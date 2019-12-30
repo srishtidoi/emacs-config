@@ -11,15 +11,6 @@
 ;;
 ;; Here are a couple examples:
 
-
-;; All of Doom's packages are pnned to a specific commit, and updated from
-;; release to release. To un-pin all packages and live on the edge, do:
-;(setq doom-pinned-packages nil)
-
-;; ...but to unpin a single package:
-;(package! pinned-package :pin nil)
-
-
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
 
@@ -50,3 +41,10 @@
 ;; This is required for some packages whose default branch isn't 'master' (which
 ;; our package manager can't deal with; see raxod502/straight.el#279)
 ;(package! builtin-package :recipe (:branch "develop"))
+
+(package! company-tabnine
+  :recipe (:host github :repo "TommyX12/company-tabnine"
+           :files ("company-tabnine.el" "fetch-binaries.sh")))
+
+(package! prettify-utils
+  :recipe (:host github :repo "Ilazki/prettify-utils.el"))
