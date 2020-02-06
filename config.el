@@ -37,8 +37,17 @@
 (custom-set-faces!
   '(doom-modeline-buffer-modified :foreground "orange"))
 (setq display-line-numbers-type 'relative)
+(setq doom-fallback-buffer-name "► Doom"
+      +doom-dashboard-name "► Doom")
 (map! :n [mouse-8] #'better-jumper-jump-backward
       :n [mouse-9] #'better-jumper-jump-forward)
+(setq frame-title-format
+    '(""
+      "%b"
+      (:eval
+       (let ((project-name (projectile-project-name)))
+         (unless (string= "-" project-name)
+           (format " ● %s" project-name))))))
 (after! centaur-tabs
   (setq centaur-tabs-height 36
         centaur-tabs-set-icons t
@@ -67,31 +76,33 @@
     (string-match-p "Issue" window-title)
     ))
 (defun ea-popup-handler (app-name window-title x y w h)
-(set-frame-size (selected-frame) 80 12)
-; font
-(interactive)
-(setq buffer-face-mode-face '(:family "P22 Underground Book" :height 160))
-(buffer-face-mode)
-; position
-(let* ((mousepos (split-string (shell-command-to-string "xdotool getmouselocation | sed -E \"s/ screen:0 window:[^ ]*|x:|y://g\"")))
-        (mouse-x (- (string-to-number (nth 0 mousepos)) 100))
-        (mouse-y (- (string-to-number (nth 1 mousepos)) 50)))
+  (set-frame-size (selected-frame) 80 12)
+                                        ; font
+  (interactive)
+  (setq buffer-face-mode-face '(:family "P22 Underground Book" :height 160))
+  (buffer-face-mode)
+                                        ; position
+  (let* ((mousepos (split-string (shell-command-to-string "xdotool getmouselocation | sed -E \"s/ screen:0 window:[^ ]*|x:|y://g\"")))
+         (mouse-x (- (string-to-number (nth 0 mousepos)) 100))
+         (mouse-y (- (string-to-number (nth 1 mousepos)) 50)))
     (set-frame-position (selected-frame) mouse-x mouse-y))
-; set major mode
-(cond
-    ((github-conversation-p window-title) (gfm-mode))
-    (t (markdown-mode)) ; default major mode
-    )
-; start in insert
-(evil-insert-state)
-)
+                                        ; set major mode
+  (cond
+   ((github-conversation-p window-title) (gfm-mode))
+   (t (org-mode)) ; default major mode
+   )
+
+  (evil-insert-state); start in insert
+  'centaur-tabs-local-mode ; disable tab
+  )
 (add-hook 'ea-popup-hook 'ea-popup-handler)
 (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
 (setq wttrin-default-cities '(""))
 (setq spray-wpm 500
       spray-height 700)
 (add-hook 'doom-load-theme-hook 'theme-magic-from-emacs)
-(setq org-directory "~/Desktop/TEC/Organisation")
+(setq calc-angle-mode 'rad)
+(setq org-directory "~/.org")
 (setq org-use-property-inheritance t)
 (use-package mixed-pitch
   :hook (org-mode . mixed-pitch-mode))
