@@ -162,7 +162,7 @@
 \\setlength{\\topmargin}{1.5cm}
 \\addtolength{\\topmargin}{-2.54cm}
 % my custom stuff
-\usepackage{arev}
+\\usepackage{arev}
 \\usepackage{arevmath}")
 (after! org
 ;; make background of fragments transparent
