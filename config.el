@@ -39,6 +39,8 @@
 (setq display-line-numbers-type 'relative)
 (setq doom-fallback-buffer-name "► Doom"
       +doom-dashboard-name "► Doom")
+;; (custom-set-faces! '(doom-modeline-evil-insert-state :weight bold :foreground "#339CDB"))
+(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 (map! :n [mouse-8] #'better-jumper-jump-backward
       :n [mouse-9] #'better-jumper-jump-forward)
 (setq frame-title-format
@@ -58,7 +60,7 @@
   (centaur-tabs-change-fonts "P22 Underground Book" 160))
 ;; (setq x-underline-at-descent-line t)
 (after! company
-  (setq company-idle-delay 0.2
+  (setq company-idle-delay 0.1
         company-minimum-prefix-length 2)
   (setq company-show-numbers t))
 (setq-default history-length 1000)
@@ -102,11 +104,10 @@
       spray-height 700)
 (add-hook 'doom-load-theme-hook 'theme-magic-from-emacs)
 (setq calc-angle-mode 'rad)
-(setq org-directory "~/.org")
-(setq org-use-property-inheritance t)
-(use-package mixed-pitch
-  :hook (org-mode . mixed-pitch-mode))
-(add-hook 'org-mode-hook '+org-pretty-mode)
+(setq org-directory "~/.org"                      ; let's put files here
+      org-use-property-inheritance t              ; it's convenient to have properties inherited
+      org-log-done 'time)                         ; having the time a item is done sounds convininet
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 (setq global-org-pretty-table-mode t)
 (setq org-ellipsis " ▾ "
       org-bullets-bullet-list '("◉" "○" "✸" "✿" "✤")
@@ -161,6 +162,7 @@
 \\setlength{\\topmargin}{1.5cm}
 \\addtolength{\\topmargin}{-2.54cm}
 % my custom stuff
+\usepackage{arev}
 \\usepackage{arevmath}")
 (after! org
 ;; make background of fragments transparent
