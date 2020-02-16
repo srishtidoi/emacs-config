@@ -49,12 +49,6 @@
        (let ((project-name (projectile-project-name)))
          (unless (string= "-" project-name)
            (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
-(package! systemd)
-(package! org-pretty-table-mode
-  :recipe (:host github :repo "Fuco1/org-pretty-table"))
-(package! ox-gfm)
-(package! ox-pandoc)
-(package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view"))
 (after! centaur-tabs
   (setq centaur-tabs-height 36
         centaur-tabs-set-icons t
@@ -164,6 +158,7 @@
     :em_dash     "---")
 )
 (plist-put +pretty-code-symbols :name "⁍") ; or › could be good?
+(add-hook 'org-mode-hook 'org-fragtog-mode)
 (setq org-format-latex-header "\\documentclass{article}
 \\usepackage[usenames]{color}
 [PACKAGES]

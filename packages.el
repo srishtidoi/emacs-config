@@ -25,3 +25,16 @@
                                  :files ("*.el")))
 
 (package! ess-view)
+
+(package! systemd)
+
+(package! org-pretty-table-mode
+  :recipe (:host github :repo "Fuco1/org-pretty-table"))
+
+(package! ox-gfm)
+
+(package! ox-pandoc)
+
+(package! org-fragtog)
+
+(package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view"))
