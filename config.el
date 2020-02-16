@@ -49,6 +49,12 @@
        (let ((project-name (projectile-project-name)))
          (unless (string= "-" project-name)
            (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
+(package! systemd)
+(package! org-pretty-table-mode
+  :recipe (:host github :repo "Fuco1/org-pretty-table"))
+(package! ox-gfm)
+(package! ox-pandoc)
+(package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view"))
 (after! centaur-tabs
   (setq centaur-tabs-height 36
         centaur-tabs-set-icons t

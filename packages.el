@@ -7,15 +7,6 @@
 (package! prettify-utils ; simplify messing with prettify-mode
   :recipe (:host github :repo "Ilazki/prettify-utils.el"))
 
-(package! org-pretty-table-mode
-  :recipe (:host github :repo "Fuco1/org-pretty-table"))
-
-(package! ox-gfm)
-
-(package! ox-pandoc)
-
-(package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view"))
-
 (package! rotate)
 
 (package! xkcd)
@@ -32,7 +23,5 @@
 
 (package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
                                  :files ("*.el")))
-
-(package! systemd)
 
 (package! ess-view)
