@@ -28,8 +28,6 @@
 
 (package! theme-magic)
 
-(use-package! beancount :load-path "~/.config/doom/lisp")
-
 (package! flyspell-lazy)
 
 (package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"

@@ -28,7 +28,7 @@
       evil-split-window-below t)
 (defadvice! prompt-for-buffer (&rest _)
   :after '(evil-window-split evil-window-vsplit)
-  (+ivy/switch-workspace-buffer))
+  (+ivy/switch-buffer))
 (setq-default major-mode 'org-mode)
 (setq doom-font (font-spec :family "Fira Code" :size 22)
       doom-big-font (font-spec :family "Fira Code" :size 36)
@@ -39,8 +39,7 @@
 (setq display-line-numbers-type 'relative)
 (setq doom-fallback-buffer-name "► Doom"
       +doom-dashboard-name "► Doom")
-;; (custom-set-faces! '(doom-modeline-evil-insert-state :weight bold :foreground "#339CDB"))
-(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+(custom-set-faces! '(doom-modeline-evil-insert-state :weight bold :foreground "#339CDB"))
 (map! :n [mouse-8] #'better-jumper-jump-backward
       :n [mouse-9] #'better-jumper-jump-forward)
 (setq frame-title-format
@@ -49,7 +48,7 @@
       (:eval
        (let ((project-name (projectile-project-name)))
          (unless (string= "-" project-name)
-           (format " ● %s" project-name))))))
+           (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
 (after! centaur-tabs
   (setq centaur-tabs-height 36
         centaur-tabs-set-icons t
@@ -106,7 +105,23 @@
 (setq calc-angle-mode 'rad)
 (setq org-directory "~/.org"                      ; let's put files here
       org-use-property-inheritance t              ; it's convenient to have properties inherited
-      org-log-done 'time)                         ; having the time a item is done sounds convininet
+      org-log-done 'time                          ; having the time a item is done sounds convininet
+      org-list-allow-alphabetical t               ; have a. A. a) A) list bullets
+      org-export-in-background t)                 ; run export processes in external emacs process
+(evil-define-command evil-buffer-org-new (count file)
+  "Creates a new ORG buffer replacing the current window, optionally
+   editing a certain FILE"
+  :repeat nil
+  (interactive "P<f>")
+  (if file
+      (evil-edit file)
+    (let ((buffer (generate-new-buffer "*new org*")))
+      (set-window-buffer nil buffer)
+      (with-current-buffer buffer
+        (org-mode)))))
+(map! :leader
+  (:prefix "b"
+    :desc "New empty ORG buffer" "o" #'evil-buffer-org-new))
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 (setq global-org-pretty-table-mode t)
 (setq org-ellipsis " ▾ "
@@ -169,7 +184,13 @@
 ;; (let ((dvipng--plist (alist-get 'dvipng org-preview-latex-process-alist)))
 ;;   (plist-put dvipng--plist :use-xcolor t)
 ;;   (plist-put dvipng--plist :image-converter '("dvipng -D %D -bg 'transparent' -T tight -o %O %f")))
-(plist-put org-format-latex-options :background "Transparent")
+  (add-hook! 'doom-load-theme-hook
+    (defun +org-refresh-latex-background ()
+      (plist-put! org-format-latex-options
+                  :background
+                  (face-attribute (or (cadr (assq 'default face-remapping-alist))
+                                      'default)
+                                  :background nil t))))
 )
 (defun my-org-inline-css-hook (exporter)
   "Insert custom inline css to automatically set the
@@ -426,11 +447,6 @@
 (setq org-beamer-frame-level 2)
 (eval-after-load "org"
   '(require 'ox-gfm nil t))
-(setq-default org-babel-load-languages '((emacs-lisp . t)
-                                         (shell . t)
-                                         (python . t)
-                                         (R . t)
-                                         (ledger . t)))
 (setq org-babel-python-command "python3")
 (defun tec-org-python ()
   (if (eq major-mode 'python-mode)
@@ -477,4 +493,6 @@
 (setq ledger-mode-should-check-version nil
       ledger-report-links-in-register nil
       ledger-binary-path "hledger")
-(add-to-list 'auto-mode-alist '("\\.beancount\\'" . beancount-mode))
+(use-package! beancount
+   :load-path "~/.config/doom/lisp"
+   :mode ("\\.beancount\\'" . beancount-mode))
