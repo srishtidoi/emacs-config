@@ -29,7 +29,7 @@
 (defadvice! prompt-for-buffer (&rest _)
   :after '(evil-window-split evil-window-vsplit)
   (+ivy/switch-buffer))
-(setq-default major-mode 'org-mode)
+;; (setq-default major-mode 'org-mode)
 (setq doom-font (font-spec :family "Fira Code" :size 22)
       doom-big-font (font-spec :family "Fira Code" :size 36)
       doom-variable-pitch-font (font-spec :family "Overpass" :size 24))
