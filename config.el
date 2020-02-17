@@ -103,6 +103,7 @@
       spray-height 700)
 (add-hook 'doom-load-theme-hook 'theme-magic-from-emacs)
 (setq calc-angle-mode 'rad)
+(set-file-template! "\\.tex$" :trigger "__" :mode 'latex-mode)
 (setq org-directory "~/.org"                      ; let's put files here
       org-use-property-inheritance t              ; it's convenient to have properties inherited
       org-log-done 'time                          ; having the time a item is done sounds convininet
@@ -468,6 +469,39 @@
  (ess-fl-keyword:delimiters . t)
  (ess-fl-keyword:= . t)
  (ess-R-fl-keyword:F&T . t)))
+(setq tec/yas-latex-template-preamble "
+\\usepackage[pdfa,unicode=true,hidelinks]{hyperref}
+
+\\usepackage[dvipsnames,svgnames,table,hyperref]{xcolor}
+\\renewcommand{\\UrlFont}{\\ttfamily\\small}
+
+\\usepackage[a-2b]{pdfx} % why not be archival
+
+\\usepackage[T1]{fontenc}
+\\usepackage[osf,helvratio=0.9]{newpxtext} % pallatino
+\\usepackage[scale=0.92]{sourcecodepro}
+
+\\usepackage[varbb]{newpxmath}
+\\usepackage{mathtools}
+\\usepackage{amssymb}
+
+\\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=2000]{microtype}
+% microtype makes text look nicer
+
+\\usepackage{graphicx} % include graphics
+\\usepackage{grffile} % fix allowed graphicx filenames
+
+\\usepackage{booktabs} % nice table rules
+")
+
+(defun tec/yas-latex-get-class-choice ()
+  "Prompt user for LaTeX class choice"
+  (setq tec/yas-latex-class-choice (ivy-read "Select document class: " '("article" "scrartcl" "bmc") :def "bmc")))
+
+(defun tec/yas-latex-preamble-if ()
+  "Based on class choice prompt for insertion of default preamble"
+    (if (equal tec/yas-latex-class-choice "bmc") 'nil
+             (eq (read-char-choice "Include default preamble? [Type y/n]" '(?y ?n)) ?y)))
 (after! ess-r-mode
   (appendq! +pretty-code-symbols
             '(:assign "⟵"
