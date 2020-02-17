@@ -162,8 +162,11 @@
 (add-hook 'org-mode-hook 'org-fragtog-mode)
 (setq org-format-latex-header "\\documentclass{article}
 \\usepackage[usenames]{color}
-[PACKAGES]
-[DEFAULT-PACKAGES]
+
+\\usepackage[T1]{fontenc}
+\\usepackage{mathtools}
+\\usepackage{textcomp,amssymb}
+
 \\pagestyle{empty}             % do not remove
 % The settings below are copied from fullpage.sty
 \\setlength{\\textwidth}{\\paperwidth}
