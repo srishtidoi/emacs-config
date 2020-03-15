@@ -33,8 +33,10 @@
 
 (package! ox-gfm)
 
-(package! ox-pandoc)
+(package! org-ref)
 
 (package! org-fragtog)
 
 (package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view"))
+
+(package! org-chef)
