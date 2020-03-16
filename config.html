@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-16 Mon 00:38 -->
+<!-- 2020-03-16 Mon 21:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -1833,6 +1833,2918 @@
    ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
    ::-webkit-scrollbar-thumb:hover { background:#888; }
 </style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
@@ -1887,163 +4799,163 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbf3390e">1. Intro</a></li>
-<li><a href="#org6cade4f">2. Rudimentary configuration</a>
+<li><a href="#orga213401">1. Intro</a></li>
+<li><a href="#orgac101ae">2. Rudimentary configuration</a>
 <ul>
-<li><a href="#org8de8f1d">2.1. Personal Information</a></li>
-<li><a href="#orgc7ef5ec">2.2. Better defaults</a>
+<li><a href="#orgab22f63">2.1. Personal Information</a></li>
+<li><a href="#orgf190ba5">2.2. Better defaults</a>
 <ul>
-<li><a href="#org4213fb8">2.2.1. Simple settings</a></li>
-<li><a href="#org8ea85f4">2.2.2. Fullscreen</a></li>
-<li><a href="#orge648d34">2.2.3. Auto-customisations</a></li>
-<li><a href="#org6fead6d">2.2.4. Windows</a></li>
-<li><a href="#org1393d76">2.2.5. Buffer defaults</a></li>
+<li><a href="#org998a82a">2.2.1. Simple settings</a></li>
+<li><a href="#org43aa719">2.2.2. Fullscreen</a></li>
+<li><a href="#org839c121">2.2.3. Auto-customisations</a></li>
+<li><a href="#org4343e35">2.2.4. Windows</a></li>
+<li><a href="#org50f6f8a">2.2.5. Buffer defaults</a></li>
 </ul>
 </li>
-<li><a href="#org3187857">2.3. Doom configuration</a>
+<li><a href="#orgbd4bab2">2.3. Doom configuration</a>
 <ul>
-<li><a href="#orgb701664">2.3.1. Visual Settings</a>
+<li><a href="#org8b7e770">2.3.1. Visual Settings</a>
 <ul>
-<li><a href="#org69eea2d">2.3.1.1. Font Face</a></li>
-<li><a href="#orgad9b2b7">2.3.1.2. Theme</a></li>
-<li><a href="#orgcd35f7d">2.3.1.3. Miscellaneous</a></li>
+<li><a href="#org2f50cc4">2.3.1.1. Font Face</a></li>
+<li><a href="#org1ed97a2">2.3.1.2. Theme</a></li>
+<li><a href="#orgbed57a3">2.3.1.3. Miscellaneous</a></li>
 </ul>
 </li>
-<li><a href="#org2ec0993">2.3.2. Some helper macros</a></li>
+<li><a href="#orgb266110">2.3.2. Some helper macros</a></li>
 </ul>
 </li>
-<li><a href="#org2b94802">2.4. Other things</a>
+<li><a href="#orgb0a0f5f">2.4. Other things</a>
 <ul>
-<li><a href="#orgff5af85">2.4.1. Editor interaction</a>
+<li><a href="#orgcff0415">2.4.1. Editor interaction</a>
 <ul>
-<li><a href="#orgd0ce4b9">2.4.1.1. Mouse buttons</a></li>
+<li><a href="#org8367919">2.4.1.1. Mouse buttons</a></li>
 </ul>
 </li>
-<li><a href="#org8b12ff0">2.4.2. Window title</a></li>
-<li><a href="#org836be6c">2.4.3. Systemd daemon</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgc4f2db9">3. Package loading</a>
-<ul>
-<li><a href="#org8c48923">3.1. Loading instructions</a>
-<ul>
-<li><a href="#org4337584">3.1.1. Packages in MELPA/ELPA/emacsmirror</a></li>
-<li><a href="#org6e7b606">3.1.2. Packages from git repositories</a></li>
-<li><a href="#org5d8e299">3.1.3. Disabling built-in packages</a></li>
-</ul>
-</li>
-<li><a href="#orgd4fa45a">3.2. General packages</a>
-<ul>
-<li><a href="#org4fc3092">3.2.1. Auto-complete</a></li>
-<li><a href="#orgc559841">3.2.2. Prettification</a></li>
-<li><a href="#org029fb74">3.2.3. Window management</a></li>
-<li><a href="#orgf7c4ac8">3.2.4. Fun</a></li>
-<li><a href="#org293acb1">3.2.5. Other</a>
-<ul>
-<li><a href="#org5f6dca1">3.2.5.1. Flyspell-lazy</a></li>
-<li><a href="#org281da62">3.2.5.2. CalcTeX</a></li>
-<li><a href="#org7ce6847">3.2.5.3. ESS</a></li>
+<li><a href="#org49af93d">2.4.2. Window title</a></li>
+<li><a href="#org006e15e">2.4.3. Systemd daemon</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgd815907">3.3. Language packages</a>
+<li><a href="#orgfa3d0c3">3. Package loading</a>
 <ul>
-<li><a href="#org544eb61">3.3.1. Systemd</a></li>
-<li><a href="#org318ac2e">3.3.2. Org Mode</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org532ac20">4. Package configuration</a>
+<li><a href="#orge0efced">3.1. Loading instructions</a>
 <ul>
-<li><a href="#orge2df34d">4.1. Centaur Tabs</a></li>
-<li><a href="#orgfaeb3ab">4.2. Company</a>
+<li><a href="#org72dc599">3.1.1. Packages in MELPA/ELPA/emacsmirror</a></li>
+<li><a href="#orgd56a7e1">3.1.2. Packages from git repositories</a></li>
+<li><a href="#org998d894">3.1.3. Disabling built-in packages</a></li>
+</ul>
+</li>
+<li><a href="#org43b8450">3.2. General packages</a>
 <ul>
-<li><a href="#org2d1fa97">4.2.1. Plain Text</a></li>
-<li><a href="#org0a6c57a">4.2.2. ESS</a></li>
-</ul>
-</li>
-<li><a href="#org544ade6">4.3. Emacs Anywhere configuration</a></li>
-<li><a href="#org92bd8dc">4.4. Flyspell</a></li>
-<li><a href="#orgee3f3be">4.5. Abbrev mode</a></li>
-<li><a href="#org3890eb8">4.6. Miscellaneous</a>
+<li><a href="#org9cd7ea4">3.2.1. Auto-complete</a></li>
+<li><a href="#orga285fc1">3.2.2. Prettification</a></li>
+<li><a href="#org3f09710">3.2.3. Window management</a></li>
+<li><a href="#org7040dc7">3.2.4. Fun</a></li>
+<li><a href="#org1183229">3.2.5. Other</a>
 <ul>
-<li><a href="#orgcf580a9">4.6.1. wttrin</a></li>
-<li><a href="#orge9b87a6">4.6.2. electric pair mode</a></li>
-<li><a href="#org1bc50a3">4.6.3. spray</a></li>
-<li><a href="#orgddd5a2f">4.6.4. theme magic</a></li>
-<li><a href="#orga6216c6">4.6.5. calc</a></li>
-<li><a href="#orga8c7941">4.6.6. Tramp</a>
+<li><a href="#org251d4e0">3.2.5.1. Flyspell-lazy</a></li>
+<li><a href="#org495d3e1">3.2.5.2. CalcTeX</a></li>
+<li><a href="#orgbda3dfe">3.2.5.3. ESS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org889284b">3.3. Language packages</a>
 <ul>
-<li><a href="#orgdc64965">4.6.6.1. Troubleshooting</a>
+<li><a href="#orgfdc8d64">3.3.1. Systemd</a></li>
+<li><a href="#org799bf08">3.3.2. Org Mode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7cd80ae">4. Package configuration</a>
 <ul>
-<li><a href="#org3d4cbd1">4.6.6.1.1. Zsh</a></li>
+<li><a href="#orgf151756">4.1. Centaur Tabs</a></li>
+<li><a href="#orgb7b2f0f">4.2. Company</a>
+<ul>
+<li><a href="#orgce533ec">4.2.1. Plain Text</a></li>
+<li><a href="#orgffdcc1f">4.2.2. ESS</a></li>
+</ul>
+</li>
+<li><a href="#orgf398c7c">4.3. Emacs Anywhere configuration</a></li>
+<li><a href="#org77fed1d">4.4. Flyspell</a></li>
+<li><a href="#orgd88ca7a">4.5. Abbrev mode</a></li>
+<li><a href="#org2945520">4.6. Miscellaneous</a>
+<ul>
+<li><a href="#org745206c">4.6.1. wttrin</a></li>
+<li><a href="#org8f47fa9">4.6.2. electric pair mode</a></li>
+<li><a href="#org3254c27">4.6.3. spray</a></li>
+<li><a href="#org45ecfce">4.6.4. theme magic</a></li>
+<li><a href="#org04e88af">4.6.5. calc</a></li>
+<li><a href="#org5bb0440">4.6.6. Tramp</a>
+<ul>
+<li><a href="#orgdb8fa9c">4.6.6.1. Troubleshooting</a>
+<ul>
+<li><a href="#orge7746b9">4.6.6.1.1. Zsh</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgf45108e">4.6.7. ispell</a></li>
+<li><a href="#org0dcc83a">4.6.7. ispell</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org7a5e265">5. Language configuration</a>
+<li><a href="#orgd3b7fd7">5. Language configuration</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org3e00fdf">5.0.1. File Templates</a></li>
+<li><a href="#org4de1956">5.0.1. File Templates</a></li>
 </ul>
 </li>
-<li><a href="#org2908dd0">5.1. Org Mode</a>
+<li><a href="#orgda487f9">5.1. Org Mode</a>
 <ul>
-<li><a href="#orga030769">5.1.1. System config</a></li>
-<li><a href="#org356649b">5.1.2. Behaviour</a></li>
-<li><a href="#org2df6912">5.1.3. Visuals</a>
+<li><a href="#org86f24ab">5.1.1. System config</a></li>
+<li><a href="#orgcb17400">5.1.2. Behaviour</a></li>
+<li><a href="#org854e4d1">5.1.3. Visuals</a>
 <ul>
-<li><a href="#org1c7d857">5.1.3.1. In editor</a>
+<li><a href="#org0903135">5.1.3.1. In editor</a>
 <ul>
-<li><a href="#org96c1be3">5.1.3.1.1. Font Display</a></li>
-<li><a href="#orga689eda">5.1.3.1.2. Symbols</a></li>
-<li><a href="#orgc8ce7bc">5.1.3.1.3. LaTeX Fragments</a></li>
-<li><a href="#org30e1cf1">5.1.3.1.4. Stolen from scimax (semi-working right now)</a></li>
+<li><a href="#orga1b6ae8">5.1.3.1.1. Font Display</a></li>
+<li><a href="#org848f342">5.1.3.1.2. Symbols</a></li>
+<li><a href="#org4ffc3b2">5.1.3.1.3. LaTeX Fragments</a></li>
+<li><a href="#org819b6ea">5.1.3.1.4. Stolen from scimax (semi-working right now)</a></li>
 </ul>
 </li>
-<li><a href="#orgdeb4c85">5.1.3.2. Exporting (general)</a></li>
-<li><a href="#org6b0946a">5.1.3.3. Exporting to HTML</a>
+<li><a href="#org9dad8e1">5.1.3.2. Exporting (general)</a></li>
+<li><a href="#orgaf6ed3f">5.1.3.3. Exporting to HTML</a>
 <ul>
-<li><a href="#orgfe1859b">5.1.3.3.1. Custom CSS/JS</a></li>
-<li><a href="#org43ce9d3">5.1.3.3.2. Make verbatim different to code</a></li>
-<li><a href="#orga5d5444">5.1.3.3.3. Change checkbox type</a></li>
-<li><a href="#org8bce4dd">5.1.3.3.4. LaTeX Rendering</a></li>
+<li><a href="#org17a3837">5.1.3.3.1. Custom CSS/JS</a></li>
+<li><a href="#org38404c3">5.1.3.3.2. Make verbatim different to code</a></li>
+<li><a href="#orga22f562">5.1.3.3.3. Change checkbox type</a></li>
+<li><a href="#org80fd013">5.1.3.3.4. LaTeX Rendering</a></li>
 </ul>
 </li>
-<li><a href="#org4b3e829">5.1.3.4. Exporting to LaTeX</a></li>
-<li><a href="#org11bfddf">5.1.3.5. Exporting to Beamer</a></li>
-<li><a href="#org3fea981">5.1.3.6. Exporting to GFM</a></li>
+<li><a href="#orga22fbc9">5.1.3.4. Exporting to LaTeX</a></li>
+<li><a href="#org7fb663f">5.1.3.5. Exporting to Beamer</a></li>
+<li><a href="#org9fc8d6d">5.1.3.6. Exporting to GFM</a></li>
 </ul>
 </li>
-<li><a href="#orgd4abe3e">5.1.4. Babel</a></li>
-<li><a href="#org0595f57">5.1.5. ESS</a></li>
+<li><a href="#orgb8865ad">5.1.4. Babel</a></li>
+<li><a href="#org9232316">5.1.5. ESS</a></li>
 </ul>
 </li>
-<li><a href="#org571f7ba">5.2. LaTeX</a>
+<li><a href="#org7edb01c">5.2. LaTeX</a>
 <ul>
-<li><a href="#org13ac71f">5.2.1. Snippet value</a></li>
-<li><a href="#org6845110">5.2.2. Editor visuals</a></li>
-<li><a href="#org55068e4">5.2.3. CDLaTeX</a></li>
+<li><a href="#org6ca0e92">5.2.1. Snippet value</a></li>
+<li><a href="#org05b3d59">5.2.2. Editor visuals</a></li>
+<li><a href="#orgc7f0dd0">5.2.3. CDLaTeX</a></li>
 </ul>
 </li>
-<li><a href="#orgd0614cb">5.3. R</a>
+<li><a href="#org3f14ed6">5.3. R</a>
 <ul>
-<li><a href="#orgbdd8e9f">5.3.1. Editor Visuals</a></li>
+<li><a href="#org4dc6c48">5.3.1. Editor Visuals</a></li>
 </ul>
 </li>
-<li><a href="#org31fa2a5">5.4. hledger</a></li>
-<li><a href="#org83aaec5">5.5. Markdown</a></li>
-<li><a href="#orgd013495">5.6. Beancount</a></li>
+<li><a href="#org2564795">5.4. hledger</a></li>
+<li><a href="#orga322767">5.5. Markdown</a></li>
+<li><a href="#orgb642c92">5.6. Beancount</a></li>
 </ul>
 </li>
 </ul>
@@ -2058,8 +4970,8 @@ computer to do. &#x2014; Donald Knuth
 </p>
 </blockquote>
 
-<div id="outline-container-orgbf3390e" class="outline-2">
-<h2 id="orgbf3390e"><span class="section-number-2">1</span> Intro</h2>
+<div id="outline-container-orga213401" class="outline-2">
+<h2 id="orga213401"><span class="section-number-2">1</span> Intro</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Customising an editor can be very rewarding &#x2026; until you have to leave it.
@@ -2090,8 +5002,8 @@ settled by the day. This is my config.
 </p>
 </div>
 </div>
-<div id="outline-container-org6cade4f" class="outline-2">
-<h2 id="org6cade4f"><span class="section-number-2">2</span> Rudimentary configuration</h2>
+<div id="outline-container-orgac101ae" class="outline-2">
+<h2 id="orgac101ae"><span class="section-number-2">2</span> Rudimentary configuration</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Make this file run (slightly) faster with lexical binding (see <a href="https://nullprogram.com/blog/2016/12/22/">this blog post</a>
@@ -2102,8 +5014,8 @@ for more info).
 </pre>
 </div>
 </div>
-<div id="outline-container-org8de8f1d" class="outline-3">
-<h3 id="org8de8f1d"><span class="section-number-3">2.1</span> Personal Information</h3>
+<div id="outline-container-orgab22f63" class="outline-3">
+<h3 id="orgab22f63"><span class="section-number-3">2.1</span> Personal Information</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 It&rsquo;s useful to have some basic personal information
@@ -2118,12 +5030,12 @@ Apparently this is used by <code>GPG</code>, and all sorts of other things.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc7ef5ec" class="outline-3">
-<h3 id="orgc7ef5ec"><span class="section-number-3">2.2</span> Better defaults</h3>
+<div id="outline-container-orgf190ba5" class="outline-3">
+<h3 id="orgf190ba5"><span class="section-number-3">2.2</span> Better defaults</h3>
 <div class="outline-text-3" id="text-2-2">
 </div>
-<div id="outline-container-org4213fb8" class="outline-4">
-<h4 id="org4213fb8"><span class="section-number-4">2.2.1</span> Simple settings</h4>
+<div id="outline-container-org998a82a" class="outline-4">
+<h4 id="org998a82a"><span class="section-number-4">2.2.1</span> Simple settings</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 Browsing the web and seeing <a href="https://github.com/angrybacon/dotemacs/blob/master/dotemacs.org#use-better-defaults">angrybacon/dotemacs</a> and comparing with the values
@@ -2149,8 +5061,8 @@ shown by <kbd>SPC h v</kbd> and selecting what I thought looks good, I&rsquo;ve 
 </div>
 </div>
 </div>
-<div id="outline-container-org8ea85f4" class="outline-4">
-<h4 id="org8ea85f4"><span class="section-number-4">2.2.2</span> Fullscreen</h4>
+<div id="outline-container-org43aa719" class="outline-4">
+<h4 id="org43aa719"><span class="section-number-4">2.2.2</span> Fullscreen</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <p>
 I also like the idea of fullscreen-ing when opened by <code>emacs</code> or the <code>.desktop</code> file.
@@ -2163,8 +5075,8 @@ I also like the idea of fullscreen-ing when opened by <code>emacs</code> or the 
 </div>
 </div>
 </div>
-<div id="outline-container-orge648d34" class="outline-4">
-<h4 id="orge648d34"><span class="section-number-4">2.2.3</span> Auto-customisations</h4>
+<div id="outline-container-org839c121" class="outline-4">
+<h4 id="org839c121"><span class="section-number-4">2.2.3</span> Auto-customisations</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 By default changes made via a customisation interface are added to <kbd>init.el</kbd>.
@@ -2179,8 +5091,8 @@ setting, and load it if it exists.
 </div>
 </div>
 </div>
-<div id="outline-container-org6fead6d" class="outline-4">
-<h4 id="org6fead6d"><span class="section-number-4">2.2.4</span> Windows</h4>
+<div id="outline-container-org4343e35" class="outline-4">
+<h4 id="org4343e35"><span class="section-number-4">2.2.4</span> Windows</h4>
 <div class="outline-text-4" id="text-2-2-4">
 <p>
 I find it rather handy to be asked which buffer I want to see after splitting
@@ -2203,8 +5115,8 @@ Then, we&rsquo;ll pull up <code>ivy</code>
 </div>
 </div>
 </div>
-<div id="outline-container-org1393d76" class="outline-4">
-<h4 id="org1393d76"><span class="section-number-4">2.2.5</span> Buffer defaults</h4>
+<div id="outline-container-org50f6f8a" class="outline-4">
+<h4 id="org50f6f8a"><span class="section-number-4">2.2.5</span> Buffer defaults</h4>
 <div class="outline-text-4" id="text-2-2-5">
 <p>
 I&rsquo;d much rather have my new buffers in <code>org-mode</code> than <code>fundamental-mode</code>, hence
@@ -2220,16 +5132,16 @@ just need to resort to <kbd>SPC b o</kbd> for now.
 </div>
 </div>
 </div>
-<div id="outline-container-org3187857" class="outline-3">
-<h3 id="org3187857"><span class="section-number-3">2.3</span> Doom configuration</h3>
+<div id="outline-container-orgbd4bab2" class="outline-3">
+<h3 id="orgbd4bab2"><span class="section-number-3">2.3</span> Doom configuration</h3>
 <div class="outline-text-3" id="text-2-3">
 </div>
-<div id="outline-container-orgb701664" class="outline-4">
-<h4 id="orgb701664"><span class="section-number-4">2.3.1</span> Visual Settings</h4>
+<div id="outline-container-org8b7e770" class="outline-4">
+<h4 id="org8b7e770"><span class="section-number-4">2.3.1</span> Visual Settings</h4>
 <div class="outline-text-4" id="text-2-3-1">
 </div>
-<div id="outline-container-org69eea2d" class="outline-5">
-<h5 id="org69eea2d"><span class="section-number-5">2.3.1.1</span> Font Face</h5>
+<div id="outline-container-org2f50cc4" class="outline-5">
+<h5 id="org2f50cc4"><span class="section-number-5">2.3.1.1</span> Font Face</h5>
 <div class="outline-text-5" id="text-2-3-1-1">
 <p>
 &rsquo;Fira Code&rsquo; is nice, and &rsquo;Overpass&rsquo; makes for a nice sans companion. We just need to
@@ -2243,8 +5155,8 @@ fiddle with the font sizes a tad so that they visually match.
 </div>
 </div>
 </div>
-<div id="outline-container-orgad9b2b7" class="outline-5">
-<h5 id="orgad9b2b7"><span class="section-number-5">2.3.1.2</span> Theme</h5>
+<div id="outline-container-org1ed97a2" class="outline-5">
+<h5 id="org1ed97a2"><span class="section-number-5">2.3.1.2</span> Theme</h5>
 <div class="outline-text-5" id="text-2-3-1-2">
 <p>
 <code>doom-one</code> is nice and all, but I find the <code>vibrant</code> variant nicer.
@@ -2264,8 +5176,8 @@ so I don&rsquo;t feel like something&rsquo;s gone <i>wrong</i> when editing file
 </div>
 </div>
 </div>
-<div id="outline-container-orgcd35f7d" class="outline-5">
-<h5 id="orgcd35f7d"><span class="section-number-5">2.3.1.3</span> Miscellaneous</h5>
+<div id="outline-container-orgbed57a3" class="outline-5">
+<h5 id="orgbed57a3"><span class="section-number-5">2.3.1.3</span> Miscellaneous</h5>
 <div class="outline-text-5" id="text-2-3-1-3">
 <p>
 Relative line numbers are fantastic for knowing how far away line numbers are,
@@ -2293,8 +5205,8 @@ There&rsquo;s a bug with the modeline in insert mode for org documents (<a href=
 </div>
 </div>
 </div>
-<div id="outline-container-org2ec0993" class="outline-4">
-<h4 id="org2ec0993"><span class="section-number-4">2.3.2</span> Some helper macros</h4>
+<div id="outline-container-orgb266110" class="outline-4">
+<h4 id="orgb266110"><span class="section-number-4">2.3.2</span> Some helper macros</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 There are a few handy macros added by doom, namely
@@ -2312,16 +5224,16 @@ To find more,
 </div>
 </div>
 </div>
-<div id="outline-container-org2b94802" class="outline-3">
-<h3 id="org2b94802"><span class="section-number-3">2.4</span> Other things</h3>
+<div id="outline-container-orgb0a0f5f" class="outline-3">
+<h3 id="orgb0a0f5f"><span class="section-number-3">2.4</span> Other things</h3>
 <div class="outline-text-3" id="text-2-4">
 </div>
-<div id="outline-container-orgff5af85" class="outline-4">
-<h4 id="orgff5af85"><span class="section-number-4">2.4.1</span> Editor interaction</h4>
+<div id="outline-container-orgcff0415" class="outline-4">
+<h4 id="orgcff0415"><span class="section-number-4">2.4.1</span> Editor interaction</h4>
 <div class="outline-text-4" id="text-2-4-1">
 </div>
-<div id="outline-container-orgd0ce4b9" class="outline-5">
-<h5 id="orgd0ce4b9"><span class="section-number-5">2.4.1.1</span> Mouse buttons</h5>
+<div id="outline-container-org8367919" class="outline-5">
+<h5 id="org8367919"><span class="section-number-5">2.4.1.1</span> Mouse buttons</h5>
 <div class="outline-text-5" id="text-2-4-1-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">map!</span> <span style="color: #C57BDB;">:n</span> <span style="color: #C57BDB;">[</span>mouse-8<span style="color: #C57BDB;">]</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">better-jumper-jump-backward</span>
@@ -2331,8 +5243,8 @@ To find more,
 </div>
 </div>
 </div>
-<div id="outline-container-org8b12ff0" class="outline-4">
-<h4 id="org8b12ff0"><span class="section-number-4">2.4.2</span> Window title</h4>
+<div id="outline-container-org49af93d" class="outline-4">
+<h4 id="org49af93d"><span class="section-number-4">2.4.2</span> Window title</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <p>
 I&rsquo;d like to have just the buffer name, then if applicable the project folder
@@ -2349,8 +5261,8 @@ I&rsquo;d like to have just the buffer name, then if applicable the project fold
 </div>
 </div>
 </div>
-<div id="outline-container-org836be6c" class="outline-4">
-<h4 id="org836be6c"><span class="section-number-4">2.4.3</span> Systemd daemon</h4>
+<div id="outline-container-org006e15e" class="outline-4">
+<h4 id="org006e15e"><span class="section-number-4">2.4.3</span> Systemd daemon</h4>
 <div class="outline-text-4" id="text-2-4-3">
 <p>
 For running a systemd service for a emacs server I have the following
@@ -2382,8 +5294,8 @@ which is then enabled by
 </div>
 </div>
 </div>
-<div id="outline-container-orgc4f2db9" class="outline-2">
-<h2 id="orgc4f2db9"><span class="section-number-2">3</span> Package loading</h2>
+<div id="outline-container-orgfa3d0c3" class="outline-2">
+<h2 id="orgfa3d0c3"><span class="section-number-2">3</span> Package loading</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This file shouldn&rsquo;t be byte compiled.
@@ -2393,8 +5305,8 @@ This file shouldn&rsquo;t be byte compiled.
 </pre>
 </div>
 </div>
-<div id="outline-container-org8c48923" class="outline-3">
-<h3 id="org8c48923"><span class="section-number-3">3.1</span> Loading instructions</h3>
+<div id="outline-container-orge0efced" class="outline-3">
+<h3 id="orge0efced"><span class="section-number-3">3.1</span> Loading instructions</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 This is where you install packages, by declaring them with the <code>package!</code>
@@ -2408,8 +5320,8 @@ Doom requires these, and disabling them may have terrible side effects.
 </p>
 </div>
 
-<div id="outline-container-org4337584" class="outline-4">
-<h4 id="org4337584"><span class="section-number-4">3.1.1</span> Packages in MELPA/ELPA/emacsmirror</h4>
+<div id="outline-container-org72dc599" class="outline-4">
+<h4 id="org72dc599"><span class="section-number-4">3.1.1</span> Packages in MELPA/ELPA/emacsmirror</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 To install <code>some-package</code> from MELPA, ELPA or emacsmirror:
@@ -2421,8 +5333,8 @@ To install <code>some-package</code> from MELPA, ELPA or emacsmirror:
 </div>
 </div>
 
-<div id="outline-container-org6e7b606" class="outline-4">
-<h4 id="org6e7b606"><span class="section-number-4">3.1.2</span> Packages from git repositories</h4>
+<div id="outline-container-orgd56a7e1" class="outline-4">
+<h4 id="orgd56a7e1"><span class="section-number-4">3.1.2</span> Packages from git repositories</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
 To install a package directly from a particular repo, you&rsquo;ll need to specify
@@ -2448,8 +5360,8 @@ file, or is located in a subdirectory of the repo, you&rsquo;ll need to specify
 </div>
 </div>
 
-<div id="outline-container-org5d8e299" class="outline-4">
-<h4 id="org5d8e299"><span class="section-number-4">3.1.3</span> Disabling built-in packages</h4>
+<div id="outline-container-org998d894" class="outline-4">
+<h4 id="org998d894"><span class="section-number-4">3.1.3</span> Disabling built-in packages</h4>
 <div class="outline-text-4" id="text-3-1-3">
 <p>
 If you&rsquo;d like to disable a package included with Doom, for whatever reason,
@@ -2482,12 +5394,12 @@ our package manager can&rsquo;t deal with; see <a href="https://github.com/raxod
 </div>
 </div>
 </div>
-<div id="outline-container-orgd4fa45a" class="outline-3">
-<h3 id="orgd4fa45a"><span class="section-number-3">3.2</span> General packages</h3>
+<div id="outline-container-org43b8450" class="outline-3">
+<h3 id="org43b8450"><span class="section-number-3">3.2</span> General packages</h3>
 <div class="outline-text-3" id="text-3-2">
 </div>
-<div id="outline-container-org4fc3092" class="outline-4">
-<h4 id="org4fc3092"><span class="section-number-4">3.2.1</span> Auto-complete</h4>
+<div id="outline-container-org9cd7ea4" class="outline-4">
+<h4 id="org9cd7ea4"><span class="section-number-4">3.2.1</span> Auto-complete</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> company-tabnine <span style="color: #62686E;">; </span><span style="color: #62686E;">tab9 autocomplete</span>
@@ -2497,8 +5409,8 @@ our package manager can&rsquo;t deal with; see <a href="https://github.com/raxod
 </div>
 </div>
 </div>
-<div id="outline-container-orgc559841" class="outline-4">
-<h4 id="orgc559841"><span class="section-number-4">3.2.2</span> Prettification</h4>
+<div id="outline-container-orga285fc1" class="outline-4">
+<h4 id="orga285fc1"><span class="section-number-4">3.2.2</span> Prettification</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <p>
 <code>prettify-mode</code> is nice and all, but adding substitutions is a little verbose.
@@ -2511,8 +5423,8 @@ This helps with that.
 </div>
 </div>
 </div>
-<div id="outline-container-org029fb74" class="outline-4">
-<h4 id="org029fb74"><span class="section-number-4">3.2.3</span> Window management</h4>
+<div id="outline-container-org3f09710" class="outline-4">
+<h4 id="org3f09710"><span class="section-number-4">3.2.3</span> Window management</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> rotate<span style="color: #51afef;">)</span>
@@ -2520,8 +5432,8 @@ This helps with that.
 </div>
 </div>
 </div>
-<div id="outline-container-orgf7c4ac8" class="outline-4">
-<h4 id="orgf7c4ac8"><span class="section-number-4">3.2.4</span> Fun</h4>
+<div id="outline-container-org7040dc7" class="outline-4">
+<h4 id="org7040dc7"><span class="section-number-4">3.2.4</span> Fun</h4>
 <div class="outline-text-4" id="text-3-2-4">
 <p>
 Sometimes one just wants a little fun.
@@ -2566,15 +5478,15 @@ With all our fancy emacs themes, my terminal is missing out!
 </div>
 </div>
 </div>
-<div id="outline-container-org293acb1" class="outline-4">
-<h4 id="org293acb1"><span class="section-number-4">3.2.5</span> Other</h4>
+<div id="outline-container-org1183229" class="outline-4">
+<h4 id="org1183229"><span class="section-number-4">3.2.5</span> Other</h4>
 <div class="outline-text-4" id="text-3-2-5">
 </div>
-<div id="outline-container-org5f6dca1" class="outline-5">
-<h5 id="org5f6dca1"><span class="section-number-5">3.2.5.1</span> Flyspell-lazy</h5>
+<div id="outline-container-org251d4e0" class="outline-5">
+<h5 id="org251d4e0"><span class="section-number-5">3.2.5.1</span> Flyspell-lazy</h5>
 <div class="outline-text-5" id="text-3-2-5-1">
 <p>
-To alleviate some <a href="#org92bd8dc">issues with flyspell</a>
+To alleviate some <a href="#org77fed1d">issues with flyspell</a>
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> flyspell-lazy<span style="color: #51afef;">)</span>
@@ -2582,8 +5494,8 @@ To alleviate some <a href="#org92bd8dc">issues with flyspell</a>
 </div>
 </div>
 </div>
-<div id="outline-container-org281da62" class="outline-5">
-<h5 id="org281da62"><span class="section-number-5">3.2.5.2</span> CalcTeX</h5>
+<div id="outline-container-org495d3e1" class="outline-5">
+<h5 id="org495d3e1"><span class="section-number-5">3.2.5.2</span> CalcTeX</h5>
 <div class="outline-text-5" id="text-3-2-5-2">
 <p>
 This is a nice extension to <code>calc</code>
@@ -2595,8 +5507,8 @@ This is a nice extension to <code>calc</code>
 </div>
 </div>
 </div>
-<div id="outline-container-org7ce6847" class="outline-5">
-<h5 id="org7ce6847"><span class="section-number-5">3.2.5.3</span> ESS</h5>
+<div id="outline-container-orgbda3dfe" class="outline-5">
+<h5 id="orgbda3dfe"><span class="section-number-5">3.2.5.3</span> ESS</h5>
 <div class="outline-text-5" id="text-3-2-5-3">
 <p>
 View dataframes better with
@@ -2609,12 +5521,12 @@ View dataframes better with
 </div>
 </div>
 </div>
-<div id="outline-container-orgd815907" class="outline-3">
-<h3 id="orgd815907"><span class="section-number-3">3.3</span> Language packages</h3>
+<div id="outline-container-org889284b" class="outline-3">
+<h3 id="org889284b"><span class="section-number-3">3.3</span> Language packages</h3>
 <div class="outline-text-3" id="text-3-3">
 </div>
-<div id="outline-container-org544eb61" class="outline-4">
-<h4 id="org544eb61"><span class="section-number-4">3.3.1</span> Systemd</h4>
+<div id="outline-container-orgfdc8d64" class="outline-4">
+<h4 id="orgfdc8d64"><span class="section-number-4">3.3.1</span> Systemd</h4>
 <div class="outline-text-4" id="text-3-3-1">
 <p>
 For editing systemd unit files
@@ -2625,8 +5537,8 @@ For editing systemd unit files
 </div>
 </div>
 </div>
-<div id="outline-container-org318ac2e" class="outline-4">
-<h4 id="org318ac2e"><span class="section-number-4">3.3.2</span> Org Mode</h4>
+<div id="outline-container-org799bf08" class="outline-4">
+<h4 id="org799bf08"><span class="section-number-4">3.3.2</span> Org Mode</h4>
 <div class="outline-text-4" id="text-3-3-2">
 <p>
 Org tables aren&rsquo;t the prettiest thing to look at. This package is supposed to
@@ -2643,7 +5555,7 @@ Because of the <i><a href="https://github.com/commonmark/commonmark-spec/wiki/ma
 such a thing a standard table spec &#x2026; or standard anything really. Because
 <code>org-md</code> is a goody-two-shoes, it just uses HTML for all these non-standardised
 elements (a lot of them). So <code>ox-gfm</code> is handy for exporting markdown with all the
-features that GitHub has. Initialised in <a href="#org3fea981">5.1.3.6</a>.
+features that GitHub has. Initialised in <a href="#org9fc8d6d">5.1.3.6</a>.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> ox-gfm<span style="color: #51afef;">)</span>
@@ -2686,12 +5598,12 @@ inserts an org-ified version at point. Isn&rsquo;t that just great.
 </div>
 </div>
 </div>
-<div id="outline-container-org532ac20" class="outline-2">
-<h2 id="org532ac20"><span class="section-number-2">4</span> Package configuration</h2>
+<div id="outline-container-org7cd80ae" class="outline-2">
+<h2 id="org7cd80ae"><span class="section-number-2">4</span> Package configuration</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orge2df34d" class="outline-3">
-<h3 id="orge2df34d"><span class="section-number-3">4.1</span> Centaur Tabs</h3>
+<div id="outline-container-orgf151756" class="outline-3">
+<h3 id="orgf151756"><span class="section-number-3">4.1</span> Centaur Tabs</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 We want to make the tabs a nice, comfy size (<code>36</code>), with icons. The modifier
@@ -2718,8 +5630,8 @@ well somehow, so let&rsquo;s switch to &rsquo;P22 Underground Book&rsquo;; it lo
 </div>
 </div>
 </div>
-<div id="outline-container-orgfaeb3ab" class="outline-3">
-<h3 id="orgfaeb3ab"><span class="section-number-3">4.2</span> Company</h3>
+<div id="outline-container-orgb7b2f0f" class="outline-3">
+<h3 id="orgb7b2f0f"><span class="section-number-3">4.2</span> Company</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 It&rsquo;s nice to have completions almost all the time, in my opinion. Key strokes
@@ -2743,8 +5655,8 @@ let&rsquo;s improve that memory.
 </pre>
 </div>
 </div>
-<div id="outline-container-org2d1fa97" class="outline-4">
-<h4 id="org2d1fa97"><span class="section-number-4">4.2.1</span> Plain Text</h4>
+<div id="outline-container-orgce533ec" class="outline-4">
+<h4 id="orgce533ec"><span class="section-number-4">4.2.1</span> Plain Text</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 <code>ispell</code> is nice, let&rsquo;s have it in <code>text</code>, <code>markdown</code>, and <code>GFM</code>.
@@ -2763,7 +5675,7 @@ The <code>SCOWL</code> word list I got for <code>VSCode</code> is better than th
 let&rsquo;s use that.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">company-ispell-dictionary</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">file-truename</span> <span style="color: #7bc275;">"~/.config/Code/User/Custom cSpell Dictionaries/SCOWL-workdlist-au-uk-60.txt"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> company-ispell-dictionary <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">file-truename</span> <span style="color: #7bc275;">"~/.config/Code/User/Custom cSpell Dictionaries/SCOWL-workdlist-au-uk-60.txt"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 <p>
@@ -2772,8 +5684,8 @@ Oh, and by the way, if <code>company-ispell-dictionary</code> is <code>nil</code
 </p>
 </div>
 </div>
-<div id="outline-container-org0a6c57a" class="outline-4">
-<h4 id="org0a6c57a"><span class="section-number-4">4.2.2</span> ESS</h4>
+<div id="outline-container-orgffdcc1f" class="outline-4">
+<h4 id="orgffdcc1f"><span class="section-number-4">4.2.2</span> ESS</h4>
 <div class="outline-text-4" id="text-4-2-2">
 <p>
 <code>company-dabbrev-code</code> is nice. Let&rsquo;s have it.
@@ -2785,8 +5697,8 @@ Oh, and by the way, if <code>company-ispell-dictionary</code> is <code>nil</code
 </div>
 </div>
 </div>
-<div id="outline-container-org544ade6" class="outline-3">
-<h3 id="org544ade6"><span class="section-number-3">4.3</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration</h3>
+<div id="outline-container-orgf398c7c" class="outline-3">
+<h3 id="orgf398c7c"><span class="section-number-3">4.3</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 It&rsquo;s nice to recognise GitHub (so we can use <code>GFM</code>), and other apps which we know
@@ -2837,8 +5749,8 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-org92bd8dc" class="outline-3">
-<h3 id="org92bd8dc"><span class="section-number-3">4.4</span> Flyspell</h3>
+<div id="outline-container-org77fed1d" class="outline-3">
+<h3 id="org77fed1d"><span class="section-number-3">4.4</span> Flyspell</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 At one point, typing became noticably laggy, Profiling revealed
@@ -2851,8 +5763,8 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 </div>
 </div>
 </div>
-<div id="outline-container-orgee3f3be" class="outline-3">
-<h3 id="orgee3f3be"><span class="section-number-3">4.5</span> Abbrev mode</h3>
+<div id="outline-container-orgd88ca7a" class="outline-3">
+<h3 id="orgd88ca7a"><span class="section-number-3">4.5</span> Abbrev mode</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 Thanks to <a href="https://emacs.stackexchange.com/questions/45462/use-a-single-abbrev-table-for-multiple-modes/45476#45476">use a single abbrev-table for multiple modes? - Emacs Stack Exchange</a> I
@@ -2877,12 +5789,12 @@ have the following.
 </div>
 </div>
 </div>
-<div id="outline-container-org3890eb8" class="outline-3">
-<h3 id="org3890eb8"><span class="section-number-3">4.6</span> Miscellaneous</h3>
+<div id="outline-container-org2945520" class="outline-3">
+<h3 id="org2945520"><span class="section-number-3">4.6</span> Miscellaneous</h3>
 <div class="outline-text-3" id="text-4-6">
 </div>
-<div id="outline-container-orgcf580a9" class="outline-4">
-<h4 id="orgcf580a9"><span class="section-number-4">4.6.1</span> wttrin</h4>
+<div id="outline-container-org745206c" class="outline-4">
+<h4 id="org745206c"><span class="section-number-4">4.6.1</span> wttrin</h4>
 <div class="outline-text-4" id="text-4-6-1">
 <p>
 Set the default city. It&rsquo;s initially <code>Taipei</code> but I find the IP-locating that&rsquo;s
@@ -2894,8 +5806,8 @@ done perfectly acceptable, so let&rsquo;s make that happen.
 </div>
 </div>
 </div>
-<div id="outline-container-orge9b87a6" class="outline-4">
-<h4 id="orge9b87a6"><span class="section-number-4">4.6.2</span> electric pair mode</h4>
+<div id="outline-container-org8f47fa9" class="outline-4">
+<h4 id="org8f47fa9"><span class="section-number-4">4.6.2</span> electric pair mode</h4>
 <div class="outline-text-4" id="text-4-6-2">
 <p>
 We want this everywhere
@@ -2906,8 +5818,8 @@ We want this everywhere
 </div>
 </div>
 </div>
-<div id="outline-container-org1bc50a3" class="outline-4">
-<h4 id="org1bc50a3"><span class="section-number-4">4.6.3</span> spray</h4>
+<div id="outline-container-org3254c27" class="outline-4">
+<h4 id="org3254c27"><span class="section-number-4">4.6.3</span> spray</h4>
 <div class="outline-text-4" id="text-4-6-3">
 <p>
 Let&rsquo;s make this suit me slightly better.
@@ -2919,8 +5831,8 @@ Let&rsquo;s make this suit me slightly better.
 </div>
 </div>
 </div>
-<div id="outline-container-orgddd5a2f" class="outline-4">
-<h4 id="orgddd5a2f"><span class="section-number-4">4.6.4</span> theme magic</h4>
+<div id="outline-container-org45ecfce" class="outline-4">
+<h4 id="org45ecfce"><span class="section-number-4">4.6.4</span> theme magic</h4>
 <div class="outline-text-4" id="text-4-6-4">
 <p>
 Let&rsquo;s automaticly update terminals on theme change
@@ -2931,8 +5843,8 @@ Let&rsquo;s automaticly update terminals on theme change
 </div>
 </div>
 </div>
-<div id="outline-container-orga6216c6" class="outline-4">
-<h4 id="orga6216c6"><span class="section-number-4">4.6.5</span> calc</h4>
+<div id="outline-container-org04e88af" class="outline-4">
+<h4 id="org04e88af"><span class="section-number-4">4.6.5</span> calc</h4>
 <div class="outline-text-4" id="text-4-6-5">
 <p>
 Radians are just better
@@ -2943,8 +5855,8 @@ Radians are just better
 </div>
 </div>
 </div>
-<div id="outline-container-orga8c7941" class="outline-4">
-<h4 id="orga8c7941"><span class="section-number-4">4.6.6</span> Tramp</h4>
+<div id="outline-container-org5bb0440" class="outline-4">
+<h4 id="org5bb0440"><span class="section-number-4">4.6.6</span> Tramp</h4>
 <div class="outline-text-4" id="text-4-6-6">
 <p>
 Let&rsquo;s try to make tramp handle prompts better
@@ -2956,15 +5868,15 @@ Let&rsquo;s try to make tramp handle prompts better
 </pre>
 </div>
 </div>
-<div id="outline-container-orgdc64965" class="outline-5">
-<h5 id="orgdc64965"><span class="section-number-5">4.6.6.1</span> Troubleshooting</h5>
+<div id="outline-container-orgdb8fa9c" class="outline-5">
+<h5 id="orgdb8fa9c"><span class="section-number-5">4.6.6.1</span> Troubleshooting</h5>
 <div class="outline-text-5" id="text-4-6-6-1">
 <p>
 In case the remote shell is misbehaving, here are some things to try
 </p>
 </div>
-<div id="outline-container-org3d4cbd1" class="outline-6">
-<h6 id="org3d4cbd1"><span class="section-number-6">4.6.6.1.1</span> Zsh</h6>
+<div id="outline-container-orge7746b9" class="outline-6">
+<h6 id="orge7746b9"><span class="section-number-6">4.6.6.1.1</span> Zsh</h6>
 <div class="outline-text-6" id="text-4-6-6-1-1">
 <p>
 There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more considerately.
@@ -2982,8 +5894,8 @@ There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more
 </div>
 </div>
 </div>
-<div id="outline-container-orgf45108e" class="outline-4">
-<h4 id="orgf45108e"><span class="section-number-4">4.6.7</span> ispell</h4>
+<div id="outline-container-org0dcc83a" class="outline-4">
+<h4 id="org0dcc83a"><span class="section-number-4">4.6.7</span> ispell</h4>
 <div class="outline-text-4" id="text-4-6-7">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">ispell-dictionary</span> <span style="color: #7bc275;">"en_GBs_au_SCOWL_80_0_k_hr"</span><span style="color: #51afef;">)</span>
@@ -2993,12 +5905,12 @@ There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more
 </div>
 </div>
 </div>
-<div id="outline-container-org7a5e265" class="outline-2">
-<h2 id="org7a5e265"><span class="section-number-2">5</span> Language configuration</h2>
+<div id="outline-container-orgd3b7fd7" class="outline-2">
+<h2 id="orgd3b7fd7"><span class="section-number-2">5</span> Language configuration</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org3e00fdf" class="outline-4">
-<h4 id="org3e00fdf"><span class="section-number-4">5.0.1</span> File Templates</h4>
+<div id="outline-container-org4de1956" class="outline-4">
+<h4 id="org4de1956"><span class="section-number-4">5.0.1</span> File Templates</h4>
 <div class="outline-text-4" id="text-5-0-1">
 <p>
 For some file types, we overwrite defaults in the <a href="./snippets">snippets</a> directory, others
@@ -3010,12 +5922,12 @@ need to have a template assigned.
 </div>
 </div>
 </div>
-<div id="outline-container-org2908dd0" class="outline-3">
-<h3 id="org2908dd0"><span class="section-number-3">5.1</span> Org Mode</h3>
+<div id="outline-container-orgda487f9" class="outline-3">
+<h3 id="orgda487f9"><span class="section-number-3">5.1</span> Org Mode</h3>
 <div class="outline-text-3" id="text-5-1">
 </div>
-<div id="outline-container-orga030769" class="outline-4">
-<h4 id="orga030769"><span class="section-number-4">5.1.1</span> System config</h4>
+<div id="outline-container-org86f24ab" class="outline-4">
+<h4 id="org86f24ab"><span class="section-number-4">5.1.1</span> System config</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <p>
 Org mode isn&rsquo;t recognised as it&rsquo;s own mime type by default, but that can easily
@@ -3051,8 +5963,8 @@ Then set emacs as the default editor
 </div>
 </div>
 </div>
-<div id="outline-container-org356649b" class="outline-4">
-<h4 id="org356649b"><span class="section-number-4">5.1.2</span> Behaviour</h4>
+<div id="outline-container-orgcb17400" class="outline-4">
+<h4 id="orgcb17400"><span class="section-number-4">5.1.2</span> Behaviour</h4>
 <div class="outline-text-4" id="text-5-1-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-directory</span> <span style="color: #7bc275;">"~/.org"</span>                      <span style="color: #62686E;">; </span><span style="color: #62686E;">let's put files here</span>
@@ -3113,16 +6025,16 @@ Likewise <a href="https://archive.casouri.cat/note/2020/insert-math-symbol-in-em
 </p>
 </div>
 </div>
-<div id="outline-container-org2df6912" class="outline-4">
-<h4 id="org2df6912"><span class="section-number-4">5.1.3</span> Visuals</h4>
+<div id="outline-container-org854e4d1" class="outline-4">
+<h4 id="org854e4d1"><span class="section-number-4">5.1.3</span> Visuals</h4>
 <div class="outline-text-4" id="text-5-1-3">
 </div>
-<div id="outline-container-org1c7d857" class="outline-5">
-<h5 id="org1c7d857"><span class="section-number-5">5.1.3.1</span> In editor</h5>
+<div id="outline-container-org0903135" class="outline-5">
+<h5 id="org0903135"><span class="section-number-5">5.1.3.1</span> In editor</h5>
 <div class="outline-text-5" id="text-5-1-3-1">
 </div>
-<div id="outline-container-org96c1be3" class="outline-6">
-<h6 id="org96c1be3"><span class="section-number-6">5.1.3.1.1</span> Font Display</h6>
+<div id="outline-container-orga1b6ae8" class="outline-6">
+<h6 id="orga1b6ae8"><span class="section-number-6">5.1.3.1.1</span> Font Display</h6>
 <div class="outline-text-6" id="text-5-1-3-1-1">
 <p>
 Mixed pitch is great. As is <code>+org-pretty-mode</code>, let&rsquo;s use them.
@@ -3156,8 +6068,8 @@ Let&rsquo;s make headings a bit bigger
 </div>
 </div>
 </div>
-<div id="outline-container-orga689eda" class="outline-6">
-<h6 id="orga689eda"><span class="section-number-6">5.1.3.1.2</span> Symbols</h6>
+<div id="outline-container-org848f342" class="outline-6">
+<h6 id="org848f342"><span class="section-number-6">5.1.3.1.2</span> Symbols</h6>
 <div class="outline-text-6" id="text-5-1-3-1-2">
 <p>
 It&rsquo;s also nice to change the character used for collapsed items (by default <code>…</code>),
@@ -3221,8 +6133,8 @@ We also like <code>org-fragtog</code>, and that wants a hook.
 </div>
 </div>
 </div>
-<div id="outline-container-orgc8ce7bc" class="outline-6">
-<h6 id="orgc8ce7bc"><span class="section-number-6">5.1.3.1.3</span> LaTeX Fragments</h6>
+<div id="outline-container-org4ffc3b2" class="outline-6">
+<h6 id="org4ffc3b2"><span class="section-number-6">5.1.3.1.3</span> LaTeX Fragments</h6>
 <div class="outline-text-6" id="text-5-1-3-1-3">
 <p>
 It&rsquo;s nice to customise the look of LaTeX fragments so they fit better in the
@@ -3361,7 +6273,7 @@ Now let&rsquo;s combine this to see what&rsquo;s best
 </table>
 
 <p>
-So, let&rsquo;s use <code>dvipng</code> for previewing LaTeX fragments in-emacs, but <code>dvisvgm</code> for <a href="#org6b0946a">LaTeX Rendering</a>.
+So, let&rsquo;s use <code>dvipng</code> for previewing LaTeX fragments in-emacs, but <code>dvisvgm</code> for <a href="#orgaf6ed3f">LaTeX Rendering</a>.
 <i>Unfortunately: it seems that svg sizing is annoying ATM, so let&rsquo;s actually not do this right now.</i>
 </p>
 
@@ -3396,8 +6308,8 @@ NB: This doesn&rsquo;t work at the moment.
 </div>
 </div>
 </div>
-<div id="outline-container-org30e1cf1" class="outline-6">
-<h6 id="org30e1cf1"><span class="section-number-6">5.1.3.1.4</span> Stolen from <a href="https://github.com/jkitchin/scimax">scimax</a> (semi-working right now)</h6>
+<div id="outline-container-org819b6ea" class="outline-6">
+<h6 id="org819b6ea"><span class="section-number-6">5.1.3.1.4</span> Stolen from <a href="https://github.com/jkitchin/scimax">scimax</a> (semi-working right now)</h6>
 <div class="outline-text-6" id="text-5-1-3-1-4">
 <p>
 I want fragment justification
@@ -3523,8 +6435,8 @@ There&rsquo;s also this lovely equation numbering stuff I&rsquo;ll nick
 </div>
 </div>
 </div>
-<div id="outline-container-orgdeb4c85" class="outline-5">
-<h5 id="orgdeb4c85"><span class="section-number-5">5.1.3.2</span> Exporting (general)</h5>
+<div id="outline-container-org9dad8e1" class="outline-5">
+<h5 id="org9dad8e1"><span class="section-number-5">5.1.3.2</span> Exporting (general)</h5>
 <div class="outline-text-5" id="text-5-1-3-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-export-headline-levels</span> <span style="color: #e69055; font-weight: bold;">5</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">I like nesting</span>
@@ -3532,17 +6444,17 @@ There&rsquo;s also this lovely equation numbering stuff I&rsquo;ll nick
 </div>
 </div>
 </div>
-<div id="outline-container-org6b0946a" class="outline-5">
-<h5 id="org6b0946a"><span class="section-number-5">5.1.3.3</span> Exporting to HTML</h5>
+<div id="outline-container-orgaf6ed3f" class="outline-5">
+<h5 id="orgaf6ed3f"><span class="section-number-5">5.1.3.3</span> Exporting to HTML</h5>
 <div class="outline-text-5" id="text-5-1-3-3">
 </div>
-<div id="outline-container-orgfe1859b" class="outline-6">
-<h6 id="orgfe1859b"><span class="section-number-6">5.1.3.3.1</span> Custom CSS/JS</h6>
+<div id="outline-container-org17a3837" class="outline-6">
+<h6 id="org17a3837"><span class="section-number-6">5.1.3.3.1</span> Custom CSS/JS</h6>
 <div class="outline-text-6" id="text-5-1-3-3-1">
 <p>
 There is a fantastic exporter config (<a href="https://github.com/fniessen/org-html-themes">fniessen/org-html-themes</a>) which we can
 setup to be used with all our org files. Since most of the syntax highlighting
-colours from our <a href="#orgad9b2b7">2.3.1.2</a> gets used, we benefit from customising the code block style.
+colours from our <a href="#org1ed97a2">2.3.1.2</a> gets used, we benefit from customising the code block style.
 </p>
 <p>
 We also want to make the background and foreground colours of the <code>&lt;pre&gt;</code> blocks
@@ -3773,8 +6685,8 @@ match out theme (they don&rsquo;t by default), so I scraped some code from <code
 </div>
 </div>
 </div>
-<div id="outline-container-org43ce9d3" class="outline-6">
-<h6 id="org43ce9d3"><span class="section-number-6">5.1.3.3.2</span> Make verbatim different to code</h6>
+<div id="outline-container-org38404c3" class="outline-6">
+<h6 id="org38404c3"><span class="section-number-6">5.1.3.3.2</span> Make verbatim different to code</h6>
 <div class="outline-text-6" id="text-5-1-3-3-2">
 <p>
 Since we have <kbd>verbatim</kbd> and <code>code</code>, let&rsquo;s use <kbd>verbatim</kbd> for key strokes.
@@ -3791,8 +6703,8 @@ Since we have <kbd>verbatim</kbd> and <code>code</code>, let&rsquo;s use <kbd>ve
 </div>
 </div>
 </div>
-<div id="outline-container-orga5d5444" class="outline-6">
-<h6 id="orga5d5444"><span class="section-number-6">5.1.3.3.3</span> Change checkbox type</h6>
+<div id="outline-container-orga22f562" class="outline-6">
+<h6 id="orga22f562"><span class="section-number-6">5.1.3.3.3</span> Change checkbox type</h6>
 <div class="outline-text-6" id="text-5-1-3-3-3">
 <p>
 We also want to use HTML checkboxes, however we want to get a bit fancier than default
@@ -3813,8 +6725,8 @@ We also want to use HTML checkboxes, however we want to get a bit fancier than d
 </ul>
 </div>
 </div>
-<div id="outline-container-org8bce4dd" class="outline-6">
-<h6 id="org8bce4dd"><span class="section-number-6">5.1.3.3.4</span> LaTeX Rendering</h6>
+<div id="outline-container-org80fd013" class="outline-6">
+<h6 id="org80fd013"><span class="section-number-6">5.1.3.3.4</span> LaTeX Rendering</h6>
 <div class="outline-text-6" id="text-5-1-3-3-4">
 <p>
 On the maths side of things, I consider <code>dvisvgm</code> to be a rather compelling
@@ -3827,8 +6739,8 @@ option. However this isn&rsquo;t sized very well at the moment.
 </div>
 </div>
 </div>
-<div id="outline-container-org4b3e829" class="outline-5">
-<h5 id="org4b3e829"><span class="section-number-5">5.1.3.4</span> Exporting to LaTeX</h5>
+<div id="outline-container-orga22fbc9" class="outline-5">
+<h5 id="orga22fbc9"><span class="section-number-5">5.1.3.4</span> Exporting to LaTeX</h5>
 <div class="outline-text-5" id="text-5-1-3-4">
 <p>
 I like automatically using spaced small caps for acronyms. For strings I want to
@@ -3933,8 +6845,8 @@ Now for a few more adjustments.
 </div>
 </div>
 </div>
-<div id="outline-container-org11bfddf" class="outline-5">
-<h5 id="org11bfddf"><span class="section-number-5">5.1.3.5</span> Exporting to Beamer</h5>
+<div id="outline-container-org7fb663f" class="outline-5">
+<h5 id="org7fb663f"><span class="section-number-5">5.1.3.5</span> Exporting to Beamer</h5>
 <div class="outline-text-5" id="text-5-1-3-5">
 <p>
 It&rsquo;s nice to use a different theme
@@ -3961,8 +6873,8 @@ frame from <code>1</code> to <code>2</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-org3fea981" class="outline-5">
-<h5 id="org3fea981"><span class="section-number-5">5.1.3.6</span> Exporting to GFM</h5>
+<div id="outline-container-org9fc8d6d" class="outline-5">
+<h5 id="org9fc8d6d"><span class="section-number-5">5.1.3.6</span> Exporting to GFM</h5>
 <div class="outline-text-5" id="text-5-1-3-6">
 <p>
 We just need to load <code>ox-gfm</code> for org-mode documents
@@ -3975,8 +6887,8 @@ We just need to load <code>ox-gfm</code> for org-mode documents
 </div>
 </div>
 </div>
-<div id="outline-container-orgd4abe3e" class="outline-4">
-<h4 id="orgd4abe3e"><span class="section-number-4">5.1.4</span> Babel</h4>
+<div id="outline-container-orgb8865ad" class="outline-4">
+<h4 id="orgb8865ad"><span class="section-number-4">5.1.4</span> Babel</h4>
 <div class="outline-text-4" id="text-5-1-4">
 <p>
 Doom lazy-loads babel languages, with is lovely.
@@ -4004,8 +6916,8 @@ We also like autocompletion here
 </div>
 </div>
 </div>
-<div id="outline-container-org0595f57" class="outline-4">
-<h4 id="org0595f57"><span class="section-number-4">5.1.5</span> ESS</h4>
+<div id="outline-container-org9232316" class="outline-4">
+<h4 id="org9232316"><span class="section-number-4">5.1.5</span> ESS</h4>
 <div class="outline-text-4" id="text-5-1-5">
 <p>
 We don&rsquo;t want <code>R</code> evaluation to hang the editor, hence
@@ -4035,8 +6947,8 @@ Syntax highlighting is nice, so let&rsquo;s turn all of that on
 </div>
 </div>
 </div>
-<div id="outline-container-org571f7ba" class="outline-3">
-<h3 id="org571f7ba"><span class="section-number-3">5.2</span> LaTeX</h3>
+<div id="outline-container-org7edb01c" class="outline-3">
+<h3 id="org7edb01c"><span class="section-number-3">5.2</span> LaTeX</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 Once again, <i>all hail mixed pitch mode!</i>
@@ -4046,14 +6958,14 @@ Once again, <i>all hail mixed pitch mode!</i>
 </pre>
 </div>
 </div>
-<div id="outline-container-org13ac71f" class="outline-4">
-<h4 id="org13ac71f"><span class="section-number-4">5.2.1</span> Snippet value</h4>
+<div id="outline-container-org6ca0e92" class="outline-4">
+<h4 id="org6ca0e92"><span class="section-number-4">5.2.1</span> Snippet value</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 For use in the new-file template, let&rsquo;s set out a nice preamble we may want to use.
 </p>
 <div class="org-src-container">
-<pre class="src src-latex" id="orgcb346b5"><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">pdfa,unicode=true,hidelinks</span>]{<span style="color: #5cEfFF;">hyperref</span>}
+<pre class="src src-latex" id="orgeaeed09"><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">pdfa,unicode=true,hidelinks</span>]{<span style="color: #5cEfFF;">hyperref</span>}
 
 <span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">dvipsnames,svgnames,table,hyperref</span>]{<span style="color: #5cEfFF;">xcolor</span>}
 <span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">renewcommand</span>{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">UrlFont</span>}{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">ttfamily</span><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">small</span>}
@@ -4118,8 +7030,8 @@ Then let&rsquo;s bind the content to a function, and define some nice helpers.
 </div>
 </div>
 </div>
-<div id="outline-container-org6845110" class="outline-4">
-<h4 id="org6845110"><span class="section-number-4">5.2.2</span> Editor visuals</h4>
+<div id="outline-container-org05b3d59" class="outline-4">
+<h4 id="org05b3d59"><span class="section-number-4">5.2.2</span> Editor visuals</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 Let&rsquo;s enhance <code>TeX-fold-math</code> a bit
@@ -4143,18 +7055,46 @@ Let&rsquo;s enhance <code>TeX-fold-math</code> a bit
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8461;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"HH"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#120124;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"EE"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#119889;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"dd"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #62686E;">; </span><span style="color: #62686E;">known commands</span>
+        <span style="color: #62686E;">;; </span><span style="color: #62686E;">known commands</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">""</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"phantom"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"({1}&#10744;{2})"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"frac"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8216;</span><span style="color: #a991f1;">{1}</span><span style="color: #7bc275;">&#8217;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"text"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #62686E;">; </span><span style="color: #62686E;">private commands</span>
+        <span style="color: #62686E;">;; </span><span style="color: #62686E;">private commands</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"|{1}|"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"abs"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8214;{1}&#8214;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"norm"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8970;{1}&#8971;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"floor"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8968;{1}&#8969;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"ceil"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8970;{1}&#8969;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"round"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#11105;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"vec"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#119889;{1}&#10744;&#119889;{2}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"dv"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8706;{1}&#10744;&#8706;{2}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"pdv"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #C57BDB;">)</span>
+      <span style="color: #DFDFDF;">TeX-fold-macro-spec-list</span>
+      <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>
+        <span style="color: #62686E;">;; </span><span style="color: #62686E;">as the defaults</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"[f]"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"footnote"</span> <span style="color: #7bc275;">"marginpar"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"[c]"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"cite"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"[l]"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"label"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"[r]"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"ref"</span> <span style="color: #7bc275;">"pageref"</span> <span style="color: #7bc275;">"eqref"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"[i]"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"index"</span> <span style="color: #7bc275;">"glossary"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"..."</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"dots"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"emph"</span> <span style="color: #7bc275;">"textit"</span> <span style="color: #7bc275;">"textsl"</span> <span style="color: #7bc275;">"textmd"</span> <span style="color: #7bc275;">"textrm"</span> <span style="color: #7bc275;">"textsf"</span> <span style="color: #7bc275;">"texttt"</span>
+            <span style="color: #7bc275;">"textbf"</span> <span style="color: #7bc275;">"textsc"</span> <span style="color: #7bc275;">"textup"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #62686E;">;; </span><span style="color: #62686E;">tweaked defaults</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#169;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"copyright"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#174;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"textregistered"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8482;"</span>  <span style="color: #51afef;">(</span><span style="color: #7bc275;">"texttrademark"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"[1]:||&#9658;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"item"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#10081;&#10081;&#8198;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"part"</span> <span style="color: #7bc275;">"part*"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#10081;&#8198;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"chapter"</span> <span style="color: #7bc275;">"chapter*"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#167;&#8198;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"section"</span> <span style="color: #7bc275;">"section*"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#167;&#167;&#8198;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"subsection"</span> <span style="color: #7bc275;">"subsection*"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#167;&#167;&#167;&#8198;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"subsubsection"</span> <span style="color: #7bc275;">"subsubsection*"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#182;&#8198;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"paragraph"</span> <span style="color: #7bc275;">"paragraph*"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#182;&#182;&#8198;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"subparagraph"</span> <span style="color: #7bc275;">"subparagraph*"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #62686E;">;; </span><span style="color: #62686E;">extra</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#11030;&#8198;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"begin"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#11031;&#8198;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"end"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
@@ -4237,8 +7177,8 @@ And enable shell escape for the preview
 </div>
 </div>
 </div>
-<div id="outline-container-org55068e4" class="outline-4">
-<h4 id="org55068e4"><span class="section-number-4">5.2.3</span> CDLaTeX</h4>
+<div id="outline-container-orgc7f0dd0" class="outline-4">
+<h4 id="orgc7f0dd0"><span class="section-number-4">5.2.3</span> CDLaTeX</h4>
 <div class="outline-text-4" id="text-5-2-3">
 <p>
 The symbols and modifies are very nice by default, but could do with a bit of
@@ -4270,12 +7210,12 @@ but more convinient, like <kbd>;</kbd>.
 </div>
 </div>
 </div>
-<div id="outline-container-orgd0614cb" class="outline-3">
-<h3 id="orgd0614cb"><span class="section-number-3">5.3</span> R</h3>
+<div id="outline-container-org3f14ed6" class="outline-3">
+<h3 id="org3f14ed6"><span class="section-number-3">5.3</span> R</h3>
 <div class="outline-text-3" id="text-5-3">
 </div>
-<div id="outline-container-orgbdd8e9f" class="outline-4">
-<h4 id="orgbdd8e9f"><span class="section-number-4">5.3.1</span> Editor Visuals</h4>
+<div id="outline-container-org4dc6c48" class="outline-4">
+<h4 id="org4dc6c48"><span class="section-number-4">5.3.1</span> Editor Visuals</h4>
 <div class="outline-text-4" id="text-5-3-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> ess-r-mode
@@ -4306,8 +7246,8 @@ but more convinient, like <kbd>;</kbd>.
 </div>
 </div>
 </div>
-<div id="outline-container-org31fa2a5" class="outline-3">
-<h3 id="org31fa2a5"><span class="section-number-3">5.4</span> hledger</h3>
+<div id="outline-container-org2564795" class="outline-3">
+<h3 id="org2564795"><span class="section-number-3">5.4</span> hledger</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 <code>ledger-mode</code> is great and all, but <code>hledger</code> seems to be more actively maintained.
@@ -4329,8 +7269,8 @@ and produced by John Wiegley &#x2014; author of <code>ledger</code> and current 
 </div>
 </div>
 </div>
-<div id="outline-container-org83aaec5" class="outline-3">
-<h3 id="org83aaec5"><span class="section-number-3">5.5</span> Markdown</h3>
+<div id="outline-container-orga322767" class="outline-3">
+<h3 id="orga322767"><span class="section-number-3">5.5</span> Markdown</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 Let&rsquo;s use mixed pitch, because it&rsquo;s great
@@ -4349,8 +7289,8 @@ will do it&rsquo;s own line wrapping, hence we <i>only</i> want to use visual li
 </div>
 </div>
 </div>
-<div id="outline-container-orgd013495" class="outline-3">
-<h3 id="orgd013495"><span class="section-number-3">5.6</span> Beancount</h3>
+<div id="outline-container-orgb642c92" class="outline-3">
+<h3 id="orgb642c92"><span class="section-number-3">5.6</span> Beancount</h3>
 <div class="outline-text-3" id="text-5-6">
 <p>
 The <a href="https://bitbucket.org/blais/beancount/src/tip/editors/emacs/beancount.el">beancount package</a> online has been put into <code>./lisp</code>, we just need to load and
@@ -4371,7 +7311,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-03-16 Mon 00:38</p>
+<p class="date">Created: 2020-03-16 Mon 21:28</p>
 </div>
 </body>
 </html>
