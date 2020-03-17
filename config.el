@@ -47,6 +47,20 @@
        (let ((project-name (projectile-project-name)))
          (unless (string= "-" project-name)
            (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
+(use-package abbrev
+  :init
+  (setq-default abbrev-mode t)
+  ;; a hook funtion that sets the abbrev-table to org-mode-abbrev-table
+  ;; whenever the major mode is a text mode
+  (defun tec/set-text-mode-abbrev-table ()
+    (if (derived-mode-p 'text-mode)
+        (setq local-abbrev-table org-mode-abbrev-table)))
+  :commands abbrev-mode
+  :hook
+  (abbrev-mode . tec/set-text-mode-abbrev-table)
+  :config
+  (setq abbrev-file-name (expand-file-name "abbrev.el" doom-private-dir))
+  (setq save-abbrevs 'silently))
 (after! centaur-tabs
   (setq centaur-tabs-height 36
         centaur-tabs-set-icons t
@@ -104,30 +118,52 @@
 
 (add-hook 'ea-popup-hook 'ea-popup-handler)
 (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
-(use-package abbrev
-  :init
-  (setq-default abbrev-mode t)
-  ;; a hook funtion that sets the abbrev-table to org-mode-abbrev-table
-  ;; whenever the major mode is a text mode
-  (defun tec/set-text-mode-abbrev-table ()
-    (if (derived-mode-p 'text-mode)
-        (setq local-abbrev-table org-mode-abbrev-table)))
-  :commands abbrev-mode
-  :hook
-  (abbrev-mode . tec/set-text-mode-abbrev-table)
-  :config
-  (setq abbrev-file-name (expand-file-name "abbrev.el" doom-private-dir))
-  (setq save-abbrevs 'silently))
-(setq wttrin-default-cities '(""))
-(electric-pair-mode t)
-(setq spray-wpm 500
-      spray-height 700)
-(add-hook 'doom-load-theme-hook 'theme-magic-from-emacs)
-(setq calc-angle-mode 'rad)
 (after! tramp
   (setenv "SHELL" "/bin/bash")
   (setq tramp-shell-prompt-pattern "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")) ;; defult + 
+(setq treemacs-ignore-suffixes '(;; AucTeC
+                                   ".auctex-auto"
+                                   "_region_.log"
+                                   "_region_.tex"
+                                   ;; LaTeX
+                                   ".aux"
+                                   ".ptc"
+                                   ".fdb_latexmk"
+                                   ".fls"
+                                   ".synctex.gz"
+                                   ".toc"
+                                   ;; LaTeX - glossary
+                                   ".glg"
+                                   ".glo"
+                                   ".gls"
+                                   ".glsdefs"
+                                   ".ist"
+                                   ".acn"
+                                   ".acr"
+                                   ".alg"
+                                   ;; LaTeX - pgfplots
+                                   ".mw"
+                                   ;; LaTeX - pdfx
+                                   "pdfa.xmpi"
+                                   ))
+(setq treemacs-ignore-prefixes '(;; LaTeX
+                                 "_minted-"))
+(after! treemacs
+  (defun treemacs-ignore-filter (file _)
+    (let ((ignore-file nil))
+      (dolist (suffix treemacs-ignore-suffixes ignore-file)
+        (setq ignore-file (or ignore-file (s-suffix? suffix file))))
+      (dolist (prefix treemacs-ignore-prefixes ignore-file)
+        (setq ignore-file (or ignore-file (s-prefix? prefix file))))
+      ))
+  (push #'treemacs-ignore-filter treemacs-ignored-file-predicates))
+(setq calc-angle-mode 'rad)
+(electric-pair-mode t)
 (setq ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")
+(setq spray-wpm 500
+      spray-height 700)
+(add-hook 'doom-load-theme-hook 'theme-magic-from-emacs)
+(setq wttrin-default-cities '(""))
 (set-file-template! "\\.tex$" :trigger "__" :mode 'latex-mode)
 (setq org-directory "~/.org"                      ; let's put files here
       org-use-property-inheritance t              ; it's convenient to have properties inherited
@@ -735,10 +771,11 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
     (if (equal tec/yas-latex-class-choice "bmc") 'nil
              (eq (read-char-choice "Include default preamble? [Type y/n]" '(?y ?n)) ?y)))
 (setq TeX-fold-math-spec-list
-      '(;; missing symbols
+      '(;; missing/better symbols
         ("≤" ("le"))
         ("≥" ("ge"))
         ("≠" ("ne"))
+        ("★" ("star"))
         ;; conviniance shorts
         ("‹" ("left"))
         ("›" ("right"))
@@ -868,7 +905,8 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
           (?:    ("\\vdots" "\\ddots"))))
   cdlatex-math-modify-alist
   '( ;; my own stuff
-    (?B    "\\mathbb"        nil          t    nil  nil)))
+    (?B    "\\mathbb"        nil          t    nil  nil)
+    (?a    "\\abs"           nil          t    nil  nil)))
 (after! ess-r-mode
   (appendq! +pretty-code-symbols
             '(:assign "⟵"
