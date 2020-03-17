@@ -807,7 +807,15 @@ When set to non-nil, this adds a few hooks/advices to fold stuff.")
   (advice-add #'cdlatex-math-modify :after #'+TeX-fold-line-ah)
   ;; local after-snippet hook for folding
   (add-hook! 'TeX-mode-hook
-    (add-hook 'yas-after-exit-snippet-hook #'+TeX-fold-line-ah nil t)))
+    (add-hook 'yas-after-exit-snippet-hook #'+TeX-fold-line-ah nil t))
+  ;; TeX-fold messes up the font face a bit too much, so
+  (add-hook! 'mixed-pitch-mode-hook
+    (when mixed-pitch-mode
+      (let ((var-pitch (face-attribute 'variable-pitch :family))
+            (var-height (face-attribute 'variable-pitch :height)))
+        (add-to-list 'mixed-pitch-fixed-cookie
+                     (face-remap-add-relative
+                      'TeX-fold-folded-face :family var-pitch :height var-height))))))
 (after! tex
   (map!
    :map LaTeX-mode-map
