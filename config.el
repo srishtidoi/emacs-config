@@ -165,7 +165,7 @@
         (let ((ignore-file nil))
           (dolist (regexp treemacs-file-ignore-regexps ignore-file)
             (setq ignore-file (or ignore-file (if (string-match-p regexp full-path) t nil)))))))
-  (add-to-list #'treemacs-ignore-filter treemacs-ignored-file-predicates))
+  (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-filter))
 (setq calc-angle-mode 'rad)
 (electric-pair-mode t)
 (setq ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")
@@ -945,8 +945,14 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
 (add-hook! (gfm-mode markdown-mode) #'mixed-pitch-mode)
 (add-hook! (gfm-mode markdown-mode) #'visual-line-mode #'turn-off-auto-fill)
 (use-package! beancount
-   :load-path "~/.config/doom/lisp"
-   :mode ("\\.beancount\\'" . beancount-mode)
-   :config (setq beancount-electric-currency t)
-   ;; TODO make the following *work*
-   :bind (:map beancount-mode-map ("S-RET" . #'beancount-align-to-previous-number)))
+  :load-path "~/.config/doom/lisp"
+  :mode ("\\.beancount\\'" . beancount-mode)
+  :config (setq beancount-electric-currency t)
+  (defun beancount-bal ()
+    "Run bean-report bal."
+    (interactive)
+    (let ((compilation-read-command nil))
+      (beancount--run "bean-report"
+                      (file-relative-name buffer-file-name) "bal")))
+  ;; TODO make the following *work*
+  :bind (:map beancount-mode-map ("S-RET" . #'beancount-align-to-previous-number)))
