@@ -947,7 +947,8 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
 (use-package! beancount
   :load-path "~/.config/doom/lisp"
   :mode ("\\.beancount\\'" . beancount-mode)
-  :config (setq beancount-electric-currency t)
+  :config
+  (setq beancount-electric-currency t)
   (defun beancount-bal ()
     "Run bean-report bal."
     (interactive)
