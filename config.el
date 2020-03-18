@@ -10,7 +10,8 @@
 
 (setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
       evil-want-fine-undo t                       ; By default while in insert all changes are one big blob. Be more granular
-      auto-save-default t)                        ; Nobody likes to loose work, I certainly don't
+      auto-save-default t                         ; Nobody likes to loose work, I certainly don't
+      inhibit-compacting-font-caches t)           ; When there are lots of glyphs, keep them in memory
 
 (delete-selection-mode 1)                         ; Replace selection when inserting text
 (display-time-mode 1)                             ; Enable time in the mode-line
@@ -121,42 +122,50 @@
 (after! tramp
   (setenv "SHELL" "/bin/bash")
   (setq tramp-shell-prompt-pattern "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")) ;; defult + 
-(setq treemacs-ignore-suffixes '(;; AucTeC
-                                   ".auctex-auto"
-                                   "_region_.log"
-                                   "_region_.tex"
-                                   ;; LaTeX
-                                   ".aux"
-                                   ".ptc"
-                                   ".fdb_latexmk"
-                                   ".fls"
-                                   ".synctex.gz"
-                                   ".toc"
-                                   ;; LaTeX - glossary
-                                   ".glg"
-                                   ".glo"
-                                   ".gls"
-                                   ".glsdefs"
-                                   ".ist"
-                                   ".acn"
-                                   ".acr"
-                                   ".alg"
-                                   ;; LaTeX - pgfplots
-                                   ".mw"
-                                   ;; LaTeX - pdfx
-                                   "pdfa.xmpi"
-                                   ))
-(setq treemacs-ignore-prefixes '(;; LaTeX
-                                 "_minted-"))
+(setq treemacs-file-ignore-extensions '(;; LaTeX
+                                        "aux"
+                                        "ptc"
+                                        "fdb_latexmk"
+                                        "fls"
+                                        "synctex.gz"
+                                        "toc"
+                                        ;; LaTeX - glossary
+                                        "glg"
+                                        "glo"
+                                        "gls"
+                                        "glsdefs"
+                                        "ist"
+                                        "acn"
+                                        "acr"
+                                        "alg"
+                                        ;; LaTeX - pgfplots
+                                        "mw"
+                                        ;; LaTeX - pdfx
+                                        "pdfa.xmpi"
+                                        ))
+(setq treemacs-file-ignore-globs '(;; LaTeX
+                                   "*/_minted-*"
+                                   ;; AucTeX
+                                   "*/.auctex-auto"
+                                   "*/_region_.log"
+                                   "*/_region.tex"))
 (after! treemacs
-  (defun treemacs-ignore-filter (file _)
-    (let ((ignore-file nil))
-      (dolist (suffix treemacs-ignore-suffixes ignore-file)
-        (setq ignore-file (or ignore-file (s-suffix? suffix file))))
-      (dolist (prefix treemacs-ignore-prefixes ignore-file)
-        (setq ignore-file (or ignore-file (s-prefix? prefix file))))
-      ))
-  (push #'treemacs-ignore-filter treemacs-ignored-file-predicates))
+  (defvar treemacs-file-ignore-extensions '()
+    "File extension which `treemacs-ignore-filter' will ensure are ignored")
+  (defvar treemacs-file-ignore-globs '()
+    "Globs which will are transformed to `treemacs-file-ignore-regexps' which `treemacs-ignore-filter' will ensure are ignored")
+  (defvar treemacs-file-ignore-regexps '()
+    "RegExps to be tested to ignore files, generated from `treeemacs-file-ignore-globs'")
+  (defun treemacs-file-ignore-generate-regexps ()
+    "Generate `treemacs-file-ignore-regexps' from `treemacs-file-ignore-globs'"
+    (setq treemacs-file-ignore-regexps (mapcar 'dired-glob-regexp treemacs-file-ignore-globs)))
+  (defun treemacs-ignore-filter (file full-path)
+    "Ignore files specified by `treemacs-file-ignore-extensions', and `treemacs-file-ignore-regexps'"
+    (or (member (file-name-extension file) treemacs-file-ignore-extensions)
+        (let ((ignore-file nil))
+          (dolist (regexp treemacs-file-ignore-regexps ignore-file)
+            (setq ignore-file (or ignore-file (if (string-match-p regexp full-path) t nil)))))))
+  (add-to-list #'treemacs-ignore-filter treemacs-ignored-file-predicates))
 (setq calc-angle-mode 'rad)
 (electric-pair-mode t)
 (setq ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")
