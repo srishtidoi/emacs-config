@@ -84,7 +84,6 @@
   '(:seperate company-ispell
               company-files
               company-yasnippet))
-(setq company-ispell-dictionary (file-truename "~/.config/Code/User/Custom cSpell Dictionaries/SCOWL-workdlist-au-uk-60.txt"))
 (set-company-backend! 'ess-r-mode '(company-R-args company-R-objects company-dabbrev-code :separate))
 (defun markdown-window-p (window-title)
   "Judges from WINDOW-TITLE whether the current window likes markdown"
@@ -169,6 +168,8 @@
 (setq calc-angle-mode 'rad)
 (electric-pair-mode t)
 (setq ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")
+(setq company-ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")
+(setq ispell-personal-dictionary (expand-file-name ".hunspell_personal" doom-private-dir))
 (setq spray-wpm 500
       spray-height 700)
 (add-hook 'doom-load-theme-hook 'theme-magic-from-emacs)
