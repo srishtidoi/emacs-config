@@ -90,10 +90,21 @@
   (or (string-match-p "Pull Request" window-title)
       (string-match-p "Issue" window-title)
       (string-match-p "Discord" window-title)))
+(define-minor-mode emacs-anywhere-mode
+  "To tweak the current buffer for some emacs-anywhere considerations"
+  :init-value nil
+  ;; I'm used to C-c C-c for 'completed the thing' so add that
+  ;; :keymap '((kbd "C-c C-c") . (lambda () (interactive) (if (equal major-mode "org-mode") (if (org-in-src-block-p) (org-ctrl-c-ctrl-c) (delete-frame)) (delete-frame))))
+
+  (when emacs-anywhere-mode
+    ;; disable tabs
+    (when (centaur-tabs-mode) (centaur-tabs-local-mode t)))
+  )
+
 (defun ea-popup-handler (app-name window-title x y w h)
   (set-frame-size (selected-frame) 80 12)
   (interactive)
-  ; position
+  ;; position
   (let* ((mousepos (split-string (shell-command-to-string "xdotool getmouselocation | sed -E \"s/ screen:0 window:[^ ]*|x:|y://g\"")))
          (mouse-x (- (string-to-number (nth 0 mousepos)) 100))
          (mouse-y (- (string-to-number (nth 1 mousepos)) 50)))
@@ -102,7 +113,7 @@
   (set-frame-name (concat "Quick Edit ∷ " ea-app-name " — "
                           (truncate-string-to-width (string-trim  (string-trim-right window-title (format "-[A-Za-z0-9 ]*%s" ea-app-name)) "[\s-]+" "[\s-]+") 45 nil nil "…")))
 
-  ; set major mode
+  ;; set major mode
   (cond
    ((markdown-window-p window-title) (gfm-mode))
    (t (org-mode)) ; default major mode
@@ -111,16 +122,31 @@
   (when (gui-get-selection 'PRIMARY) (insert (gui-get-selection 'PRIMARY)))
 
   (evil-insert-state) ; start in insert
-  (when (centaur-tabs-mode) (centaur-tabs-local-mode t)) ; disable tabs
-
-  ; I'm used to C-c C-c for 'completed the thing' so add that
-  (local-set-key (kbd "C-c C-c") (lambda () (interactive) (local-unset-key (kbd "C-c C-c")) (delete-frame))))
+  (emacs-anywhere-mode 1))
 
 (add-hook 'ea-popup-hook 'ea-popup-handler)
 (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
 (after! tramp
   (setenv "SHELL" "/bin/bash")
   (setq tramp-shell-prompt-pattern "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")) ;; defult + 
+(after! treemacs
+  (defvar treemacs-file-ignore-extensions '()
+    "File extension which `treemacs-ignore-filter' will ensure are ignored")
+  (defvar treemacs-file-ignore-globs '()
+    "Globs which will are transformed to `treemacs-file-ignore-regexps' which `treemacs-ignore-filter' will ensure are ignored")
+  (defvar treemacs-file-ignore-regexps '()
+    "RegExps to be tested to ignore files, generated from `treeemacs-file-ignore-globs'")
+  (defun treemacs-file-ignore-generate-regexps ()
+    "Generate `treemacs-file-ignore-regexps' from `treemacs-file-ignore-globs'"
+    (setq treemacs-file-ignore-regexps (mapcar 'dired-glob-regexp treemacs-file-ignore-globs)))
+  (if (equal treemacs-file-ignore-globs '()) nil (treemacs-file-ignore-generate-regexps))
+  (defun treemacs-ignore-filter (file full-path)
+    "Ignore files specified by `treemacs-file-ignore-extensions', and `treemacs-file-ignore-regexps'"
+    (or (member (file-name-extension file) treemacs-file-ignore-extensions)
+        (let ((ignore-file nil))
+          (dolist (regexp treemacs-file-ignore-regexps ignore-file)
+            (setq ignore-file (or ignore-file (if (string-match-p regexp full-path) t nil)))))))
+  (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-filter))
 (setq treemacs-file-ignore-extensions '(;; LaTeX
                                         "aux"
                                         "ptc"
@@ -147,24 +173,7 @@
                                    ;; AucTeX
                                    "*/.auctex-auto"
                                    "*/_region_.log"
-                                   "*/_region.tex"))
-(after! treemacs
-  (defvar treemacs-file-ignore-extensions '()
-    "File extension which `treemacs-ignore-filter' will ensure are ignored")
-  (defvar treemacs-file-ignore-globs '()
-    "Globs which will are transformed to `treemacs-file-ignore-regexps' which `treemacs-ignore-filter' will ensure are ignored")
-  (defvar treemacs-file-ignore-regexps '()
-    "RegExps to be tested to ignore files, generated from `treeemacs-file-ignore-globs'")
-  (defun treemacs-file-ignore-generate-regexps ()
-    "Generate `treemacs-file-ignore-regexps' from `treemacs-file-ignore-globs'"
-    (setq treemacs-file-ignore-regexps (mapcar 'dired-glob-regexp treemacs-file-ignore-globs)))
-  (defun treemacs-ignore-filter (file full-path)
-    "Ignore files specified by `treemacs-file-ignore-extensions', and `treemacs-file-ignore-regexps'"
-    (or (member (file-name-extension file) treemacs-file-ignore-extensions)
-        (let ((ignore-file nil))
-          (dolist (regexp treemacs-file-ignore-regexps ignore-file)
-            (setq ignore-file (or ignore-file (if (string-match-p regexp full-path) t nil)))))))
-  (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-filter))
+                                   "*/_region_.tex"))
 (setq calc-angle-mode 'rad)
 (electric-pair-mode t)
 (setq ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")
@@ -201,6 +210,7 @@
    :config
     (setq org-ref-completion-library 'org-ref-ivy-cite))
 (after! org (add-hook 'org-mode-hook 'turn-on-org-cdlatex))
+(after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 (setq global-org-pretty-table-mode t)
 (custom-set-faces!
@@ -654,10 +664,18 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
                'tec/org-export-latex-filter-acronym)
   (add-to-list 'org-export-filter-headline-functions
                'tec/org-export-latex-filter-acronym))
-(with-eval-after-load 'ox-latex
+(after! ox-latex
   (add-to-list 'org-latex-classes
                '("fancy-article"
-               "\\documentclass{scrartcl}\n\\usepackage[T1]{fontenc}\\usepackage[osf,largesc,helvratio=0.9]{newpxtext}\\usepackage[scale=0.92]{sourcecodepro}\n\\usepackage[varbb]{newpxmath}\\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=2000]{microtype}"
+               "\\documentclass{scrartcl}\n\
+\\usepackage[T1]{fontenc}\n\
+\\usepackage[osf,largesc,helvratio=0.9]{newpxtext}\n\
+\\usepackage[scale=0.92]{sourcecodepro}\n\
+\\usepackage[varbb]{newpxmath}\n\
+\\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=2000]{microtype}\n\
+\\usepackage{xcolor}\n\
+\\setlength{\\parskip}{\\baselineskip}\n\
+\\setlength{\\parindent}{0pt}"
                ("\\section{%s}" . "\\section*{%s}")
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
@@ -696,7 +714,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-  (setq org-latex-default-class "bmc-article")
+  (setq org-latex-default-class "fancy-article")
 
   (add-to-list 'org-latex-packages-alist '("" "minted"))
   (setq org-latex-listings 'minted)
@@ -718,7 +736,19 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
           ("breakbeforesymbolpre" "\\,\\footnotesize\\ensuremath{{}_{\\rfloor}}")
           ("breakaftersymbolpre" "\\,\\footnotesize\\ensuremath{{}_{\\rfloor}}")))
 
-  (setq org-latex-hyperref-template "\\hypersetup{\n pdfauthor={%a},\n pdftitle={%t},\n pdfkeywords={%k},\n pdfsubject={%d},\n pdfcreator={%c},\n pdflang={%L},\n colorlinks=true,\nlinkcolor=}\n\\urlstyle{same}\n")
+  (setq org-latex-hyperref-template "\\hypersetup{
+  pdfauthor={%a},
+  pdftitle={%t},
+  pdfkeywords={%k},
+  pdfsubject={%d},
+  pdfcreator={%c},
+  pdflang={%L},
+  breaklinks=true,
+  colorlinks=true,
+  linkcolor=,
+  urlcolor=blue!70!green,
+  citecolor=green!60!blue\n}
+\\urlstyle{same}\n")
   (setq org-latex-pdf-process
         '("latexmk -shell-escape -interaction=nonstopmode -f -pdf -output-directory=%o %f")))
 (setq org-beamer-theme "[progressbar=foot]metropolis")
@@ -746,7 +776,6 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
  (ess-fl-keyword:delimiters . t)
  (ess-fl-keyword:= . t)
  (ess-R-fl-keyword:F&T . t)))
-(add-hook 'LaTeX-mode-hook #'mixed-pitch-mode)
 (setq tec/yas-latex-template-preamble "
 \\usepackage[pdfa,unicode=true,hidelinks]{hyperref}
 
@@ -780,6 +809,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
   "Based on class choice prompt for insertion of default preamble"
     (if (equal tec/yas-latex-class-choice "bmc") 'nil
              (eq (read-char-choice "Include default preamble? [Type y/n]" '(?y ?n)) ?y)))
+(add-hook 'LaTeX-mode-hook #'mixed-pitch-mode)
 (setq TeX-fold-math-spec-list
       '(;; missing/better symbols
         ("≤" ("le"))
