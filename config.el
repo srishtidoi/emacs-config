@@ -176,6 +176,11 @@
     ;; line breaking
     (turn-off-auto-fill)
     (visual-line-mode t)
+    ;; DEL/C-SPC to clear (first keystroke only)
+    (set-transient-map (let ((keymap (make-sparse-keymap)))
+                         (define-key keymap (kbd "DEL")   (lambda! (delete-region (point-min) (point-max))))
+                         (define-key keymap (kbd "C-SPC") (lambda! (delete-region (point-min) (point-max))))
+                         keymap))
     ;; disable tabs
     (when (bound-and-true-p centaur-tabs-mode)
       (centaur-tabs-local-mode t))))
