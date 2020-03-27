@@ -1,13 +1,13 @@
-;; [[file:~/.config/doom/config.org::*Rudimentary configuration][Rudimentary configuration:1]]
+;; [[file:~/.config/doom/config.org::*Rudimentary%20configuration][Rudimentary configuration:1]]
 ;;; config.el -*- lexical-binding: t; -*-
 ;; Rudimentary configuration:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Personal Information][Personal Information:1]]
+;; [[file:~/.config/doom/config.org::*Personal%20Information][Personal Information:1]]
 (setq user-full-name "tecosaur"
       user-mail-address "tecosaur@gmail.com")
 ;; Personal Information:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Simple settings][Simple settings:1]]
+;; [[file:~/.config/doom/config.org::*Simple%20settings][Simple settings:1]]
 (setq-default
  delete-by-moving-to-trash t                      ; Delete files to trash
  tab-width 4                                      ; Set width for tabs
@@ -49,11 +49,11 @@
   (+ivy/switch-buffer))
 ;; Windows:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Buffer defaults][Buffer defaults:1]]
+;; [[file:~/.config/doom/config.org::*Buffer%20defaults][Buffer defaults:1]]
 ;; (setq-default major-mode 'org-mode)
 ;; Buffer defaults:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Font Face][Font Face:1]]
+;; [[file:~/.config/doom/config.org::*Font%20Face][Font Face:1]]
 (setq doom-font (font-spec :family "Fira Code" :size 22)
       doom-big-font (font-spec :family "Fira Code" :size 36)
       doom-variable-pitch-font (font-spec :family "Overpass" :size 24))
@@ -81,12 +81,12 @@
 (custom-set-faces! '(doom-modeline-evil-insert-state :weight bold :foreground "#339CDB"))
 ;; Miscellaneous:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Mouse buttons][Mouse buttons:1]]
+;; [[file:~/.config/doom/config.org::*Mouse%20buttons][Mouse buttons:1]]
 (map! :n [mouse-8] #'better-jumper-jump-backward
       :n [mouse-9] #'better-jumper-jump-forward)
 ;; Mouse buttons:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Window title][Window title:1]]
+;; [[file:~/.config/doom/config.org::*Window%20title][Window title:1]]
 (setq frame-title-format
     '(""
       "%b"
@@ -96,30 +96,96 @@
            (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
 ;; Window title:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Splash screen][Splash screen:1]]
-(setq fancy-splash-image-big  (expand-file-name "misc/blackhole-lines.svg" doom-private-dir))
-(setq fancy-splash-image-small (expand-file-name "misc/blackhole-lines-small.svg" doom-private-dir))
-(setq fancy-splash-image-verysmall (expand-file-name "misc/transparent-pixel.png" doom-private-dir))
+;; [[file:~/.config/doom/config.org::*Splash%20screen][Splash screen:1]]
+(defvar fancy-splash-image-template
+  (expand-file-name "misc/blackhole-lines-template.svg" doom-private-dir)
+  "Default template svg used for the splash image, with substitutions from ")
+
+(setq fancy-splash-0-image (expand-file-name "misc/transparent-pixel.png" doom-private-dir))
+
+(defvar fancy-splash-sizes
+  `((:height 500 :minheight 50 :padding (0 . 2))
+    (:height 440 :minheight 42 :padding (1 . 4))
+    (:height 330 :minheight 36 :padding (1 . 3))
+    (:height 220 :minheight 30 :padding (1 . 2))
+    (:height 0 :minheight 0 :padding (0 . 0) :file ,fancy-splash-0-image))
+  "list of plists with the following properties
+  :height the height of the image
+  :minheight minimum `frame-height' for image
+  :padding `+doom-dashboard-banner-padding' to apply
+  :template non-default template file
+  :file file to use instead of template")
+
+(defvar fancy-splash-template-colours
+  '(("$colour1" . keywords) ("$colour2" . type) ("$colour3" . base5) ("$colour4" . base8))
+  "list of colour-replacement alists of the form (\"$placeholder\" . 'theme-colour) which applied the template")
+
+(unless (file-exists-p (expand-file-name "theme-splashes" doom-cache-dir))
+  (make-directory (expand-file-name "theme-splashes" doom-cache-dir) t))
+
+(defun fancy-splash-filename (theme-name height)
+  (expand-file-name (concat (file-name-as-directory "theme-splashes")
+                            (symbol-name doom-theme)
+                            "-" (number-to-string height) ".svg")
+                    doom-cache-dir))
+
+(defun fancy-splash-clear-cache ()
+  "Delete all cached fancy splash images"
+  (interactive)
+  (delete-directory (expand-file-name "theme-splashes" doom-cache-dir) t)
+  (message "Cache cleared!"))
+
+(defun fancy-splash-generate-image (template height)
+  "Read TEMPLATE and create an image if HEIGHT with colour substitutions as  ;described by `fancy-splash-template-colours' for the current theme"
+    (with-temp-buffer
+      (insert-file-contents template)
+      (re-search-forward "$height" nil t)
+      (replace-match (number-to-string height) nil nil)
+      (dolist (substitution fancy-splash-template-colours)
+        (beginning-of-buffer)
+        (while (re-search-forward (car substitution) nil t)
+          (replace-match (doom-color (cdr substitution)) nil nil)))
+      (write-region (point-min) (point-max)
+                    (fancy-splash-filename (symbol-name doom-theme) height))))
+
+(defun fancy-splash-generate-images ()
+  "Perform `fancy-splash-generate-image' in bulk"
+  (dolist (size fancy-splash-sizes)
+    (unless (plist-get size :file)
+      (fancy-splash-generate-image (cond ((plist-get size :file) (plist-get size :file))
+                                         ((plist-get size :template) (plist-get size :template))
+                                         (fancy-splash-image-template fancy-splash-image-template))
+                                   (plist-get size :height)))))
+
+(defun ensure-theme-splash-images-exist (&optional height)
+  (if (file-exists-p (fancy-splash-filename (symbol-name doom-theme) (cond (height height) (plist-get (car fancy-splash-sizes) :height))))
+      t (fancy-splash-generate-images)))
+
+(defun get-appropriate-splash ()
+  (let ((height (frame-height)))
+    (cl-some (lambda (size) (if (>= height (plist-get size :minheight)) size nil))
+             fancy-splash-sizes)))
+
+(setq fancy-splash-last-size nil)
+(setq fancy-splash-last-theme nil)
 (defun set-appropriate-splash (&optional frame)
-  (let ((appropriate-image (let ((height (frame-height)))
-                             (if (< height 40)
-                                 (if (< height 30) fancy-splash-image-verysmall fancy-splash-image-small)
-                               fancy-splash-image-big )))
-        (appropriate-padding (let ((height (frame-height)))
-                               (if (< height 40)
-                                   (if (< height 30) '(0 . 0) '(1 . 2))
-                                 '(1 . 4)))))
-    (let ((image-change (unless (equal appropriate-padding +doom-dashboard-banner-padding)
-                          (setq +doom-dashboard-banner-padding appropriate-padding)))
-          (padding-change (unless (equal appropriate-image fancy-splash-image)
-                            (setq fancy-splash-image appropriate-image))))
-      (if (or image-change padding-change)
-          (+doom-dashboard-reload)))))
-(set-appropriate-splash)
+  (let ((appropriate-image (get-appropriate-splash)))
+    (ensure-theme-splash-images-exist (plist-get appropriate-image :height))
+    (unless (and (equal appropriate-image fancy-splash-last-size)
+                 (equal doom-theme fancy-splash-last-theme))
+          (if (plist-get appropriate-image :file)
+              (setq fancy-splash-image (plist-get appropriate-image :file))
+            (setq fancy-splash-image (fancy-splash-filename (symbol-name doom-theme) (plist-get appropriate-image :height))))
+          (setq +doom-dashboard-banner-padding (plist-get appropriate-image :padding))
+          (setq fancy-splash-last-size appropriate-image)
+          (setq fancy-splash-last-theme doom-theme)
+          (+doom-dashboard-reload))))
+
 (add-hook 'window-size-change-functions #'set-appropriate-splash)
+(add-hook 'doom-load-theme-hook #'set-appropriate-splash)
 ;; Splash screen:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Abbrev mode][Abbrev mode:1]]
+;; [[file:~/.config/doom/config.org::*Abbrev%20mode][Abbrev mode:1]]
 (use-package abbrev
   :init
   (setq-default abbrev-mode t)
@@ -136,7 +202,7 @@
   (setq save-abbrevs 'silently))
 ;; Abbrev mode:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Centaur Tabs][Centaur Tabs:1]]
+;; [[file:~/.config/doom/config.org::*Centaur%20Tabs][Centaur Tabs:1]]
 (after! centaur-tabs
   (setq centaur-tabs-height 36
         centaur-tabs-set-icons t
@@ -161,7 +227,7 @@
 (setq-default prescient-history-length 1000)
 ;; Company:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Plain Text][Plain Text:1]]
+;; [[file:~/.config/doom/config.org::*Plain%20Text][Plain Text:1]]
 (set-company-backend! '(text-mode
                         markdown-mode
                         gfm-mode)
@@ -174,7 +240,7 @@
 (set-company-backend! 'ess-r-mode '(company-R-args company-R-objects company-dabbrev-code :separate))
 ;; ESS:1 ends here
 
-;; [[file:~/.config/doom/config.org::*\[\[https://github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1]]
+;; [[file:~/.config/doom/config.org::*%5B%5Bhttps://github.com/zachcurry/emacs-anywhere%5D%5BEmacs%20Anywhere%5D%5D%20configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1]]
 (defun markdown-window-p (window-title)
   "Judges from WINDOW-TITLE whether the current window likes markdown"
   (string-match-p (rx (or "Stack Exchange" "Stack Overflow"
@@ -182,7 +248,7 @@
                   window-title))
 ;; [[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1 ends here
 
-;; [[file:~/.config/doom/config.org::*\[\[https://github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2]]
+;; [[file:~/.config/doom/config.org::*%5B%5Bhttps://github.com/zachcurry/emacs-anywhere%5D%5BEmacs%20Anywhere%5D%5D%20configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2]]
 (define-minor-mode emacs-anywhere-mode
   "To tweak the current buffer for some emacs-anywhere considerations"
   :init-value nil
@@ -305,7 +371,7 @@
 (setq calc-angle-mode 'rad)
 ;; calc:1 ends here
 
-;; [[file:~/.config/doom/config.org::*electric pair mode][electric pair mode:1]]
+;; [[file:~/.config/doom/config.org::*electric%20pair%20mode][electric pair mode:1]]
 (electric-pair-mode t)
 ;; electric pair mode:1 ends here
 
@@ -323,7 +389,7 @@
       spray-height 700)
 ;; spray:1 ends here
 
-;; [[file:~/.config/doom/config.org::*theme magic][theme magic:1]]
+;; [[file:~/.config/doom/config.org::*theme%20magic][theme magic:1]]
 (add-hook 'doom-load-theme-hook 'theme-magic-from-emacs)
 ;; theme magic:1 ends here
 
@@ -335,11 +401,11 @@
 (defvar lsp-ui-doc-winum-ignore nil)
 ;; LSP:1 ends here
 
-;; [[file:~/.config/doom/config.org::*File Templates][File Templates:1]]
+;; [[file:~/.config/doom/config.org::*File%20Templates][File Templates:1]]
 (set-file-template! "\\.tex$" :trigger "__" :mode 'latex-mode)
 ;; File Templates:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Tweaking defaults][Tweaking defaults:1]]
+;; [[file:~/.config/doom/config.org::*Tweaking%20defaults][Tweaking defaults:1]]
 (setq org-directory "~/.org"                      ; let's put files here
       org-use-property-inheritance t              ; it's convenient to have properties inherited
       org-log-done 'time                          ; having the time a item is done sounds convininet
@@ -348,7 +414,7 @@
       org-catch-invisible-edits 'smart)           ; try not to accidently do weird stuff in invisible regions
 ;; Tweaking defaults:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Tweaking defaults][Tweaking defaults:2]]
+;; [[file:~/.config/doom/config.org::*Tweaking%20defaults][Tweaking defaults:2]]
 (setq org-babel-default-header-args '((:session . "none")
                                       (:results . "replace")
                                       (:exports . "code")
@@ -359,7 +425,7 @@
                                       (:comments . "link")))
 ;; Tweaking defaults:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:1]]
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:1]]
 (evil-define-command evil-buffer-org-new (count file)
   "Creates a new ORG buffer replacing the current window, optionally
    editing a certain FILE"
@@ -376,26 +442,26 @@
     :desc "New empty ORG buffer" "o" #'evil-buffer-org-new))
 ;; Extra functionality:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:2]]
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:2]]
 (setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+")))
 ;; Extra functionality:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:3]]
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:3]]
 (def-package! org-ref
    :after org
    :config
     (setq org-ref-completion-library 'org-ref-ivy-cite))
 ;; Extra functionality:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:4]]
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:4]]
 (after! org (add-hook 'org-mode-hook 'turn-on-org-cdlatex))
 ;; Extra functionality:4 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:5]]
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:5]]
 (after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
 ;; Extra functionality:5 ends here
 
-;; [[file:~/.config/doom/config.org::*Nicer ~org-return~][Nicer ~org-return~:1]]
+;; [[file:~/.config/doom/config.org::*Nicer%20~org-return~][Nicer ~org-return~:1]]
 (after! org
   (defun unpackaged/org-element-descendant-of (type element)
     "Return non-nil if ELEMENT is a descendant of TYPE.
@@ -496,15 +562,15 @@ appropriate.  In tables, insert a new row or end the table."
   (advice-add #'org-return-indent :override #'unpackaged/org-return-dwim))
 ;; Nicer ~org-return~:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Font Display][Font Display:1]]
+;; [[file:~/.config/doom/config.org::*Font%20Display][Font Display:1]]
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 ;; Font Display:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Font Display][Font Display:2]]
+;; [[file:~/.config/doom/config.org::*Font%20Display][Font Display:2]]
 (setq global-org-pretty-table-mode t)
 ;; Font Display:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Font Display][Font Display:3]]
+;; [[file:~/.config/doom/config.org::*Font%20Display][Font Display:3]]
 (custom-set-faces!
   '(outline-1 :weight extra-bold :height 1.2)
   '(outline-2 :weight bold :height 1.12)
@@ -564,7 +630,7 @@ appropriate.  In tables, insert a new row or end the table."
 (add-hook 'org-mode-hook 'org-fragtog-mode)
 ;; Symbols:3 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Fragments][LaTeX Fragments:1]]
+;; [[file:~/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:1]]
 (setq org-format-latex-header "\\documentclass{article}
 \\usepackage[usenames]{color}
 
@@ -592,7 +658,7 @@ appropriate.  In tables, insert a new row or end the table."
 \\usepackage{arevmath}")
 ;; LaTeX Fragments:1 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Fragments][LaTeX Fragments:2]]
+;; [[file:~/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:2]]
 (after! org
 ;; make background of fragments transparent
 ;; (let ((dvipng--plist (alist-get 'dvipng org-preview-latex-process-alist)))
@@ -608,12 +674,12 @@ appropriate.  In tables, insert a new row or end the table."
 )
 ;; LaTeX Fragments:2 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Fragments][LaTeX Fragments:3]]
+;; [[file:~/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:3]]
 (after! org
   (add-to-list 'org-latex-regexps '("\\ce" "^\\\\ce{\\(?:[^\000{}]\\|{[^\000}]+?}\\)}" 0 nil)))
 ;; LaTeX Fragments:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Stolen from \[\[https://github.com/jkitchin/scimax\]\[scimax\]\] (semi-working right now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):1]]
+;; [[file:~/.config/doom/config.org::*Stolen%20from%20%5B%5Bhttps://github.com/jkitchin/scimax%5D%5Bscimax%5D%5D%20(semi-working%20right%20now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):1]]
 (after! org
   (defun scimax-org-latex-fragment-justify (justification)
     "Justify the latex fragment at point with JUSTIFICATION.
@@ -666,7 +732,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
       (message "Latex fragment justification disabled"))))
 ;; Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):1 ends here
 
-;; [[file:~/.config/doom/config.org::*Stolen from \[\[https://github.com/jkitchin/scimax\]\[scimax\]\] (semi-working right now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):2]]
+;; [[file:~/.config/doom/config.org::*Stolen%20from%20%5B%5Bhttps://github.com/jkitchin/scimax%5D%5Bscimax%5D%5D%20(semi-working%20right%20now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):2]]
 ;; Numbered equations all have (1) as the number for fragments with vanilla
 ;; org-mode. This code injects the correct numbers into the previews so they
 ;; look good.
@@ -728,11 +794,11 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
   (put 'scimax-org-renumber-environment 'enabled t))
 ;; Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):2 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting (general)][Exporting (general):1]]
+;; [[file:~/.config/doom/config.org::*Exporting%20(general)][Exporting (general):1]]
 (after! org (setq org-export-headline-levels 5)) ; I like nesting
 ;; Exporting (general):1 ends here
 
-;; [[file:~/.config/doom/config.org::*Custom CSS/JS][Custom CSS/JS:2]]
+;; [[file:~/.config/doom/config.org::*Custom%20CSS/JS][Custom CSS/JS:2]]
 (defun my-org-inline-css-hook (exporter)
   "Insert custom inline css to automatically set the
    background of code to whatever theme I'm using's background"
@@ -955,7 +1021,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 (add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
 ;; Custom CSS/JS:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Make verbatim different to code][Make verbatim different to code:1]]
+;; [[file:~/.config/doom/config.org::*Make%20verbatim%20different%20to%20code][Make verbatim different to code:1]]
 (setq org-html-text-markup-alist
       '((bold . "<b>%s</b>")
         (code . "<code>%s</code>")
@@ -965,7 +1031,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
         (verbatim . "<kbd>%s</kbd>")))
 ;; Make verbatim different to code:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Change checkbox type][Change checkbox type:1]]
+;; [[file:~/.config/doom/config.org::*Change%20checkbox%20type][Change checkbox type:1]]
 (after! org
 (appendq! org-html-checkbox-types '((html-span .
 	  ((on . "<span class='checkbox'></span>")
@@ -974,11 +1040,11 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 (setq org-html-checkbox-type 'html-span))
 ;; Change checkbox type:1 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Rendering][LaTeX Rendering:1]]
+;; [[file:~/.config/doom/config.org::*LaTeX%20Rendering][LaTeX Rendering:1]]
 ;; (setq-default org-html-with-latex `dvisvgm)
 ;; LaTeX Rendering:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to LaTeX][Exporting to LaTeX:1]]
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20LaTeX][Exporting to LaTeX:1]]
 ;; TODO make this /only/ apply to text (i.e. not URL)
 (after! org
   (defun tec/org-export-latex-filter-acronym (text backend info)
@@ -1000,7 +1066,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
                'tec/org-export-latex-filter-acronym))
 ;; Exporting to LaTeX:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to LaTeX][Exporting to LaTeX:2]]
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20LaTeX][Exporting to LaTeX:2]]
 (after! ox-latex
   (add-to-list 'org-latex-classes
                '("fancy-article"
@@ -1090,19 +1156,19 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
         '("latexmk -shell-escape -interaction=nonstopmode -f -pdf -output-directory=%o %f")))
 ;; Exporting to LaTeX:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to Beamer][Exporting to Beamer:1]]
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20Beamer][Exporting to Beamer:1]]
 (setq org-beamer-theme "[progressbar=foot]metropolis")
 ;; Exporting to Beamer:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to Beamer][Exporting to Beamer:2]]
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20Beamer][Exporting to Beamer:2]]
 
 ;; Exporting to Beamer:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to Beamer][Exporting to Beamer:3]]
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20Beamer][Exporting to Beamer:3]]
 (setq org-beamer-frame-level 2)
 ;; Exporting to Beamer:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to GFM][Exporting to GFM:1]]
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20GFM][Exporting to GFM:1]]
 (eval-after-load "org"
   '(require 'ox-gfm nil t))
 ;; Exporting to GFM:1 ends here
@@ -1139,7 +1205,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
  (ess-R-fl-keyword:F&T . t)))
 ;; ESS:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Snippet value][Snippet value:2]]
+;; [[file:~/.config/doom/config.org::*Snippet%20value][Snippet value:2]]
 (setq tec/yas-latex-template-preamble "
 \\usepackage[pdfa,unicode=true,hidelinks]{hyperref}
 
@@ -1175,11 +1241,11 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
              (eq (read-char-choice "Include default preamble? [Type y/n]" '(?y ?n)) ?y)))
 ;; Snippet value:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:1]]
+;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:1]]
 (add-hook 'LaTeX-mode-hook #'mixed-pitch-mode)
 ;; Editor visuals:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:2]]
+;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:2]]
 (setq TeX-fold-math-spec-list
       '(;; missing/better symbols
         ("≤" ("le"))
@@ -1242,7 +1308,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
         ))
 ;; Editor visuals:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:3]]
+;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:3]]
 (defvar +latex-use-TeX-fold t
   "Use TeX fold in TeX-mode.
 When set to non-nil, this adds a few hooks/advices to fold stuff.")
@@ -1268,7 +1334,7 @@ When set to non-nil, this adds a few hooks/advices to fold stuff.")
                       'TeX-fold-folded-face :family var-pitch :height var-height))))))
 ;; Editor visuals:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:4]]
+;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:4]]
 (after! tex
   (map!
    :map LaTeX-mode-map
@@ -1285,7 +1351,7 @@ When set to non-nil, this adds a few hooks/advices to fold stuff.")
   (setq TeX-electric-math '("\\(" . "")))
 ;; Editor visuals:4 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:5]]
+;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:5]]
 ;; Making \( \) less visible
 (defface unimportant-latex-face
   '((t
@@ -1304,7 +1370,7 @@ When set to non-nil, this adds a few hooks/advices to fold stuff.")
  'end)
 ;; Editor visuals:5 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:6]]
+;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:6]]
 (setq preview-LaTeX-command '("%`%l \"\\nonstopmode\\nofiles\
 \\PassOptionsToPackage{" ("," . preview-required-option-list) "}{preview}\
 \\AtBeginDocument{\\ifx\\ifPreview\\undefined"
@@ -1335,7 +1401,7 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
      (?a    "\\abs"           nil          t    nil  nil))))
 ;; CDLaTeX:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor Visuals][Editor Visuals:1]]
+;; [[file:~/.config/doom/config.org::*Editor%20Visuals][Editor Visuals:1]]
 (after! ess-r-mode
   (appendq! +pretty-code-symbols
             '(:assign "⟵"
