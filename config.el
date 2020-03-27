@@ -96,6 +96,29 @@
            (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
 ;; Window title:1 ends here
 
+;; [[file:~/.config/doom/config.org::*Splash screen][Splash screen:1]]
+(setq fancy-splash-image-big  (expand-file-name "misc/blackhole-lines.svg" doom-private-dir))
+(setq fancy-splash-image-small (expand-file-name "misc/blackhole-lines-small.svg" doom-private-dir))
+(setq fancy-splash-image-verysmall (expand-file-name "misc/transparent-pixel.png" doom-private-dir))
+(defun set-appropriate-splash (&optional frame)
+  (let ((appropriate-image (let ((height (frame-height)))
+                             (if (< height 40)
+                                 (if (< height 30) fancy-splash-image-verysmall fancy-splash-image-small)
+                               fancy-splash-image-big )))
+        (appropriate-padding (let ((height (frame-height)))
+                               (if (< height 40)
+                                   (if (< height 30) '(0 . 0) '(1 . 2))
+                                 '(1 . 4)))))
+    (let ((image-change (unless (equal appropriate-padding +doom-dashboard-banner-padding)
+                          (setq +doom-dashboard-banner-padding appropriate-padding)))
+          (padding-change (unless (equal appropriate-image fancy-splash-image)
+                            (setq fancy-splash-image appropriate-image))))
+      (if (or image-change padding-change)
+          (+doom-dashboard-reload)))))
+(set-appropriate-splash)
+(add-hook 'window-size-change-functions #'set-appropriate-splash)
+;; Splash screen:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*Abbrev mode][Abbrev mode:1]]
 (use-package abbrev
   :init
