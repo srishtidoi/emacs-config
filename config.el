@@ -147,8 +147,8 @@
         (beginning-of-buffer)
         (while (re-search-forward (car substitution) nil t)
           (replace-match (doom-color (cdr substitution)) nil nil)))
-      (write-region (point-min) (point-max)
-                    (fancy-splash-filename (symbol-name doom-theme) height))))
+      (write-region nil nil
+                    (fancy-splash-filename (symbol-name doom-theme) height) nil nil)))
 
 (defun fancy-splash-generate-images ()
   "Perform `fancy-splash-generate-image' in bulk"
@@ -380,7 +380,6 @@
 
 ;; [[file:~/.config/doom/config.org::*ispell][ispell:1]]
 (setq ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")
-(setq company-ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")
 ;; ispell:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*ispell][ispell:2]]
@@ -399,10 +398,6 @@
 ;; [[file:~/.config/doom/config.org::*wttrin][wttrin:1]]
 (setq wttrin-default-cities '(""))
 ;; wttrin:1 ends here
-
-;; [[file:~/.config/doom/config.org::*LSP][LSP:1]]
-(defvar lsp-ui-doc-winum-ignore nil)
-;; LSP:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*File%20Templates][File Templates:1]]
 (set-file-template! "\\.tex$" :trigger "__" :mode 'latex-mode)
