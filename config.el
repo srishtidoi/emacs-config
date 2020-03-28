@@ -98,19 +98,29 @@
 
 ;; [[file:~/.config/doom/config.org::*Splash%20screen][Splash screen:1]]
 (defvar fancy-splash-image-template
-  (expand-file-name "misc/blackhole-lines-template.svg" doom-private-dir)
+  (expand-file-name "misc/splash-images/blackhole-lines-template.svg" doom-private-dir)
   "Default template svg used for the splash image, with substitutions from ")
+(defvar fancy-splash-image-nil
+  (expand-file-name "misc/splash-images/transparent-pixel.png" doom-private-dir)
+  "An image to use at minimum size, usually a transparent pixel")
 
-(setq fancy-splash-e-image (expand-file-name "misc/emacs-e-template.svg" doom-private-dir))
-(setq fancy-splash-0-image (expand-file-name "misc/transparent-pixel.png" doom-private-dir))
+(setq fancy-splash-sizes
+  `((:height 500 :min-height 50 :padding (0 . 2) :template ,(expand-file-name "misc/splash-images/blackhole-lines-0.svg" doom-private-dir))
+    (:height 440 :min-height 42 :padding (1 . 4) :template ,(expand-file-name "misc/splash-images/blackhole-lines-0.svg" doom-private-dir))
+    (:height 400 :min-height 38 :padding (1 . 4) :template ,(expand-file-name "misc/splash-images/blackhole-lines-1.svg" doom-private-dir))
+    (:height 350 :min-height 36 :padding (1 . 3) :template ,(expand-file-name "misc/splash-images/blackhole-lines-2.svg" doom-private-dir))
+    (:height 300 :min-height 34 :padding (1 . 3) :template ,(expand-file-name "misc/splash-images/blackhole-lines-3.svg" doom-private-dir))
+    (:height 250 :min-height 32 :padding (1 . 2) :template ,(expand-file-name "misc/splash-images/blackhole-lines-4.svg" doom-private-dir))
+    (:height 200 :min-height 30 :padding (1 . 2) :template ,(expand-file-name "misc/splash-images/blackhole-lines-5.svg" doom-private-dir))
+    (:height 100 :min-height 24 :padding (1 . 2) :template ,(expand-file-name "misc/splash-images/emacs-e-template.svg" doom-private-dir))
+    (:height 0   :min-height 0  :padding (0 . 0) :file ,fancy-splash-image-nil)))
 
 (defvar fancy-splash-sizes
   `((:height 500 :min-height 50 :padding (0 . 2))
     (:height 440 :min-height 42 :padding (1 . 4))
     (:height 330 :min-height 35 :padding (1 . 3))
-    (:height 220 :min-height 30 :padding (1 . 2))
-    (:height 110 :min-height 25 :padding (1 . 2) :template ,fancy-splash-e-image)
-    (:height 0   :min-height 0  :padding (0 . 0) :file ,fancy-splash-0-image))
+    (:height 200 :min-height 30 :padding (1 . 2))
+    (:height 0   :min-height 0  :padding (0 . 0) :file ,fancy-splash-image-nil))
   "list of plists with the following properties
   :height the height of the image
   :min-height minimum `frame-height' for image
@@ -154,17 +164,16 @@
   "Perform `fancy-splash-generate-image' in bulk"
   (dolist (size fancy-splash-sizes)
     (unless (plist-get size :file)
-      (fancy-splash-generate-image (cond ((plist-get size :file) (plist-get size :file))
-                                         ((plist-get size :template) (plist-get size :template))
-                                         (fancy-splash-image-template fancy-splash-image-template))
+      (fancy-splash-generate-image (or (plist-get size :file)
+                                       (plist-get size :template)
+                                       fancy-splash-image-template)
                                    (plist-get size :height)))))
 
 (defun ensure-theme-splash-images-exist (&optional height)
   (unless (file-exists-p (fancy-splash-filename
                           (symbol-name doom-theme)
-                          (cond (height height)
-                                ((plist-get (car fancy-splash-sizes) :height)
-                                 (plist-get (car fancy-splash-sizes) :height)))))
+                          (or height
+                              (plist-get (car fancy-splash-sizes) :height))))
     (fancy-splash-generate-images)))
 
 (defun get-appropriate-splash ()
@@ -181,9 +190,8 @@
     (unless (plist-get appropriate-image :file)
       (ensure-theme-splash-images-exist (plist-get appropriate-image :height)))
     (setq fancy-splash-image
-          (if (plist-get appropriate-image :file)
-              (plist-get appropriate-image :file)
-            (fancy-splash-filename (symbol-name doom-theme) (plist-get appropriate-image :height))))
+          (or (plist-get appropriate-image :file)
+              (fancy-splash-filename (symbol-name doom-theme) (plist-get appropriate-image :height))))
     (setq +doom-dashboard-banner-padding (plist-get appropriate-image :padding))
     (setq fancy-splash-last-size appropriate-image)
     (setq fancy-splash-last-theme doom-theme)
