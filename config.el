@@ -1278,7 +1278,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
         ("𝑑" ("dd"))
         ;; known commands
         ("" ("phantom"))
-        ("({1}⧸{2})" ("frac"))
+        ("❪{1}／{2}❫" ("frac"))
         ("‘{1}’" ("text"))
         ;; private commands
         ("|{1}|" ("abs"))
@@ -1287,8 +1287,16 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
         ("⌈{1}⌉" ("ceil"))
         ("⌊{1}⌉" ("round"))
         ("⭡{1}" ("vec"))
-        ("𝑑{1}⧸𝑑{2}" ("dv"))
-        ("∂{1}⧸∂{2}" ("pdv"))
+        ("𝑑{1}/𝑑{2}" ("dv"))
+        ("∂{1}/∂{2}" ("pdv"))
+        ;; fancification
+        ("{1}" ("mathrm"))
+        (TeX-fold-apply-mathbf ("mathbf"))
+        (TeX-fold-apply-mathcal ("mathcal"))
+        (TeX-fold-apply-mathfrak ("mathfrak"))
+        (TeX-fold-apply-mathbb ("mathbb"))
+        (TeX-fold-apply-mathsf ("mathsf"))
+        (TeX-fold-apply-mathtt ("mathtt"))
         )
       TeX-fold-macro-spec-list
       '(
@@ -1317,6 +1325,29 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
         ("⬖ {1}" ("begin"))
         ("⬗ {1}" ("end"))
         ))
+
+(defun TeX-fold-apply-mathbf (word)
+  (string-offset-roman-chars 119743 word))
+
+(defun TeX-fold-apply-mathcal (word)
+  (string-offset-roman-chars 119951 word))
+
+(defun TeX-fold-apply-mathfrak (word)
+  (string-offset-roman-chars 120003 word))
+
+(defun TeX-fold-apply-mathbb (word)
+  (string-offset-roman-chars 120055 word))
+
+(defun TeX-fold-apply-mathsf (word)
+  (string-offset-roman-chars 120159 word))
+
+(defun TeX-fold-apply-mathtt (word)
+  (string-offset-roman-chars 120367 word))
+
+(defun string-offset-roman-chars (offset word)
+  "Shift the codepoint of each charachter in WORD by OFFSET with an extra -6 shift if the letter is lowercase"
+    (apply 'string
+       (mapcar (lambda (c) (+ (if (>= c 97) (- c 6) c) offset)) word)))
 ;; Editor visuals:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:3]]
