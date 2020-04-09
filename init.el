@@ -135,7 +135,9 @@
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        (latex             ; writing papers in Emacs has never been so fun
-        +latexmk +cdlatex)
+        +latexmk         ; what else would you use?
+        +cdlatex         ; quick maths symbols
+        +fold)           ; TeX-fold nicities
        ;;lean
        ;;factor
        ledger            ; an accounting system in Emacs
