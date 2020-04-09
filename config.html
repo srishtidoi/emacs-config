@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-28 Sat 23:01 -->
+<!-- 2020-04-10 Fri 02:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -559,6 +559,916 @@
    ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
    ::-webkit-scrollbar-thumb:hover { background:#888; }
 </style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
+
+<style type="text/css">
+   :root {
+      --theme-bg: #242730;
+      --theme-bg-alt: #2a2e38;
+      --theme-base0: #1c1f24;
+      --theme-base1: #1c1f24;
+      --theme-base2: #21272d;
+      --theme-base3: #23272e;
+      --theme-base4: #484854;
+      --theme-base5: #62686E;
+      --theme-base6: #757B80;
+      --theme-base7: #9ca0a4;
+      --theme-base8: #DFDFDF;
+      --theme-fg: #bbc2cf;
+      --theme-fg-alt: #5D656B;
+      --theme-grey: #484854;
+      --theme-red: #ff665c;
+      --theme-orange: #e69055;
+      --theme-green: #7bc275;
+      --theme-teal: #4db5bd;
+      --theme-yellow: #FCCE7B;
+      --theme-blue: #51afef;
+      --theme-dark-blue: #1f5582;
+      --theme-magenta: #C57BDB;
+      --theme-violet: #a991f1;
+      --theme-cyan: #5cEfFF;
+      --theme-dark-cyan: #6A8FBF;
+   }
+</style>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
+<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
+<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
+
+<style>
+   pre.src {
+     background-color: var(--theme-bg);
+     color: var(--theme-fg);
+     scrollbar-color:#bbb6#9992;
+     scrollbar-width: thin;
+     margin: 0;
+     border: none;
+   }
+   div.org-src-container {
+     border-radius: 12px;
+     overflow: hidden;
+     margin-bottom: 24px;
+     margin-top: 1px;
+     border: 1px solid#e1e4e5;
+   }
+   pre.src::before {
+     background-color:#6666;
+     top: 8px;
+     border: none;
+     border-radius: 5px;
+     line-height: 1;
+     border: 2px solid var(--theme-bg);
+     opacity: 0;
+     transition: opacity 200ms;
+   }
+   pre.src:hover::before { opacity: 1; }
+   pre.src:active::before { opacity: 0; }
+
+   pre.example {
+     border-radius: 12px;
+     background: var(--theme-bg-alt);
+     color: var(--theme-fg);
+   }
+
+   code {
+     border-radius: 5px;
+     background:#e8e8e8;
+     font-size: 80%;
+   }
+
+   kbd {
+     display: inline-block;
+     padding: 3px 5px;
+     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+     line-height: normal;
+     line-height: 10px;
+     color:#444d56;
+     vertical-align: middle;
+     background-color:#fafbfc;
+     border: 1px solid#d1d5da;
+     border-radius: 3px;
+     box-shadow: inset 0 -1px 0#d1d5da;
+   }
+
+   table {
+     max-width: 100%;
+     overflow-x: auto;
+     display: block;
+     border-top: none;
+   }
+
+   a {
+       text-decoration: none;
+       background-image: linear-gradient(#d8dce9, #d8dce9);
+       background-position: 0% 100%;
+       background-repeat: no-repeat;
+       background-size: 0% 2px;
+       transition: background-size .3s;
+   }
+   #table-of-contents a {
+       background-image: none;
+   }
+   a:hover, a:focus {
+       background-size: 100% 2px;
+   }
+   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+   a[href^='#']:visited { color:#3091d1; }
+
+   li .checkbox {
+       display: inline-block;
+       width: 0.9em;
+       height: 0.9em;
+       border-radius: 3px;
+       margin: 3px;
+       top: 4px;
+       position: relative;
+   }
+   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+   li.on > .checkbox::after {
+     content: '';
+     height: 0.45em;
+     width: 0.225em;
+     -webkit-transform-origin: left top;
+     transform-origin: left top;
+     transform: scaleX(-1) rotate(135deg);
+     border-right: 2.8px solid#fff;
+     border-top: 2.8px solid#fff;
+     opacity: 0.9;
+     left: 0.10em;
+     top: 0.45em;
+     position: absolute;
+   }
+   li.trans > .checkbox::after {
+       content: '';
+       font-weight: bold;
+       font-size: 1.6em;
+       position: absolute;
+       top: 0.23em;
+       left: 0.09em;
+       width: 0.35em;
+       height: 0.12em;
+       background:#fff;
+       opacity: 0.9;
+       border-radius: 0.1em;
+   }
+   li.off > .checkbox::after {
+    content: '✖';
+    color:#fff;
+    opacity: 0.9;
+    position: relative;
+    top: -0.40rem;
+    left: 0.17em;
+    font-size: 0.75em;
+  }
+
+   span.timestamp {
+       color: #003280;
+       background: #647CFF44;
+       border-radius: 3px;
+       line-height: 1.25;
+   }
+
+   #table-of-contents { overflow-y: auto; }
+   blockquote p { margin: 8px 0px 16px 0px; }
+   #postamble .date { color: var(--theme-green); }
+
+   ::-webkit-scrollbar { width: 10px; height: 8px; }
+   ::-webkit-scrollbar-track { background:#9992; }
+   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+   ::-webkit-scrollbar-thumb:hover { background:#888; }
+</style>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
@@ -613,177 +1523,181 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org88eba87">1. Intro</a></li>
-<li><a href="#org6225255">2. Rudimentary configuration</a>
+<li><a href="#orga98f3cc">1. Intro</a></li>
+<li><a href="#orgd0b65f9">2. Rudimentary configuration</a>
 <ul>
-<li><a href="#org3e06d94">2.1. Personal Information</a></li>
-<li><a href="#orgb669570">2.2. Better defaults</a>
+<li><a href="#org50a4f3b">2.1. Personal Information</a></li>
+<li><a href="#orgc57958c">2.2. Better defaults</a>
 <ul>
-<li><a href="#org4cf4af7">2.2.1. Simple settings</a></li>
-<li><a href="#orgba528fa">2.2.2. Fullscreen</a></li>
-<li><a href="#org5e47ba7">2.2.3. Auto-customisations</a></li>
-<li><a href="#orgccc0b2e">2.2.4. Windows</a></li>
-<li><a href="#orgb184ca0">2.2.5. Buffer defaults</a></li>
+<li><a href="#orgaa59c3d">2.2.1. Simple settings</a></li>
+<li><a href="#org6d87c9d">2.2.2. Fullscreen</a></li>
+<li><a href="#org6135723">2.2.3. Auto-customisations</a></li>
+<li><a href="#org6db3c64">2.2.4. Windows</a></li>
+<li><a href="#org89b8a99">2.2.5. Buffer defaults</a></li>
 </ul>
 </li>
-<li><a href="#org3e0dc3b">2.3. Doom configuration</a>
+<li><a href="#orgc3bada6">2.3. Doom configuration</a>
 <ul>
-<li><a href="#orge9fd974">2.3.1. Visual Settings</a>
+<li><a href="#orgc6a61a3">2.3.1. Visual Settings</a>
 <ul>
-<li><a href="#orgfac0f21">2.3.1.1. Font Face</a></li>
-<li><a href="#org8879cf4">2.3.1.2. Theme</a></li>
-<li><a href="#org4975628">2.3.1.3. Miscellaneous</a></li>
+<li><a href="#orgae71a9c">2.3.1.1. Font Face</a></li>
+<li><a href="#orgaa1fbdb">2.3.1.2. Theme</a></li>
+<li><a href="#org2fce99d">2.3.1.3. Miscellaneous</a></li>
 </ul>
 </li>
-<li><a href="#orgdaf1756">2.3.2. Some helper macros</a></li>
+<li><a href="#org64cd69e">2.3.2. Some helper macros</a></li>
 </ul>
 </li>
-<li><a href="#org6b56473">2.4. Other things</a>
+<li><a href="#org73ea7df">2.4. Other things</a>
 <ul>
-<li><a href="#orgb093686">2.4.1. Editor interaction</a>
+<li><a href="#org4c4747f">2.4.1. Editor interaction</a>
 <ul>
-<li><a href="#org846dffa">2.4.1.1. Mouse buttons</a></li>
+<li><a href="#orgea12a88">2.4.1.1. Mouse buttons</a></li>
 </ul>
 </li>
-<li><a href="#orga3a2625">2.4.2. Window title</a></li>
-<li><a href="#orgdfefeeb">2.4.3. Splash screen</a></li>
-<li><a href="#org65cf357">2.4.4. Systemd daemon</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org75a3a84">3. Package loading</a>
-<ul>
-<li><a href="#org98d4776">3.1. Loading instructions</a>
-<ul>
-<li><a href="#org2b10bbf">3.1.1. Packages in MELPA/ELPA/emacsmirror</a></li>
-<li><a href="#org7625d7f">3.1.2. Packages from git repositories</a></li>
-<li><a href="#org0729d71">3.1.3. Disabling built-in packages</a></li>
-</ul>
-</li>
-<li><a href="#orgd1b8b33">3.2. General packages</a>
-<ul>
-<li><a href="#orge333b2f">3.2.1. Auto-complete</a></li>
-<li><a href="#org781a7b7">3.2.2. Prettification</a></li>
-<li><a href="#orgd7014b9">3.2.3. Window management</a></li>
-<li><a href="#org0b378e1">3.2.4. Fun</a></li>
-<li><a href="#org6174a86">3.2.5. Other</a>
-<ul>
-<li><a href="#orgda0b1da">3.2.5.1. Flyspell-lazy</a></li>
-<li><a href="#org8b50bd4">3.2.5.2. CalcTeX</a></li>
-<li><a href="#orgb6485ee">3.2.5.3. ESS</a></li>
+<li><a href="#orgfd17e77">2.4.2. Window title</a></li>
+<li><a href="#org96486b9">2.4.3. Splash screen</a></li>
+<li><a href="#org584ccc6">2.4.4. Systemd daemon</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org8a1eb4c">3.3. Language packages</a>
+<li><a href="#org07e6195">3. Package loading</a>
 <ul>
-<li><a href="#orga390e61">3.3.1. Systemd</a></li>
-<li><a href="#orgcaffca9">3.3.2. Org Mode</a></li>
+<li><a href="#org5d1ba89">3.1. Loading instructions</a>
+<ul>
+<li><a href="#org87cbf24">3.1.1. Packages in MELPA/ELPA/emacsmirror</a></li>
+<li><a href="#orgf54e895">3.1.2. Packages from git repositories</a></li>
+<li><a href="#org29d95a2">3.1.3. Disabling built-in packages</a></li>
+<li><a href="#orgb23d336">3.1.4. Updating all pins in file</a></li>
+</ul>
+</li>
+<li><a href="#org237e17a">3.2. General packages</a>
+<ul>
+<li><a href="#orgb2b03eb">3.2.1. Auto-complete</a></li>
+<li><a href="#org028b0ed">3.2.2. Prettification</a></li>
+<li><a href="#org9086a1a">3.2.3. Window management</a></li>
+<li><a href="#orgd84361c">3.2.4. Fun</a></li>
+<li><a href="#org0c377ef">3.2.5. Other</a>
+<ul>
+<li><a href="#org4d23a2f">3.2.5.1. Flyspell-lazy</a></li>
+<li><a href="#org1129bdf">3.2.5.2. CalcTeX</a></li>
+<li><a href="#org4592122">3.2.5.3. ESS</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org01be4f7">4. Package configuration</a>
+<li><a href="#org7d43645">3.3. Language packages</a>
 <ul>
-<li><a href="#orgc4d1e14">4.1. Abbrev mode</a></li>
-<li><a href="#org6e66251">4.2. Centaur Tabs</a></li>
-<li><a href="#orgbfcbbf6">4.3. Company</a>
-<ul>
-<li><a href="#orga5148a1">4.3.1. Plain Text</a></li>
-<li><a href="#org7ea56d6">4.3.2. ESS</a></li>
+<li><a href="#org43f49f5">3.3.1. Systemd</a></li>
+<li><a href="#orgf19e167">3.3.2. Org Mode</a></li>
 </ul>
 </li>
-<li><a href="#org843552e">4.4. Emacs Anywhere configuration</a></li>
-<li><a href="#orge9a7c62">4.5. Flyspell</a></li>
-<li><a href="#orgd481b51">4.6. Tramp</a>
+</ul>
+</li>
+<li><a href="#orgfa83b17">4. Package configuration</a>
+<ul>
+<li><a href="#org1052494">4.1. Abbrev mode</a></li>
+<li><a href="#org718cf97">4.2. Centaur Tabs</a></li>
+<li><a href="#org2ac508a">4.3. Company</a>
+<ul>
+<li><a href="#org3076285">4.3.1. Plain Text</a></li>
+<li><a href="#org29aee4e">4.3.2. ESS</a></li>
+</ul>
+</li>
+<li><a href="#org2633f54">4.4. Emacs Anywhere configuration</a></li>
+<li><a href="#orgf5d997d">4.5. Flyspell</a></li>
+<li><a href="#orgc4875d7">4.6. Tramp</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org715a89d">4.6.0.1. Troubleshooting</a>
+<li><a href="#org10cebdb">4.6.0.1. Troubleshooting</a>
 <ul>
-<li><a href="#orgecdcd68">4.6.0.1.1. Zsh</a></li>
+<li><a href="#org30e544d">4.6.0.1.1. Zsh</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org174840f">4.7. Treemacs</a></li>
-<li><a href="#orgfec6cc0">4.8. Miscellaneous</a>
+<li><a href="#orga9a55af">4.7. Treemacs</a></li>
+<li><a href="#org56c3e87">4.8. Miscellaneous</a>
 <ul>
-<li><a href="#org7cf91b4">4.8.1. calc</a></li>
-<li><a href="#org0876dcd">4.8.2. electric pair mode</a></li>
-<li><a href="#org0a2adfb">4.8.3. ispell</a></li>
-<li><a href="#orgdf2a537">4.8.4. spray</a></li>
-<li><a href="#org402f21d">4.8.5. theme magic</a></li>
-<li><a href="#org94f503c">4.8.6. wttrin</a></li>
+<li><a href="#org5de0dd7">4.8.1. calc</a></li>
+<li><a href="#orga4f4955">4.8.2. electric pair mode</a></li>
+<li><a href="#org42b98ae">4.8.3. ispell</a></li>
+<li><a href="#org2b4f8c3">4.8.4. spray</a></li>
+<li><a href="#org74205c1">4.8.5. theme magic</a></li>
+<li><a href="#org5802c42">4.8.6. wttrin</a></li>
+<li><a href="#org55c9402">4.8.7. elcord</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org38f1a3f">5. Language configuration</a>
+<li><a href="#orgf9745e3">5. Language configuration</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org192184b">5.0.1. File Templates</a></li>
+<li><a href="#org19ff12e">5.0.1. File Templates</a></li>
 </ul>
 </li>
-<li><a href="#orga1f5d03">5.1. Org Mode</a>
+<li><a href="#org8b17621">5.1. Org Mode</a>
 <ul>
-<li><a href="#orge1a4fbc">5.1.1. System config</a></li>
-<li><a href="#org02dc4b1">5.1.2. Behaviour</a>
+<li><a href="#orgc2431ad">5.1.1. System config</a></li>
+<li><a href="#org9adcf0c">5.1.2. Behaviour</a>
 <ul>
-<li><a href="#org90147b8">5.1.2.1. Tweaking defaults</a></li>
-<li><a href="#org762e126">5.1.2.2. Extra functionality</a></li>
-<li><a href="#org8ee3454">5.1.2.3. Nicer headings</a></li>
-<li><a href="#org559b7b7">5.1.2.4. Nicer <code>org-return</code></a></li>
+<li><a href="#orge356ae2">5.1.2.1. Tweaking defaults</a></li>
+<li><a href="#org5dfa8fb">5.1.2.2. Extra functionality</a></li>
+<li><a href="#orgcbb1576">5.1.2.3. Nicer headings</a></li>
+<li><a href="#orgc8f7398">5.1.2.4. Nicer <code>org-return</code></a></li>
 </ul>
 </li>
-<li><a href="#orgbe6f8a4">5.1.3. Visuals</a>
+<li><a href="#org5ef6ae4">5.1.3. Visuals</a>
 <ul>
-<li><a href="#org6ec5ffb">5.1.3.1. In editor</a>
+<li><a href="#org398d568">5.1.3.1. In editor</a>
 <ul>
-<li><a href="#orgf3fee59">5.1.3.1.1. Font Display</a></li>
-<li><a href="#org5be59f6">5.1.3.1.2. Symbols</a></li>
-<li><a href="#orgc0f285a">5.1.3.1.3. LaTeX Fragments</a></li>
-<li><a href="#org418d6f1">5.1.3.1.4. Stolen from scimax (semi-working right now)</a></li>
+<li><a href="#org9e3e0b2">5.1.3.1.1. Font Display</a></li>
+<li><a href="#orgb4a164f">5.1.3.1.2. Symbols</a></li>
+<li><a href="#org96641a7">5.1.3.1.3. LaTeX Fragments</a></li>
+<li><a href="#org65d8cf3">5.1.3.1.4. Stolen from scimax (semi-working right now)</a></li>
 </ul>
 </li>
-<li><a href="#org853827f">5.1.3.2. Exporting (general)</a></li>
-<li><a href="#org431cf08">5.1.3.3. Exporting to HTML</a>
+<li><a href="#org5a3df90">5.1.3.2. Exporting (general)</a></li>
+<li><a href="#org52f98f9">5.1.3.3. Exporting to HTML</a>
 <ul>
-<li><a href="#orgfad959e">5.1.3.3.1. Custom CSS/JS</a></li>
-<li><a href="#org3aa3676">5.1.3.3.2. Make verbatim different to code</a></li>
-<li><a href="#orge3595ef">5.1.3.3.3. Change checkbox type</a></li>
-<li><a href="#orgbbef76f">5.1.3.3.4. LaTeX Rendering</a></li>
+<li><a href="#orgc5334cf">5.1.3.3.1. Custom CSS/JS</a></li>
+<li><a href="#orgdc7df60">5.1.3.3.2. Make verbatim different to code</a></li>
+<li><a href="#org21b149c">5.1.3.3.3. Change checkbox type</a></li>
+<li><a href="#orgd3c8e96">5.1.3.3.4. LaTeX Rendering</a></li>
 </ul>
 </li>
-<li><a href="#orgc0b5af3">5.1.3.4. Exporting to LaTeX</a></li>
-<li><a href="#org8ad5ab1">5.1.3.5. Exporting to Beamer</a></li>
-<li><a href="#org7118f5b">5.1.3.6. Exporting to GFM</a></li>
+<li><a href="#org6acfaee">5.1.3.4. Exporting to LaTeX</a></li>
+<li><a href="#org3be3e0c">5.1.3.5. Exporting to Beamer</a></li>
+<li><a href="#org571b10a">5.1.3.6. Exporting to GFM</a></li>
 </ul>
 </li>
-<li><a href="#org943d907">5.1.4. Babel</a></li>
-<li><a href="#orgf238f98">5.1.5. ESS</a></li>
+<li><a href="#orga0b5007">5.1.4. Babel</a></li>
+<li><a href="#org57a7bfc">5.1.5. ESS</a></li>
 </ul>
 </li>
-<li><a href="#org8482a07">5.2. LaTeX</a>
+<li><a href="#org44d835b">5.2. LaTeX</a>
 <ul>
-<li><a href="#org7fa040d">5.2.1. To-be-implemented ideas</a></li>
-<li><a href="#org824d3b7">5.2.2. Snippet value</a></li>
-<li><a href="#orgc1b7053">5.2.3. Editor visuals</a></li>
-<li><a href="#org4293f83">5.2.4. CDLaTeX</a></li>
+<li><a href="#org495482d">5.2.1. To-be-implemented ideas</a></li>
+<li><a href="#org65a39e8">5.2.2. Compilation</a></li>
+<li><a href="#org72e5d44">5.2.3. Snippet value</a></li>
+<li><a href="#org202393a">5.2.4. Editor visuals</a></li>
+<li><a href="#orgef048cb">5.2.5. CDLaTeX</a></li>
+<li><a href="#orgb7f4cd2">5.2.6. SyncTeX</a></li>
 </ul>
 </li>
-<li><a href="#orgbc967e4">5.3. R</a>
+<li><a href="#orgdffaea5">5.3. R</a>
 <ul>
-<li><a href="#orga98778f">5.3.1. Editor Visuals</a></li>
+<li><a href="#org669c9fd">5.3.1. Editor Visuals</a></li>
 </ul>
 </li>
-<li><a href="#org0207a48">5.4. hledger</a></li>
-<li><a href="#org47fb9e9">5.5. Markdown</a></li>
-<li><a href="#org095d1a0">5.6. Beancount</a></li>
+<li><a href="#org7bcfb20">5.4. hledger</a></li>
+<li><a href="#orgca8ae09">5.5. Markdown</a></li>
+<li><a href="#org251fa6c">5.6. Beancount</a></li>
 </ul>
 </li>
 </ul>
@@ -798,8 +1712,8 @@ computer to do. &#x2014; Donald Knuth
 </p>
 </blockquote>
 
-<div id="outline-container-org88eba87" class="outline-2">
-<h2 id="org88eba87"><span class="section-number-2">1</span> Intro</h2>
+<div id="outline-container-orga98f3cc" class="outline-2">
+<h2 id="orga98f3cc"><span class="section-number-2">1</span> Intro</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Customising an editor can be very rewarding &#x2026; until you have to leave it.
@@ -830,8 +1744,8 @@ settled by the day. This is my config.
 </p>
 </div>
 </div>
-<div id="outline-container-org6225255" class="outline-2">
-<h2 id="org6225255"><span class="section-number-2">2</span> Rudimentary configuration</h2>
+<div id="outline-container-orgd0b65f9" class="outline-2">
+<h2 id="orgd0b65f9"><span class="section-number-2">2</span> Rudimentary configuration</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Make this file run (slightly) faster with lexical binding (see <a href="https://nullprogram.com/blog/2016/12/22/">this blog post</a>
@@ -842,8 +1756,8 @@ for more info).
 </pre>
 </div>
 </div>
-<div id="outline-container-org3e06d94" class="outline-3">
-<h3 id="org3e06d94"><span class="section-number-3">2.1</span> Personal Information</h3>
+<div id="outline-container-org50a4f3b" class="outline-3">
+<h3 id="org50a4f3b"><span class="section-number-3">2.1</span> Personal Information</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 It&rsquo;s useful to have some basic personal information
@@ -858,12 +1772,12 @@ Apparently this is used by <code>GPG</code>, and all sorts of other things.
 </p>
 </div>
 </div>
-<div id="outline-container-orgb669570" class="outline-3">
-<h3 id="orgb669570"><span class="section-number-3">2.2</span> Better defaults</h3>
+<div id="outline-container-orgc57958c" class="outline-3">
+<h3 id="orgc57958c"><span class="section-number-3">2.2</span> Better defaults</h3>
 <div class="outline-text-3" id="text-2-2">
 </div>
-<div id="outline-container-org4cf4af7" class="outline-4">
-<h4 id="org4cf4af7"><span class="section-number-4">2.2.1</span> Simple settings</h4>
+<div id="outline-container-orgaa59c3d" class="outline-4">
+<h4 id="orgaa59c3d"><span class="section-number-4">2.2.1</span> Simple settings</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 Browsing the web and seeing <a href="https://github.com/angrybacon/dotemacs/blob/master/dotemacs.org#use-better-defaults">angrybacon/dotemacs</a> and comparing with the values
@@ -890,8 +1804,8 @@ shown by <kbd>SPC h v</kbd> and selecting what I thought looks good, I&rsquo;ve 
 </div>
 </div>
 </div>
-<div id="outline-container-orgba528fa" class="outline-4">
-<h4 id="orgba528fa"><span class="section-number-4">2.2.2</span> Fullscreen</h4>
+<div id="outline-container-org6d87c9d" class="outline-4">
+<h4 id="org6d87c9d"><span class="section-number-4">2.2.2</span> Fullscreen</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <p>
 I also like the idea of fullscreen-ing when opened by <code>emacs</code> or the <code>.desktop</code> file.
@@ -904,8 +1818,8 @@ I also like the idea of fullscreen-ing when opened by <code>emacs</code> or the 
 </div>
 </div>
 </div>
-<div id="outline-container-org5e47ba7" class="outline-4">
-<h4 id="org5e47ba7"><span class="section-number-4">2.2.3</span> Auto-customisations</h4>
+<div id="outline-container-org6135723" class="outline-4">
+<h4 id="org6135723"><span class="section-number-4">2.2.3</span> Auto-customisations</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 By default changes made via a customisation interface are added to <kbd>init.el</kbd>.
@@ -920,8 +1834,8 @@ setting, and load it if it exists.
 </div>
 </div>
 </div>
-<div id="outline-container-orgccc0b2e" class="outline-4">
-<h4 id="orgccc0b2e"><span class="section-number-4">2.2.4</span> Windows</h4>
+<div id="outline-container-org6db3c64" class="outline-4">
+<h4 id="org6db3c64"><span class="section-number-4">2.2.4</span> Windows</h4>
 <div class="outline-text-4" id="text-2-2-4">
 <p>
 I find it rather handy to be asked which buffer I want to see after splitting
@@ -944,8 +1858,8 @@ Then, we&rsquo;ll pull up <code>ivy</code>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb184ca0" class="outline-4">
-<h4 id="orgb184ca0"><span class="section-number-4">2.2.5</span> Buffer defaults</h4>
+<div id="outline-container-org89b8a99" class="outline-4">
+<h4 id="org89b8a99"><span class="section-number-4">2.2.5</span> Buffer defaults</h4>
 <div class="outline-text-4" id="text-2-2-5">
 <p>
 I&rsquo;d much rather have my new buffers in <code>org-mode</code> than <code>fundamental-mode</code>, hence
@@ -961,16 +1875,16 @@ just need to resort to <kbd>SPC b o</kbd> for now.
 </div>
 </div>
 </div>
-<div id="outline-container-org3e0dc3b" class="outline-3">
-<h3 id="org3e0dc3b"><span class="section-number-3">2.3</span> Doom configuration</h3>
+<div id="outline-container-orgc3bada6" class="outline-3">
+<h3 id="orgc3bada6"><span class="section-number-3">2.3</span> Doom configuration</h3>
 <div class="outline-text-3" id="text-2-3">
 </div>
-<div id="outline-container-orge9fd974" class="outline-4">
-<h4 id="orge9fd974"><span class="section-number-4">2.3.1</span> Visual Settings</h4>
+<div id="outline-container-orgc6a61a3" class="outline-4">
+<h4 id="orgc6a61a3"><span class="section-number-4">2.3.1</span> Visual Settings</h4>
 <div class="outline-text-4" id="text-2-3-1">
 </div>
-<div id="outline-container-orgfac0f21" class="outline-5">
-<h5 id="orgfac0f21"><span class="section-number-5">2.3.1.1</span> Font Face</h5>
+<div id="outline-container-orgae71a9c" class="outline-5">
+<h5 id="orgae71a9c"><span class="section-number-5">2.3.1.1</span> Font Face</h5>
 <div class="outline-text-5" id="text-2-3-1-1">
 <p>
 &rsquo;Fira Code&rsquo; is nice, and &rsquo;Overpass&rsquo; makes for a nice sans companion. We just need to
@@ -984,8 +1898,8 @@ fiddle with the font sizes a tad so that they visually match.
 </div>
 </div>
 </div>
-<div id="outline-container-org8879cf4" class="outline-5">
-<h5 id="org8879cf4"><span class="section-number-5">2.3.1.2</span> Theme</h5>
+<div id="outline-container-orgaa1fbdb" class="outline-5">
+<h5 id="orgaa1fbdb"><span class="section-number-5">2.3.1.2</span> Theme</h5>
 <div class="outline-text-5" id="text-2-3-1-2">
 <p>
 <code>doom-one</code> is nice and all, but I find the <code>vibrant</code> variant nicer.
@@ -1005,8 +1919,8 @@ so I don&rsquo;t feel like something&rsquo;s gone <i>wrong</i> when editing file
 </div>
 </div>
 </div>
-<div id="outline-container-org4975628" class="outline-5">
-<h5 id="org4975628"><span class="section-number-5">2.3.1.3</span> Miscellaneous</h5>
+<div id="outline-container-org2fce99d" class="outline-5">
+<h5 id="org2fce99d"><span class="section-number-5">2.3.1.3</span> Miscellaneous</h5>
 <div class="outline-text-5" id="text-2-3-1-3">
 <p>
 Relative line numbers are fantastic for knowing how far away line numbers are,
@@ -1034,8 +1948,8 @@ There&rsquo;s a bug with the modeline in insert mode for org documents (<a href=
 </div>
 </div>
 </div>
-<div id="outline-container-orgdaf1756" class="outline-4">
-<h4 id="orgdaf1756"><span class="section-number-4">2.3.2</span> Some helper macros</h4>
+<div id="outline-container-org64cd69e" class="outline-4">
+<h4 id="org64cd69e"><span class="section-number-4">2.3.2</span> Some helper macros</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 There are a few handy macros added by doom, namely
@@ -1053,16 +1967,16 @@ To find more,
 </div>
 </div>
 </div>
-<div id="outline-container-org6b56473" class="outline-3">
-<h3 id="org6b56473"><span class="section-number-3">2.4</span> Other things</h3>
+<div id="outline-container-org73ea7df" class="outline-3">
+<h3 id="org73ea7df"><span class="section-number-3">2.4</span> Other things</h3>
 <div class="outline-text-3" id="text-2-4">
 </div>
-<div id="outline-container-orgb093686" class="outline-4">
-<h4 id="orgb093686"><span class="section-number-4">2.4.1</span> Editor interaction</h4>
+<div id="outline-container-org4c4747f" class="outline-4">
+<h4 id="org4c4747f"><span class="section-number-4">2.4.1</span> Editor interaction</h4>
 <div class="outline-text-4" id="text-2-4-1">
 </div>
-<div id="outline-container-org846dffa" class="outline-5">
-<h5 id="org846dffa"><span class="section-number-5">2.4.1.1</span> Mouse buttons</h5>
+<div id="outline-container-orgea12a88" class="outline-5">
+<h5 id="orgea12a88"><span class="section-number-5">2.4.1.1</span> Mouse buttons</h5>
 <div class="outline-text-5" id="text-2-4-1-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">map!</span> <span style="color: #C57BDB;">:n</span> <span style="color: #C57BDB;">[</span>mouse-8<span style="color: #C57BDB;">]</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">better-jumper-jump-backward</span>
@@ -1072,8 +1986,8 @@ To find more,
 </div>
 </div>
 </div>
-<div id="outline-container-orga3a2625" class="outline-4">
-<h4 id="orga3a2625"><span class="section-number-4">2.4.2</span> Window title</h4>
+<div id="outline-container-orgfd17e77" class="outline-4">
+<h4 id="orgfd17e77"><span class="section-number-4">2.4.2</span> Window title</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <p>
 I&rsquo;d like to have just the buffer name, then if applicable the project folder
@@ -1090,14 +2004,14 @@ I&rsquo;d like to have just the buffer name, then if applicable the project fold
 </div>
 </div>
 </div>
-<div id="outline-container-orgdfefeeb" class="outline-4">
-<h4 id="orgdfefeeb"><span class="section-number-4">2.4.3</span> Splash screen</h4>
+<div id="outline-container-org96486b9" class="outline-4">
+<h4 id="org96486b9"><span class="section-number-4">2.4.3</span> Splash screen</h4>
 <div class="outline-text-4" id="text-2-4-3">
 <p>
 Emacs can render an image as the splash screen, and <a href="https://github.com/MarioRicalde">@MarioRicalde</a> came up with a
 cracker! He&rsquo;s also provided me with a nice emacs-style <i>E</i>, which is good for
 smaller windows. <b>@MarioRicalde</b> you have my sincere thanks, you&rsquo;re great!
-<object type="image/svg+xml" data="misc/blackhole-lines.svg" class="org-svg">
+<object type="image/svg+xml" data="misc/splash-images/blackhole-lines.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 By incrementally stripping away the outer layers of the logo one can obtain
 quite a nice resizing effect.
@@ -1209,8 +2123,8 @@ quite a nice resizing effect.
 </div>
 </div>
 </div>
-<div id="outline-container-org65cf357" class="outline-4">
-<h4 id="org65cf357"><span class="section-number-4">2.4.4</span> Systemd daemon</h4>
+<div id="outline-container-org584ccc6" class="outline-4">
+<h4 id="org584ccc6"><span class="section-number-4">2.4.4</span> Systemd daemon</h4>
 <div class="outline-text-4" id="text-2-4-4">
 <p>
 For running a systemd service for a emacs server I have the following
@@ -1242,8 +2156,8 @@ which is then enabled by
 </div>
 </div>
 </div>
-<div id="outline-container-org75a3a84" class="outline-2">
-<h2 id="org75a3a84"><span class="section-number-2">3</span> Package loading</h2>
+<div id="outline-container-org07e6195" class="outline-2">
+<h2 id="org07e6195"><span class="section-number-2">3</span> Package loading</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This file shouldn&rsquo;t be byte compiled.
@@ -1253,8 +2167,8 @@ This file shouldn&rsquo;t be byte compiled.
 </pre>
 </div>
 </div>
-<div id="outline-container-org98d4776" class="outline-3">
-<h3 id="org98d4776"><span class="section-number-3">3.1</span> Loading instructions</h3>
+<div id="outline-container-org5d1ba89" class="outline-3">
+<h3 id="org5d1ba89"><span class="section-number-3">3.1</span> Loading instructions</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 This is where you install packages, by declaring them with the <code>package!</code>
@@ -1268,8 +2182,8 @@ Doom requires these, and disabling them may have terrible side effects.
 </p>
 </div>
 
-<div id="outline-container-org2b10bbf" class="outline-4">
-<h4 id="org2b10bbf"><span class="section-number-4">3.1.1</span> Packages in MELPA/ELPA/emacsmirror</h4>
+<div id="outline-container-org87cbf24" class="outline-4">
+<h4 id="org87cbf24"><span class="section-number-4">3.1.1</span> Packages in MELPA/ELPA/emacsmirror</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 To install <code>some-package</code> from MELPA, ELPA or emacsmirror:
@@ -1281,8 +2195,8 @@ To install <code>some-package</code> from MELPA, ELPA or emacsmirror:
 </div>
 </div>
 
-<div id="outline-container-org7625d7f" class="outline-4">
-<h4 id="org7625d7f"><span class="section-number-4">3.1.2</span> Packages from git repositories</h4>
+<div id="outline-container-orgf54e895" class="outline-4">
+<h4 id="orgf54e895"><span class="section-number-4">3.1.2</span> Packages from git repositories</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
 To install a package directly from a particular repo, you&rsquo;ll need to specify
@@ -1308,8 +2222,8 @@ file, or is located in a subdirectory of the repo, you&rsquo;ll need to specify
 </div>
 </div>
 
-<div id="outline-container-org0729d71" class="outline-4">
-<h4 id="org0729d71"><span class="section-number-4">3.1.3</span> Disabling built-in packages</h4>
+<div id="outline-container-org29d95a2" class="outline-4">
+<h4 id="org29d95a2"><span class="section-number-4">3.1.3</span> Disabling built-in packages</h4>
 <div class="outline-text-4" id="text-3-1-3">
 <p>
 If you&rsquo;d like to disable a package included with Doom, for whatever reason,
@@ -1341,24 +2255,50 @@ our package manager can&rsquo;t deal with; see <a href="https://github.com/raxod
 </div>
 </div>
 </div>
-</div>
-<div id="outline-container-orgd1b8b33" class="outline-3">
-<h3 id="orgd1b8b33"><span class="section-number-3">3.2</span> General packages</h3>
-<div class="outline-text-3" id="text-3-2">
-</div>
-<div id="outline-container-orge333b2f" class="outline-4">
-<h4 id="orge333b2f"><span class="section-number-4">3.2.1</span> Auto-complete</h4>
-<div class="outline-text-4" id="text-3-2-1">
+<div id="outline-container-orgb23d336" class="outline-4">
+<h4 id="orgb23d336"><span class="section-number-4">3.1.4</span> Updating all pins in file</h4>
+<div class="outline-text-4" id="text-3-1-4">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> company-tabnine <span style="color: #62686E;">; </span><span style="color: #62686E;">tab9 autocomplete</span>
-  <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"TommyX12/company-tabnine"</span>
-           <span style="color: #C57BDB;">:files</span> <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"company-tabnine.el"</span> <span style="color: #7bc275;">"fetch-binaries.sh"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+doom/update-all-pinned-package-form</span> <span style="color: #C57BDB;">()</span>
+  <span style="color: #7e7e87;">"Call `</span><span style="color: #a991f1;">doom/update-pinned-package-form</span><span style="color: #7e7e87;">' on every package! statement in the buffer"</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">interactive</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">beginning-of-buffer</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>progress <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>total <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">how-many</span> <span style="color: #7bc275;">"package!"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>updated <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">while</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">search-forward</span> <span style="color: #7bc275;">"package!"</span> nil t<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> progress <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">1+</span> progress<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">forward-char</span><span style="color: #51afef;">)</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">move cursor to package name "package! |name"</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">message</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"Re-pinning package: %s/%s (%s)"</span> progress total <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">current-word</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">backward-char</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">evil-scroll-line-to-center</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">line-number-at-pos</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">redisplay</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">s-contains-p</span> <span style="color: #7bc275;">"Updated"</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">condition-case</span> nil
+                                      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom/update-pinned-package-form</span><span style="color: #51afef;">)</span>
+                                    <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">user-error</span> <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> updated <span style="color: #7bc275;">(</span><span style="color: #a991f1;">1+</span> updated<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">search-forward</span> <span style="color: #7bc275;">"package!"</span> nil t<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">because of cursor-moving done</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">message</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s packages updated"</span> updated<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org781a7b7" class="outline-4">
-<h4 id="org781a7b7"><span class="section-number-4">3.2.2</span> Prettification</h4>
+</div>
+<div id="outline-container-org237e17a" class="outline-3">
+<h3 id="org237e17a"><span class="section-number-3">3.2</span> General packages</h3>
+<div class="outline-text-3" id="text-3-2">
+</div>
+<div id="outline-container-orgb2b03eb" class="outline-4">
+<h4 id="orgb2b03eb"><span class="section-number-4">3.2.1</span> Auto-complete</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> company-tabnine <span style="color: #62686E;">; </span><span style="color: #62686E;">tab9 autocomplete</span>
+  <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"TommyX12/company-tabnine"</span>
+           <span style="color: #C57BDB;">:files</span> <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"company-tabnine.el"</span> <span style="color: #7bc275;">"fetch-binaries.sh"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"e986a4ad0d"</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org028b0ed" class="outline-4">
+<h4 id="org028b0ed"><span class="section-number-4">3.2.2</span> Prettification</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <p>
 <code>prettify-mode</code> is nice and all, but adding substitutions is a little verbose.
@@ -1366,29 +2306,29 @@ This helps with that.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> prettify-utils <span style="color: #62686E;">; </span><span style="color: #62686E;">simplify messing with prettify-mode</span>
-  <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"Ilazki/prettify-utils.el"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"Ilazki/prettify-utils.el"</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"8b783d316c"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd7014b9" class="outline-4">
-<h4 id="orgd7014b9"><span class="section-number-4">3.2.3</span> Window management</h4>
+<div id="outline-container-org9086a1a" class="outline-4">
+<h4 id="org9086a1a"><span class="section-number-4">3.2.3</span> Window management</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> rotate<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> rotate <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"091b5ac4fc"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org0b378e1" class="outline-4">
-<h4 id="org0b378e1"><span class="section-number-4">3.2.4</span> Fun</h4>
+<div id="outline-container-orgd84361c" class="outline-4">
+<h4 id="orgd84361c"><span class="section-number-4">3.2.4</span> Fun</h4>
 <div class="outline-text-4" id="text-3-2-4">
 <p>
 Sometimes one just wants a little fun.
 XKCD comics are fun.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> xkcd<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> xkcd <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"66e928706f"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -1397,7 +2337,7 @@ Every so often, you want everyone else to <i>know</i> that you&rsquo;re typing, 
 amuse oneself. Introducing: typewriter sounds!
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> <span style="color: #DFDFDF;">selectric-mode</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> <span style="color: #DFDFDF;">selectric-mode</span> <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"bb9e66678f"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -1405,7 +2345,7 @@ amuse oneself. Introducing: typewriter sounds!
 Hey, let&rsquo;s get the weather in here while we&rsquo;re at it.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> wttrin<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> wttrin <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"df5427ce2a"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -1413,7 +2353,7 @@ Hey, let&rsquo;s get the weather in here while we&rsquo;re at it.
 Why not flash words on the screen. Why not &#x2014; hey, it could be fun.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> spray<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> spray <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"00638bc916"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -1421,20 +2361,29 @@ Why not flash words on the screen. Why not &#x2014; hey, it could be fun.
 With all our fancy emacs themes, my terminal is missing out!
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> theme-magic<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> theme-magic <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"844c4311bd"</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+What&rsquo;s even the point of using Emacs unless you&rsquo;re constantly telling everyone
+about it?
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> elcord <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"94b0afb9ba"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org6174a86" class="outline-4">
-<h4 id="org6174a86"><span class="section-number-4">3.2.5</span> Other</h4>
+<div id="outline-container-org0c377ef" class="outline-4">
+<h4 id="org0c377ef"><span class="section-number-4">3.2.5</span> Other</h4>
 <div class="outline-text-4" id="text-3-2-5">
 </div>
-<div id="outline-container-orgda0b1da" class="outline-5">
-<h5 id="orgda0b1da"><span class="section-number-5">3.2.5.1</span> Flyspell-lazy</h5>
+<div id="outline-container-org4d23a2f" class="outline-5">
+<h5 id="org4d23a2f"><span class="section-number-5">3.2.5.1</span> Flyspell-lazy</h5>
 <div class="outline-text-5" id="text-3-2-5-1">
 <p>
-To alleviate some <a href="#orge9a7c62">issues with flyspell</a>
+To alleviate some <a href="#orgf5d997d">issues with flyspell</a>
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> flyspell-lazy<span style="color: #51afef;">)</span>
@@ -1442,51 +2391,51 @@ To alleviate some <a href="#orge9a7c62">issues with flyspell</a>
 </div>
 </div>
 </div>
-<div id="outline-container-org8b50bd4" class="outline-5">
-<h5 id="org8b50bd4"><span class="section-number-5">3.2.5.2</span> CalcTeX</h5>
+<div id="outline-container-org1129bdf" class="outline-5">
+<h5 id="org1129bdf"><span class="section-number-5">3.2.5.2</span> CalcTeX</h5>
 <div class="outline-text-5" id="text-3-2-5-2">
 <p>
 This is a nice extension to <code>calc</code>
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> calctex <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"johnbcoughlin/calctex"</span>
-                                 <span style="color: #C57BDB;">:files</span> <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"*.el"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                                 <span style="color: #C57BDB;">:files</span> <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"*.el"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"542b628eb4"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb6485ee" class="outline-5">
-<h5 id="orgb6485ee"><span class="section-number-5">3.2.5.3</span> ESS</h5>
+<div id="outline-container-org4592122" class="outline-5">
+<h5 id="org4592122"><span class="section-number-5">3.2.5.3</span> ESS</h5>
 <div class="outline-text-5" id="text-3-2-5-3">
 <p>
 View dataframes better with
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> ess-view<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> ess-view <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"d4e5a340b7"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org8a1eb4c" class="outline-3">
-<h3 id="org8a1eb4c"><span class="section-number-3">3.3</span> Language packages</h3>
+<div id="outline-container-org7d43645" class="outline-3">
+<h3 id="org7d43645"><span class="section-number-3">3.3</span> Language packages</h3>
 <div class="outline-text-3" id="text-3-3">
 </div>
-<div id="outline-container-orga390e61" class="outline-4">
-<h4 id="orga390e61"><span class="section-number-4">3.3.1</span> Systemd</h4>
+<div id="outline-container-org43f49f5" class="outline-4">
+<h4 id="org43f49f5"><span class="section-number-4">3.3.1</span> Systemd</h4>
 <div class="outline-text-4" id="text-3-3-1">
 <p>
 For editing systemd unit files
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> systemd<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> systemd <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"51c148e09a"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgcaffca9" class="outline-4">
-<h4 id="orgcaffca9"><span class="section-number-4">3.3.2</span> Org Mode</h4>
+<div id="outline-container-orgf19e167" class="outline-4">
+<h4 id="orgf19e167"><span class="section-number-4">3.3.2</span> Org Mode</h4>
 <div class="outline-text-4" id="text-3-3-2">
 <p>
 Org tables aren&rsquo;t the prettiest thing to look at. This package is supposed to
@@ -1495,7 +2444,7 @@ improvement to me! Just need to get it working&#x2026;
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-pretty-table-mode
-  <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"Fuco1/org-pretty-table"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"Fuco1/org-pretty-table"</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"88380f865a"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 <p>
@@ -1503,10 +2452,10 @@ Because of the <i><a href="https://github.com/commonmark/commonmark-spec/wiki/ma
 such a thing a standard table spec &#x2026; or standard anything really. Because
 <code>org-md</code> is a goody-two-shoes, it just uses HTML for all these non-standardised
 elements (a lot of them). So <code>ox-gfm</code> is handy for exporting markdown with all the
-features that GitHub has. Initialised in <a href="#org7118f5b">5.1.3.6</a>.
+features that GitHub has. Initialised in <a href="#org571b10a">5.1.3.6</a>.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> ox-gfm<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> ox-gfm <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"99f93011b0"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -1514,7 +2463,7 @@ features that GitHub has. Initialised in <a href="#org7118f5b">5.1.3.6</a>.
 Now and then citations need to happen
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-ref<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-ref <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"5bb9be2232"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -1522,7 +2471,7 @@ Now and then citations need to happen
 For automatically toggling LaTeX fragment previews there&rsquo;s this nice package
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-fragtog<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-fragtog <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"8eca8084cc"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -1530,7 +2479,7 @@ For automatically toggling LaTeX fragment previews there&rsquo;s this nice packa
 Came across this and &#x2026; it&rsquo;s cool
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-graph-view <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"alphapapa/org-graph-view"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-graph-view <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"alphapapa/org-graph-view"</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"13314338d7"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -1539,19 +2488,34 @@ I <b>need</b> this in my life. It take a URL to a recipe from a common site, and
 inserts an org-ified version at point. Isn&rsquo;t that just great.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-chef<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-chef <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"67f50aa2a2"</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+<code>org-superstar-mode</code> seems better than <code>org-bullets</code>, so let&rsquo;s switch to that
+instead. Since we&rsquo;re making stuff look nicer we may as well make priorities and
+tags prettier as well :)
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-bullets <span style="color: #C57BDB;">:disable</span> t <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"767f55feb5"</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-superstar
+  <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"integral-dw/org-superstar-mode"</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"4659cfc120"</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-fancy-priorities <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"819bb993b7"</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-pretty-tags <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"40fd72f3e7"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org01be4f7" class="outline-2">
-<h2 id="org01be4f7"><span class="section-number-2">4</span> Package configuration</h2>
+<div id="outline-container-orgfa83b17" class="outline-2">
+<h2 id="orgfa83b17"><span class="section-number-2">4</span> Package configuration</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orgc4d1e14" class="outline-3">
-<h3 id="orgc4d1e14"><span class="section-number-3">4.1</span> Abbrev mode</h3>
+<div id="outline-container-org1052494" class="outline-3">
+<h3 id="org1052494"><span class="section-number-3">4.1</span> Abbrev mode</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 Thanks to <a href="https://emacs.stackexchange.com/questions/45462/use-a-single-abbrev-table-for-multiple-modes/45476#45476">use a single abbrev-table for multiple modes? - Emacs Stack Exchange</a> I
@@ -1576,8 +2540,8 @@ have the following.
 </div>
 </div>
 </div>
-<div id="outline-container-org6e66251" class="outline-3">
-<h3 id="org6e66251"><span class="section-number-3">4.2</span> Centaur Tabs</h3>
+<div id="outline-container-org718cf97" class="outline-3">
+<h3 id="org718cf97"><span class="section-number-3">4.2</span> Centaur Tabs</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 We want to make the tabs a nice, comfy size (<code>36</code>), with icons. The modifier
@@ -1592,20 +2556,21 @@ well somehow, so let&rsquo;s switch to &rsquo;P22 Underground Book&rsquo;; it lo
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> centaur-tabs
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">centaur-tabs-height</span> <span style="color: #e69055; font-weight: bold;">36</span>
-        <span style="color: #DFDFDF;">centaur-tabs-set-icons</span> t
-        <span style="color: #DFDFDF;">centaur-tabs-modified-marker</span> <span style="color: #7bc275;">"o"</span>
-        <span style="color: #DFDFDF;">centaur-tabs-close-button</span> <span style="color: #7bc275;">"&#215;"</span>
-        <span style="color: #DFDFDF;">centaur-tabs-set-bar</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">above</span><span style="color: #C57BDB;">)</span>
-        <span style="color: #DFDFDF;">centaur-tabs-gray-out-icons</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">buffer</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">centaur-tabs-change-fonts</span> <span style="color: #7bc275;">"P22 Underground Book"</span> <span style="color: #e69055; font-weight: bold;">160</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">(</span>centaur-tabs-mode <span style="color: #e69055; font-weight: bold;">-1</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> centaur-tabs-height <span style="color: #e69055; font-weight: bold;">36</span>
+        centaur-tabs-set-icons t
+        centaur-tabs-modified-marker <span style="color: #7bc275;">"o"</span>
+        centaur-tabs-close-button <span style="color: #7bc275;">"&#215;"</span>
+        centaur-tabs-set-bar <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">above</span><span style="color: #C57BDB;">)</span>
+        centaur-tabs-gray-out-icons <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">buffer</span>
+  <span style="color: #C57BDB;">(</span>centaur-tabs-change-fonts <span style="color: #7bc275;">"P22 Underground Book"</span> <span style="color: #e69055; font-weight: bold;">160</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 <span style="color: #62686E;">;; </span><span style="color: #62686E;">(setq x-underline-at-descent-line t)</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgbfcbbf6" class="outline-3">
-<h3 id="orgbfcbbf6"><span class="section-number-3">4.3</span> Company</h3>
+<div id="outline-container-org2ac508a" class="outline-3">
+<h3 id="org2ac508a"><span class="section-number-3">4.3</span> Company</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 It&rsquo;s nice to have completions almost all the time, in my opinion. Key strokes
@@ -1629,8 +2594,8 @@ let&rsquo;s improve that memory.
 </pre>
 </div>
 </div>
-<div id="outline-container-orga5148a1" class="outline-4">
-<h4 id="orga5148a1"><span class="section-number-4">4.3.1</span> Plain Text</h4>
+<div id="outline-container-org3076285" class="outline-4">
+<h4 id="org3076285"><span class="section-number-4">4.3.1</span> Plain Text</h4>
 <div class="outline-text-4" id="text-4-3-1">
 <p>
 <code>ispell</code> is nice, let&rsquo;s have it in <code>text</code>, <code>markdown</code>, and <code>GFM</code>.
@@ -1645,12 +2610,12 @@ let&rsquo;s improve that memory.
 </pre>
 </div>
 <p>
-We then configure the dictionary we&rsquo;re using in <a href="#org0a2adfb">ispell</a>.
+We then configure the dictionary we&rsquo;re using in <a href="#org42b98ae">ispell</a>.
 </p>
 </div>
 </div>
-<div id="outline-container-org7ea56d6" class="outline-4">
-<h4 id="org7ea56d6"><span class="section-number-4">4.3.2</span> ESS</h4>
+<div id="outline-container-org29aee4e" class="outline-4">
+<h4 id="org29aee4e"><span class="section-number-4">4.3.2</span> ESS</h4>
 <div class="outline-text-4" id="text-4-3-2">
 <p>
 <code>company-dabbrev-code</code> is nice. Let&rsquo;s have it.
@@ -1662,8 +2627,8 @@ We then configure the dictionary we&rsquo;re using in <a href="#org0a2adfb">ispe
 </div>
 </div>
 </div>
-<div id="outline-container-org843552e" class="outline-3">
-<h3 id="org843552e"><span class="section-number-3">4.4</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration</h3>
+<div id="outline-container-org2633f54" class="outline-3">
+<h3 id="org2633f54"><span class="section-number-3">4.4</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 It&rsquo;s nice to recognise GitHub (so we can use <code>GFM</code>), and other apps which we know
@@ -1705,8 +2670,8 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
                          <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">define-key</span> keymap <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">kbd</span> <span style="color: #7bc275;">"C-SPC"</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda!</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">delete-region</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">point-min</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">point-max</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
                          keymap<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
     <span style="color: #62686E;">;; </span><span style="color: #62686E;">disable tabs</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">bound-and-true-p</span> <span style="color: #DFDFDF;">centaur-tabs-mode</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">centaur-tabs-local-mode</span> t<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">bound-and-true-p</span> centaur-tabs-mode<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span>centaur-tabs-local-mode t<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
 <span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">ea-popup-handler</span> <span style="color: #C57BDB;">(</span>app-name window-title x y w h<span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">interactive</span><span style="color: #C57BDB;">)</span>
@@ -1742,8 +2707,8 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-orge9a7c62" class="outline-3">
-<h3 id="orge9a7c62"><span class="section-number-3">4.5</span> Flyspell</h3>
+<div id="outline-container-orgf5d997d" class="outline-3">
+<h3 id="orgf5d997d"><span class="section-number-3">4.5</span> Flyspell</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 At one point, typing became noticably laggy, Profiling revealed
@@ -1756,8 +2721,8 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd481b51" class="outline-3">
-<h3 id="orgd481b51"><span class="section-number-3">4.6</span> Tramp</h3>
+<div id="outline-container-orgc4875d7" class="outline-3">
+<h3 id="orgc4875d7"><span class="section-number-3">4.6</span> Tramp</h3>
 <div class="outline-text-3" id="text-4-6">
 <p>
 Let&rsquo;s try to make tramp handle prompts better
@@ -1769,15 +2734,15 @@ Let&rsquo;s try to make tramp handle prompts better
 </pre>
 </div>
 </div>
-<div id="outline-container-org715a89d" class="outline-5">
-<h5 id="org715a89d"><span class="section-number-5">4.6.0.1</span> Troubleshooting</h5>
+<div id="outline-container-org10cebdb" class="outline-5">
+<h5 id="org10cebdb"><span class="section-number-5">4.6.0.1</span> Troubleshooting</h5>
 <div class="outline-text-5" id="text-4-6-0-1">
 <p>
 In case the remote shell is misbehaving, here are some things to try
 </p>
 </div>
-<div id="outline-container-orgecdcd68" class="outline-6">
-<h6 id="orgecdcd68"><span class="section-number-6">4.6.0.1.1</span> Zsh</h6>
+<div id="outline-container-org30e544d" class="outline-6">
+<h6 id="org30e544d"><span class="section-number-6">4.6.0.1.1</span> Zsh</h6>
 <div class="outline-text-6" id="text-4-6-0-1-1">
 <p>
 There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more considerately.
@@ -1795,8 +2760,8 @@ There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more
 </div>
 </div>
 </div>
-<div id="outline-container-org174840f" class="outline-3">
-<h3 id="org174840f"><span class="section-number-3">4.7</span> Treemacs</h3>
+<div id="outline-container-orga9a55af" class="outline-3">
+<h3 id="orga9a55af"><span class="section-number-3">4.7</span> Treemacs</h3>
 <div class="outline-text-3" id="text-4-7">
 <p>
 Quite often there are superfluous files I&rsquo;m not that interested in. There&rsquo;s no
@@ -1859,12 +2824,12 @@ Now, we just identify the files in question.
 </div>
 </div>
 </div>
-<div id="outline-container-orgfec6cc0" class="outline-3">
-<h3 id="orgfec6cc0"><span class="section-number-3">4.8</span> Miscellaneous</h3>
+<div id="outline-container-org56c3e87" class="outline-3">
+<h3 id="org56c3e87"><span class="section-number-3">4.8</span> Miscellaneous</h3>
 <div class="outline-text-3" id="text-4-8">
 </div>
-<div id="outline-container-org7cf91b4" class="outline-4">
-<h4 id="org7cf91b4"><span class="section-number-4">4.8.1</span> calc</h4>
+<div id="outline-container-org5de0dd7" class="outline-4">
+<h4 id="org5de0dd7"><span class="section-number-4">4.8.1</span> calc</h4>
 <div class="outline-text-4" id="text-4-8-1">
 <p>
 Radians are just better
@@ -1875,8 +2840,8 @@ Radians are just better
 </div>
 </div>
 </div>
-<div id="outline-container-org0876dcd" class="outline-4">
-<h4 id="org0876dcd"><span class="section-number-4">4.8.2</span> electric pair mode</h4>
+<div id="outline-container-orga4f4955" class="outline-4">
+<h4 id="orga4f4955"><span class="section-number-4">4.8.2</span> electric pair mode</h4>
 <div class="outline-text-4" id="text-4-8-2">
 <p>
 We want this everywhere
@@ -1887,8 +2852,8 @@ We want this everywhere
 </div>
 </div>
 </div>
-<div id="outline-container-org0a2adfb" class="outline-4">
-<h4 id="org0a2adfb"><span class="section-number-4">4.8.3</span> ispell</h4>
+<div id="outline-container-org42b98ae" class="outline-4">
+<h4 id="org42b98ae"><span class="section-number-4">4.8.3</span> ispell</h4>
 <div class="outline-text-4" id="text-4-8-3">
 <p>
 Let&rsquo;s get a nice big dictionary from <a href="http://app.aspell.net/create">SCOWL Custom List/Dictionary Creator</a> with
@@ -1922,8 +2887,8 @@ nearby (also means that if I change the &rsquo;main&rsquo; dictionary I keep my 
 </div>
 </div>
 </div>
-<div id="outline-container-orgdf2a537" class="outline-4">
-<h4 id="orgdf2a537"><span class="section-number-4">4.8.4</span> spray</h4>
+<div id="outline-container-org2b4f8c3" class="outline-4">
+<h4 id="org2b4f8c3"><span class="section-number-4">4.8.4</span> spray</h4>
 <div class="outline-text-4" id="text-4-8-4">
 <p>
 Let&rsquo;s make this suit me slightly better.
@@ -1935,8 +2900,8 @@ Let&rsquo;s make this suit me slightly better.
 </div>
 </div>
 </div>
-<div id="outline-container-org402f21d" class="outline-4">
-<h4 id="org402f21d"><span class="section-number-4">4.8.5</span> theme magic</h4>
+<div id="outline-container-org74205c1" class="outline-4">
+<h4 id="org74205c1"><span class="section-number-4">4.8.5</span> theme magic</h4>
 <div class="outline-text-4" id="text-4-8-5">
 <p>
 Let&rsquo;s automatically update terminals on theme change
@@ -1947,8 +2912,8 @@ Let&rsquo;s automatically update terminals on theme change
 </div>
 </div>
 </div>
-<div id="outline-container-org94f503c" class="outline-4">
-<h4 id="org94f503c"><span class="section-number-4">4.8.6</span> wttrin</h4>
+<div id="outline-container-org5802c42" class="outline-4">
+<h4 id="org5802c42"><span class="section-number-4">4.8.6</span> wttrin</h4>
 <div class="outline-text-4" id="text-4-8-6">
 <p>
 Set the default city. It&rsquo;s initially <code>Taipei</code> but I find the IP-locating that&rsquo;s
@@ -1960,14 +2925,23 @@ done perfectly acceptable, so let&rsquo;s make that happen.
 </div>
 </div>
 </div>
+<div id="outline-container-org55c9402" class="outline-4">
+<h4 id="org55c9402"><span class="section-number-4">4.8.7</span> elcord</h4>
+<div class="outline-text-4" id="text-4-8-7">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> elcord-use-major-mode-as-main-icon t<span style="color: #51afef;">)</span>
+</pre>
 </div>
 </div>
-<div id="outline-container-org38f1a3f" class="outline-2">
-<h2 id="org38f1a3f"><span class="section-number-2">5</span> Language configuration</h2>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf9745e3" class="outline-2">
+<h2 id="orgf9745e3"><span class="section-number-2">5</span> Language configuration</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org192184b" class="outline-4">
-<h4 id="org192184b"><span class="section-number-4">5.0.1</span> File Templates</h4>
+<div id="outline-container-org19ff12e" class="outline-4">
+<h4 id="org19ff12e"><span class="section-number-4">5.0.1</span> File Templates</h4>
 <div class="outline-text-4" id="text-5-0-1">
 <p>
 For some file types, we overwrite defaults in the <a href="./snippets">snippets</a> directory, others
@@ -1979,12 +2953,12 @@ need to have a template assigned.
 </div>
 </div>
 </div>
-<div id="outline-container-orga1f5d03" class="outline-3">
-<h3 id="orga1f5d03"><span class="section-number-3">5.1</span> Org Mode</h3>
+<div id="outline-container-org8b17621" class="outline-3">
+<h3 id="org8b17621"><span class="section-number-3">5.1</span> Org Mode</h3>
 <div class="outline-text-3" id="text-5-1">
 </div>
-<div id="outline-container-orge1a4fbc" class="outline-4">
-<h4 id="orge1a4fbc"><span class="section-number-4">5.1.1</span> System config</h4>
+<div id="outline-container-orgc2431ad" class="outline-4">
+<h4 id="orgc2431ad"><span class="section-number-4">5.1.1</span> System config</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <p>
 Org mode isn&rsquo;t recognised as it&rsquo;s own mime type by default, but that can easily
@@ -2020,15 +2994,15 @@ Then set emacs as the default editor
 </div>
 </div>
 </div>
-<div id="outline-container-org02dc4b1" class="outline-4">
-<h4 id="org02dc4b1"><span class="section-number-4">5.1.2</span> Behaviour</h4>
+<div id="outline-container-org9adcf0c" class="outline-4">
+<h4 id="org9adcf0c"><span class="section-number-4">5.1.2</span> Behaviour</h4>
 <div class="outline-text-4" id="text-5-1-2">
 </div>
-<div id="outline-container-org90147b8" class="outline-5">
-<h5 id="org90147b8"><span class="section-number-5">5.1.2.1</span> Tweaking defaults</h5>
+<div id="outline-container-orge356ae2" class="outline-5">
+<h5 id="orge356ae2"><span class="section-number-5">5.1.2.1</span> Tweaking defaults</h5>
 <div class="outline-text-5" id="text-5-1-2-1">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-directory</span> <span style="color: #7bc275;">"~/.org"</span>                      <span style="color: #62686E;">; </span><span style="color: #62686E;">let's put files here</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-directory <span style="color: #7bc275;">"~/.org"</span>                      <span style="color: #62686E;">; </span><span style="color: #62686E;">let's put files here</span>
       <span style="color: #DFDFDF;">org-use-property-inheritance</span> t              <span style="color: #62686E;">; </span><span style="color: #62686E;">it's convenient to have properties inherited</span>
       <span style="color: #DFDFDF;">org-log-done</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">time</span>                          <span style="color: #62686E;">; </span><span style="color: #62686E;">having the time a item is done sounds convininet</span>
       <span style="color: #DFDFDF;">org-list-allow-alphabetical</span> t               <span style="color: #62686E;">; </span><span style="color: #62686E;">have a. A. a) A) list bullets</span>
@@ -2052,8 +3026,8 @@ I also like the <code>:comments</code> header-argument, so let&rsquo;s make that
 </div>
 </div>
 </div>
-<div id="outline-container-org762e126" class="outline-5">
-<h5 id="org762e126"><span class="section-number-5">5.1.2.2</span> Extra functionality</h5>
+<div id="outline-container-org5dfa8fb" class="outline-5">
+<h5 id="org5dfa8fb"><span class="section-number-5">5.1.2.2</span> Extra functionality</h5>
 <div class="outline-text-5" id="text-5-1-2-2">
 <p>
 Let&rsquo;s also make creating an org buffer just that little bit easier.
@@ -2086,7 +3060,7 @@ I think it makes sense to have list bullets change with depth
 Occasionally I want to cite something.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">def-package!</span> org-ref
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> org-ref
    <span style="color: #C57BDB;">:after</span> org
    <span style="color: #C57BDB;">:config</span>
     <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-ref-completion-library</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-ref-ivy-cite</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -2113,8 +3087,8 @@ My spelling is atrocious, so let&rsquo;s get flycheck going.
 </div>
 </div>
 </div>
-<div id="outline-container-org8ee3454" class="outline-5">
-<h5 id="org8ee3454"><span class="section-number-5">5.1.2.3</span> Nicer headings</h5>
+<div id="outline-container-orgcbb1576" class="outline-5">
+<h5 id="orgcbb1576"><span class="section-number-5">5.1.2.3</span> Nicer headings</h5>
 <div class="outline-text-5" id="text-5-1-2-3">
 <p>
 Thanks to alphapapa&rsquo;s <a href="https://github.com/alphapapa/unpackaged.el#export-to-html-with-useful-anchors">unpackaged.el</a>.
@@ -2210,8 +3184,8 @@ Unfortunately this currently seems to break some of the other modifications I&rs
 </div>
 </div>
 </div>
-<div id="outline-container-org559b7b7" class="outline-5">
-<h5 id="org559b7b7"><span class="section-number-5">5.1.2.4</span> Nicer <code>org-return</code></h5>
+<div id="outline-container-orgc8f7398" class="outline-5">
+<h5 id="orgc8f7398"><span class="section-number-5">5.1.2.4</span> Nicer <code>org-return</code></h5>
 <div class="outline-text-5" id="text-5-1-2-4">
 <p>
 Once again, from <a href="https://github.com/alphapapa/unpackaged.el#org-return-dwim">unpackaged.el</a>
@@ -2320,16 +3294,16 @@ Once again, from <a href="https://github.com/alphapapa/unpackaged.el#org-return-
 </div>
 </div>
 </div>
-<div id="outline-container-orgbe6f8a4" class="outline-4">
-<h4 id="orgbe6f8a4"><span class="section-number-4">5.1.3</span> Visuals</h4>
+<div id="outline-container-org5ef6ae4" class="outline-4">
+<h4 id="org5ef6ae4"><span class="section-number-4">5.1.3</span> Visuals</h4>
 <div class="outline-text-4" id="text-5-1-3">
 </div>
-<div id="outline-container-org6ec5ffb" class="outline-5">
-<h5 id="org6ec5ffb"><span class="section-number-5">5.1.3.1</span> In editor</h5>
+<div id="outline-container-org398d568" class="outline-5">
+<h5 id="org398d568"><span class="section-number-5">5.1.3.1</span> In editor</h5>
 <div class="outline-text-5" id="text-5-1-3-1">
 </div>
-<div id="outline-container-orgf3fee59" class="outline-6">
-<h6 id="orgf3fee59"><span class="section-number-6">5.1.3.1.1</span> Font Display</h6>
+<div id="outline-container-org9e3e0b2" class="outline-6">
+<h6 id="org9e3e0b2"><span class="section-number-6">5.1.3.1.1</span> Font Display</h6>
 <div class="outline-text-6" id="text-5-1-3-1-1">
 <p>
 Mixed pitch is great. As is <code>+org-pretty-mode</code>, let&rsquo;s use them.
@@ -2363,8 +3337,8 @@ Let&rsquo;s make headings a bit bigger
 </div>
 </div>
 </div>
-<div id="outline-container-org5be59f6" class="outline-6">
-<h6 id="org5be59f6"><span class="section-number-6">5.1.3.1.2</span> Symbols</h6>
+<div id="outline-container-orgb4a164f" class="outline-6">
+<h6 id="orgb4a164f"><span class="section-number-6">5.1.3.1.2</span> Symbols</h6>
 <div class="outline-text-6" id="text-5-1-3-1-2">
 <p>
 It&rsquo;s also nice to change the character used for collapsed items (by default <code>…</code>),
@@ -2373,10 +3347,33 @@ and add an extra <code>org-bullet</code> to the default list of four.
 I&rsquo;ve also added some fun alternatives, just commented out.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-ellipsis</span> <span style="color: #7bc275;">" &#9662; "</span>
-      <span style="color: #DFDFDF;">org-bullets-bullet-list</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"&#9673;"</span> <span style="color: #7bc275;">"&#9675;"</span> <span style="color: #7bc275;">"&#10040;"</span> <span style="color: #7bc275;">"&#10047;"</span> <span style="color: #7bc275;">"&#10020;"</span><span style="color: #C57BDB;">)</span>
-      <span style="color: #62686E;">;; </span><span style="color: #62686E;">org-bullets-bullet-list '("&#8544;" "&#8545;" "&#8546;" "&#8547;" "&#8548;" "&#8549;" "&#8550;" "&#8551;" "&#8552;" "&#8553;")</span>
-      <span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> org-superstar <span style="color: #62686E;">; </span><span style="color: #62686E;">"prettier" bullets</span>
+  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-mode</span> . <span style="color: #DFDFDF;">org-superstar-mode</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+
+<span style="color: #51afef;">(</span><span style="color: #51afef;">use-package</span> org-fancy-priorities
+  <span style="color: #C57BDB;">:diminish</span>
+  <span style="color: #C57BDB;">:defines</span> <span style="color: #DFDFDF;">org-fancy-priorities-list</span>
+  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-mode</span> . <span style="color: #DFDFDF;">org-fancy-priorities-mode</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">:config</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">unless</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">char-displayable-p</span> ?&#10071;<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-fancy-priorities-list</span> <span style="color: #C57BDB;">'</span><span style="color: #51afef;">(</span><span style="color: #7bc275;">"HIGH"</span> <span style="color: #7bc275;">"MID"</span> <span style="color: #7bc275;">"LOW"</span> <span style="color: #7bc275;">"OPTIONAL"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+
+<span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">use-package</span> org-pretty-tags
+  <span style="color: #C57BDB;">:config</span>
+   <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-pretty-tags-surrogate-strings</span>
+          <span style="color: #C57BDB;">'</span><span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"uni"</span> . <span style="color: #7bc275;">"&#127891;"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+   <span style="color: #7bc275;">(</span><span style="color: #DFDFDF;">org-pretty-tags-global-mode</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+
+<span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-ellipsis</span> <span style="color: #7bc275;">" &#9662; "</span>
+        <span style="color: #DFDFDF;">org-superstar-headline-bullets-list</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#9673;"</span> <span style="color: #7bc275;">"&#9675;"</span> <span style="color: #7bc275;">"&#10040;"</span> <span style="color: #7bc275;">"&#10047;"</span> <span style="color: #7bc275;">"&#10020;"</span> <span style="color: #7bc275;">"&#10012;"</span> <span style="color: #7bc275;">"&#9670;"</span> <span style="color: #7bc275;">"&#9654;"</span><span style="color: #7bc275;">)</span>
+        <span style="color: #DFDFDF;">org-fancy-priorities-list</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>?A . <span style="color: #7bc275;">"&#9873;"</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>?B . <span style="color: #7bc275;">"&#11014;"</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>?C . <span style="color: #7bc275;">"&#11015;"</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>?D . <span style="color: #7bc275;">"&#10067;"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #DFDFDF;">org-priority-faces</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>?A . error<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>?B . warning<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>?C . success<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>?D . all-the-icons-blue<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #DFDFDF;">org-priority-highest</span> ?A
+        <span style="color: #DFDFDF;">org-priority-lowest</span> ?D
+        <span style="color: #62686E;">;; </span><span style="color: #62686E;">org-superstar-headline-bullets-list '("&#8544;" "&#8545;" "&#8546;" "&#8547;" "&#8548;" "&#8549;" "&#8550;" "&#8551;" "&#8552;" "&#8553;")</span>
+        <span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 <p>
@@ -2428,8 +3425,8 @@ We also like <code>org-fragtog</code>, and that wants a hook.
 </div>
 </div>
 </div>
-<div id="outline-container-orgc0f285a" class="outline-6">
-<h6 id="orgc0f285a"><span class="section-number-6">5.1.3.1.3</span> LaTeX Fragments</h6>
+<div id="outline-container-org96641a7" class="outline-6">
+<h6 id="org96641a7"><span class="section-number-6">5.1.3.1.3</span> LaTeX Fragments</h6>
 <div class="outline-text-6" id="text-5-1-3-1-3">
 <p>
 It&rsquo;s nice to customise the look of LaTeX fragments so they fit better in the
@@ -2568,7 +3565,7 @@ Now let&rsquo;s combine this to see what&rsquo;s best
 </table>
 
 <p>
-So, let&rsquo;s use <code>dvipng</code> for previewing LaTeX fragments in-emacs, but <code>dvisvgm</code> for <a href="#org431cf08">LaTeX Rendering</a>.
+So, let&rsquo;s use <code>dvipng</code> for previewing LaTeX fragments in-emacs, but <code>dvisvgm</code> for <a href="#org52f98f9">LaTeX Rendering</a>.
 <i>Unfortunately: it seems that svg sizing is annoying ATM, so let&rsquo;s actually not do this right now.</i>
 </p>
 
@@ -2603,8 +3600,8 @@ NB: This doesn&rsquo;t work at the moment.
 </div>
 </div>
 </div>
-<div id="outline-container-org418d6f1" class="outline-6">
-<h6 id="org418d6f1"><span class="section-number-6">5.1.3.1.4</span> Stolen from <a href="https://github.com/jkitchin/scimax">scimax</a> (semi-working right now)</h6>
+<div id="outline-container-org65d8cf3" class="outline-6">
+<h6 id="org65d8cf3"><span class="section-number-6">5.1.3.1.4</span> Stolen from <a href="https://github.com/jkitchin/scimax">scimax</a> (semi-working right now)</h6>
 <div class="outline-text-6" id="text-5-1-3-1-4">
 <p>
 I want fragment justification
@@ -2730,8 +3727,8 @@ There&rsquo;s also this lovely equation numbering stuff I&rsquo;ll nick
 </div>
 </div>
 </div>
-<div id="outline-container-org853827f" class="outline-5">
-<h5 id="org853827f"><span class="section-number-5">5.1.3.2</span> Exporting (general)</h5>
+<div id="outline-container-org5a3df90" class="outline-5">
+<h5 id="org5a3df90"><span class="section-number-5">5.1.3.2</span> Exporting (general)</h5>
 <div class="outline-text-5" id="text-5-1-3-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-export-headline-levels</span> <span style="color: #e69055; font-weight: bold;">5</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">I like nesting</span>
@@ -2739,17 +3736,17 @@ There&rsquo;s also this lovely equation numbering stuff I&rsquo;ll nick
 </div>
 </div>
 </div>
-<div id="outline-container-org431cf08" class="outline-5">
-<h5 id="org431cf08"><span class="section-number-5">5.1.3.3</span> Exporting to HTML</h5>
+<div id="outline-container-org52f98f9" class="outline-5">
+<h5 id="org52f98f9"><span class="section-number-5">5.1.3.3</span> Exporting to HTML</h5>
 <div class="outline-text-5" id="text-5-1-3-3">
 </div>
-<div id="outline-container-orgfad959e" class="outline-6">
-<h6 id="orgfad959e"><span class="section-number-6">5.1.3.3.1</span> Custom CSS/JS</h6>
+<div id="outline-container-orgc5334cf" class="outline-6">
+<h6 id="orgc5334cf"><span class="section-number-6">5.1.3.3.1</span> Custom CSS/JS</h6>
 <div class="outline-text-6" id="text-5-1-3-3-1">
 <p>
 There is a fantastic exporter config (<a href="https://github.com/fniessen/org-html-themes">fniessen/org-html-themes</a>) which we can
 setup to be used with all our org files. Since most of the syntax highlighting
-colours from our <a href="#org8879cf4">2.3.1.2</a> gets used, we benefit from customising the code block style.
+colours from our <a href="#orgaa1fbdb">2.3.1.2</a> gets used, we benefit from customising the code block style.
 </p>
 <p>
 We also want to make the background and foreground colours of the <code>&lt;pre&gt;</code> blocks
@@ -2980,8 +3977,8 @@ match out theme (they don&rsquo;t by default), so I scraped some code from <code
 </div>
 </div>
 </div>
-<div id="outline-container-org3aa3676" class="outline-6">
-<h6 id="org3aa3676"><span class="section-number-6">5.1.3.3.2</span> Make verbatim different to code</h6>
+<div id="outline-container-orgdc7df60" class="outline-6">
+<h6 id="orgdc7df60"><span class="section-number-6">5.1.3.3.2</span> Make verbatim different to code</h6>
 <div class="outline-text-6" id="text-5-1-3-3-2">
 <p>
 Since we have <kbd>verbatim</kbd> and <code>code</code>, let&rsquo;s use <kbd>verbatim</kbd> for key strokes.
@@ -2998,8 +3995,8 @@ Since we have <kbd>verbatim</kbd> and <code>code</code>, let&rsquo;s use <kbd>ve
 </div>
 </div>
 </div>
-<div id="outline-container-orge3595ef" class="outline-6">
-<h6 id="orge3595ef"><span class="section-number-6">5.1.3.3.3</span> Change checkbox type</h6>
+<div id="outline-container-org21b149c" class="outline-6">
+<h6 id="org21b149c"><span class="section-number-6">5.1.3.3.3</span> Change checkbox type</h6>
 <div class="outline-text-6" id="text-5-1-3-3-3">
 <p>
 We also want to use HTML checkboxes, however we want to get a bit fancier than default
@@ -3014,14 +4011,14 @@ We also want to use HTML checkboxes, however we want to get a bit fancier than d
 </pre>
 </div>
 <ul class="org-ul">
-<li class="off"><span class='checkbox'></span> I&rsquo;m yet to do this</li>
-<li class="trans"><span class='checkbox'></span> Work in progress</li>
-<li class="on"><span class='checkbox'></span> This is done</li>
+<li class="off"> I&rsquo;m yet to do this</li>
+<li class="trans"> Work in progress</li>
+<li class="on"> This is done</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbbef76f" class="outline-6">
-<h6 id="orgbbef76f"><span class="section-number-6">5.1.3.3.4</span> LaTeX Rendering</h6>
+<div id="outline-container-orgd3c8e96" class="outline-6">
+<h6 id="orgd3c8e96"><span class="section-number-6">5.1.3.3.4</span> LaTeX Rendering</h6>
 <div class="outline-text-6" id="text-5-1-3-3-4">
 <p>
 On the maths side of things, I consider <code>dvisvgm</code> to be a rather compelling
@@ -3034,8 +4031,8 @@ option. However this isn&rsquo;t sized very well at the moment.
 </div>
 </div>
 </div>
-<div id="outline-container-orgc0b5af3" class="outline-5">
-<h5 id="orgc0b5af3"><span class="section-number-5">5.1.3.4</span> Exporting to LaTeX</h5>
+<div id="outline-container-org6acfaee" class="outline-5">
+<h5 id="org6acfaee"><span class="section-number-5">5.1.3.4</span> Exporting to LaTeX</h5>
 <div class="outline-text-5" id="text-5-1-3-4">
 <p>
 I like automatically using spaced small caps for acronyms. For strings I want to
@@ -3160,8 +4157,8 @@ Now for a few more adjustments.
 </div>
 </div>
 </div>
-<div id="outline-container-org8ad5ab1" class="outline-5">
-<h5 id="org8ad5ab1"><span class="section-number-5">5.1.3.5</span> Exporting to Beamer</h5>
+<div id="outline-container-org3be3e0c" class="outline-5">
+<h5 id="org3be3e0c"><span class="section-number-5">5.1.3.5</span> Exporting to Beamer</h5>
 <div class="outline-text-5" id="text-5-1-3-5">
 <p>
 It&rsquo;s nice to use a different theme
@@ -3188,8 +4185,8 @@ frame from <code>1</code> to <code>2</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-org7118f5b" class="outline-5">
-<h5 id="org7118f5b"><span class="section-number-5">5.1.3.6</span> Exporting to GFM</h5>
+<div id="outline-container-org571b10a" class="outline-5">
+<h5 id="org571b10a"><span class="section-number-5">5.1.3.6</span> Exporting to GFM</h5>
 <div class="outline-text-5" id="text-5-1-3-6">
 <p>
 We just need to load <code>ox-gfm</code> for org-mode documents
@@ -3202,8 +4199,8 @@ We just need to load <code>ox-gfm</code> for org-mode documents
 </div>
 </div>
 </div>
-<div id="outline-container-org943d907" class="outline-4">
-<h4 id="org943d907"><span class="section-number-4">5.1.4</span> Babel</h4>
+<div id="outline-container-orga0b5007" class="outline-4">
+<h4 id="orga0b5007"><span class="section-number-4">5.1.4</span> Babel</h4>
 <div class="outline-text-4" id="text-5-1-4">
 <p>
 Doom lazy-loads babel languages, with is lovely.
@@ -3231,8 +4228,8 @@ We also like autocompletion here
 </div>
 </div>
 </div>
-<div id="outline-container-orgf238f98" class="outline-4">
-<h4 id="orgf238f98"><span class="section-number-4">5.1.5</span> ESS</h4>
+<div id="outline-container-org57a7bfc" class="outline-4">
+<h4 id="org57a7bfc"><span class="section-number-4">5.1.5</span> ESS</h4>
 <div class="outline-text-4" id="text-5-1-5">
 <p>
 We don&rsquo;t want <code>R</code> evaluation to hang the editor, hence
@@ -3262,12 +4259,12 @@ Syntax highlighting is nice, so let&rsquo;s turn all of that on
 </div>
 </div>
 </div>
-<div id="outline-container-org8482a07" class="outline-3">
-<h3 id="org8482a07"><span class="section-number-3">5.2</span> LaTeX</h3>
+<div id="outline-container-org44d835b" class="outline-3">
+<h3 id="org44d835b"><span class="section-number-3">5.2</span> LaTeX</h3>
 <div class="outline-text-3" id="text-5-2">
 </div>
-<div id="outline-container-org7fa040d" class="outline-4">
-<h4 id="org7fa040d"><span class="section-number-4">5.2.1</span> To-be-implemented ideas</h4>
+<div id="outline-container-org495482d" class="outline-4">
+<h4 id="org495482d"><span class="section-number-4">5.2.1</span> To-be-implemented ideas</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <ul class="org-ul">
 <li>Paste image from clipboard
@@ -3296,14 +4293,27 @@ filename as variable maybe?)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org824d3b7" class="outline-4">
-<h4 id="org824d3b7"><span class="section-number-4">5.2.2</span> Snippet value</h4>
+<div id="outline-container-org65a39e8" class="outline-4">
+<h4 id="org65a39e8"><span class="section-number-4">5.2.2</span> Compilation</h4>
 <div class="outline-text-4" id="text-5-2-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">TeX-save-query</span> nil
+      <span style="color: #DFDFDF;">TeX-show-compilation</span> t
+      <span style="color: #DFDFDF;">TeX-command-extra-options</span> <span style="color: #7bc275;">"-shell-escape"</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> latex
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">TeX-command-list</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"XeLaTeX"</span> <span style="color: #7bc275;">"%`xelatex%(mode)%' %t"</span> TeX-run-TeX nil t<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org72e5d44" class="outline-4">
+<h4 id="org72e5d44"><span class="section-number-4">5.2.3</span> Snippet value</h4>
+<div class="outline-text-4" id="text-5-2-3">
 <p>
 For use in the new-file template, let&rsquo;s set out a nice preamble we may want to use.
 </p>
 <div class="org-src-container">
-<pre class="src src-latex" id="orgaf0c94d"><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">pdfa,unicode=true,hidelinks</span>]{<span style="color: #5cEfFF;">hyperref</span>}
+<pre class="src src-latex" id="orgd10ead1"><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">pdfa,unicode=true,hidelinks</span>]{<span style="color: #5cEfFF;">hyperref</span>}
 
 <span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">dvipsnames,svgnames,table,hyperref</span>]{<span style="color: #5cEfFF;">xcolor</span>}
 <span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">renewcommand</span>{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">UrlFont</span>}{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">ttfamily</span><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">small</span>}
@@ -3368,9 +4378,9 @@ Then let&rsquo;s bind the content to a function, and define some nice helpers.
 </div>
 </div>
 </div>
-<div id="outline-container-orgc1b7053" class="outline-4">
-<h4 id="orgc1b7053"><span class="section-number-4">5.2.3</span> Editor visuals</h4>
-<div class="outline-text-4" id="text-5-2-3">
+<div id="outline-container-org202393a" class="outline-4">
+<h4 id="org202393a"><span class="section-number-4">5.2.4</span> Editor visuals</h4>
+<div class="outline-text-4" id="text-5-2-4">
 <p>
 Once again, <i>all hail mixed pitch mode!</i>
 </p>
@@ -3383,12 +4393,14 @@ Once again, <i>all hail mixed pitch mode!</i>
 Let&rsquo;s enhance <code>TeX-fold-math</code> a bit
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">TeX-fold-math-spec-list</span>
-      <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #62686E;">;; </span><span style="color: #62686E;">missing/better symbols</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> latex
+  <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">setcar</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"&#8902;"</span> <span style="color: #DFDFDF;">LaTeX-fold-math-spec-list</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">"&#9733;"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">make \star bigger</span>
+
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">TeX-fold-math-spec-list</span>
+      <span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">(</span><span style="color: #62686E;">;; </span><span style="color: #62686E;">missing/better symbols</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8804;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"le"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8805;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"ge"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8800;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"ne"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#9733;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"star"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #62686E;">;; </span><span style="color: #62686E;">conviniance shorts</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8249;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"left"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8250;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"right"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
@@ -3404,7 +4416,9 @@ Let&rsquo;s enhance <code>TeX-fold-math</code> a bit
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#119889;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"dd"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #62686E;">;; </span><span style="color: #62686E;">known commands</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">""</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"phantom"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"({1}&#10744;{2})"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"frac"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#10090;{1}&#65295;{2}&#10091;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"frac"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>,<span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>arg<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"&#8730;"</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">TeX-fold-parenthesize-as-neccesary</span> arg<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"sqrt"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>,<span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>arg<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"&#11105;"</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">TeX-fold-parenthesize-as-neccesary</span> arg<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"vec"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8216;</span><span style="color: #a991f1;">{1}</span><span style="color: #7bc275;">&#8217;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"text"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #62686E;">;; </span><span style="color: #62686E;">private commands</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"|{1}|"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"abs"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
@@ -3412,9 +4426,16 @@ Let&rsquo;s enhance <code>TeX-fold-math</code> a bit
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8970;{1}&#8971;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"floor"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8968;{1}&#8969;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"ceil"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8970;{1}&#8969;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"round"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#11105;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"vec"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#119889;{1}&#10744;&#119889;{2}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"dv"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8706;{1}&#10744;&#8706;{2}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"pdv"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#119889;{1}/&#119889;{2}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"dv"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8706;{1}/&#8706;{2}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"pdv"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #62686E;">;; </span><span style="color: #62686E;">fancification</span>
+        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"mathrm"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>,<span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>word<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">string-offset-roman-chars</span> <span style="color: #e69055; font-weight: bold;">119743</span> word<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"mathbf"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>,<span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>word<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">string-offset-roman-chars</span> <span style="color: #e69055; font-weight: bold;">119951</span> word<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"mathcal"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>,<span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>word<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">string-offset-roman-chars</span> <span style="color: #e69055; font-weight: bold;">120003</span> word<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"mathfrak"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>,<span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>word<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">string-offset-roman-chars</span> <span style="color: #e69055; font-weight: bold;">120055</span> word<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"mathbb"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>,<span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>word<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">string-offset-roman-chars</span> <span style="color: #e69055; font-weight: bold;">120159</span> word<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"mathsf"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>,<span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>word<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">string-offset-roman-chars</span> <span style="color: #e69055; font-weight: bold;">120367</span> word<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"mathtt"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #C57BDB;">)</span>
       <span style="color: #DFDFDF;">TeX-fold-macro-spec-list</span>
       <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>
@@ -3443,36 +4464,18 @@ Let&rsquo;s enhance <code>TeX-fold-math</code> a bit
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#11030;&#8198;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"begin"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#11031;&#8198;{1}"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"end"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
 
-<p>
-Let&rsquo;s just make the folding a little less manual
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">+latex-use-TeX-fold</span> t
-  <span style="color: #7e7e87;">"Use TeX fold in TeX-mode.</span>
-<span style="color: #7e7e87;">When set to non-nil, this adds a few hooks/advices to fold stuff."</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">string-offset-roman-chars</span> <span style="color: #C57BDB;">(</span>offset word<span style="color: #C57BDB;">)</span>
+  <span style="color: #7e7e87;">"Shift the codepoint of each charachter in WORD by OFFSET with an extra -6 shift if the letter is lowercase"</span>
+    <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">apply</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">string</span>
+       <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>c<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">+</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">&gt;=</span> c <span style="color: #e69055; font-weight: bold;">97</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">-</span> c <span style="color: #e69055; font-weight: bold;">6</span><span style="color: #51afef;">)</span> c<span style="color: #7bc275;">)</span> offset<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> word<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #62686E;">;; </span><span style="color: #62686E;">Fold after cdlatex and snippets.</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+TeX-fold-line-ah</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;rest</span> _<span style="color: #C57BDB;">)</span>
-  <span style="color: #7e7e87;">"Auto-fold LaTeX macros after functions that typically insert them."</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">TeX-fold-region</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">line-beginning-position</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">line-end-position</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-
-<span style="color: #51afef;">(</span><span style="color: #51afef;">when</span> <span style="color: #DFDFDF;">+latex-use-TeX-fold</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">advice-add</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">cdlatex-math-symbol</span> <span style="color: #C57BDB;">:after</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+TeX-fold-line-ah</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">advice-add</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">cdlatex-math-modify</span> <span style="color: #C57BDB;">:after</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+TeX-fold-line-ah</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #62686E;">;; </span><span style="color: #62686E;">local after-snippet hook for folding</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">add-hook!</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">TeX-mode-hook</span>
-    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">yas-after-exit-snippet-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+TeX-fold-line-ah</span> nil t<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #62686E;">;; </span><span style="color: #62686E;">TeX-fold messes up the font face a bit too much, so</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">add-hook!</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mixed-pitch-mode-hook</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #DFDFDF;">mixed-pitch-mode</span>
-      <span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>var-pitch <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">variable-pitch</span> <span style="color: #C57BDB;">:family</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-            <span style="color: #7bc275;">(</span>var-height <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">variable-pitch</span> <span style="color: #C57BDB;">:height</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mixed-pitch-fixed-cookie</span>
-                     <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-remap-add-relative</span>
-                      <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">TeX-fold-folded-face</span> <span style="color: #C57BDB;">:family</span> var-pitch <span style="color: #C57BDB;">:height</span> var-height<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">TeX-fold-parenthesize-as-neccesary</span> <span style="color: #C57BDB;">(</span>tokens <span style="color: #FCCE7B;">&amp;optional</span> suppress-left suppress-right<span style="color: #C57BDB;">)</span>
+  <span style="color: #7e7e87;">"Add &#10090; &#10091; parenthesis as if multiple LaTeX tokens appear to be present"</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">string-match-p</span> <span style="color: #7bc275;">"^\\\\?\\w+$"</span> tokens<span style="color: #7bc275;">)</span> tokens
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> suppress-left <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">"&#10090;"</span><span style="color: #51afef;">)</span>
+            tokens
+            <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> suppress-right <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">"&#10091;"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -3487,12 +4490,7 @@ Some local keybindings to make life a bit easier
 
    <span style="color: #62686E;">;; </span><span style="color: #62686E;">normal stuff here</span>
    <span style="color: #C57BDB;">:localleader</span>
-   <span style="color: #C57BDB;">:desc</span> <span style="color: #7bc275;">"View"</span> <span style="color: #7bc275;">"v"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">TeX-view</span>
-   <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:when</span> <span style="color: #DFDFDF;">+latex-use-TeX-fold</span>
-     <span style="color: #C57BDB;">:desc</span> <span style="color: #7bc275;">"Fold paragraph"</span>     <span style="color: #7bc275;">"f"</span>   <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">TeX-fold-paragraph</span>
-     <span style="color: #C57BDB;">:desc</span> <span style="color: #7bc275;">"Unfold paragraph"</span>   <span style="color: #7bc275;">"C-f"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">TeX-fold-clearout-paragraph</span>
-     <span style="color: #C57BDB;">:desc</span> <span style="color: #7bc275;">"Fold buffer"</span>        <span style="color: #7bc275;">"F"</span>   <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">TeX-fold-buffer</span>
-     <span style="color: #C57BDB;">:desc</span> <span style="color: #7bc275;">"Unfold buffer"</span>      <span style="color: #7bc275;">"C-F"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">TeX-fold-clearout-buffer</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+   <span style="color: #C57BDB;">:desc</span> <span style="color: #7bc275;">"View"</span> <span style="color: #7bc275;">"v"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">TeX-view</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">TeX-electric-math</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">(</span><span style="color: #7bc275;">"</span> . <span style="color: #7bc275;">""</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
@@ -3532,9 +4530,9 @@ And enable shell escape for the preview
 </div>
 </div>
 </div>
-<div id="outline-container-org4293f83" class="outline-4">
-<h4 id="org4293f83"><span class="section-number-4">5.2.4</span> CDLaTeX</h4>
-<div class="outline-text-4" id="text-5-2-4">
+<div id="outline-container-orgef048cb" class="outline-4">
+<h4 id="orgef048cb"><span class="section-number-4">5.2.5</span> CDLaTeX</h4>
+<div class="outline-text-4" id="text-5-2-5">
 <p>
 The symbols and modifies are very nice by default, but could do with a bit of
 fleshing out. Let&rsquo;s change the prefix to a key which is similarly rarely used,
@@ -3566,13 +4564,24 @@ but more convinient, like <kbd>;</kbd>.
 </div>
 </div>
 </div>
+<div id="outline-container-orgb7f4cd2" class="outline-4">
+<h4 id="orgb7f4cd2"><span class="section-number-4">5.2.6</span> SyncTeX</h4>
+<div class="outline-text-4" id="text-5-2-6">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> tex
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">TeX-view-program-list</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"Evince"</span> <span style="color: #7bc275;">"evince %o"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">TeX-view-program-selection</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>output-pdf <span style="color: #7bc275;">"Evince"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
 </div>
-<div id="outline-container-orgbc967e4" class="outline-3">
-<h3 id="orgbc967e4"><span class="section-number-3">5.3</span> R</h3>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdffaea5" class="outline-3">
+<h3 id="orgdffaea5"><span class="section-number-3">5.3</span> R</h3>
 <div class="outline-text-3" id="text-5-3">
 </div>
-<div id="outline-container-orga98778f" class="outline-4">
-<h4 id="orga98778f"><span class="section-number-4">5.3.1</span> Editor Visuals</h4>
+<div id="outline-container-org669c9fd" class="outline-4">
+<h4 id="org669c9fd"><span class="section-number-4">5.3.1</span> Editor Visuals</h4>
 <div class="outline-text-4" id="text-5-3-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> ess-r-mode
@@ -3603,8 +4612,8 @@ but more convinient, like <kbd>;</kbd>.
 </div>
 </div>
 </div>
-<div id="outline-container-org0207a48" class="outline-3">
-<h3 id="org0207a48"><span class="section-number-3">5.4</span> hledger</h3>
+<div id="outline-container-org7bcfb20" class="outline-3">
+<h3 id="org7bcfb20"><span class="section-number-3">5.4</span> hledger</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 <code>ledger-mode</code> is great and all, but <code>hledger</code> seems to be more actively maintained.
@@ -3626,8 +4635,8 @@ and produced by John Wiegley &#x2014; author of <code>ledger</code> and current 
 </div>
 </div>
 </div>
-<div id="outline-container-org47fb9e9" class="outline-3">
-<h3 id="org47fb9e9"><span class="section-number-3">5.5</span> Markdown</h3>
+<div id="outline-container-orgca8ae09" class="outline-3">
+<h3 id="orgca8ae09"><span class="section-number-3">5.5</span> Markdown</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 Let&rsquo;s use mixed pitch, because it&rsquo;s great
@@ -3646,8 +4655,8 @@ will do it&rsquo;s own line wrapping, hence we <i>only</i> want to use visual li
 </div>
 </div>
 </div>
-<div id="outline-container-org095d1a0" class="outline-3">
-<h3 id="org095d1a0"><span class="section-number-3">5.6</span> Beancount</h3>
+<div id="outline-container-org251fa6c" class="outline-3">
+<h3 id="org251fa6c"><span class="section-number-3">5.6</span> Beancount</h3>
 <div class="outline-text-3" id="text-5-6">
 <p>
 The <a href="https://bitbucket.org/blais/beancount/src/tip/editors/emacs/beancount.el">beancount package</a> online has been put into <code>./lisp</code>, we just need to load and
@@ -3675,7 +4684,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-03-28 Sat 23:01</p>
+<p class="date">Created: 2020-04-10 Fri 02:27</p>
 </div>
 </body>
 </html>
