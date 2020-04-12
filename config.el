@@ -1,13 +1,13 @@
-;; [[file:~/.config/doom/config.org::*Rudimentary configuration][Rudimentary configuration:1]]
+;; [[file:~/.config/doom/config.org::*Rudimentary%20configuration][Rudimentary configuration:1]]
 ;;; config.el -*- lexical-binding: t; -*-
 ;; Rudimentary configuration:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Personal Information][Personal Information:1]]
+;; [[file:~/.config/doom/config.org::*Personal%20Information][Personal Information:1]]
 (setq user-full-name "tecosaur"
       user-mail-address "tecosaur@gmail.com")
 ;; Personal Information:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Simple settings][Simple settings:1]]
+;; [[file:~/.config/doom/config.org::*Simple%20settings][Simple settings:1]]
 (setq-default
  delete-by-moving-to-trash t                      ; Delete files to trash
  tab-width 4                                      ; Set width for tabs
@@ -49,11 +49,11 @@
   (+ivy/switch-buffer))
 ;; Windows:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Buffer defaults][Buffer defaults:1]]
+;; [[file:~/.config/doom/config.org::*Buffer%20defaults][Buffer defaults:1]]
 ;; (setq-default major-mode 'org-mode)
 ;; Buffer defaults:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Font Face][Font Face:1]]
+;; [[file:~/.config/doom/config.org::*Font%20Face][Font Face:1]]
 (setq doom-font (font-spec :family "Fira Code" :size 22)
       doom-big-font (font-spec :family "Fira Code" :size 36)
       doom-variable-pitch-font (font-spec :family "Overpass" :size 24))
@@ -81,12 +81,12 @@
 (custom-set-faces! '(doom-modeline-evil-insert-state :weight bold :foreground "#339CDB"))
 ;; Miscellaneous:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Mouse buttons][Mouse buttons:1]]
+;; [[file:~/.config/doom/config.org::*Mouse%20buttons][Mouse buttons:1]]
 (map! :n [mouse-8] #'better-jumper-jump-backward
       :n [mouse-9] #'better-jumper-jump-forward)
 ;; Mouse buttons:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Window title][Window title:1]]
+;; [[file:~/.config/doom/config.org::*Window%20title][Window title:1]]
 (setq frame-title-format
     '(""
       "%b"
@@ -96,7 +96,7 @@
            (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
 ;; Window title:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Splash screen][Splash screen:1]]
+;; [[file:~/.config/doom/config.org::*Splash%20screen][Splash screen:1]]
 (defvar fancy-splash-image-template
   (expand-file-name "misc/splash-images/blackhole-lines-template.svg" doom-private-dir)
   "Default template svg used for the splash image, with substitutions from ")
@@ -201,7 +201,26 @@
 (add-hook 'doom-load-theme-hook #'set-appropriate-splash)
 ;; Splash screen:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Abbrev mode][Abbrev mode:1]]
+(defun +doom/update-all-pinned-package-form ()
+  "Call `doom/update-pinned-package-form' on every package! statement in the buffer"
+  (interactive)
+  (beginning-of-buffer)
+  (let ((progress 0) (total (how-many "package!")) (updated 0))
+    (while (search-forward "package!" nil t)
+      (setq progress (1+ progress))
+      (forward-char) ;; move cursor to package name "package! |name"
+      (message (format "Re-pinning package: %s/%s (%s)" progress total (current-word)))
+      (backward-char)
+      (evil-scroll-line-to-center (line-number-at-pos))
+      (redisplay)
+      (if (s-contains-p "Updated" (condition-case nil
+                                      (doom/update-pinned-package-form)
+                                    (user-error "")))
+        (setq updated (1+ updated)))
+      (search-forward "package!" nil t)) ;; because of cursor-moving done
+    (message (format "%s packages updated" updated))))
+
+;; [[file:~/.config/doom/config.org::*Abbrev%20mode][Abbrev mode:1]]
 (use-package abbrev
   :init
   (setq-default abbrev-mode t)
@@ -218,7 +237,7 @@
   (setq save-abbrevs 'silently))
 ;; Abbrev mode:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Centaur Tabs][Centaur Tabs:1]]
+;; [[file:~/.config/doom/config.org::*Centaur%20Tabs][Centaur Tabs:1]]
 (after! centaur-tabs
   (centaur-tabs-mode -1)
   (setq centaur-tabs-height 36
@@ -244,7 +263,7 @@
 (setq-default prescient-history-length 1000)
 ;; Company:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Plain Text][Plain Text:1]]
+;; [[file:~/.config/doom/config.org::*Plain%20Text][Plain Text:1]]
 (set-company-backend! '(text-mode
                         markdown-mode
                         gfm-mode)
@@ -257,7 +276,7 @@
 (set-company-backend! 'ess-r-mode '(company-R-args company-R-objects company-dabbrev-code :separate))
 ;; ESS:1 ends here
 
-;; [[file:~/.config/doom/config.org::*\[\[https://github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1]]
+;; [[file:~/.config/doom/config.org::*%5B%5Bhttps://github.com/zachcurry/emacs-anywhere%5D%5BEmacs%20Anywhere%5D%5D%20configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1]]
 (defun markdown-window-p (window-title)
   "Judges from WINDOW-TITLE whether the current window likes markdown"
   (string-match-p (rx (or "Stack Exchange" "Stack Overflow"
@@ -265,7 +284,7 @@
                   window-title))
 ;; [[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1 ends here
 
-;; [[file:~/.config/doom/config.org::*\[\[https://github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2]]
+;; [[file:~/.config/doom/config.org::*%5B%5Bhttps://github.com/zachcurry/emacs-anywhere%5D%5BEmacs%20Anywhere%5D%5D%20configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2]]
 (define-minor-mode emacs-anywhere-mode
   "To tweak the current buffer for some emacs-anywhere considerations"
   :init-value nil
@@ -385,10 +404,16 @@
 ;; Treemacs:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*calc][calc:1]]
-(setq calc-angle-mode 'rad)
+(setq calc-angle-mode 'rad  ;; radians are rad
+      calc-algebraic-mode t ;; allows '2*x instead of 'x<RET>2*
+      calc-symbolic-mode t) ;; keeps stuff like √2 irrational for as long as possible
+(after! calctex
+  (setq calctex-format-latex-header (concat calctex-format-latex-header
+                                            "\n\\usepackage{arevmath}")))
+(add-hook 'calc-mode-hook #'calctex-mode)
 ;; calc:1 ends here
 
-;; [[file:~/.config/doom/config.org::*electric pair mode][electric pair mode:1]]
+;; [[file:~/.config/doom/config.org::*electric%20pair%20mode][electric pair mode:1]]
 (electric-pair-mode t)
 ;; electric pair mode:1 ends here
 
@@ -405,7 +430,7 @@
       spray-height 700)
 ;; spray:1 ends here
 
-;; [[file:~/.config/doom/config.org::*theme magic][theme magic:1]]
+;; [[file:~/.config/doom/config.org::*theme%20magic][theme magic:1]]
 (add-hook 'doom-load-theme-hook 'theme-magic-from-emacs)
 ;; theme magic:1 ends here
 
@@ -417,11 +442,11 @@
 (setq elcord-use-major-mode-as-main-icon t)
 ;; elcord:1 ends here
 
-;; [[file:~/.config/doom/config.org::*File Templates][File Templates:1]]
+;; [[file:~/.config/doom/config.org::*File%20Templates][File Templates:1]]
 (set-file-template! "\\.tex$" :trigger "__" :mode 'latex-mode)
 ;; File Templates:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Tweaking defaults][Tweaking defaults:1]]
+;; [[file:~/.config/doom/config.org::*Tweaking%20defaults][Tweaking defaults:1]]
 (setq org-directory "~/.org"                      ; let's put files here
       org-use-property-inheritance t              ; it's convenient to have properties inherited
       org-log-done 'time                          ; having the time a item is done sounds convininet
@@ -430,7 +455,7 @@
       org-catch-invisible-edits 'smart)           ; try not to accidently do weird stuff in invisible regions
 ;; Tweaking defaults:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Tweaking defaults][Tweaking defaults:2]]
+;; [[file:~/.config/doom/config.org::*Tweaking%20defaults][Tweaking defaults:2]]
 (setq org-babel-default-header-args '((:session . "none")
                                       (:results . "replace")
                                       (:exports . "code")
@@ -441,7 +466,7 @@
                                       (:comments . "link")))
 ;; Tweaking defaults:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:1]]
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:1]]
 (evil-define-command evil-buffer-org-new (count file)
   "Creates a new ORG buffer replacing the current window, optionally
    editing a certain FILE"
@@ -458,26 +483,364 @@
     :desc "New empty ORG buffer" "o" #'evil-buffer-org-new))
 ;; Extra functionality:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:2]]
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:2]]
 (setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+")))
 ;; Extra functionality:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:3]]
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:3]]
 (use-package! org-ref
    :after org
    :config
     (setq org-ref-completion-library 'org-ref-ivy-cite))
 ;; Extra functionality:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:4]]
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:4]]
 (after! org (add-hook 'org-mode-hook 'turn-on-org-cdlatex))
 ;; Extra functionality:4 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:5]]
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:5]]
 (after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
 ;; Extra functionality:5 ends here
 
-;; [[file:~/.config/doom/config.org::*Nicer ~org-return~][Nicer ~org-return~:1]]
+;; [[file:~/.config/doom/config.org::*Super%20agenda][Super agenda:1]]
+(use-package! org-super-agenda
+  :commands (org-super-agenda-mode))
+(after! org-agenda
+  (org-super-agenda-mode))
+
+(setq org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-block-separator nil
+      org-agenda-compact-blocks t)
+
+(setq org-agenda-custom-commands
+      '(("o" "Overview"
+         ((agenda "" ((org-agenda-span 'day)
+                      (org-super-agenda-groups
+                       '((:name "Today"
+                                :time-grid t
+                                :date today
+                                :todo "TODAY"
+                                :scheduled today
+                                :order 1)))))
+          (alltodo "" ((org-agenda-overriding-header "")
+                       (org-super-agenda-groups
+                        '((:name "Next to do"
+                                 :todo "NEXT"
+                                 :order 1)
+                          (:name "Important"
+                                 :tag "Important"
+                                 :priority "A"
+                                 :order 6)
+                          (:name "Due Today"
+                                 :deadline today
+                                 :order 2)
+                          (:name "Due Soon"
+                                 :deadline future
+                                 :order 8)
+                          (:name "Overdue"
+                                 :deadline past
+                                 :face error
+                                 :order 7)
+                          (:name "Assignments"
+                                 :tag "Assignment"
+                                 :order 10)
+                          (:name "Issues"
+                                 :tag "Issue"
+                                 :order 12)
+                          (:name "Projects"
+                                 :tag "Project"
+                                 :order 14)
+                          (:name "Emacs"
+                                 :tag "Emacs"
+                                 :order 13)
+                          (:name "Research"
+                                 :tag "Research"
+                                 :order 15)
+                          (:name "To read"
+                                 :tag "Read"
+                                 :order 30)
+                          (:name "Waiting"
+                                 :todo "WAITING"
+                                 :order 20)
+                          (:name "Trivial"
+                                 :priority<= "E"
+                                 :tag ("Trivial" "Unimportant")
+                                 :todo ("SOMEDAY" )
+                                 :order 90)
+                          (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
+;; Super agenda:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Capture][Capture:1]]
+(use-package! doct
+  :commands (doct))
+
+(after! org-capture
+  (defun org-capture-select-template-prettier (&optional keys)
+    "Select a capture template, in a prettier way than default
+  Lisp programs can force the template by setting KEYS to a string."
+    (let ((org-capture-templates
+           (or (org-contextualize-keys
+                (org-capture-upgrade-templates org-capture-templates)
+                org-capture-templates-contexts)
+               '(("t" "Task" entry (file+headline "" "Tasks")
+                  "* TODO %?\n  %u\n  %a")))))
+      (if keys
+          (or (assoc keys org-capture-templates)
+              (error "No capture template referred to by \"%s\" keys" keys))
+        (org-mks org-capture-templates
+                 "Select a capture template\n━━━━━━━━━━━━━━━━━━━━━━━━━"
+                 "Template key: "
+                 `(("q" ,(concat (all-the-icons-octicon "stop" :face 'all-the-icons-red :v-adjust 0.01) "\tAbort")))))))
+  (advice-add 'org-capture-select-template :override #'org-capture-select-template-prettier)
+  
+  (defun org-mks-pretty (table title &optional prompt specials)
+    "Select a member of an alist with multiple keys. Prettified.
+  
+  TABLE is the alist which should contain entries where the car is a string.
+  There should be two types of entries.
+  
+  1. prefix descriptions like (\"a\" \"Description\")
+     This indicates that `a' is a prefix key for multi-letter selection, and
+     that there are entries following with keys like \"ab\", \"ax\"…
+  
+  2. Select-able members must have more than two elements, with the first
+     being the string of keys that lead to selecting it, and the second a
+     short description string of the item.
+  
+  The command will then make a temporary buffer listing all entries
+  that can be selected with a single key, and all the single key
+  prefixes.  When you press the key for a single-letter entry, it is selected.
+  When you press a prefix key, the commands (and maybe further prefixes)
+  under this key will be shown and offered for selection.
+  
+  TITLE will be placed over the selection in the temporary buffer,
+  PROMPT will be used when prompting for a key.  SPECIALS is an
+  alist with (\"key\" \"description\") entries.  When one of these
+  is selected, only the bare key is returned."
+    (save-window-excursion
+      (let ((inhibit-quit t)
+      (buffer (org-switch-to-buffer-other-window "*Org Select*"))
+      (prompt (or prompt "Select: "))
+      case-fold-search
+      current)
+        (unwind-protect
+      (catch 'exit
+        (while t
+          (setq-local evil-normal-state-cursor (list nil))
+          (erase-buffer)
+          (insert title "\n\n")
+          (let ((des-keys nil)
+          (allowed-keys '("\C-g"))
+          (tab-alternatives '("\s" "\t" "\r"))
+          (cursor-type nil))
+      ;; Populate allowed keys and descriptions keys
+      ;; available with CURRENT selector.
+      (let ((re (format "\\`%s\\(.\\)\\'"
+            (if current (regexp-quote current) "")))
+            (prefix (if current (concat current " ") "")))
+        (dolist (entry table)
+          (pcase entry
+            ;; Description.
+            (`(,(and key (pred (string-match re))) ,desc)
+             (let ((k (match-string 1 key)))
+         (push k des-keys)
+         ;; Keys ending in tab, space or RET are equivalent.
+         (if (member k tab-alternatives)
+             (push "\t" allowed-keys)
+           (push k allowed-keys))
+         (insert (propertize prefix 'face 'font-lock-comment-face) (propertize k 'face 'bold) (propertize "›" 'face 'font-lock-comment-face) "  " desc "…" "\n")))
+            ;; Usable entry.
+            (`(,(and key (pred (string-match re))) ,desc . ,_)
+             (let ((k (match-string 1 key)))
+         (insert (propertize prefix 'face 'font-lock-comment-face) (propertize k 'face 'bold) "   " desc "\n")
+         (push k allowed-keys)))
+            (_ nil))))
+      ;; Insert special entries, if any.
+      (when specials
+        (insert "─────────────────────────\n")
+        (pcase-dolist (`(,key ,description) specials)
+          (insert (format "%s   %s\n" (propertize key 'face '(bold all-the-icons-red)) description))
+          (push key allowed-keys)))
+      ;; Display UI and let user select an entry or
+      ;; a sub-level prefix.
+      (goto-char (point-min))
+      (unless (pos-visible-in-window-p (point-max))
+        (org-fit-window-to-buffer))
+      (let ((pressed (org--mks-read-key allowed-keys prompt)))
+        (setq current (concat current pressed))
+        (cond
+         ((equal pressed "\C-g") (user-error "Abort"))
+         ;; Selection is a prefix: open a new menu.
+         ((member pressed des-keys))
+         ;; Selection matches an association: return it.
+         ((let ((entry (assoc current table)))
+            (and entry (throw 'exit entry))))
+         ;; Selection matches a special entry: return the
+         ;; selection prefix.
+         ((assoc current specials) (throw 'exit current))
+         (t (error "No entry available")))))))
+    (when buffer (kill-buffer buffer))))))
+  (advice-add 'org-mks :override #'org-mks-pretty)
+  (add-transient-hook! 'org-capture-select-template
+    (setq org-capture-templates
+          (doct `((,(format "%s\tPersonal todo" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
+                   :keys "t"
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Inbox"
+                   :type entry
+                   :template ("* TODO %?"
+                              "%i %a")
+                   )
+                  (,(format "%s\tPersonal note" (all-the-icons-faicon "sticky-note-o" :face 'all-the-icons-green :v-adjust 0.01))
+                   :keys "n"
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Inbox"
+                   :type entry
+                   :template ("* %?"
+                              "%i %a")
+                   )
+                  (,(format "%s\tUniversity" (all-the-icons-faicon "graduation-cap" :face 'all-the-icons-purple :v-adjust 0.01))
+                   :keys "u"
+                   :file +org-capture-todo-file
+                   :headline "University"
+                   :prepend t
+                   :type entry
+                   :children ((,(format "%s\tTest" (all-the-icons-material "timer" :face 'all-the-icons-red :v-adjust 0.01))
+                               :keys "t"
+                               :template ("* TODO [#C] %? :uni:tests:"
+                                          "SCHEDULED: %^{Test date:}T"
+                                          "%i %a"))
+                              (,(format "%s\tAssignment" (all-the-icons-material "library_books" :face 'all-the-icons-orange :v-adjust 0.01))
+                               :keys "a"
+                               :template ("* TODO [#B] %? :uni:assignments:"
+                                          "DEADLINE: %^{Due date:}T"
+                                          "%i %a"))
+                              (,(format "%s\tMiscellaneous task" (all-the-icons-faicon "list" :face 'all-the-icons-yellow :v-adjust 0.01))
+                               :keys "u"
+                               :template ("* TODO [#C] %? :uni:"
+                                          "%i %a"))))
+                  (,(format "%s\tEmail" (all-the-icons-faicon "envelope" :face 'all-the-icons-blue :v-adjust 0.01))
+                   :keys "e"
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Inbox"
+                   :type entry
+                   :template ("* TODO %? :email:"
+                              "%i %a"))
+                  (,(format "%s\tInteresting" (all-the-icons-faicon "eye" :face 'all-the-icons-lcyan :v-adjust 0.01))
+                   :keys "i"
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Interesting"
+                   :type entry
+                   :template ("* [ ] %{desc}%? :%{i-type}:"
+                              "%i %a")
+                   :children ((,(format "%s\tWebpage" (all-the-icons-faicon "globe" :face 'all-the-icons-green :v-adjust 0.01))
+                               :keys "w"
+                               :desc "%(org-cliplink-capture) "
+                               :i-type "read:web"
+                               )
+                              (,(format "%s\tArticle" (all-the-icons-octicon "file-text" :face 'all-the-icons-yellow :v-adjust 0.01))
+                               :keys "a"
+                               :desc ""
+                               :i-type "read:reaserch"
+                               )
+                              (,(format "%s\tInformation" (all-the-icons-faicon "info-circle" :face 'all-the-icons-blue :v-adjust 0.01))
+                               :keys "i"
+                               :desc ""
+                               :i-type "read:info"
+                               )
+                              (,(format "%s\tIdea" (all-the-icons-material "bubble_chart" :face 'all-the-icons-silver :v-adjust 0.01))
+                               :keys "I"
+                               :desc ""
+                               :i-type "idea"
+                               )))
+                  (,(format "%s\tTasks" (all-the-icons-octicon "inbox" :face 'all-the-icons-yellow :v-adjust 0.01))
+                   :keys "k"
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Tasks"
+                   :type entry
+                   :template ("* TODO %? %^G%{extra}"
+                              "%i")
+                   :children ((,(format "%s\tGeneral Task" (all-the-icons-octicon "inbox" :face 'all-the-icons-yellow :v-adjust 0.01))
+                               :keys "k"
+                               :extra ""
+                               )
+                              (,(format "%s\tTask with deadline" (all-the-icons-material "timer" :face 'all-the-icons-orange :v-adjust -0.1))
+                               :keys "d"
+                               :extra "\nDEADLINE: %^{Deadline:}t"
+                               )
+                              (,(format "%s\tScheduled Task" (all-the-icons-octicon "calendar" :face 'all-the-icons-orange :v-adjust 0.01))
+                               :keys "s"
+                               :extra "\nSCHEDULED: %^{Start time:}t"
+                               )
+                              ))
+                  (,(format "%s\tProject" (all-the-icons-octicon "repo" :face 'all-the-icons-silver :v-adjust 0.01))
+                   :keys "p"
+                   :prepend t
+                   :type entry
+                   :headline "Inbox"
+                   :template ("* %{time-or-todo} %?"
+                              "%i"
+                              "%a")
+                   :file ""
+                   :custom (:time-or-todo "")
+                   :children ((,(format "%s\tProject-local todo" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
+                               :keys "t"
+                               :time-or-todo "TODO"
+                               :file +org-capture-project-todo-file)
+                              (,(format "%s\tProject-local note" (all-the-icons-faicon "sticky-note" :face 'all-the-icons-yellow :v-adjust 0.01))
+                               :keys "n"
+                               :time-or-todo "%U"
+                               :file +org-capture-project-notes-file)
+                              (,(format "%s\tProject-local changelog" (all-the-icons-faicon "list" :face 'all-the-icons-blue :v-adjust 0.01))
+                               :keys "c"
+                               :time-or-todo "%U"
+                               :heading "Unreleased"
+                               :file +org-capture-project-changelog-file))
+                   )
+                  ("\tCenteralised project templates"
+                   :keys "o"
+                   :type entry
+                   :prepend t
+                   :template ("* %{time-or-todo} %?"
+                              "%i"
+                              "%a")
+                   :children (("Project todo"
+                               :keys "t"
+                               :prepend nil
+                               :time-or-todo "TODO"
+                               :heading "Tasks"
+                               :file +org-capture-central-project-todo-file)
+                              ("Project note"
+                               :keys "n"
+                               :time-or-todo "%U"
+                               :heading "Notes"
+                               :file +org-capture-central-project-notes-file)
+                              ("Project changelog"
+                               :keys "c"
+                               :time-or-todo "%U"
+                               :heading "Unreleased"
+                               :file +org-capture-central-project-changelog-file))
+                   ))))))
+;; Capture:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Capture][Capture:3]]
+(setf (alist-get 'height +org-capture-frame-parameters) 15)
+      ;; (alist-get 'name +org-capture-frame-parameters) "❖ Capture") ;; ATM hardcoded in other places, so changing breaks stuff
+(setq +org-capture-fn
+      (lambda ()
+        (interactive)
+        (set-window-parameter nil 'mode-line-format 'none)
+        (org-capture)))
+;; Capture:3 ends here
+
+;; [[file:~/.config/doom/config.org::*Nicer%20~org-return~][Nicer ~org-return~:1]]
 (after! org
   (defun unpackaged/org-element-descendant-of (type element)
     "Return non-nil if ELEMENT is a descendant of TYPE.
@@ -578,15 +941,15 @@ appropriate.  In tables, insert a new row or end the table."
   (advice-add #'org-return-indent :override #'unpackaged/org-return-dwim))
 ;; Nicer ~org-return~:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Font Display][Font Display:1]]
+;; [[file:~/.config/doom/config.org::*Font%20Display][Font Display:1]]
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 ;; Font Display:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Font Display][Font Display:2]]
+;; [[file:~/.config/doom/config.org::*Font%20Display][Font Display:2]]
 (setq global-org-pretty-table-mode t)
 ;; Font Display:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Font Display][Font Display:3]]
+;; [[file:~/.config/doom/config.org::*Font%20Display][Font Display:3]]
 (custom-set-faces!
   '(outline-1 :weight extra-bold :height 1.2)
   '(outline-2 :weight bold :height 1.12)
@@ -614,16 +977,32 @@ appropriate.  In tables, insert a new row or end the table."
   (use-package org-pretty-tags
   :config
    (setq org-pretty-tags-surrogate-strings
-          '(("uni" . "🎓")))
+         '(("uni" . "🎓")
+           ("assignment" . "📓")
+           ("email" . "🖂")
+           ("read" . "🕮")
+           ("article" . "🖹")
+           ("web" . "🌐")
+           ("info" . "🛈")
+           ("issue" . "🐛")
+           ("emacs" . "ɛ")))
    (org-pretty-tags-global-mode)))
 
 (after! org
   (setq org-ellipsis " ▾ "
         org-superstar-headline-bullets-list '("◉" "○" "✸" "✿" "✤" "✜" "◆" "▶")
-        org-fancy-priorities-list '((?A . "⚑") (?B . "⬆") (?C . "⬇") (?D . "❓"))
-        org-priority-faces '((?A . error) (?B . warning) (?C . success) (?D . all-the-icons-blue))
+        org-fancy-priorities-list '((?A . "⚑")  ;; ASAP
+                                    (?B . "⬆")  ;; High
+                                    (?C . "■")  ;; Medium
+                                    (?D . "⬇")  ;; Low
+                                    (?E . "❓")) ;; Optional
+        org-priority-faces '((?A . all-the-icons-red)
+                             (?B . all-the-icons-orange)
+                             (?C . all-the-icons-yellow)
+                             (?D . all-the-icons-green)
+                             (?E . all-the-icons-blue))
         org-priority-highest ?A
-        org-priority-lowest ?D
+        org-priority-lowest ?E
         ;; org-superstar-headline-bullets-list '("Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ")
         ))
 ;; Symbols:1 ends here
@@ -669,7 +1048,7 @@ appropriate.  In tables, insert a new row or end the table."
 (add-hook 'org-mode-hook 'org-fragtog-mode)
 ;; Symbols:3 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Fragments][LaTeX Fragments:1]]
+;; [[file:~/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:1]]
 (setq org-format-latex-header "\\documentclass{article}
 \\usepackage[usenames]{color}
 
@@ -697,7 +1076,7 @@ appropriate.  In tables, insert a new row or end the table."
 \\usepackage{arevmath}")
 ;; LaTeX Fragments:1 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Fragments][LaTeX Fragments:2]]
+;; [[file:~/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:2]]
 (after! org
 ;; make background of fragments transparent
 ;; (let ((dvipng--plist (alist-get 'dvipng org-preview-latex-process-alist)))
@@ -713,12 +1092,12 @@ appropriate.  In tables, insert a new row or end the table."
 )
 ;; LaTeX Fragments:2 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Fragments][LaTeX Fragments:3]]
+;; [[file:~/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:3]]
 (after! org
   (add-to-list 'org-latex-regexps '("\\ce" "^\\\\ce{\\(?:[^\000{}]\\|{[^\000}]+?}\\)}" 0 nil)))
 ;; LaTeX Fragments:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Stolen from \[\[https://github.com/jkitchin/scimax\]\[scimax\]\] (semi-working right now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):1]]
+;; [[file:~/.config/doom/config.org::*Stolen%20from%20%5B%5Bhttps://github.com/jkitchin/scimax%5D%5Bscimax%5D%5D%20(semi-working%20right%20now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):1]]
 (after! org
   (defun scimax-org-latex-fragment-justify (justification)
     "Justify the latex fragment at point with JUSTIFICATION.
@@ -771,7 +1150,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
       (message "Latex fragment justification disabled"))))
 ;; Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):1 ends here
 
-;; [[file:~/.config/doom/config.org::*Stolen from \[\[https://github.com/jkitchin/scimax\]\[scimax\]\] (semi-working right now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):2]]
+;; [[file:~/.config/doom/config.org::*Stolen%20from%20%5B%5Bhttps://github.com/jkitchin/scimax%5D%5Bscimax%5D%5D%20(semi-working%20right%20now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):2]]
 ;; Numbered equations all have (1) as the number for fragments with vanilla
 ;; org-mode. This code injects the correct numbers into the previews so they
 ;; look good.
@@ -833,11 +1212,11 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
   (put 'scimax-org-renumber-environment 'enabled t))
 ;; Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):2 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting (general)][Exporting (general):1]]
+;; [[file:~/.config/doom/config.org::*Exporting%20(general)][Exporting (general):1]]
 (after! org (setq org-export-headline-levels 5)) ; I like nesting
 ;; Exporting (general):1 ends here
 
-;; [[file:~/.config/doom/config.org::*Custom CSS/JS][Custom CSS/JS:2]]
+;; [[file:~/.config/doom/config.org::*Custom%20CSS/JS][Custom CSS/JS:2]]
 (defun my-org-inline-css-hook (exporter)
   "Insert custom inline css to automatically set the
    background of code to whatever theme I'm using's background"
@@ -1060,7 +1439,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 (add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
 ;; Custom CSS/JS:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Make verbatim different to code][Make verbatim different to code:1]]
+;; [[file:~/.config/doom/config.org::*Make%20verbatim%20different%20to%20code][Make verbatim different to code:1]]
 (setq org-html-text-markup-alist
       '((bold . "<b>%s</b>")
         (code . "<code>%s</code>")
@@ -1070,7 +1449,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
         (verbatim . "<kbd>%s</kbd>")))
 ;; Make verbatim different to code:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Change checkbox type][Change checkbox type:1]]
+;; [[file:~/.config/doom/config.org::*Change%20checkbox%20type][Change checkbox type:1]]
 (after! org
 (appendq! org-html-checkbox-types '((html-span .
 	  ((on . "<span class='checkbox'></span>")
@@ -1079,11 +1458,11 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 (setq org-html-checkbox-type 'html-span))
 ;; Change checkbox type:1 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Rendering][LaTeX Rendering:1]]
+;; [[file:~/.config/doom/config.org::*LaTeX%20Rendering][LaTeX Rendering:1]]
 ;; (setq-default org-html-with-latex `dvisvgm)
 ;; LaTeX Rendering:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to LaTeX][Exporting to LaTeX:1]]
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20LaTeX][Exporting to LaTeX:1]]
 ;; TODO make this /only/ apply to text (i.e. not URL)
 (after! org
   (defun tec/org-export-latex-filter-acronym (text backend info)
@@ -1105,7 +1484,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
                'tec/org-export-latex-filter-acronym))
 ;; Exporting to LaTeX:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to LaTeX][Exporting to LaTeX:2]]
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20LaTeX][Exporting to LaTeX:2]]
 (after! ox-latex
   (add-to-list 'org-latex-classes
                '("fancy-article"
@@ -1195,19 +1574,19 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
         '("latexmk -shell-escape -interaction=nonstopmode -f -pdf -output-directory=%o %f")))
 ;; Exporting to LaTeX:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to Beamer][Exporting to Beamer:1]]
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20Beamer][Exporting to Beamer:1]]
 (setq org-beamer-theme "[progressbar=foot]metropolis")
 ;; Exporting to Beamer:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to Beamer][Exporting to Beamer:2]]
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20Beamer][Exporting to Beamer:2]]
 
 ;; Exporting to Beamer:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to Beamer][Exporting to Beamer:3]]
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20Beamer][Exporting to Beamer:3]]
 (setq org-beamer-frame-level 2)
 ;; Exporting to Beamer:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to GFM][Exporting to GFM:1]]
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20GFM][Exporting to GFM:1]]
 (eval-after-load "org"
   '(require 'ox-gfm nil t))
 ;; Exporting to GFM:1 ends here
@@ -1252,7 +1631,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
   (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t)))
 ;; Compilation:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Snippet value][Snippet value:2]]
+;; [[file:~/.config/doom/config.org::*Snippet%20value][Snippet value:2]]
 (setq tec/yas-latex-template-preamble "
 \\usepackage[pdfa,unicode=true,hidelinks]{hyperref}
 
@@ -1288,11 +1667,11 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
              (eq (read-char-choice "Include default preamble? [Type y/n]" '(?y ?n)) ?y)))
 ;; Snippet value:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:1]]
+;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:1]]
 (add-hook 'LaTeX-mode-hook #'mixed-pitch-mode)
 ;; Editor visuals:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:2]]
+;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:2]]
 (after! latex
   (setcar (assoc "⋆" LaTeX-fold-math-spec-list) "★")) ;; make \star bigger
 
@@ -1378,7 +1757,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
             (if suppress-right "" "❫"))))
 ;; Editor visuals:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:3]]
+;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:3]]
 (after! tex
   (map!
    :map LaTeX-mode-map
@@ -1390,7 +1769,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
   (setq TeX-electric-math '("\\(" . "")))
 ;; Editor visuals:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:4]]
+;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:4]]
 ;; Making \( \) less visible
 (defface unimportant-latex-face
   '((t
@@ -1409,7 +1788,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
  'end)
 ;; Editor visuals:4 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:5]]
+;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:5]]
 (setq preview-LaTeX-command '("%`%l \"\\nonstopmode\\nofiles\
 \\PassOptionsToPackage{" ("," . preview-required-option-list) "}{preview}\
 \\AtBeginDocument{\\ifx\\ifPreview\\undefined"
@@ -1446,7 +1825,7 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
   (add-to-list 'TeX-view-program-selection '(output-pdf "Evince")))
 ;; SyncTeX:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor Visuals][Editor Visuals:1]]
+;; [[file:~/.config/doom/config.org::*Editor%20Visuals][Editor Visuals:1]]
 (after! ess-r-mode
   (appendq! +pretty-code-symbols
             '(:assign "⟵"

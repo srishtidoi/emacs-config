@@ -1,4 +1,4 @@
-;; [[file:~/.config/doom/config.org::*Package loading][Package loading:1]]
+;; [[file:~/.config/doom/config.org::*Package%20loading][Package loading:1]]
 ;; -*- no-byte-compile: t; -*-
 ;; Package loading:1 ends here
 
@@ -13,7 +13,7 @@
   :recipe (:host github :repo "Ilazki/prettify-utils.el") :pin "8b783d316c")
 ;; Prettification:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Window management][Window management:1]]
+;; [[file:~/.config/doom/config.org::*Window%20management][Window management:1]]
 (package! rotate :pin "091b5ac4fc")
 ;; Window management:1 ends here
 
@@ -58,36 +58,46 @@
 (package! systemd :pin "51c148e09a")
 ;; Systemd:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Org Mode][Org Mode:1]]
+;; [[file:~/.config/doom/config.org::*Improve%20agenda/capture][Improve agenda/capture:1]]
+(package! org-super-agenda :pin "dd0d104c26")
+;; Improve agenda/capture:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Improve%20agenda/capture][Improve agenda/capture:2]]
+(package! doct
+  :recipe (:host github :repo "progfolio/doct")
+  :pin "6cf1943ad7")
+;; Improve agenda/capture:2 ends here
+
+;; [[file:~/.config/doom/config.org::*Visuals][Visuals:1]]
 (package! org-pretty-table-mode
   :recipe (:host github :repo "Fuco1/org-pretty-table") :pin "88380f865a")
-;; Org Mode:1 ends here
+;; Visuals:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Org Mode][Org Mode:2]]
-(package! ox-gfm :pin "99f93011b0")
-;; Org Mode:2 ends here
-
-;; [[file:~/.config/doom/config.org::*Org Mode][Org Mode:3]]
-(package! org-ref :pin "5bb9be2232")
-;; Org Mode:3 ends here
-
-;; [[file:~/.config/doom/config.org::*Org Mode][Org Mode:4]]
+;; [[file:~/.config/doom/config.org::*Visuals][Visuals:2]]
 (package! org-fragtog :pin "8eca8084cc")
-;; Org Mode:4 ends here
+;; Visuals:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Org Mode][Org Mode:5]]
-(package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view") :pin "13314338d7")
-;; Org Mode:5 ends here
-
-;; [[file:~/.config/doom/config.org::*Org Mode][Org Mode:6]]
-(package! org-chef :pin "67f50aa2a2")
-;; Org Mode:6 ends here
-
-;; [[file:~/.config/doom/config.org::*Org Mode][Org Mode:7]]
+;; [[file:~/.config/doom/config.org::*Visuals][Visuals:3]]
 (package! org-bullets :disable t :pin "767f55feb5")
 (package! org-superstar
   :recipe (:host github :repo "integral-dw/org-superstar-mode")
   :pin "4659cfc120")
 (package! org-fancy-priorities :pin "819bb993b7")
 (package! org-pretty-tags :pin "40fd72f3e7")
-;; Org Mode:7 ends here
+;; Visuals:3 ends here
+
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:1]]
+(package! ox-gfm :pin "99f93011b0")
+;; Extra functionality:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:2]]
+(package! org-ref :pin "5bb9be2232")
+;; Extra functionality:2 ends here
+
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:3]]
+(package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view") :pin "13314338d7")
+;; Extra functionality:3 ends here
+
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:4]]
+(package! org-chef :pin "67f50aa2a2")
+;; Extra functionality:4 ends here
