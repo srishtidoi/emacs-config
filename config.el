@@ -306,8 +306,6 @@
                          (define-key keymap (kbd "DEL")   (lambda! (delete-region (point-min) (point-max))))
                          (define-key keymap (kbd "C-SPC") (lambda! (delete-region (point-min) (point-max))))
                          keymap))
-    ;; I'll be honest with myself, I /need/ spellcheck
-    (flyspell-buffer)
     ;; disable tabs
     (when (bound-and-true-p centaur-tabs-mode)
       (centaur-tabs-local-mode t))))
@@ -336,7 +334,10 @@
    (t (org-mode)) ; default major mode
    )
 
-  (when (gui-get-selection 'PRIMARY) (insert (gui-get-selection 'PRIMARY)))
+  (when-let ((selection (gui-get-selection 'PRIMARY)))
+    (insert selection)
+    ;; I'll be honest with myself, I /need/ spellcheck
+    (flyspell-buffer))
 
   (evil-insert-state) ; start in insert
   (emacs-anywhere-mode 1))
@@ -415,9 +416,12 @@
 (add-hook 'calc-mode-hook #'calctex-mode)
 ;; calc:1 ends here
 
-;; [[file:~/.config/doom/config.org::*electric%20pair%20mode][electric pair mode:1]]
-(electric-pair-mode t)
-;; electric pair mode:1 ends here
+;; [[file:~/.config/doom/config.org::*Smart%20Parentheses][Smart Parentheses:1]]
+(sp-local-pair
+     '(org-mode)
+     "<<" ">>"
+     :actions '(insert))
+;; Smart Parentheses:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*ispell][ispell:1]]
 (setq ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")

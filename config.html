@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-14 Tue 03:27 -->
+<!-- 2020-04-14 Tue 03:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -923,188 +923,6 @@
    ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
    ::-webkit-scrollbar-thumb:hover { background:#888; }
 </style>
-
-<style type="text/css">
-   :root {
-      --theme-bg: #242730;
-      --theme-bg-alt: #2a2e38;
-      --theme-base0: #1c1f24;
-      --theme-base1: #1c1f24;
-      --theme-base2: #21272d;
-      --theme-base3: #23272e;
-      --theme-base4: #484854;
-      --theme-base5: #62686E;
-      --theme-base6: #757B80;
-      --theme-base7: #9ca0a4;
-      --theme-base8: #DFDFDF;
-      --theme-fg: #bbc2cf;
-      --theme-fg-alt: #5D656B;
-      --theme-grey: #484854;
-      --theme-red: #ff665c;
-      --theme-orange: #e69055;
-      --theme-green: #7bc275;
-      --theme-teal: #4db5bd;
-      --theme-yellow: #FCCE7B;
-      --theme-blue: #51afef;
-      --theme-dark-blue: #1f5582;
-      --theme-magenta: #C57BDB;
-      --theme-violet: #a991f1;
-      --theme-cyan: #5cEfFF;
-      --theme-dark-cyan: #6A8FBF;
-   }
-</style>
-<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
-<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
-
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
-<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
-<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
-
-<style>
-   pre.src {
-     background-color: var(--theme-bg);
-     color: var(--theme-fg);
-     scrollbar-color:#bbb6#9992;
-     scrollbar-width: thin;
-     margin: 0;
-     border: none;
-   }
-   div.org-src-container {
-     border-radius: 12px;
-     overflow: hidden;
-     margin-bottom: 24px;
-     margin-top: 1px;
-     border: 1px solid#e1e4e5;
-   }
-   pre.src::before {
-     background-color:#6666;
-     top: 8px;
-     border: none;
-     border-radius: 5px;
-     line-height: 1;
-     border: 2px solid var(--theme-bg);
-     opacity: 0;
-     transition: opacity 200ms;
-   }
-   pre.src:hover::before { opacity: 1; }
-   pre.src:active::before { opacity: 0; }
-
-   pre.example {
-     border-radius: 12px;
-     background: var(--theme-bg-alt);
-     color: var(--theme-fg);
-   }
-
-   code {
-     border-radius: 5px;
-     background:#e8e8e8;
-     font-size: 80%;
-   }
-
-   kbd {
-     display: inline-block;
-     padding: 3px 5px;
-     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-     line-height: normal;
-     line-height: 10px;
-     color:#444d56;
-     vertical-align: middle;
-     background-color:#fafbfc;
-     border: 1px solid#d1d5da;
-     border-radius: 3px;
-     box-shadow: inset 0 -1px 0#d1d5da;
-   }
-
-   table {
-     max-width: 100%;
-     overflow-x: auto;
-     display: block;
-     border-top: none;
-   }
-
-   a {
-       text-decoration: none;
-       background-image: linear-gradient(#d8dce9, #d8dce9);
-       background-position: 0% 100%;
-       background-repeat: no-repeat;
-       background-size: 0% 2px;
-       transition: background-size .3s;
-   }
-   #table-of-contents a {
-       background-image: none;
-   }
-   a:hover, a:focus {
-       background-size: 100% 2px;
-   }
-   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
-   a[href^='#']:visited { color:#3091d1; }
-
-   li .checkbox {
-       display: inline-block;
-       width: 0.9em;
-       height: 0.9em;
-       border-radius: 3px;
-       margin: 3px;
-       top: 4px;
-       position: relative;
-   }
-   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
-   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
-   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
-   li.on > .checkbox::after {
-     content: '';
-     height: 0.45em;
-     width: 0.225em;
-     -webkit-transform-origin: left top;
-     transform-origin: left top;
-     transform: scaleX(-1) rotate(135deg);
-     border-right: 2.8px solid#fff;
-     border-top: 2.8px solid#fff;
-     opacity: 0.9;
-     left: 0.10em;
-     top: 0.45em;
-     position: absolute;
-   }
-   li.trans > .checkbox::after {
-       content: '';
-       font-weight: bold;
-       font-size: 1.6em;
-       position: absolute;
-       top: 0.23em;
-       left: 0.09em;
-       width: 0.35em;
-       height: 0.12em;
-       background:#fff;
-       opacity: 0.9;
-       border-radius: 0.1em;
-   }
-   li.off > .checkbox::after {
-    content: '✖';
-    color:#fff;
-    opacity: 0.9;
-    position: relative;
-    top: -0.40rem;
-    left: 0.17em;
-    font-size: 0.75em;
-  }
-
-   span.timestamp {
-       color: #003280;
-       background: #647CFF44;
-       border-radius: 3px;
-       line-height: 1.25;
-   }
-
-   #table-of-contents { overflow-y: auto; }
-   blockquote p { margin: 8px 0px 16px 0px; }
-   #postamble .date { color: var(--theme-green); }
-
-   ::-webkit-scrollbar { width: 10px; height: 8px; }
-   ::-webkit-scrollbar-track { background:#9992; }
-   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
-   ::-webkit-scrollbar-thumb:hover { background:#888; }
-</style>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
@@ -1266,7 +1084,7 @@
 <li><a href="#PackageConfigurationMiscellaneous">4.8. Miscellaneous</a>
 <ul>
 <li><a href="#Calc">4.8.1. calc</a></li>
-<li><a href="#ElectricPairMode">4.8.2. electric pair mode</a></li>
+<li><a href="#SmartParentheses">4.8.2. Smart Parentheses</a></li>
 <li><a href="#Ispell">4.8.3. ispell</a></li>
 <li><a href="#Spray">4.8.4. spray</a></li>
 <li><a href="#ThemeMagic">4.8.5. theme magic</a></li>
@@ -2347,8 +2165,6 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
                          <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">define-key</span> keymap <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">kbd</span> <span style="color: #7bc275;">"DEL"</span><span style="color: #7bc275;">)</span>   <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda!</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">delete-region</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">point-min</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">point-max</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
                          <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">define-key</span> keymap <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">kbd</span> <span style="color: #7bc275;">"C-SPC"</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda!</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">delete-region</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">point-min</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">point-max</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
                          keymap<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-    <span style="color: #62686E;">;; </span><span style="color: #62686E;">I'll be honest with myself, I /need/ spellcheck</span>
-    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">flyspell-buffer</span><span style="color: #7bc275;">)</span>
     <span style="color: #62686E;">;; </span><span style="color: #62686E;">disable tabs</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">bound-and-true-p</span> centaur-tabs-mode<span style="color: #51afef;">)</span>
       <span style="color: #51afef;">(</span>centaur-tabs-local-mode t<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -2377,7 +2193,10 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
    <span style="color: #7bc275;">(</span>t <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">org-mode</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">default major mode</span>
    <span style="color: #C57BDB;">)</span>
 
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">gui-get-selection</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">PRIMARY</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">insert</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">gui-get-selection</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">PRIMARY</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when-let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>selection <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">gui-get-selection</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">PRIMARY</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">insert</span> selection<span style="color: #7bc275;">)</span>
+    <span style="color: #62686E;">;; </span><span style="color: #62686E;">I'll be honest with myself, I /need/ spellcheck</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">flyspell-buffer</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">evil-insert-state</span><span style="color: #C57BDB;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">start in insert</span>
   <span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">emacs-anywhere-mode</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -2526,14 +2345,14 @@ Radians are just better
 </div>
 </div>
 </div>
-<div id="outline-container-ElectricPairMode" class="outline-4">
-<h4 id="ElectricPairMode"><span class="section-number-4">4.8.2</span> electric pair mode</h4>
+<div id="outline-container-SmartParentheses" class="outline-4">
+<h4 id="SmartParentheses"><span class="section-number-4">4.8.2</span> Smart Parentheses</h4>
 <div class="outline-text-4" id="text-4-8-2">
-<p>
-We want this everywhere
-</p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">electric-pair-mode</span> t<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">sp-local-pair</span>
+     <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>org-mode<span style="color: #C57BDB;">)</span>
+     <span style="color: #7bc275;">"&lt;&lt;"</span> <span style="color: #7bc275;">"&gt;&gt;"</span>
+     <span style="color: #C57BDB;">:actions</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>insert<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -2875,16 +2694,16 @@ Let&rsquo;s setup some org-capture templates
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #7bc275;">)</span>
     <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">  Lisp programs can force the template by setting KEYS to a string."</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>org-capture-templates
            <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">org-contextualize-keys</span>
-                <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-capture-upgrade-templates</span> <span style="color: #DFDFDF;">org-capture-templates</span><span style="color: #C57BDB;">)</span>
-                <span style="color: #DFDFDF;">org-capture-templates-contexts</span><span style="color: #51afef;">)</span>
+                <span style="color: #C57BDB;">(</span>org-capture-upgrade-templates org-capture-templates<span style="color: #C57BDB;">)</span>
+                org-capture-templates-contexts<span style="color: #51afef;">)</span>
                <span style="color: #C57BDB;">'</span><span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"t"</span> <span style="color: #7bc275;">"Task"</span> entry <span style="color: #7bc275;">(</span>file+headline <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">"Tasks"</span><span style="color: #7bc275;">)</span>
                   <span style="color: #7bc275;">"* </span><span style="color: #FCCE7B; font-weight: bold;">TODO</span><span style="color: #7bc275;"> %?\n  %u\n  %a"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
       <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> keys
-          <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> keys <span style="color: #DFDFDF;">org-capture-templates</span><span style="color: #7bc275;">)</span>
+          <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> keys org-capture-templates<span style="color: #7bc275;">)</span>
               <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">error</span> <span style="color: #7bc275;">"No capture template referred to by \"%s\" keys"</span> keys<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-mks</span> <span style="color: #DFDFDF;">org-capture-templates</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-mks</span> org-capture-templates
                  <span style="color: #7bc275;">"Select a capture template\n&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;"</span>
                  <span style="color: #7bc275;">"Template key: "</span>
                  <span style="color: #C57BDB;">`</span><span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #7bc275;">"q"</span> ,<span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-octicon</span> <span style="color: #7bc275;">"stop"</span> <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-red</span> <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">"\tAbort"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
@@ -2980,7 +2799,7 @@ Let&rsquo;s setup some org-capture templates
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">advice-add</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-mks</span> <span style="color: #C57BDB;">:override</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-mks-pretty</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> +org-capture-uni-units <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">split-string</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">f-read-text</span> <span style="color: #7bc275;">"~/.org/.uni-units"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">add-transient-hook!</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-capture-select-template</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-capture-templates</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> org-capture-templates
           <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doct</span> <span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>,<span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s\tPersonal todo"</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">all-the-icons-octicon</span> <span style="color: #7bc275;">"checklist"</span> <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-green</span> <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
                    <span style="color: #C57BDB;">:keys</span> <span style="color: #7bc275;">"t"</span>
                    <span style="color: #C57BDB;">:file</span> <span style="color: #DFDFDF;">+org-capture-todo-file</span>
@@ -3137,19 +2956,19 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialouge looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgc7fb46b"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="orgac8eb63"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-capture-templates
          <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-contextualize-keys</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">org-capture-upgrade-templates</span> <span style="color: #DFDFDF;">org-capture-templates</span><span style="color: #51afef;">)</span>
-              <span style="color: #DFDFDF;">org-capture-templates-contexts</span><span style="color: #7bc275;">)</span>
+              <span style="color: #51afef;">(</span>org-capture-upgrade-templates org-capture-templates<span style="color: #51afef;">)</span>
+              org-capture-templates-contexts<span style="color: #7bc275;">)</span>
              <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #7bc275;">"t"</span> <span style="color: #7bc275;">"Task"</span> entry <span style="color: #C57BDB;">(</span>file+headline <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">"Tasks"</span><span style="color: #C57BDB;">)</span>
                 <span style="color: #7bc275;">"* </span><span style="color: #FCCE7B; font-weight: bold;">TODO</span><span style="color: #7bc275;"> %?\n  %u\n  %a"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> keys
-        <span style="color: #51afef;">(</span><span style="color: #51afef;">or</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">assoc</span> keys <span style="color: #DFDFDF;">org-capture-templates</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #51afef;">(</span><span style="color: #51afef;">or</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">assoc</span> keys org-capture-templates<span style="color: #C57BDB;">)</span>
             <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">error</span> <span style="color: #7bc275;">"No capture template referred to by \"%s\" keys"</span> keys<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">org-mks</span> <span style="color: #DFDFDF;">org-capture-templates</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">org-mks</span> org-capture-templates
                <span style="color: #7bc275;">"Select a capture template\n&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;"</span>
                <span style="color: #7bc275;">"Template key: "</span>
                <span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"q"</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">all-the-icons-octicon</span> <span style="color: #7bc275;">"stop"</span> <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-red</span> <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #C57BDB;">)</span> <span style="color: #7bc275;">"\tAbort"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -4507,7 +4326,7 @@ filename as variable maybe?)</li>
 For use in the new-file template, let&rsquo;s set out a nice preamble we may want to use.
 </p>
 <div class="org-src-container">
-<pre class="src src-latex" id="orgd50493c"><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">pdfa,unicode=true,hidelinks</span>]{<span style="color: #5cEfFF;">hyperref</span>}
+<pre class="src src-latex" id="orgb80341a"><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">pdfa,unicode=true,hidelinks</span>]{<span style="color: #5cEfFF;">hyperref</span>}
 
 <span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">dvipsnames,svgnames,table,hyperref</span>]{<span style="color: #5cEfFF;">xcolor</span>}
 <span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">renewcommand</span>{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">UrlFont</span>}{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">ttfamily</span><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">small</span>}
@@ -4878,7 +4697,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-04-14 Tue 03:27</p>
+<p class="date">Created: 2020-04-14 Tue 03:37</p>
 </div>
 </body>
 </html>
