@@ -1829,7 +1829,9 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
         ("𝑑" ("dd"))
         ;; known commands
         ("" ("phantom"))
-        ("❪{1}／{2}❫" ("frac"))
+        (,(lambda (num den) (if (and (TeX-string-single-token-p num) (TeX-string-single-token-p den))
+                           (concat num "／" den)
+                         (concat "❪" num "／" den "❫"))) ("frac"))
         (,(lambda (arg) (concat "√" (TeX-fold-parenthesize-as-neccesary arg))) ("sqrt"))
         (,(lambda (arg) (concat "⭡" (TeX-fold-parenthesize-as-neccesary arg))) ("vec"))
         ("‘{1}’" ("text"))
@@ -1885,10 +1887,14 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 
 (defun TeX-fold-parenthesize-as-neccesary (tokens &optional suppress-left suppress-right)
   "Add ❪ ❫ parenthesis as if multiple LaTeX tokens appear to be present"
-  (if (string-match-p "^\\\\?\\w+$" tokens) tokens
+  (if (TeX-string-single-token-p tokens) tokens
     (concat (if suppress-left "" "❪")
             tokens
             (if suppress-right "" "❫"))))
+
+(defun TeX-string-single-token-p (teststring)
+  "Return t if TESTSTRING appears to be a single token, nil otherwise"
+ (if (string-match-p "^\\\\?\\w+$" teststring) t nil))
 ;; Editor visuals:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:3]]
