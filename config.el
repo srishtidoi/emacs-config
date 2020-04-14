@@ -49,6 +49,10 @@
   (+ivy/switch-buffer))
 ;; Windows:2 ends here
 
+;; [[file:~/.config/doom/config.org::*Windows][Windows:3]]
+(setq +ivy-buffer-preview t)
+;; Windows:3 ends here
+
 ;; [[file:~/.config/doom/config.org::*Buffer%20defaults][Buffer defaults:1]]
 ;; (setq-default major-mode 'org-mode)
 ;; Buffer defaults:1 ends here
@@ -453,9 +457,28 @@
 (setq eros-eval-result-prefix "⟹ ")
 ;; eros-eval:1 ends here
 
+;; [[file:~/.config/doom/config.org::*which-key][which-key:1]]
+(setq which-key-idle-delay 0.5) ;; I need the help, I really do
+;; which-key:1 ends here
+
+;; [[file:~/.config/doom/config.org::*projectile][projectile:1]]
+(setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
+(defun projectile-ignored-project-function (filepath)
+  "Return t if FILEPATH is within any of `projectile-ignored-projects'"
+  (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
+;; projectile:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*File%20Templates][File Templates:1]]
 (set-file-template! "\\.tex$" :trigger "__" :mode 'latex-mode)
 ;; File Templates:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Plaintext][Plaintext:1]]
+(after! text-mode
+  (add-hook! 'text-mode-hook
+    ;; Apply ANSI color codes
+    (with-silent-modifications
+      (ansi-color-apply-on-region (point-min) (point-max)))))
+;; Plaintext:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Tweaking%20defaults][Tweaking defaults:1]]
 (setq org-directory "~/.org"                      ; let's put files here
