@@ -14,11 +14,7 @@
 ;;      Alternatively, press 'gd' (or 'C-c g d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
-(doom! :input
-       ;;chinese
-       ;;japanese
-
-       :completion
+(doom! :completion
        (company            ; the ultimate code completion backend
         +childframe)       ; ... when your children the better version of you
        ;;helm              ; the *other* search engine for love and life
