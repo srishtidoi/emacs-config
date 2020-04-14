@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-14 Tue 14:26 -->
+<!-- 2020-04-14 Tue 15:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,370 +195,6 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
-
-<style type="text/css">
-   :root {
-      --theme-bg: #242730;
-      --theme-bg-alt: #2a2e38;
-      --theme-base0: #1c1f24;
-      --theme-base1: #1c1f24;
-      --theme-base2: #21272d;
-      --theme-base3: #23272e;
-      --theme-base4: #484854;
-      --theme-base5: #62686E;
-      --theme-base6: #757B80;
-      --theme-base7: #9ca0a4;
-      --theme-base8: #DFDFDF;
-      --theme-fg: #bbc2cf;
-      --theme-fg-alt: #5D656B;
-      --theme-grey: #484854;
-      --theme-red: #ff665c;
-      --theme-orange: #e69055;
-      --theme-green: #7bc275;
-      --theme-teal: #4db5bd;
-      --theme-yellow: #FCCE7B;
-      --theme-blue: #51afef;
-      --theme-dark-blue: #1f5582;
-      --theme-magenta: #C57BDB;
-      --theme-violet: #a991f1;
-      --theme-cyan: #5cEfFF;
-      --theme-dark-cyan: #6A8FBF;
-   }
-</style>
-<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
-<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
-
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
-<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
-<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
-
-<style>
-   pre.src {
-     background-color: var(--theme-bg);
-     color: var(--theme-fg);
-     scrollbar-color:#bbb6#9992;
-     scrollbar-width: thin;
-     margin: 0;
-     border: none;
-   }
-   div.org-src-container {
-     border-radius: 12px;
-     overflow: hidden;
-     margin-bottom: 24px;
-     margin-top: 1px;
-     border: 1px solid#e1e4e5;
-   }
-   pre.src::before {
-     background-color:#6666;
-     top: 8px;
-     border: none;
-     border-radius: 5px;
-     line-height: 1;
-     border: 2px solid var(--theme-bg);
-     opacity: 0;
-     transition: opacity 200ms;
-   }
-   pre.src:hover::before { opacity: 1; }
-   pre.src:active::before { opacity: 0; }
-
-   pre.example {
-     border-radius: 12px;
-     background: var(--theme-bg-alt);
-     color: var(--theme-fg);
-   }
-
-   code {
-     border-radius: 5px;
-     background:#e8e8e8;
-     font-size: 80%;
-   }
-
-   kbd {
-     display: inline-block;
-     padding: 3px 5px;
-     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-     line-height: normal;
-     line-height: 10px;
-     color:#444d56;
-     vertical-align: middle;
-     background-color:#fafbfc;
-     border: 1px solid#d1d5da;
-     border-radius: 3px;
-     box-shadow: inset 0 -1px 0#d1d5da;
-   }
-
-   table {
-     max-width: 100%;
-     overflow-x: auto;
-     display: block;
-     border-top: none;
-   }
-
-   a {
-       text-decoration: none;
-       background-image: linear-gradient(#d8dce9, #d8dce9);
-       background-position: 0% 100%;
-       background-repeat: no-repeat;
-       background-size: 0% 2px;
-       transition: background-size .3s;
-   }
-   #table-of-contents a {
-       background-image: none;
-   }
-   a:hover, a:focus {
-       background-size: 100% 2px;
-   }
-   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
-   a[href^='#']:visited { color:#3091d1; }
-
-   li .checkbox {
-       display: inline-block;
-       width: 0.9em;
-       height: 0.9em;
-       border-radius: 3px;
-       margin: 3px;
-       top: 4px;
-       position: relative;
-   }
-   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
-   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
-   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
-   li.on > .checkbox::after {
-     content: '';
-     height: 0.45em;
-     width: 0.225em;
-     -webkit-transform-origin: left top;
-     transform-origin: left top;
-     transform: scaleX(-1) rotate(135deg);
-     border-right: 2.8px solid#fff;
-     border-top: 2.8px solid#fff;
-     opacity: 0.9;
-     left: 0.10em;
-     top: 0.45em;
-     position: absolute;
-   }
-   li.trans > .checkbox::after {
-       content: '';
-       font-weight: bold;
-       font-size: 1.6em;
-       position: absolute;
-       top: 0.23em;
-       left: 0.09em;
-       width: 0.35em;
-       height: 0.12em;
-       background:#fff;
-       opacity: 0.9;
-       border-radius: 0.1em;
-   }
-   li.off > .checkbox::after {
-    content: '✖';
-    color:#fff;
-    opacity: 0.9;
-    position: relative;
-    top: -0.40rem;
-    left: 0.17em;
-    font-size: 0.75em;
-  }
-
-   span.timestamp {
-       color: #003280;
-       background: #647CFF44;
-       border-radius: 3px;
-       line-height: 1.25;
-   }
-
-   #table-of-contents { overflow-y: auto; }
-   blockquote p { margin: 8px 0px 16px 0px; }
-   #postamble .date { color: var(--theme-green); }
-
-   ::-webkit-scrollbar { width: 10px; height: 8px; }
-   ::-webkit-scrollbar-track { background:#9992; }
-   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
-   ::-webkit-scrollbar-thumb:hover { background:#888; }
-</style>
-
-<style type="text/css">
-   :root {
-      --theme-bg: #242730;
-      --theme-bg-alt: #2a2e38;
-      --theme-base0: #1c1f24;
-      --theme-base1: #1c1f24;
-      --theme-base2: #21272d;
-      --theme-base3: #23272e;
-      --theme-base4: #484854;
-      --theme-base5: #62686E;
-      --theme-base6: #757B80;
-      --theme-base7: #9ca0a4;
-      --theme-base8: #DFDFDF;
-      --theme-fg: #bbc2cf;
-      --theme-fg-alt: #5D656B;
-      --theme-grey: #484854;
-      --theme-red: #ff665c;
-      --theme-orange: #e69055;
-      --theme-green: #7bc275;
-      --theme-teal: #4db5bd;
-      --theme-yellow: #FCCE7B;
-      --theme-blue: #51afef;
-      --theme-dark-blue: #1f5582;
-      --theme-magenta: #C57BDB;
-      --theme-violet: #a991f1;
-      --theme-cyan: #5cEfFF;
-      --theme-dark-cyan: #6A8FBF;
-   }
-</style>
-<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
-<link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
-
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
-<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
-<script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
-
-<style>
-   pre.src {
-     background-color: var(--theme-bg);
-     color: var(--theme-fg);
-     scrollbar-color:#bbb6#9992;
-     scrollbar-width: thin;
-     margin: 0;
-     border: none;
-   }
-   div.org-src-container {
-     border-radius: 12px;
-     overflow: hidden;
-     margin-bottom: 24px;
-     margin-top: 1px;
-     border: 1px solid#e1e4e5;
-   }
-   pre.src::before {
-     background-color:#6666;
-     top: 8px;
-     border: none;
-     border-radius: 5px;
-     line-height: 1;
-     border: 2px solid var(--theme-bg);
-     opacity: 0;
-     transition: opacity 200ms;
-   }
-   pre.src:hover::before { opacity: 1; }
-   pre.src:active::before { opacity: 0; }
-
-   pre.example {
-     border-radius: 12px;
-     background: var(--theme-bg-alt);
-     color: var(--theme-fg);
-   }
-
-   code {
-     border-radius: 5px;
-     background:#e8e8e8;
-     font-size: 80%;
-   }
-
-   kbd {
-     display: inline-block;
-     padding: 3px 5px;
-     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-     line-height: normal;
-     line-height: 10px;
-     color:#444d56;
-     vertical-align: middle;
-     background-color:#fafbfc;
-     border: 1px solid#d1d5da;
-     border-radius: 3px;
-     box-shadow: inset 0 -1px 0#d1d5da;
-   }
-
-   table {
-     max-width: 100%;
-     overflow-x: auto;
-     display: block;
-     border-top: none;
-   }
-
-   a {
-       text-decoration: none;
-       background-image: linear-gradient(#d8dce9, #d8dce9);
-       background-position: 0% 100%;
-       background-repeat: no-repeat;
-       background-size: 0% 2px;
-       transition: background-size .3s;
-   }
-   #table-of-contents a {
-       background-image: none;
-   }
-   a:hover, a:focus {
-       background-size: 100% 2px;
-   }
-   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
-   a[href^='#']:visited { color:#3091d1; }
-
-   li .checkbox {
-       display: inline-block;
-       width: 0.9em;
-       height: 0.9em;
-       border-radius: 3px;
-       margin: 3px;
-       top: 4px;
-       position: relative;
-   }
-   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
-   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
-   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
-   li.on > .checkbox::after {
-     content: '';
-     height: 0.45em;
-     width: 0.225em;
-     -webkit-transform-origin: left top;
-     transform-origin: left top;
-     transform: scaleX(-1) rotate(135deg);
-     border-right: 2.8px solid#fff;
-     border-top: 2.8px solid#fff;
-     opacity: 0.9;
-     left: 0.10em;
-     top: 0.45em;
-     position: absolute;
-   }
-   li.trans > .checkbox::after {
-       content: '';
-       font-weight: bold;
-       font-size: 1.6em;
-       position: absolute;
-       top: 0.23em;
-       left: 0.09em;
-       width: 0.35em;
-       height: 0.12em;
-       background:#fff;
-       opacity: 0.9;
-       border-radius: 0.1em;
-   }
-   li.off > .checkbox::after {
-    content: '✖';
-    color:#fff;
-    opacity: 0.9;
-    position: relative;
-    top: -0.40rem;
-    left: 0.17em;
-    font-size: 0.75em;
-  }
-
-   span.timestamp {
-       color: #003280;
-       background: #647CFF44;
-       border-radius: 3px;
-       line-height: 1.25;
-   }
-
-   #table-of-contents { overflow-y: auto; }
-   blockquote p { margin: 8px 0px 16px 0px; }
-   #postamble .date { color: var(--theme-green); }
-
-   ::-webkit-scrollbar { width: 10px; height: 8px; }
-   ::-webkit-scrollbar-track { background:#9992; }
-   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
-   ::-webkit-scrollbar-thumb:hover { background:#888; }
-</style>
 
 <style type="text/css">
    :root {
@@ -999,7 +635,7 @@ computer to do. &#x2014; Donald Knuth
 <p>
 Customising an editor can be very rewarding &#x2026; until you have to leave it.
 For years I have been looking for ways to avoid this pain.
-Then I discovered <a href="https://github.com/cknadler/vim-anywhere">vim-anywhere</a>, and found that it had an emacs companion,<a href="https://github.com/zachcurry/emacs-anywhere">
+Then I discovered <a href="https://github.com/cknadler/vim-anywhere">vim-anywhere</a>, and found that it had an Emacs companion,<a href="https://github.com/zachcurry/emacs-anywhere">
 emacs-anywhere</a>. To me, this looked most attractive.
 </p>
 
@@ -1408,7 +1044,7 @@ quite a nice resizing effect.
 <h4 id="SystemdDaemon"><span class="section-number-4">2.4.4</span> Systemd daemon</h4>
 <div class="outline-text-4" id="text-2-4-4">
 <p>
-For running a systemd service for a emacs server I have the following
+For running a systemd service for a Emacs server I have the following
 </p>
 <div class="org-src-container">
 <pre class="src src-systemd"><span style="color: #FCCE7B;">[Unit]</span>
@@ -1640,7 +1276,7 @@ Why not flash words on the screen. Why not &#x2014; hey, it could be fun.
 </div>
 
 <p>
-With all our fancy emacs themes, my terminal is missing out!
+With all our fancy Emacs themes, my terminal is missing out!
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> theme-magic <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"844c4311bd"</span><span style="color: #51afef;">)</span>
@@ -1690,7 +1326,7 @@ This is a nice extension to <code>calc</code>
 <h5 id="Ess"><span class="section-number-5">3.2.5.3</span> ESS</h5>
 <div class="outline-text-5" id="text-3-2-5-3">
 <p>
-View dataframes better with
+View data frames better with
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> ess-view <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"d4e5a340b7"</span><span style="color: #51afef;">)</span>
@@ -2029,7 +1665,7 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
 <h3 id="Flyspell"><span class="section-number-3">4.5</span> Flyspell</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
-At one point, typing became noticably laggy, Profiling revealed
+At one point, typing became noticeably laggy, Profiling revealed
 <code>flyspell-post-command-hook</code> was responsible for 47% of CPU cycles by itself!
 So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 </p>
@@ -2186,7 +1822,7 @@ the following configuration
 <dl class="org-dl">
 <dt>size</dt><dd>80 (huge)</dd>
 <dt>spellings</dt><dd>British(-ise) and Australian</dd>
-<dt>spellling variants level</dt><dd>0</dd>
+<dt>spelling variants level</dt><dd>0</dd>
 <dt>diacritics</dt><dd>keep</dd>
 <dt>extra lists</dt><dd>hacker, roman numerals</dd>
 </dl>
@@ -2323,7 +1959,7 @@ One simply needs to refresh their mime database
 </pre>
 </div>
 <p>
-Then set emacs as the default editor
+Then set Emacs as the default editor
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">xdg-mime default emacs.desktop text/org
@@ -2772,10 +2408,10 @@ Let&rsquo;s setup some org-capture templates
 </pre>
 </div>
 <p>
-It would also be nice to improve how the capture dialouge looks
+It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org799ef23"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org7358902"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -3209,7 +2845,7 @@ I&rsquo;ve also added some fun alternatives, just commented out.
 </pre>
 </div>
 <p>
-It&rsquo;s also nice to make use of the unicode characters for check boxes, and other commands.
+It&rsquo;s also nice to make use of the Unicode characters for check boxes, and other commands.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
@@ -3320,10 +2956,10 @@ We can either render from a <code>dvi</code> or <code>pdf</code> file, so let&rs
 </table>
 
 <p>
-On the rendering side, there are two <code>.dvi</code>-to-image convertors which I am
+On the rendering side, there are two <code>.dvi</code>-to-image converters which I am
 interested in: <code>dvipng</code> and <code>dvisvgm</code>. Then with the a <code>.pdf</code> we have <code>pdf2svg</code>.
 For inline preview we care about speed, while for exporting we care about file
-size and preffer a vector graphic.
+size and prefer a vector graphic.
 </p>
 
 <p>
@@ -3397,7 +3033,7 @@ Now let&rsquo;s combine this to see what&rsquo;s best
 </table>
 
 <p>
-So, let&rsquo;s use <code>dvipng</code> for previewing LaTeX fragments in-emacs, but <code>dvisvgm</code> for <a href="#ExportingToHtml">LaTeX Rendering</a>.
+So, let&rsquo;s use <code>dvipng</code> for previewing LaTeX fragments in-Emacs, but <code>dvisvgm</code> for <a href="#ExportingToHtml">LaTeX Rendering</a>.
 <i>Unfortunately: it seems that svg sizing is annoying ATM, so let&rsquo;s actually not do this right now.</i>
 </p>
 
@@ -4047,7 +3683,7 @@ doesn&rsquo;t <code>python</code> refer to the latest version!?
 </pre>
 </div>
 <p>
-We also like autocompletion here
+We also like auto-completion here
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">tec-org-python</span> <span style="color: #C57BDB;">()</span>
@@ -4144,31 +3780,6 @@ filename as variable maybe?)</li>
 <p>
 For use in the new-file template, let&rsquo;s set out a nice preamble we may want to use.
 </p>
-<div class="org-src-container">
-<pre class="src src-latex" id="org28821e8"><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">pdfa,unicode=true,hidelinks</span>]{<span style="color: #5cEfFF;">hyperref</span>}
-
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">dvipsnames,svgnames,table,hyperref</span>]{<span style="color: #5cEfFF;">xcolor</span>}
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">renewcommand</span>{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">UrlFont</span>}{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">ttfamily</span><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">small</span>}
-
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">a-2b</span>]{<span style="color: #5cEfFF;">pdfx</span>} <span style="color: #62686E;">% why not be archival</span>
-
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">T1</span>]{<span style="color: #5cEfFF;">fontenc</span>}
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">osf,helvratio=0.9</span>]{<span style="color: #5cEfFF;">newpxtext</span>} <span style="color: #62686E;">% pallatino</span>
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">scale=0.92</span>]{<span style="color: #5cEfFF;">sourcecodepro</span>}
-
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">varbb</span>]{<span style="color: #5cEfFF;">newpxmath</span>}
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>{<span style="color: #5cEfFF;">mathtools</span>}
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>{<span style="color: #5cEfFF;">amssymb</span>}
-
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=2000</span>]{<span style="color: #5cEfFF;">microtype</span>}
-<span style="color: #62686E;">% </span><span style="color: #62686E;">microtype makes text look nicer</span>
-
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>{<span style="color: #5cEfFF;">graphicx</span>} <span style="color: #62686E;">% include graphics</span>
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>{<span style="color: #5cEfFF;">grffile</span>} <span style="color: #62686E;">% fix allowed graphicx filenames</span>
-
-<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>{<span style="color: #5cEfFF;">booktabs</span>} <span style="color: #62686E;">% nice table rules</span>
-</pre>
-</div>
 <p>
 Then let&rsquo;s bind the content to a function, and define some nice helpers.
 </p>
@@ -4368,7 +3979,7 @@ And enable shell escape for the preview
 <p>
 The symbols and modifies are very nice by default, but could do with a bit of
 fleshing out. Let&rsquo;s change the prefix to a key which is similarly rarely used,
-but more convinient, like <kbd>;</kbd>.
+but more convenient, like <kbd>;</kbd>.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> cdlatex
@@ -4453,7 +4064,7 @@ For example, from 2018&#x2013;2020, the most prolific contributor to <code>ledge
 31 commits. For <code>hledger</code> this statistic is 1800 commits. In addition, over the
 last decade, <code>ledger</code> seems to have lost steam, while <code>hledger</code> seems as actively
 developed as ever. From this basic comparison <code>hledger</code> looks to have a more
-promising outlook. It also has a few extra nicities that <code>ledger</code> doesn&rsquo;t, but is
+promising outlook. It also has a few extra niceties that <code>ledger</code> doesn&rsquo;t, but is
 a little slower (<code>haskell</code> vs. <code>c++</code>).
 Since this uses the same format, and <code>ledger-mode</code> is well integrated into emacs,
 and produced by John Wiegley &#x2014; author of <code>ledger</code> and current Emacs maintainer
@@ -4516,7 +4127,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-04-14 Tue 14:26</p>
+<p class="date">Created: 2020-04-14 Tue 15:02</p>
 </div>
 </body>
 </html>
