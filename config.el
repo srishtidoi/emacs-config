@@ -1096,9 +1096,6 @@ appropriate.  In tables, insert a new row or end the table."
 ;; Font Display:3 ends here
 
 ;; [[file:~/.config/doom/config.org::*Symbols][Symbols:1]]
-(use-package! org-superstar ; "prettier" bullets
-  :hook (org-mode . org-superstar-mode))
-
 (use-package org-fancy-priorities
   :diminish
   :defines org-fancy-priorities-list
@@ -1125,6 +1122,8 @@ appropriate.  In tables, insert a new row or end the table."
 (after! org
   (setq org-ellipsis " ▾ "
         org-superstar-headline-bullets-list '("◉" "○" "✸" "✿" "✤" "✜" "◆" "▶")
+        ;; org-superstar-headline-bullets-list '("Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ")
+        org-superstar-prettify-item-bullets t
         org-fancy-priorities-list '((?A . "⚑")  ;; ASAP
                                     (?B . "⬆")  ;; High
                                     (?C . "■")  ;; Medium
@@ -1137,7 +1136,6 @@ appropriate.  In tables, insert a new row or end the table."
                              (?E . all-the-icons-blue))
         org-priority-highest ?A
         org-priority-lowest ?E
-        ;; org-superstar-headline-bullets-list '("Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ")
         ))
 ;; Symbols:1 ends here
 

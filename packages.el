@@ -78,10 +78,6 @@
 ;; Visuals:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Visuals][Visuals:3]]
-(package! org-bullets :disable t :pin "767f55feb5")
-(package! org-superstar
-  :recipe (:host github :repo "integral-dw/org-superstar-mode")
-  :pin "4659cfc120")
 (package! org-fancy-priorities :pin "819bb993b7")
 (package! org-pretty-tags :pin "40fd72f3e7")
 ;; Visuals:3 ends here
