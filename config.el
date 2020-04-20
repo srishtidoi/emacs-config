@@ -1740,8 +1740,8 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
   (setq org-latex-default-class "fancy-article")
 
   (add-to-list 'org-latex-packages-alist '("" "minted"))
-  (setq org-latex-listings 'minted)
-  (setq org-latex-minted-options
+  (setq org-latex-listings 'minted
+        org-latex-minted-options
         '(("frame" "lines")
           ("fontsize" "\\scriptsize")
           ("linenos" "")
@@ -1760,7 +1760,10 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
           ("breakaftersymbolpre" "\\,\\footnotesize\\ensuremath{{}_{\\rfloor}}")))
   (setq org-latex-tables-booktabs t)
 
-  (setq org-latex-hyperref-template "\\hypersetup{
+  (setq org-latex-hyperref-template "
+\\providecolor{link}{HTML}{blue!70!green}
+\\providecolor{cite}{HTML}{blue!40!green}
+\\hypersetup{
   pdfauthor={%a},
   pdftitle={%t},
   pdfkeywords={%k},
@@ -1770,12 +1773,145 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
   breaklinks=true,
   colorlinks=true,
   linkcolor=,
-  urlcolor=blue!70!green,
-  citecolor=green!60!blue\n}
+  urlcolor=link,
+  citecolor=cite\n}
 \\urlstyle{same}\n")
   (setq org-latex-pdf-process
         '("latexmk -shell-escape -interaction=nonstopmode -f -pdf -output-directory=%o %f")))
 ;; Exporting to LaTeX:2 ends here
+
+;; [[file:~/.config/doom/config.org::*Chameleon%20---%20aka.%20match%20theme][Chameleon --- aka. match theme:1]]
+(defvar ox-chameleon-base-class "fancy-article"
+  "The base class that chameleon builds on")
+
+(defvar ox-chameleon--p nil
+  "Used to indicate whether the current export is trying to blend in. Set just before being accessed.")
+
+;; TODO make this less hacky. One ideas was as follows
+;; (map-put (org-export-backend-filters (org-export-get-backend 'latex))
+;;           :filter-latex-class 'ox-chameleon-latex-class-detector-filter))
+;; Never seemed to execute though
+(defadvice! ox-chameleon-org-latex-detect (orig-fun info)
+  :around #'org-export-install-filters
+  (setq ox-chameleon--p (when (equal (plist-get info :latex-class)
+                                     "chameleon")
+                          (plist-put info :latex-class ox-chameleon-base-class)
+                          t))
+  (funcall orig-fun info))
+
+(defadvice! ox-chameleon-org-latex-export (orig-fn info)
+  :around #'org-latex-make-preamble
+  (funcall orig-fn info)
+  (if (not ox-chameleon--p)
+      (funcall orig-fn info)
+    (concat (funcall orig-fn info)
+            (ox-chameleon-generate-colourings))))
+
+(defun ox-chameleon-generate-colourings ()
+  (apply #'format
+         "%% make document follow Emacs theme
+\\definecolor{bg}{HTML}{%s}
+\\definecolor{fg}{HTML}{%s}
+
+\\definecolor{red}{HTML}{%s}
+\\definecolor{orange}{HTML}{%s}
+\\definecolor{green}{HTML}{%s}
+\\definecolor{teal}{HTML}{%s}
+\\definecolor{yellow}{HTML}{%s}
+\\definecolor{blue}{HTML}{%s}
+\\definecolor{dark-blue}{HTML}{%s}
+\\definecolor{magenta}{HTML}{%s}
+\\definecolor{violet}{HTML}{%s}
+\\definecolor{cyan}{HTML}{%s}
+\\definecolor{dark-cyan}{HTML}{%s}
+
+\\definecolor{level1}{HTML}{%s}
+\\definecolor{level2}{HTML}{%s}
+\\definecolor{level3}{HTML}{%s}
+\\definecolor{level4}{HTML}{%s}
+\\definecolor{level5}{HTML}{%s}
+\\definecolor{level6}{HTML}{%s}
+\\definecolor{level7}{HTML}{%s}
+\\definecolor{level8}{HTML}{%s}
+
+\\definecolor{link}{HTML}{%s}
+\\definecolor{cite}{HTML}{%s}
+\\definecolor{itemlabel}{HTML}{%s}
+\\definecolor{code}{HTML}{%s}
+\\definecolor{verbatim}{HTML}{%s}
+
+\\pagecolor{bg}
+\\color{fg}
+
+\\addtokomafont{section}{\\color{level1}}
+\\newkomafont{sectionprefix}{\\color{level1}}
+\\addtokomafont{subsection}{\\color{level2}}
+\\newkomafont{subsectionprefix}{\\color{level2}}
+\\addtokomafont{subsubsection}{\\color{level3}}
+\\newkomafont{subsubsectionprefix}{\\color{level3}}
+\\addtokomafont{paragraph}{\\color{level4}}
+\\newkomafont{paragraphprefix}{\\color{level4}}
+\\addtokomafont{subparagraph}{\\color{level5}}
+\\newkomafont{subparagraphprefix}{\\color{level5}}
+
+\\renewcommand{\\labelitemi}{\\textcolor{itemlabel}{\\textbullet}}
+\\renewcommand{\\labelitemii}{\\textcolor{itemlabel}{\\normalfont\\bfseries \\textendash}}
+\\renewcommand{\\labelitemiii}{\\textcolor{itemlabel}{\\textasteriskcentered}}
+\\renewcommand{\\labelitemiv}{\\textcolor{itemlabel}{\\textperiodcentered}}
+
+\\renewcommand{\\labelenumi}{\\textcolor{itemlabel}{\\theenumi.}}
+\\renewcommand{\\labelenumii}{\\textcolor{itemlabel}{(\\theenumii)}}
+\\renewcommand{\\labelenumiii}{\\textcolor{itemlabel}{\\theenumiii.}}
+\\renewcommand{\\labelenumiv}{\\textcolor{itemlabel}{\\theenumiv.}}
+
+\\DeclareTextFontCommand{\\texttt}{\\color{code}\\ttfamily}
+\\makeatletter
+\\def\\verbatim@font{\\color{verbatim}\\normalfont\\ttfamily}
+\\makeatother
+%% end customisations
+"
+         (mapcar (doom-rpartial #'substring 1)
+                 (list
+                  (face-attribute 'solaire-default-face :background)
+                  (face-attribute 'default :foreground)
+                  ;;
+                  (doom-color 'red)
+                  (doom-color 'orange)
+                  (doom-color 'green)
+                  (doom-color 'teal)
+                  (doom-color 'yellow)
+                  (doom-color 'blue)
+                  (doom-color 'dark-blue)
+                  (doom-color 'magenta)
+                  (doom-color 'violet)
+                  (doom-color 'cyan)
+                  (doom-color 'dark-cyan)
+                  ;;
+                  (face-attribute 'outline-1 :foreground)
+                  (face-attribute 'outline-2 :foreground)
+                  (face-attribute 'outline-3 :foreground)
+                  (face-attribute 'outline-4 :foreground)
+                  (face-attribute 'outline-5 :foreground)
+                  (face-attribute 'outline-6 :foreground)
+                  (face-attribute 'outline-7 :foreground)
+                  (face-attribute 'outline-8 :foreground)
+                  ;;
+                  (face-attribute 'link :foreground)
+                  (or (face-attribute 'org-ref-cite-face :foreground) (doom-color 'yellow))
+                  (face-attribute 'org-list-dt :foreground)
+                  (face-attribute 'org-code :foreground)
+                  (face-attribute 'org-verbatim :foreground)
+                  ))))
+;; Chameleon --- aka. match theme:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Make%20verbatim%20different%20to%20code][Make verbatim different to code:1]]
+(setq org-latex-text-markup-alist '((bold . "\\textbf{%s}")
+           (code . protectedtexttt)
+           (italic . "\\emph{%s}")
+           (strike-through . "\\sout{%s}")
+           (underline . "\\uline{%s}")
+           (verbatim . verb)))
+;; Make verbatim different to code:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Exporting%20to%20Beamer][Exporting to Beamer:1]]
 (setq org-beamer-theme "[progressbar=foot]metropolis")

@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-14 Tue 23:22 -->
+<!-- 2020-04-21 Tue 00:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -4110,7 +4110,10 @@ Now for a few more adjustments.
           <span style="color: #51afef;">(</span><span style="color: #7bc275;">"breakaftersymbolpre"</span> <span style="color: #7bc275;">"\\,\\footnotesize\\ensuremath{{}_{\\rfloor}}"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-latex-tables-booktabs</span> t<span style="color: #C57BDB;">)</span>
 
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-latex-hyperref-template</span> <span style="color: #7bc275;">"\\hypersetup{</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-latex-hyperref-template</span> <span style="color: #7bc275;">"</span>
+<span style="color: #7bc275;">\\providecolor{link}{HTML}{blue!70!green}</span>
+<span style="color: #7bc275;">\\providecolor{cite}{HTML}{blue!40!green}</span>
+<span style="color: #7bc275;">\\hypersetup{</span>
 <span style="color: #7bc275;">  pdfauthor={%a},</span>
 <span style="color: #7bc275;">  pdftitle={%t},</span>
 <span style="color: #7bc275;">  pdfkeywords={%k},</span>
@@ -4120,12 +4123,163 @@ Now for a few more adjustments.
 <span style="color: #7bc275;">  breaklinks=true,</span>
 <span style="color: #7bc275;">  colorlinks=true,</span>
 <span style="color: #7bc275;">  linkcolor=,</span>
-<span style="color: #7bc275;">  urlcolor=blue!70!green,</span>
-<span style="color: #7bc275;">  citecolor=green!60!blue\n}</span>
+<span style="color: #7bc275;">  urlcolor=link,</span>
+<span style="color: #7bc275;">  citecolor=cite\n}</span>
 <span style="color: #7bc275;">\\urlstyle{same}\n"</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-latex-pdf-process</span>
         <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"latexmk -shell-escape -interaction=nonstopmode -f -pdf -output-directory=%o %f"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
+</div>
+</div>
+<div id="outline-container-ChameleonAkaMatchTheme" class="outline-6">
+<h6 id="ChameleonAkaMatchTheme"><span class="section-number-6">5.2.3.4.1</span> Chameleon &#x2014; aka. match theme</h6>
+<div class="outline-text-6" id="text-5-2-3-4-1">
+<p>
+Once the idea of having the look of the LaTeX document produced match the
+current Emacs theme, I was enraptured. The result is the pseudo-class <code>chameleon</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">ox-chameleon-base-class</span> <span style="color: #7bc275;">"fancy-article"</span>
+  <span style="color: #7e7e87;">"The base class that chameleon builds on"</span><span style="color: #51afef;">)</span>
+
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">ox-chameleon--p</span> nil
+  <span style="color: #7e7e87;">"Used to indicate whether the current export is trying to blend in. Set just before being accessed."</span><span style="color: #51afef;">)</span>
+
+<span style="color: #62686E;">;; </span><span style="color: #FCCE7B; font-weight: bold;">TODO</span><span style="color: #62686E;"> make this less hacky. One ideas was as follows</span>
+<span style="color: #62686E;">;; </span><span style="color: #62686E;">(map-put (org-export-backend-filters (org-export-get-backend 'latex))</span>
+<span style="color: #62686E;">;;           </span><span style="color: #62686E;">:filter-latex-class 'ox-chameleon-latex-class-detector-filter))</span>
+<span style="color: #62686E;">;; </span><span style="color: #62686E;">Never seemed to execute though</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defadvice!</span> ox-chameleon-org-latex-detect <span style="color: #C57BDB;">(</span>orig-fun info<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">:around</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-export-install-filters</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">ox-chameleon--p</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">equal</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> info <span style="color: #C57BDB;">:latex-class</span><span style="color: #C57BDB;">)</span>
+                                     <span style="color: #7bc275;">"chameleon"</span><span style="color: #51afef;">)</span>
+                          <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-put</span> info <span style="color: #C57BDB;">:latex-class</span> <span style="color: #DFDFDF;">ox-chameleon-base-class</span><span style="color: #51afef;">)</span>
+                          t<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">funcall</span> orig-fun info<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defadvice!</span> ox-chameleon-org-latex-export <span style="color: #C57BDB;">(</span>orig-fn info<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">:around</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-latex-make-preamble</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">funcall</span> orig-fn info<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">not</span> <span style="color: #DFDFDF;">ox-chameleon--p</span><span style="color: #7bc275;">)</span>
+      <span style="color: #7bc275;">(</span><span style="color: #a991f1;">funcall</span> orig-fn info<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">funcall</span> orig-fn info<span style="color: #51afef;">)</span>
+            <span style="color: #51afef;">(</span>ox-chameleon-generate-colourings<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">ox-chameleon-generate-colourings</span> <span style="color: #C57BDB;">()</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">apply</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">format</span>
+         <span style="color: #7bc275;">"%% make document follow Emacs theme</span>
+<span style="color: #7bc275;">\\definecolor{bg}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{fg}{HTML}{%s}</span>
+
+<span style="color: #7bc275;">\\definecolor{red}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{orange}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{green}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{teal}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{yellow}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{blue}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{dark-blue}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{magenta}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{violet}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{cyan}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{dark-cyan}{HTML}{%s}</span>
+
+<span style="color: #7bc275;">\\definecolor{level1}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{level2}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{level3}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{level4}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{level5}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{level6}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{level7}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{level8}{HTML}{%s}</span>
+
+<span style="color: #7bc275;">\\definecolor{link}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{cite}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{itemlabel}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{code}{HTML}{%s}</span>
+<span style="color: #7bc275;">\\definecolor{verbatim}{HTML}{%s}</span>
+
+<span style="color: #7bc275;">\\pagecolor{bg}</span>
+<span style="color: #7bc275;">\\color{fg}</span>
+
+<span style="color: #7bc275;">\\addtokomafont{section}{\\color{level1}}</span>
+<span style="color: #7bc275;">\\newkomafont{sectionprefix}{\\color{level1}}</span>
+<span style="color: #7bc275;">\\addtokomafont{subsection}{\\color{level2}}</span>
+<span style="color: #7bc275;">\\newkomafont{subsectionprefix}{\\color{level2}}</span>
+<span style="color: #7bc275;">\\addtokomafont{subsubsection}{\\color{level3}}</span>
+<span style="color: #7bc275;">\\newkomafont{subsubsectionprefix}{\\color{level3}}</span>
+<span style="color: #7bc275;">\\addtokomafont{paragraph}{\\color{level4}}</span>
+<span style="color: #7bc275;">\\newkomafont{paragraphprefix}{\\color{level4}}</span>
+<span style="color: #7bc275;">\\addtokomafont{subparagraph}{\\color{level5}}</span>
+<span style="color: #7bc275;">\\newkomafont{subparagraphprefix}{\\color{level5}}</span>
+
+<span style="color: #7bc275;">\\renewcommand{\\labelitemi}{\\textcolor{itemlabel}{\\textbullet}}</span>
+<span style="color: #7bc275;">\\renewcommand{\\labelitemii}{\\textcolor{itemlabel}{\\normalfont\\bfseries \\textendash}}</span>
+<span style="color: #7bc275;">\\renewcommand{\\labelitemiii}{\\textcolor{itemlabel}{\\textasteriskcentered}}</span>
+<span style="color: #7bc275;">\\renewcommand{\\labelitemiv}{\\textcolor{itemlabel}{\\textperiodcentered}}</span>
+
+<span style="color: #7bc275;">\\renewcommand{\\labelenumi}{\\textcolor{itemlabel}{\\theenumi.}}</span>
+<span style="color: #7bc275;">\\renewcommand{\\labelenumii}{\\textcolor{itemlabel}{(\\theenumii)}}</span>
+<span style="color: #7bc275;">\\renewcommand{\\labelenumiii}{\\textcolor{itemlabel}{\\theenumiii.}}</span>
+<span style="color: #7bc275;">\\renewcommand{\\labelenumiv}{\\textcolor{itemlabel}{\\theenumiv.}}</span>
+
+<span style="color: #7bc275;">\\DeclareTextFontCommand{\\texttt}{\\color{code}\\ttfamily}</span>
+<span style="color: #7bc275;">\\makeatletter</span>
+<span style="color: #7bc275;">\\def\\verbatim@font{\\color{verbatim}\\normalfont\\ttfamily}</span>
+<span style="color: #7bc275;">\\makeatother</span>
+<span style="color: #7bc275;">%% end customisations</span>
+<span style="color: #7bc275;">"</span>
+         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-rpartial</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">substring</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #51afef;">)</span>
+                 <span style="color: #51afef;">(</span><span style="color: #a991f1;">list</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">solaire-default-face</span> <span style="color: #C57BDB;">:background</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">default</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #62686E;">;;</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">red</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">orange</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">green</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">teal</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">yellow</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">blue</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">dark-blue</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">magenta</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">violet</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">cyan</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">dark-cyan</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #62686E;">;;</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-1</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-2</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-3</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-4</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-5</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-6</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-7</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-8</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #62686E;">;;</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">link</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-ref-cite-face</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">yellow</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-list-dt</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-code</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-verbatim</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-ExportingToLaTeXMakeVerbatimDifferentToCode" class="outline-6">
+<h6 id="ExportingToLaTeXMakeVerbatimDifferentToCode"><span class="section-number-6">5.2.3.4.2</span> Make verbatim different to code</h6>
+<div class="outline-text-6" id="text-5-2-3-4-2">
+<p>
+Since have just gone to so much effort above let&rsquo;s make the most of it by making
+<kbd>verbatim</kbd> use <code>verb</code> instead of <code>protectedtexttt</code> (default).
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-latex-text-markup-alist</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">bold</span> . <span style="color: #7bc275;">"\\textbf{%s}"</span><span style="color: #7bc275;">)</span>
+           <span style="color: #7bc275;">(</span>code . protectedtexttt<span style="color: #7bc275;">)</span>
+           <span style="color: #7bc275;">(</span>italic . <span style="color: #7bc275;">"\\emph{%s}"</span><span style="color: #7bc275;">)</span>
+           <span style="color: #7bc275;">(</span>strike-through . <span style="color: #7bc275;">"\\sout{%s}"</span><span style="color: #7bc275;">)</span>
+           <span style="color: #7bc275;">(</span>underline . <span style="color: #7bc275;">"\\uline{%s}"</span><span style="color: #7bc275;">)</span>
+           <span style="color: #7bc275;">(</span>verbatim . verb<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
 </div>
 </div>
 </div>
