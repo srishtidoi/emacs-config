@@ -65,7 +65,7 @@
 ;; [[file:~/.config/doom/config.org::*Improve%20agenda/capture][Improve agenda/capture:2]]
 (package! doct
   :recipe (:host github :repo "progfolio/doct")
-  :pin "fb798eb3a2")
+  :pin "c237e72e0b")
 ;; Improve agenda/capture:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Visuals][Visuals:1]]
