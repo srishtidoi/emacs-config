@@ -223,7 +223,8 @@
                                     (user-error "")))
           (add-to-list 'updated package))
       (search-forward "package!" nil t)) ;; because of cursor-moving done
-    (message (format "%s packages updated (%s)" (length updated) (s-join ", " updated)))))
+    (message (format "%s packages updated (%s)" (length updated) (s-join ", " updated)))
+    updated))
 
 ;; [[file:~/.config/doom/config.org::*Abbrev%20mode][Abbrev mode:1]]
 (use-package abbrev
@@ -460,6 +461,16 @@
 ;; [[file:~/.config/doom/config.org::*which-key][which-key:1]]
 (setq which-key-idle-delay 0.5) ;; I need the help, I really do
 ;; which-key:1 ends here
+
+;; [[file:~/.config/doom/config.org::*which-key][which-key:2]]
+(setq which-key-allow-multiple-replacements t)
+(after! which-key
+  (pushnew!
+   which-key-replacement-alist
+   '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
+   '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
+   ))
+;; which-key:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*projectile][projectile:1]]
 (setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
@@ -808,7 +819,7 @@
                    :headline "Tasks"
                    :type entry
                    :template ("* TODO %? %^G%{extra}"
-                              "%i")
+                              "%i %a")
                    :children ((,(format "%s\tGeneral Task" (all-the-icons-octicon "inbox" :face 'all-the-icons-yellow :v-adjust 0.01))
                                :keys "k"
                                :extra ""
@@ -1085,12 +1096,12 @@ appropriate.  In tables, insert a new row or end the table."
 
 ;; [[file:~/.config/doom/config.org::*Font%20Display][Font Display:3]]
 (custom-set-faces!
-  '(outline-1 :weight extra-bold :height 1.2)
-  '(outline-2 :weight bold :height 1.12)
-  '(outline-3 :weight bold :height 1.1)
-  '(outline-4 :weight semi-bold :height 1.08)
-  '(outline-5 :weight semi-bold :height 1.05)
-  '(outline-6 :weight semi-bold :height 1.02)
+  '(outline-1 :weight extra-bold :height 1.25)
+  '(outline-2 :weight bold :height 1.15)
+  '(outline-3 :weight bold :height 1.12)
+  '(outline-4 :weight semi-bold :height 1.09)
+  '(outline-5 :weight semi-bold :height 1.06)
+  '(outline-6 :weight semi-bold :height 1.03)
   '(outline-8 :weight semi-bold)
   '(outline-9 :weight semi-bold))
 ;; Font Display:3 ends here
@@ -1119,11 +1130,13 @@ appropriate.  In tables, insert a new row or end the table."
            ("emacs" . "ɛ")))
    (org-pretty-tags-global-mode)))
 
+(after! org-superstar
+  (setq org-superstar-headline-bullets-list '("◉" "○" "✸" "✿" "✤" "✜" "◆" "▶")
+        ;; org-superstar-headline-bullets-list '("Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ")
+        org-superstar-prettify-item-bullets t ))
 (after! org
   (setq org-ellipsis " ▾ "
-        org-superstar-headline-bullets-list '("◉" "○" "✸" "✿" "✤" "✜" "◆" "▶")
-        ;; org-superstar-headline-bullets-list '("Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ")
-        org-superstar-prettify-item-bullets t
+
         org-fancy-priorities-list '((?A . "⚑")  ;; ASAP
                                     (?B . "⬆")  ;; High
                                     (?C . "■")  ;; Medium
@@ -1142,36 +1155,42 @@ appropriate.  In tables, insert a new row or end the table."
 ;; [[file:~/.config/doom/config.org::*Symbols][Symbols:2]]
 (after! org
   (appendq! +pretty-code-symbols
-            '(:checkbox    "☐"
-              :pending     "◼"
-              :checkedbox  "☑"
-              :results     "🠶"
-              :property    "☸"
-              :properties  "⚙"
-              :end         "∎"
-              :options     "⌥"
-              :title       "𝙏"
-              :author      "𝘼"
-              :date        "𝘿"
-              :begin_quote "❮"
-              :end_quote   "❯"
-              :em_dash     "—"))
+            '(:checkbox     "☐"
+              :pending      "◼"
+              :checkedbox   "☑"
+              :results      "🠶"
+              :property     "☸"
+              :properties   "⚙"
+              :end          "∎"
+              :options      "⌥"
+              :title        "𝙏"
+              :author       "𝘼"
+              :date         "𝘿"
+              :latex_header "⇥"
+              :begin_quote  "❮"
+              :end_quote    "❯"
+              :begin_export "⯮"
+              :end_export "⯬"
+              :em_dash      "—"))
   (set-pretty-symbols! 'org-mode
     :merge t
-    :checkbox    "[ ]"
-    :pending     "[-]"
-    :checkedbox  "[X]"
-    :results     "#+RESULTS:"
-    :property    "#+PROPERTY:"
-    :property    ":PROPERTIES:"
-    :end         ":END:"
-    :options     "#+OPTIONS:"
-    :title       "#+TITLE:"
-    :author      "#+AUTHOR:"
-    :date        "#+DATE:"
-    :begin_quote "#+BEGIN_QUOTE"
-    :end_quote   "#+END_QUOTE"
-    :em_dash     "---")
+    :checkbox     "[ ]"
+    :pending      "[-]"
+    :checkedbox   "[X]"
+    :results      "#+RESULTS:"
+    :property     "#+PROPERTY:"
+    :property     ":PROPERTIES:"
+    :end          ":END:"
+    :options      "#+OPTIONS:"
+    :title        "#+TITLE:"
+    :author       "#+AUTHOR:"
+    :date         "#+DATE:"
+    :latex_header "#+LATEX_HEADER:"
+    :begin_quote  "#+BEGIN_QUOTE"
+    :end_quote    "#+END_QUOTE"
+    :begin_export "#+BEGIN_EXPORT"
+    :end_export   "#+END_EXPORT"
+    :em_dash      "---")
 )
 (plist-put +pretty-code-symbols :name "⁍") ; or › could be good?
 ;; Symbols:2 ends here
@@ -1348,16 +1367,24 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 (after! org (setq org-export-headline-levels 5)) ; I like nesting
 ;; Exporting (general):1 ends here
 
+;; [[file:~/.config/doom/config.org::*Exporting%20(general)][Exporting (general):2]]
+(after! org
+  (require 'ox-extra)
+  (ox-extras-activate '(ignore-headlines)))
+;; Exporting (general):2 ends here
+
 ;; [[file:~/.config/doom/config.org::*Custom%20CSS/JS][Custom CSS/JS:2]]
 (defun my-org-inline-css-hook (exporter)
   "Insert custom inline css to automatically set the
    background of code to whatever theme I'm using's background"
   (when (eq exporter 'html)
-      (setq
-       org-html-head-extra
-       (concat
-        org-html-head-extra
-        (format "
+    (setq
+     org-html-head-extra
+     (concat
+      (if (s-contains-p "<!––tec/custom-head-start-->" org-html-head-extra)
+          (s-replace-regexp "<!––tec/custom-head-start-->.*<!––tec/custom-head-end-->" "" org-html-head-extra)
+        org-html-head-extra)
+      (format "<!––tec/custom-head-start-->
 <style type=\"text/css\">
    :root {
       --theme-bg: %s;
@@ -1387,32 +1414,32 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
       --theme-dark-cyan: %s;
    }
 </style>"
-       (doom-color 'bg)
-       (doom-color 'bg-alt)
-       (doom-color 'base0)
-       (doom-color 'base1)
-       (doom-color 'base2)
-       (doom-color 'base3)
-       (doom-color 'base4)
-       (doom-color 'base5)
-       (doom-color 'base6)
-       (doom-color 'base7)
-       (doom-color 'base8)
-       (doom-color 'fg)
-       (doom-color 'fg-alt)
-       (doom-color 'grey)
-       (doom-color 'red)
-       (doom-color 'orange)
-       (doom-color 'green)
-       (doom-color 'teal)
-       (doom-color 'yellow)
-       (doom-color 'blue)
-       (doom-color 'dark-blue)
-       (doom-color 'magenta)
-       (doom-color 'violet)
-       (doom-color 'cyan)
-       (doom-color 'dark-cyan))
-        "
+              (doom-color 'bg)
+              (doom-color 'bg-alt)
+              (doom-color 'base0)
+              (doom-color 'base1)
+              (doom-color 'base2)
+              (doom-color 'base3)
+              (doom-color 'base4)
+              (doom-color 'base5)
+              (doom-color 'base6)
+              (doom-color 'base7)
+              (doom-color 'base8)
+              (doom-color 'fg)
+              (doom-color 'fg-alt)
+              (doom-color 'grey)
+              (doom-color 'red)
+              (doom-color 'orange)
+              (doom-color 'green)
+              (doom-color 'teal)
+              (doom-color 'yellow)
+              (doom-color 'blue)
+              (doom-color 'dark-blue)
+              (doom-color 'magenta)
+              (doom-color 'violet)
+              (doom-color 'cyan)
+              (doom-color 'dark-cyan))
+      "
 <link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
 <link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
 
@@ -1565,8 +1592,9 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
    ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
    ::-webkit-scrollbar-thumb:hover { background:#888; }
 </style>
+<!––tec/custom-head-end-->
 "
-        ))))
+      ))))
 
 (add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
 ;; Custom CSS/JS:2 ends here
@@ -1601,13 +1629,17 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
     (when (org-export-derived-backend-p backend 'latex)
       (let ((case-fold-search nil))
         (replace-regexp-in-string
-         ";?\\b[A-Z][A-Z]+s?"
+         "[;\\\\]?\\b[A-Z][A-Z]+s?"
          (lambda (all-caps-str)
-           ; only \acr if str doesn't start with ";"
-           (if (equal (aref all-caps-str 0) 59) (substring all-caps-str 1)
-             (if (equal (aref all-caps-str (- (length all-caps-str) 1)) ?s)
-                 (concat "\\textls*[70]{\\textsc{" (s-downcase (substring all-caps-str 0 -1)) "}\\protect\\scalebox{.91}[.84]{s}}")
-               (concat "\\textls*[70]{\\textsc{" (s-downcase all-caps-str) "}}"))))
+           ; only \acr if str doesn't start with ";" or "\" (for LaTeX commands)
+           (cond ((equal (aref all-caps-str 0) ?\;) (substring all-caps-str 1))
+                 ((equal (aref all-caps-str 0) ?\\) all-caps-str)
+                 ((equal (aref all-caps-str (- (length all-caps-str) 1)) ?s)
+                  (concat "\\textls*[70]{\\textsc{"
+                            (s-downcase (substring all-caps-str 0 -1))
+                            "}\\protect\\scalebox{.91}[.84]{s}}"))
+                 (t (concat "\\textls*[70]{\\textsc{"
+                              (s-downcase all-caps-str) "}}"))))
          text t t))))
 
   (add-to-list 'org-export-filter-plain-text-functions
@@ -1627,6 +1659,13 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 \\usepackage[varbb]{newpxmath}\n\
 \\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=2000]{microtype}\n\
 \\usepackage{xcolor}\n\
+\\usepackage{booktabs}
+\\usepackage{subcaption}
+\\usepackage[hypcap=true]{caption}
+\\setkomafont{caption}{\\sffamily\\small}
+\\setkomafont{captionlabel}{\\upshape\\bfseries}
+\\captionsetup{justification=raggedright,singlelinecheck=true}
+\\setcapindent{0pt}
 \\setlength{\\parskip}{\\baselineskip}\n\
 \\setlength{\\parindent}{0pt}"
                ("\\section{%s}" . "\\section*{%s}")
@@ -1688,6 +1727,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
           ("breakanywheresymbolpre" "\\,\\footnotesize\\ensuremath{{}_{\\rfloor}}")
           ("breakbeforesymbolpre" "\\,\\footnotesize\\ensuremath{{}_{\\rfloor}}")
           ("breakaftersymbolpre" "\\,\\footnotesize\\ensuremath{{}_{\\rfloor}}")))
+  (setq org-latex-tables-booktabs t)
 
   (setq org-latex-hyperref-template "\\hypersetup{
   pdfauthor={%a},
