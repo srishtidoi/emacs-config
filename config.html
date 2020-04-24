@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-21 Tue 00:09 -->
+<!-- 2020-04-24 Fri 20:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -798,198 +798,203 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#Intro">1. Intro</a></li>
-<li><a href="#RudimentaryConfiguration">2. Rudimentary configuration</a>
+<li><a href="#intro">1. Intro</a>
 <ul>
-<li><a href="#PersonalInformation">2.1. Personal Information</a></li>
-<li><a href="#BetterDefaults">2.2. Better defaults</a>
-<ul>
-<li><a href="#SimpleSettings">2.2.1. Simple settings</a></li>
-<li><a href="#Fullscreen">2.2.2. Fullscreen</a></li>
-<li><a href="#AutoCustomisations">2.2.3. Auto-customisations</a></li>
-<li><a href="#Windows">2.2.4. Windows</a></li>
-<li><a href="#BufferDefaults">2.2.5. Buffer defaults</a></li>
+<li><a href="#notes-unwary-adventurer">1.1. Notes for the unwary adventurer</a></li>
 </ul>
 </li>
-<li><a href="#DoomConfiguration">2.3. Doom configuration</a>
+<li><a href="#rudimentary-configuration">2. Rudimentary configuration</a>
 <ul>
-<li><a href="#VisualSettings">2.3.1. Visual Settings</a>
+<li><a href="#personal-information">2.1. Personal Information</a></li>
+<li><a href="#better-defaults">2.2. Better defaults</a>
 <ul>
-<li><a href="#FontFace">2.3.1.1. Font Face</a></li>
-<li><a href="#Theme">2.3.1.2. Theme</a></li>
-<li><a href="#Miscellaneous">2.3.1.3. Miscellaneous</a></li>
+<li><a href="#simple-settings">2.2.1. Simple settings</a></li>
+<li><a href="#fullscreen">2.2.2. Fullscreen</a></li>
+<li><a href="#auto-customisations">2.2.3. Auto-customisations</a></li>
+<li><a href="#windows">2.2.4. Windows</a></li>
+<li><a href="#buffer-defaults">2.2.5. Buffer defaults</a></li>
 </ul>
 </li>
-<li><a href="#SomeHelperMacros">2.3.2. Some helper macros</a></li>
+<li><a href="#doom-configuration">2.3. Doom configuration</a>
+<ul>
+<li><a href="#visual-settings">2.3.1. Visual Settings</a>
+<ul>
+<li><a href="#font-face">2.3.1.1. Font Face</a></li>
+<li><a href="#theme">2.3.1.2. Theme</a></li>
+<li><a href="#miscellaneous">2.3.1.3. Miscellaneous</a></li>
 </ul>
 </li>
-<li><a href="#OtherThings">2.4. Other things</a>
-<ul>
-<li><a href="#EditorInteraction">2.4.1. Editor interaction</a>
-<ul>
-<li><a href="#MouseButtons">2.4.1.1. Mouse buttons</a></li>
+<li><a href="#some-helper-macros">2.3.2. Some helper macros</a></li>
 </ul>
 </li>
-<li><a href="#WindowTitle">2.4.2. Window title</a></li>
-<li><a href="#SplashScreen">2.4.3. Splash screen</a></li>
-<li><a href="#SystemdDaemon">2.4.4. Systemd daemon</a></li>
+<li><a href="#other-things">2.4. Other things</a>
+<ul>
+<li><a href="#editor-interaction">2.4.1. Editor interaction</a>
+<ul>
+<li><a href="#mouse-buttons">2.4.1.1. Mouse buttons</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#PackageLoading">3. Package loading</a>
-<ul>
-<li><a href="#LoadingInstructions">3.1. Loading instructions</a>
-<ul>
-<li><a href="#PackagesInMelpaElpaEmacsmirror">3.1.1. Packages in MELPA/ELPA/emacsmirror</a></li>
-<li><a href="#PackagesFromGitRepositories">3.1.2. Packages from git repositories</a></li>
-<li><a href="#DisablingBuiltInPackages">3.1.3. Disabling built-in packages</a></li>
-<li><a href="#UpdatingAllPinsInFile">3.1.4. Updating all pins in file</a></li>
-</ul>
-</li>
-<li><a href="#GeneralPackages">3.2. General packages</a>
-<ul>
-<li><a href="#AutoComplete">3.2.1. Auto-complete</a></li>
-<li><a href="#Prettification">3.2.2. Prettification</a></li>
-<li><a href="#WindowManagement">3.2.3. Window management</a></li>
-<li><a href="#Fun">3.2.4. Fun</a></li>
-<li><a href="#Other">3.2.5. Other</a>
-<ul>
-<li><a href="#FlyspellLazy">3.2.5.1. Flyspell-lazy</a></li>
-<li><a href="#CalcTeX">3.2.5.2. CalcTeX</a></li>
-<li><a href="#Ess">3.2.5.3. ESS</a></li>
+<li><a href="#window-title">2.4.2. Window title</a></li>
+<li><a href="#splash-screen">2.4.3. Splash screen</a></li>
+<li><a href="#systemd-daemon">2.4.4. Systemd daemon</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#LanguagePackages">3.3. Language packages</a>
+<li><a href="#package-loading">3. Package loading</a>
 <ul>
-<li><a href="#Systemd">3.3.1. Systemd</a></li>
-<li><a href="#OrgMode">3.3.2. Org Mode</a>
+<li><a href="#loading-instructions">3.1. Loading instructions</a>
 <ul>
-<li><a href="#ImproveAgendaCapture">3.3.2.1. Improve agenda/capture</a></li>
-<li><a href="#Visuals">3.3.2.2. Visuals</a></li>
-<li><a href="#ExtraFunctionality">3.3.2.3. Extra functionality</a></li>
+<li><a href="#packages-melpa-elpa">3.1.1. Packages in MELPA/ELPA/emacsmirror</a></li>
+<li><a href="#packages-from-git">3.1.2. Packages from git repositories</a></li>
+<li><a href="#disabling-built-packages">3.1.3. Disabling built-in packages</a></li>
+<li><a href="#updating-all-pins">3.1.4. Updating all pins in file</a></li>
+</ul>
+</li>
+<li><a href="#general-packages">3.2. General packages</a>
+<ul>
+<li><a href="#auto-complete">3.2.1. Auto-complete</a></li>
+<li><a href="#prettification">3.2.2. Prettification</a></li>
+<li><a href="#window-management">3.2.3. Window management</a></li>
+<li><a href="#fun">3.2.4. Fun</a></li>
+<li><a href="#other">3.2.5. Other</a>
+<ul>
+<li><a href="#flyspell-lazy">3.2.5.1. Flyspell-lazy</a></li>
+<li><a href="#calctex">3.2.5.2. CalcTeX</a></li>
+<li><a href="#ess">3.2.5.3. ESS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#language-packages">3.3. Language packages</a>
+<ul>
+<li><a href="#systemd">3.3.1. Systemd</a></li>
+<li><a href="#org-mode">3.3.2. Org Mode</a>
+<ul>
+<li><a href="#improve-agenda-capture">3.3.2.1. Improve agenda/capture</a></li>
+<li><a href="#visuals">3.3.2.2. Visuals</a></li>
+<li><a href="#extra-functionality">3.3.2.3. Extra functionality</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#PackageConfiguration">4. Package configuration</a>
+<li><a href="#package-configuration">4. Package configuration</a>
 <ul>
-<li><a href="#AbbrevMode">4.1. Abbrev mode</a></li>
-<li><a href="#CentaurTabs">4.2. Centaur Tabs</a></li>
-<li><a href="#Company">4.3. Company</a>
+<li><a href="#abbrev-mode">4.1. Abbrev mode</a></li>
+<li><a href="#centaur-tabs">4.2. Centaur Tabs</a></li>
+<li><a href="#company">4.3. Company</a>
 <ul>
-<li><a href="#PlainText">4.3.1. Plain Text</a></li>
-<li><a href="#CompanyEss">4.3.2. ESS</a></li>
+<li><a href="#plain-text">4.3.1. Plain Text</a></li>
+<li><a href="#company-ess">4.3.2. ESS</a></li>
 </ul>
 </li>
-<li><a href="#HttpsGithubComZachcurryEmacsAnywhereEmacsAnywhereConfiguration">4.4. Emacs Anywhere configuration</a></li>
-<li><a href="#Flyspell">4.5. Flyspell</a></li>
-<li><a href="#Tramp">4.6. Tramp</a>
+<li><a href="#emacs-anywhere-configurati">4.4. Emacs Anywhere configuration</a></li>
+<li><a href="#flyspell">4.5. Flyspell</a></li>
+<li><a href="#tramp">4.6. Tramp</a>
 <ul>
 <li>
 <ul>
-<li><a href="#Troubleshooting">4.6.0.1. Troubleshooting</a>
+<li><a href="#troubleshooting">4.6.0.1. Troubleshooting</a>
 <ul>
-<li><a href="#Zsh">4.6.0.1.1. Zsh</a></li>
+<li><a href="#zsh">4.6.0.1.1. Zsh</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#Treemacs">4.7. Treemacs</a></li>
-<li><a href="#PackageConfigurationMiscellaneous">4.8. Miscellaneous</a>
+<li><a href="#treemacs">4.7. Treemacs</a></li>
+<li><a href="#package-configur-miscella">4.8. Miscellaneous</a>
 <ul>
-<li><a href="#Calc">4.8.1. calc</a></li>
-<li><a href="#SmartParentheses">4.8.2. Smart Parentheses</a></li>
-<li><a href="#Ispell">4.8.3. ispell</a></li>
-<li><a href="#Spray">4.8.4. spray</a></li>
-<li><a href="#ThemeMagic">4.8.5. theme magic</a></li>
-<li><a href="#Wttrin">4.8.6. wttrin</a></li>
-<li><a href="#Elcord">4.8.7. elcord</a></li>
-<li><a href="#ErosEval">4.8.8. eros-eval</a></li>
-<li><a href="#WhichKey">4.8.9. which-key</a></li>
-<li><a href="#Projectile">4.8.10. projectile</a></li>
+<li><a href="#calc">4.8.1. calc</a></li>
+<li><a href="#smart-parentheses">4.8.2. Smart Parentheses</a></li>
+<li><a href="#ispell">4.8.3. ispell</a></li>
+<li><a href="#spray">4.8.4. spray</a></li>
+<li><a href="#theme-magic">4.8.5. theme magic</a></li>
+<li><a href="#wttrin">4.8.6. wttrin</a></li>
+<li><a href="#elcord">4.8.7. elcord</a></li>
+<li><a href="#eros-eval">4.8.8. eros-eval</a></li>
+<li><a href="#which-key">4.8.9. which-key</a></li>
+<li><a href="#projectile">4.8.10. projectile</a></li>
+<li><a href="#vterm">4.8.11. vterm</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#LanguageConfiguration">5. Language configuration</a>
+<li><a href="#language-configuration">5. Language configuration</a>
 <ul>
 <li>
 <ul>
-<li><a href="#FileTemplates">5.0.1. File Templates</a></li>
+<li><a href="#file-templates">5.0.1. File Templates</a></li>
 </ul>
 </li>
-<li><a href="#Plaintext">5.1. Plaintext</a></li>
-<li><a href="#LanguageConfigurationOrgMode">5.2. Org Mode</a>
+<li><a href="#plaintext">5.1. Plaintext</a></li>
+<li><a href="#language-configuration-org">5.2. Org Mode</a>
 <ul>
-<li><a href="#SystemConfig">5.2.1. System config</a></li>
-<li><a href="#Behaviour">5.2.2. Behaviour</a>
+<li><a href="#system-config">5.2.1. System config</a></li>
+<li><a href="#behaviour">5.2.2. Behaviour</a>
 <ul>
-<li><a href="#TweakingDefaults">5.2.2.1. Tweaking defaults</a></li>
-<li><a href="#BehaviourExtraFunctionality">5.2.2.2. Extra functionality</a></li>
-<li><a href="#SuperAgenda">5.2.2.3. Super agenda</a></li>
-<li><a href="#Capture">5.2.2.4. Capture</a></li>
-<li><a href="#NicerHeadings">5.2.2.5. Nicer headings</a></li>
-<li><a href="#NicerOrgReturn">5.2.2.6. Nicer <code>org-return</code></a></li>
+<li><a href="#tweaking-defaults">5.2.2.1. Tweaking defaults</a></li>
+<li><a href="#behaviour-extra-functiona">5.2.2.2. Extra functionality</a></li>
+<li><a href="#super-agenda">5.2.2.3. Super agenda</a></li>
+<li><a href="#capture">5.2.2.4. Capture</a></li>
+<li><a href="#nicer-generated-heading">5.2.2.5. Nicer generated heading IDs</a></li>
+<li><a href="#nicer-org-return">5.2.2.6. Nicer <code>org-return</code></a></li>
 </ul>
 </li>
-<li><a href="#OrgModeVisuals">5.2.3. Visuals</a>
+<li><a href="#org-mode-visuals">5.2.3. Visuals</a>
 <ul>
-<li><a href="#InEditor">5.2.3.1. In editor</a>
+<li><a href="#editor">5.2.3.1. In editor</a>
 <ul>
-<li><a href="#FontDisplay">5.2.3.1.1. Font Display</a></li>
-<li><a href="#Symbols">5.2.3.1.2. Symbols</a></li>
-<li><a href="#LaTeXFragments">5.2.3.1.3. LaTeX Fragments</a></li>
-<li><a href="#StolenFromHttpsGithubComJkitchinScimaxScimaxSemiWorkingRightNow">5.2.3.1.4. Stolen from scimax (semi-working right now)</a></li>
+<li><a href="#font-display">5.2.3.1.1. Font Display</a></li>
+<li><a href="#symbols">5.2.3.1.2. Symbols</a></li>
+<li><a href="#latex-fragments">5.2.3.1.3. LaTeX Fragments</a></li>
+<li><a href="#stolen-from-scimax">5.2.3.1.4. Stolen from scimax (semi-working right now)</a></li>
 </ul>
 </li>
-<li><a href="#ExportingGeneral">5.2.3.2. Exporting (general)</a></li>
-<li><a href="#ExportingToHtml">5.2.3.3. Exporting to HTML</a>
+<li><a href="#exporting-general">5.2.3.2. Exporting (general)</a></li>
+<li><a href="#exporting-html">5.2.3.3. Exporting to HTML</a>
 <ul>
-<li><a href="#CustomCssJs">5.2.3.3.1. Custom CSS/JS</a></li>
-<li><a href="#MakeVerbatimDifferentToCode">5.2.3.3.2. Make verbatim different to code</a></li>
-<li><a href="#ChangeCheckboxType">5.2.3.3.3. Change checkbox type</a></li>
-<li><a href="#LaTeXRendering">5.2.3.3.4. LaTeX Rendering</a></li>
+<li><a href="#custom-css-js">5.2.3.3.1. Custom CSS/JS</a></li>
+<li><a href="#make-verbatim-different">5.2.3.3.2. Make verbatim different to code</a></li>
+<li><a href="#change-checkbox-type">5.2.3.3.3. Change checkbox type</a></li>
+<li><a href="#latex-rendering">5.2.3.3.4. LaTeX Rendering</a></li>
 </ul>
 </li>
-<li><a href="#ExportingToLaTeX">5.2.3.4. Exporting to LaTeX</a>
+<li><a href="#exporting-latex">5.2.3.4. Exporting to LaTeX</a>
 <ul>
-<li><a href="#ChameleonAkaMatchTheme">5.2.3.4.1. Chameleon &#x2014; aka. match theme</a></li>
-<li><a href="#ExportingToLaTeXMakeVerbatimDifferentToCode">5.2.3.4.2. Make verbatim different to code</a></li>
+<li><a href="#chameleon-aka-match">5.2.3.4.1. Chameleon &#x2014; aka. match theme</a></li>
+<li><a href="#exporting-latex-make">5.2.3.4.2. Make verbatim different to code</a></li>
 </ul>
 </li>
-<li><a href="#ExportingToBeamer">5.2.3.5. Exporting to Beamer</a></li>
-<li><a href="#ExportingToGfm">5.2.3.6. Exporting to GFM</a></li>
+<li><a href="#exporting-beamer">5.2.3.5. Exporting to Beamer</a></li>
+<li><a href="#exporting-gfm">5.2.3.6. Exporting to GFM</a></li>
 </ul>
 </li>
-<li><a href="#Babel">5.2.4. Babel</a></li>
-<li><a href="#OrgModeEss">5.2.5. ESS</a></li>
+<li><a href="#babel">5.2.4. Babel</a></li>
+<li><a href="#org-mode-ess">5.2.5. ESS</a></li>
 </ul>
 </li>
-<li><a href="#LaTeX">5.3. LaTeX</a>
+<li><a href="#latex">5.3. LaTeX</a>
 <ul>
-<li><a href="#ToBeImplementedIdeas">5.3.1. To-be-implemented ideas</a></li>
-<li><a href="#Compilation">5.3.2. Compilation</a></li>
-<li><a href="#SnippetValue">5.3.3. Snippet value</a></li>
-<li><a href="#EditorVisuals">5.3.4. Editor visuals</a></li>
-<li><a href="#CdLaTeX">5.3.5. CDLaTeX</a></li>
-<li><a href="#SyncTeX">5.3.6. SyncTeX</a></li>
+<li><a href="#be-implemented-ideas">5.3.1. To-be-implemented ideas</a></li>
+<li><a href="#compilation">5.3.2. Compilation</a></li>
+<li><a href="#snippet-value">5.3.3. Snippet value</a></li>
+<li><a href="#editor-visuals">5.3.4. Editor visuals</a></li>
+<li><a href="#cdlatex">5.3.5. CDLaTeX</a></li>
+<li><a href="#synctex">5.3.6. SyncTeX</a></li>
 </ul>
 </li>
-<li><a href="#R">5.4. R</a>
+<li><a href="#r">5.4. R</a>
 <ul>
-<li><a href="#REditorVisuals">5.4.1. Editor Visuals</a></li>
+<li><a href="#r-editor-visuals">5.4.1. Editor Visuals</a></li>
 </ul>
 </li>
-<li><a href="#Hledger">5.5. hledger</a></li>
-<li><a href="#Markdown">5.6. Markdown</a></li>
-<li><a href="#Beancount">5.7. Beancount</a></li>
+<li><a href="#hledger">5.5. hledger</a></li>
+<li><a href="#markdown">5.6. Markdown</a></li>
+<li><a href="#beancount">5.7. Beancount</a></li>
 </ul>
 </li>
 </ul>
@@ -1004,8 +1009,8 @@ computer to do. &#x2014; Donald Knuth
 </p>
 </blockquote>
 
-<div id="outline-container-Intro" class="outline-2">
-<h2 id="Intro"><span class="section-number-2">1</span> Intro</h2>
+<div id="outline-container-intro" class="outline-2">
+<h2 id="intro"><span class="section-number-2">1</span> Intro</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Customising an editor can be very rewarding &#x2026; until you have to leave it.
@@ -1036,8 +1041,9 @@ settled by the day. This is my config.
 </p>
 </div>
 </div>
-<div id="outline-container-RudimentaryConfiguration" class="outline-2">
-<h2 id="RudimentaryConfiguration"><span class="section-number-2">2</span> Rudimentary configuration</h2>
+</div>
+<div id="outline-container-rudimentary-configuration" class="outline-2">
+<h2 id="rudimentary-configuration"><span class="section-number-2">2</span> Rudimentary configuration</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Make this file run (slightly) faster with lexical binding (see <a href="https://nullprogram.com/blog/2016/12/22/">this blog post</a>
@@ -1048,8 +1054,8 @@ for more info).
 </pre>
 </div>
 </div>
-<div id="outline-container-PersonalInformation" class="outline-3">
-<h3 id="PersonalInformation"><span class="section-number-3">2.1</span> Personal Information</h3>
+<div id="outline-container-personal-information" class="outline-3">
+<h3 id="personal-information"><span class="section-number-3">2.1</span> Personal Information</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 It&rsquo;s useful to have some basic personal information
@@ -1064,12 +1070,12 @@ Apparently this is used by <code>GPG</code>, and all sorts of other things.
 </p>
 </div>
 </div>
-<div id="outline-container-BetterDefaults" class="outline-3">
-<h3 id="BetterDefaults"><span class="section-number-3">2.2</span> Better defaults</h3>
+<div id="outline-container-better-defaults" class="outline-3">
+<h3 id="better-defaults"><span class="section-number-3">2.2</span> Better defaults</h3>
 <div class="outline-text-3" id="text-2-2">
 </div>
-<div id="outline-container-SimpleSettings" class="outline-4">
-<h4 id="SimpleSettings"><span class="section-number-4">2.2.1</span> Simple settings</h4>
+<div id="outline-container-simple-settings" class="outline-4">
+<h4 id="simple-settings"><span class="section-number-4">2.2.1</span> Simple settings</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 Browsing the web and seeing <a href="https://github.com/angrybacon/dotemacs/blob/master/dotemacs.org#use-better-defaults">angrybacon/dotemacs</a> and comparing with the values
@@ -1096,8 +1102,8 @@ shown by <kbd>SPC h v</kbd> and selecting what I thought looks good, I&rsquo;ve 
 </div>
 </div>
 </div>
-<div id="outline-container-Fullscreen" class="outline-4">
-<h4 id="Fullscreen"><span class="section-number-4">2.2.2</span> Fullscreen</h4>
+<div id="outline-container-fullscreen" class="outline-4">
+<h4 id="fullscreen"><span class="section-number-4">2.2.2</span> Fullscreen</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <p>
 I also like the idea of fullscreen-ing when opened by <code>emacs</code> or the <code>.desktop</code> file.
@@ -1110,8 +1116,8 @@ I also like the idea of fullscreen-ing when opened by <code>emacs</code> or the 
 </div>
 </div>
 </div>
-<div id="outline-container-AutoCustomisations" class="outline-4">
-<h4 id="AutoCustomisations"><span class="section-number-4">2.2.3</span> Auto-customisations</h4>
+<div id="outline-container-auto-customisations" class="outline-4">
+<h4 id="auto-customisations"><span class="section-number-4">2.2.3</span> Auto-customisations</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 By default changes made via a customisation interface are added to <kbd>init.el</kbd>.
@@ -1126,8 +1132,8 @@ setting, and load it if it exists.
 </div>
 </div>
 </div>
-<div id="outline-container-Windows" class="outline-4">
-<h4 id="Windows"><span class="section-number-4">2.2.4</span> Windows</h4>
+<div id="outline-container-windows" class="outline-4">
+<h4 id="windows"><span class="section-number-4">2.2.4</span> Windows</h4>
 <div class="outline-text-4" id="text-2-2-4">
 <p>
 I find it rather handy to be asked which buffer I want to see after splitting
@@ -1157,8 +1163,8 @@ Oh, and previews are nice
 </div>
 </div>
 </div>
-<div id="outline-container-BufferDefaults" class="outline-4">
-<h4 id="BufferDefaults"><span class="section-number-4">2.2.5</span> Buffer defaults</h4>
+<div id="outline-container-buffer-defaults" class="outline-4">
+<h4 id="buffer-defaults"><span class="section-number-4">2.2.5</span> Buffer defaults</h4>
 <div class="outline-text-4" id="text-2-2-5">
 <p>
 I&rsquo;d much rather have my new buffers in <code>org-mode</code> than <code>fundamental-mode</code>, hence
@@ -1174,16 +1180,16 @@ just need to resort to <kbd>SPC b o</kbd> for now.
 </div>
 </div>
 </div>
-<div id="outline-container-DoomConfiguration" class="outline-3">
-<h3 id="DoomConfiguration"><span class="section-number-3">2.3</span> Doom configuration</h3>
+<div id="outline-container-doom-configuration" class="outline-3">
+<h3 id="doom-configuration"><span class="section-number-3">2.3</span> Doom configuration</h3>
 <div class="outline-text-3" id="text-2-3">
 </div>
-<div id="outline-container-VisualSettings" class="outline-4">
-<h4 id="VisualSettings"><span class="section-number-4">2.3.1</span> Visual Settings</h4>
+<div id="outline-container-visual-settings" class="outline-4">
+<h4 id="visual-settings"><span class="section-number-4">2.3.1</span> Visual Settings</h4>
 <div class="outline-text-4" id="text-2-3-1">
 </div>
-<div id="outline-container-FontFace" class="outline-5">
-<h5 id="FontFace"><span class="section-number-5">2.3.1.1</span> Font Face</h5>
+<div id="outline-container-font-face" class="outline-5">
+<h5 id="font-face"><span class="section-number-5">2.3.1.1</span> Font Face</h5>
 <div class="outline-text-5" id="text-2-3-1-1">
 <p>
 &rsquo;Fira Code&rsquo; is nice, and &rsquo;Overpass&rsquo; makes for a nice sans companion. We just need to
@@ -1197,8 +1203,8 @@ fiddle with the font sizes a tad so that they visually match.
 </div>
 </div>
 </div>
-<div id="outline-container-Theme" class="outline-5">
-<h5 id="Theme"><span class="section-number-5">2.3.1.2</span> Theme</h5>
+<div id="outline-container-theme" class="outline-5">
+<h5 id="theme"><span class="section-number-5">2.3.1.2</span> Theme</h5>
 <div class="outline-text-5" id="text-2-3-1-2">
 <p>
 <code>doom-one</code> is nice and all, but I find the <code>vibrant</code> variant nicer.
@@ -1218,8 +1224,8 @@ so I don&rsquo;t feel like something&rsquo;s gone <i>wrong</i> when editing file
 </div>
 </div>
 </div>
-<div id="outline-container-Miscellaneous" class="outline-5">
-<h5 id="Miscellaneous"><span class="section-number-5">2.3.1.3</span> Miscellaneous</h5>
+<div id="outline-container-miscellaneous" class="outline-5">
+<h5 id="miscellaneous"><span class="section-number-5">2.3.1.3</span> Miscellaneous</h5>
 <div class="outline-text-5" id="text-2-3-1-3">
 <p>
 Relative line numbers are fantastic for knowing how far away line numbers are,
@@ -1247,8 +1253,8 @@ There&rsquo;s a bug with the modeline in insert mode for org documents (<a href=
 </div>
 </div>
 </div>
-<div id="outline-container-SomeHelperMacros" class="outline-4">
-<h4 id="SomeHelperMacros"><span class="section-number-4">2.3.2</span> Some helper macros</h4>
+<div id="outline-container-some-helper-macros" class="outline-4">
+<h4 id="some-helper-macros"><span class="section-number-4">2.3.2</span> Some helper macros</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 There are a few handy macros added by doom, namely
@@ -1266,16 +1272,16 @@ To find more,
 </div>
 </div>
 </div>
-<div id="outline-container-OtherThings" class="outline-3">
-<h3 id="OtherThings"><span class="section-number-3">2.4</span> Other things</h3>
+<div id="outline-container-other-things" class="outline-3">
+<h3 id="other-things"><span class="section-number-3">2.4</span> Other things</h3>
 <div class="outline-text-3" id="text-2-4">
 </div>
-<div id="outline-container-EditorInteraction" class="outline-4">
-<h4 id="EditorInteraction"><span class="section-number-4">2.4.1</span> Editor interaction</h4>
+<div id="outline-container-editor-interaction" class="outline-4">
+<h4 id="editor-interaction"><span class="section-number-4">2.4.1</span> Editor interaction</h4>
 <div class="outline-text-4" id="text-2-4-1">
 </div>
-<div id="outline-container-MouseButtons" class="outline-5">
-<h5 id="MouseButtons"><span class="section-number-5">2.4.1.1</span> Mouse buttons</h5>
+<div id="outline-container-mouse-buttons" class="outline-5">
+<h5 id="mouse-buttons"><span class="section-number-5">2.4.1.1</span> Mouse buttons</h5>
 <div class="outline-text-5" id="text-2-4-1-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">map!</span> <span style="color: #C57BDB;">:n</span> <span style="color: #C57BDB;">[</span>mouse-8<span style="color: #C57BDB;">]</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">better-jumper-jump-backward</span>
@@ -1285,8 +1291,8 @@ To find more,
 </div>
 </div>
 </div>
-<div id="outline-container-WindowTitle" class="outline-4">
-<h4 id="WindowTitle"><span class="section-number-4">2.4.2</span> Window title</h4>
+<div id="outline-container-window-title" class="outline-4">
+<h4 id="window-title"><span class="section-number-4">2.4.2</span> Window title</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <p>
 I&rsquo;d like to have just the buffer name, then if applicable the project folder
@@ -1303,8 +1309,8 @@ I&rsquo;d like to have just the buffer name, then if applicable the project fold
 </div>
 </div>
 </div>
-<div id="outline-container-SplashScreen" class="outline-4">
-<h4 id="SplashScreen"><span class="section-number-4">2.4.3</span> Splash screen</h4>
+<div id="outline-container-splash-screen" class="outline-4">
+<h4 id="splash-screen"><span class="section-number-4">2.4.3</span> Splash screen</h4>
 <div class="outline-text-4" id="text-2-4-3">
 <p>
 Emacs can render an image as the splash screen, and <a href="https://github.com/MarioRicalde">@MarioRicalde</a> came up with a
@@ -1422,8 +1428,8 @@ quite a nice resizing effect.
 </div>
 </div>
 </div>
-<div id="outline-container-SystemdDaemon" class="outline-4">
-<h4 id="SystemdDaemon"><span class="section-number-4">2.4.4</span> Systemd daemon</h4>
+<div id="outline-container-systemd-daemon" class="outline-4">
+<h4 id="systemd-daemon"><span class="section-number-4">2.4.4</span> Systemd daemon</h4>
 <div class="outline-text-4" id="text-2-4-4">
 <p>
 For running a systemd service for a Emacs server I have the following
@@ -1455,8 +1461,8 @@ which is then enabled by
 </div>
 </div>
 </div>
-<div id="outline-container-PackageLoading" class="outline-2">
-<h2 id="PackageLoading"><span class="section-number-2">3</span> Package loading</h2>
+<div id="outline-container-package-loading" class="outline-2">
+<h2 id="package-loading"><span class="section-number-2">3</span> Package loading</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This file shouldn&rsquo;t be byte compiled.
@@ -1466,8 +1472,8 @@ This file shouldn&rsquo;t be byte compiled.
 </pre>
 </div>
 </div>
-<div id="outline-container-LoadingInstructions" class="outline-3">
-<h3 id="LoadingInstructions"><span class="section-number-3">3.1</span> Loading instructions</h3>
+<div id="outline-container-loading-instructions" class="outline-3">
+<h3 id="loading-instructions"><span class="section-number-3">3.1</span> Loading instructions</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 This is where you install packages, by declaring them with the <code>package!</code>
@@ -1481,8 +1487,8 @@ Doom requires these, and disabling them may have terrible side effects.
 </p>
 </div>
 
-<div id="outline-container-PackagesInMelpaElpaEmacsmirror" class="outline-4">
-<h4 id="PackagesInMelpaElpaEmacsmirror"><span class="section-number-4">3.1.1</span> Packages in MELPA/ELPA/emacsmirror</h4>
+<div id="outline-container-packages-melpa-elpa" class="outline-4">
+<h4 id="packages-melpa-elpa"><span class="section-number-4">3.1.1</span> Packages in MELPA/ELPA/emacsmirror</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 To install <code>some-package</code> from MELPA, ELPA or emacsmirror:
@@ -1494,8 +1500,8 @@ To install <code>some-package</code> from MELPA, ELPA or emacsmirror:
 </div>
 </div>
 
-<div id="outline-container-PackagesFromGitRepositories" class="outline-4">
-<h4 id="PackagesFromGitRepositories"><span class="section-number-4">3.1.2</span> Packages from git repositories</h4>
+<div id="outline-container-packages-from-git" class="outline-4">
+<h4 id="packages-from-git"><span class="section-number-4">3.1.2</span> Packages from git repositories</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
 To install a package directly from a particular repo, you&rsquo;ll need to specify
@@ -1521,8 +1527,8 @@ file, or is located in a subdirectory of the repo, you&rsquo;ll need to specify
 </div>
 </div>
 
-<div id="outline-container-DisablingBuiltInPackages" class="outline-4">
-<h4 id="DisablingBuiltInPackages"><span class="section-number-4">3.1.3</span> Disabling built-in packages</h4>
+<div id="outline-container-disabling-built-packages" class="outline-4">
+<h4 id="disabling-built-packages"><span class="section-number-4">3.1.3</span> Disabling built-in packages</h4>
 <div class="outline-text-4" id="text-3-1-3">
 <p>
 If you&rsquo;d like to disable a package included with Doom, for whatever reason,
@@ -1554,8 +1560,8 @@ our package manager can&rsquo;t deal with; see <a href="https://github.com/raxod
 </div>
 </div>
 </div>
-<div id="outline-container-UpdatingAllPinsInFile" class="outline-4">
-<h4 id="UpdatingAllPinsInFile"><span class="section-number-4">3.1.4</span> Updating all pins in file</h4>
+<div id="outline-container-updating-all-pins" class="outline-4">
+<h4 id="updating-all-pins"><span class="section-number-4">3.1.4</span> Updating all pins in file</h4>
 <div class="outline-text-4" id="text-3-1-4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+doom/update-all-pinned-package-form</span> <span style="color: #C57BDB;">()</span>
@@ -1583,12 +1589,12 @@ our package manager can&rsquo;t deal with; see <a href="https://github.com/raxod
 </div>
 </div>
 </div>
-<div id="outline-container-GeneralPackages" class="outline-3">
-<h3 id="GeneralPackages"><span class="section-number-3">3.2</span> General packages</h3>
+<div id="outline-container-general-packages" class="outline-3">
+<h3 id="general-packages"><span class="section-number-3">3.2</span> General packages</h3>
 <div class="outline-text-3" id="text-3-2">
 </div>
-<div id="outline-container-AutoComplete" class="outline-4">
-<h4 id="AutoComplete"><span class="section-number-4">3.2.1</span> Auto-complete</h4>
+<div id="outline-container-auto-complete" class="outline-4">
+<h4 id="auto-complete"><span class="section-number-4">3.2.1</span> Auto-complete</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> company-tabnine <span style="color: #62686E;">; </span><span style="color: #62686E;">tab9 autocomplete</span>
@@ -1598,8 +1604,8 @@ our package manager can&rsquo;t deal with; see <a href="https://github.com/raxod
 </div>
 </div>
 </div>
-<div id="outline-container-Prettification" class="outline-4">
-<h4 id="Prettification"><span class="section-number-4">3.2.2</span> Prettification</h4>
+<div id="outline-container-prettification" class="outline-4">
+<h4 id="prettification"><span class="section-number-4">3.2.2</span> Prettification</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <p>
 <code>prettify-mode</code> is nice and all, but adding substitutions is a little verbose.
@@ -1612,8 +1618,8 @@ This helps with that.
 </div>
 </div>
 </div>
-<div id="outline-container-WindowManagement" class="outline-4">
-<h4 id="WindowManagement"><span class="section-number-4">3.2.3</span> Window management</h4>
+<div id="outline-container-window-management" class="outline-4">
+<h4 id="window-management"><span class="section-number-4">3.2.3</span> Window management</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> rotate <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"091b5ac4fc"</span><span style="color: #51afef;">)</span>
@@ -1621,8 +1627,8 @@ This helps with that.
 </div>
 </div>
 </div>
-<div id="outline-container-Fun" class="outline-4">
-<h4 id="Fun"><span class="section-number-4">3.2.4</span> Fun</h4>
+<div id="outline-container-fun" class="outline-4">
+<h4 id="fun"><span class="section-number-4">3.2.4</span> Fun</h4>
 <div class="outline-text-4" id="text-3-2-4">
 <p>
 Sometimes one just wants a little fun.
@@ -1676,15 +1682,15 @@ about it?
 </div>
 </div>
 </div>
-<div id="outline-container-Other" class="outline-4">
-<h4 id="Other"><span class="section-number-4">3.2.5</span> Other</h4>
+<div id="outline-container-other" class="outline-4">
+<h4 id="other"><span class="section-number-4">3.2.5</span> Other</h4>
 <div class="outline-text-4" id="text-3-2-5">
 </div>
-<div id="outline-container-FlyspellLazy" class="outline-5">
-<h5 id="FlyspellLazy"><span class="section-number-5">3.2.5.1</span> Flyspell-lazy</h5>
+<div id="outline-container-flyspell-lazy" class="outline-5">
+<h5 id="flyspell-lazy"><span class="section-number-5">3.2.5.1</span> Flyspell-lazy</h5>
 <div class="outline-text-5" id="text-3-2-5-1">
 <p>
-To alleviate some <a href="#Flyspell">issues with flyspell</a>
+To alleviate some <a href="#flyspell">issues with flyspell</a>
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> flyspell-lazy<span style="color: #51afef;">)</span>
@@ -1692,8 +1698,8 @@ To alleviate some <a href="#Flyspell">issues with flyspell</a>
 </div>
 </div>
 </div>
-<div id="outline-container-CalcTeX" class="outline-5">
-<h5 id="CalcTeX"><span class="section-number-5">3.2.5.2</span> CalcTeX</h5>
+<div id="outline-container-calctex" class="outline-5">
+<h5 id="calctex"><span class="section-number-5">3.2.5.2</span> CalcTeX</h5>
 <div class="outline-text-5" id="text-3-2-5-2">
 <p>
 This is a nice extension to <code>calc</code>
@@ -1705,8 +1711,8 @@ This is a nice extension to <code>calc</code>
 </div>
 </div>
 </div>
-<div id="outline-container-Ess" class="outline-5">
-<h5 id="Ess"><span class="section-number-5">3.2.5.3</span> ESS</h5>
+<div id="outline-container-ess" class="outline-5">
+<h5 id="ess"><span class="section-number-5">3.2.5.3</span> ESS</h5>
 <div class="outline-text-5" id="text-3-2-5-3">
 <p>
 View data frames better with
@@ -1719,12 +1725,12 @@ View data frames better with
 </div>
 </div>
 </div>
-<div id="outline-container-LanguagePackages" class="outline-3">
-<h3 id="LanguagePackages"><span class="section-number-3">3.3</span> Language packages</h3>
+<div id="outline-container-language-packages" class="outline-3">
+<h3 id="language-packages"><span class="section-number-3">3.3</span> Language packages</h3>
 <div class="outline-text-3" id="text-3-3">
 </div>
-<div id="outline-container-Systemd" class="outline-4">
-<h4 id="Systemd"><span class="section-number-4">3.3.1</span> Systemd</h4>
+<div id="outline-container-systemd" class="outline-4">
+<h4 id="systemd"><span class="section-number-4">3.3.1</span> Systemd</h4>
 <div class="outline-text-4" id="text-3-3-1">
 <p>
 For editing systemd unit files
@@ -1735,12 +1741,12 @@ For editing systemd unit files
 </div>
 </div>
 </div>
-<div id="outline-container-OrgMode" class="outline-4">
-<h4 id="OrgMode"><span class="section-number-4">3.3.2</span> Org Mode</h4>
+<div id="outline-container-org-mode" class="outline-4">
+<h4 id="org-mode"><span class="section-number-4">3.3.2</span> Org Mode</h4>
 <div class="outline-text-4" id="text-3-3-2">
 </div>
-<div id="outline-container-ImproveAgendaCapture" class="outline-5">
-<h5 id="ImproveAgendaCapture"><span class="section-number-5">3.3.2.1</span> Improve agenda/capture</h5>
+<div id="outline-container-improve-agenda-capture" class="outline-5">
+<h5 id="improve-agenda-capture"><span class="section-number-5">3.3.2.1</span> Improve agenda/capture</h5>
 <div class="outline-text-5" id="text-3-3-2-1">
 <p>
 The agenda is nice, but a souped up version is nicer.
@@ -1762,8 +1768,8 @@ set up org-capture.
 </div>
 </div>
 </div>
-<div id="outline-container-Visuals" class="outline-5">
-<h5 id="Visuals"><span class="section-number-5">3.3.2.2</span> Visuals</h5>
+<div id="outline-container-visuals" class="outline-5">
+<h5 id="visuals"><span class="section-number-5">3.3.2.2</span> Visuals</h5>
 <div class="outline-text-5" id="text-3-3-2-2">
 <p>
 Org tables aren&rsquo;t the prettiest thing to look at. This package is supposed to
@@ -1795,15 +1801,15 @@ tags prettier as well :)
 </div>
 </div>
 </div>
-<div id="outline-container-ExtraFunctionality" class="outline-5">
-<h5 id="ExtraFunctionality"><span class="section-number-5">3.3.2.3</span> Extra functionality</h5>
+<div id="outline-container-extra-functionality" class="outline-5">
+<h5 id="extra-functionality"><span class="section-number-5">3.3.2.3</span> Extra functionality</h5>
 <div class="outline-text-5" id="text-3-3-2-3">
 <p>
 Because of the <i><a href="https://github.com/commonmark/commonmark-spec/wiki/markdown-flavors">lovely variety in markdown implementations</a></i> there isn&rsquo;t actually
 such a thing a standard table spec &#x2026; or standard anything really. Because
 <code>org-md</code> is a goody-two-shoes, it just uses HTML for all these non-standardised
 elements (a lot of them). So <code>ox-gfm</code> is handy for exporting markdown with all the
-features that GitHub has. Initialised in <a href="#ExportingToGfm">5.2.3.6</a>.
+features that GitHub has. Initialised in <a href="#exporting-gfm">5.2.3.6</a>.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> ox-gfm <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"99f93011b0"</span><span style="color: #51afef;">)</span>
@@ -1839,12 +1845,12 @@ inserts an org-ified version at point. Isn&rsquo;t that just great.
 </div>
 </div>
 </div>
-<div id="outline-container-PackageConfiguration" class="outline-2">
-<h2 id="PackageConfiguration"><span class="section-number-2">4</span> Package configuration</h2>
+<div id="outline-container-package-configuration" class="outline-2">
+<h2 id="package-configuration"><span class="section-number-2">4</span> Package configuration</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-AbbrevMode" class="outline-3">
-<h3 id="AbbrevMode"><span class="section-number-3">4.1</span> Abbrev mode</h3>
+<div id="outline-container-abbrev-mode" class="outline-3">
+<h3 id="abbrev-mode"><span class="section-number-3">4.1</span> Abbrev mode</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 Thanks to <a href="https://emacs.stackexchange.com/questions/45462/use-a-single-abbrev-table-for-multiple-modes/45476#45476">use a single abbrev-table for multiple modes? - Emacs Stack Exchange</a> I
@@ -1869,8 +1875,8 @@ have the following.
 </div>
 </div>
 </div>
-<div id="outline-container-CentaurTabs" class="outline-3">
-<h3 id="CentaurTabs"><span class="section-number-3">4.2</span> Centaur Tabs</h3>
+<div id="outline-container-centaur-tabs" class="outline-3">
+<h3 id="centaur-tabs"><span class="section-number-3">4.2</span> Centaur Tabs</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 We want to make the tabs a nice, comfy size (<code>36</code>), with icons. The modifier
@@ -1898,8 +1904,8 @@ well somehow, so let&rsquo;s switch to &rsquo;P22 Underground Book&rsquo;; it lo
 </div>
 </div>
 </div>
-<div id="outline-container-Company" class="outline-3">
-<h3 id="Company"><span class="section-number-3">4.3</span> Company</h3>
+<div id="outline-container-company" class="outline-3">
+<h3 id="company"><span class="section-number-3">4.3</span> Company</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 It&rsquo;s nice to have completions almost all the time, in my opinion. Key strokes
@@ -1923,8 +1929,8 @@ let&rsquo;s improve that memory.
 </pre>
 </div>
 </div>
-<div id="outline-container-PlainText" class="outline-4">
-<h4 id="PlainText"><span class="section-number-4">4.3.1</span> Plain Text</h4>
+<div id="outline-container-plain-text" class="outline-4">
+<h4 id="plain-text"><span class="section-number-4">4.3.1</span> Plain Text</h4>
 <div class="outline-text-4" id="text-4-3-1">
 <p>
 <code>ispell</code> is nice, let&rsquo;s have it in <code>text</code>, <code>markdown</code>, and <code>GFM</code>.
@@ -1939,12 +1945,12 @@ let&rsquo;s improve that memory.
 </pre>
 </div>
 <p>
-We then configure the dictionary we&rsquo;re using in <a href="#Ispell">ispell</a>.
+We then configure the dictionary we&rsquo;re using in <a href="#ispell">ispell</a>.
 </p>
 </div>
 </div>
-<div id="outline-container-CompanyEss" class="outline-4">
-<h4 id="CompanyEss"><span class="section-number-4">4.3.2</span> ESS</h4>
+<div id="outline-container-company-ess" class="outline-4">
+<h4 id="company-ess"><span class="section-number-4">4.3.2</span> ESS</h4>
 <div class="outline-text-4" id="text-4-3-2">
 <p>
 <code>company-dabbrev-code</code> is nice. Let&rsquo;s have it.
@@ -1956,8 +1962,8 @@ We then configure the dictionary we&rsquo;re using in <a href="#Ispell">ispell</
 </div>
 </div>
 </div>
-<div id="outline-container-HttpsGithubComZachcurryEmacsAnywhereEmacsAnywhereConfiguration" class="outline-3">
-<h3 id="HttpsGithubComZachcurryEmacsAnywhereEmacsAnywhereConfiguration"><span class="section-number-3">4.4</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration</h3>
+<div id="outline-container-emacs-anywhere-configurati" class="outline-3">
+<h3 id="emacs-anywhere-configurati"><span class="section-number-3">4.4</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 It&rsquo;s nice to recognise GitHub (so we can use <code>GFM</code>), and other apps which we know
@@ -2039,8 +2045,8 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-Flyspell" class="outline-3">
-<h3 id="Flyspell"><span class="section-number-3">4.5</span> Flyspell</h3>
+<div id="outline-container-flyspell" class="outline-3">
+<h3 id="flyspell"><span class="section-number-3">4.5</span> Flyspell</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 At one point, typing became noticeably laggy, Profiling revealed
@@ -2053,8 +2059,8 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 </div>
 </div>
 </div>
-<div id="outline-container-Tramp" class="outline-3">
-<h3 id="Tramp"><span class="section-number-3">4.6</span> Tramp</h3>
+<div id="outline-container-tramp" class="outline-3">
+<h3 id="tramp"><span class="section-number-3">4.6</span> Tramp</h3>
 <div class="outline-text-3" id="text-4-6">
 <p>
 Let&rsquo;s try to make tramp handle prompts better
@@ -2066,15 +2072,15 @@ Let&rsquo;s try to make tramp handle prompts better
 </pre>
 </div>
 </div>
-<div id="outline-container-Troubleshooting" class="outline-5">
-<h5 id="Troubleshooting"><span class="section-number-5">4.6.0.1</span> Troubleshooting</h5>
+<div id="outline-container-troubleshooting" class="outline-5">
+<h5 id="troubleshooting"><span class="section-number-5">4.6.0.1</span> Troubleshooting</h5>
 <div class="outline-text-5" id="text-4-6-0-1">
 <p>
 In case the remote shell is misbehaving, here are some things to try
 </p>
 </div>
-<div id="outline-container-Zsh" class="outline-6">
-<h6 id="Zsh"><span class="section-number-6">4.6.0.1.1</span> Zsh</h6>
+<div id="outline-container-zsh" class="outline-6">
+<h6 id="zsh"><span class="section-number-6">4.6.0.1.1</span> Zsh</h6>
 <div class="outline-text-6" id="text-4-6-0-1-1">
 <p>
 There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more considerately.
@@ -2092,8 +2098,8 @@ There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more
 </div>
 </div>
 </div>
-<div id="outline-container-Treemacs" class="outline-3">
-<h3 id="Treemacs"><span class="section-number-3">4.7</span> Treemacs</h3>
+<div id="outline-container-treemacs" class="outline-3">
+<h3 id="treemacs"><span class="section-number-3">4.7</span> Treemacs</h3>
 <div class="outline-text-3" id="text-4-7">
 <p>
 Quite often there are superfluous files I&rsquo;m not that interested in. There&rsquo;s no
@@ -2156,12 +2162,12 @@ Now, we just identify the files in question.
 </div>
 </div>
 </div>
-<div id="outline-container-PackageConfigurationMiscellaneous" class="outline-3">
-<h3 id="PackageConfigurationMiscellaneous"><span class="section-number-3">4.8</span> Miscellaneous</h3>
+<div id="outline-container-package-configur-miscella" class="outline-3">
+<h3 id="package-configur-miscella"><span class="section-number-3">4.8</span> Miscellaneous</h3>
 <div class="outline-text-3" id="text-4-8">
 </div>
-<div id="outline-container-Calc" class="outline-4">
-<h4 id="Calc"><span class="section-number-4">4.8.1</span> calc</h4>
+<div id="outline-container-calc" class="outline-4">
+<h4 id="calc"><span class="section-number-4">4.8.1</span> calc</h4>
 <div class="outline-text-4" id="text-4-8-1">
 <p>
 Radians are just better
@@ -2178,8 +2184,8 @@ Radians are just better
 </div>
 </div>
 </div>
-<div id="outline-container-SmartParentheses" class="outline-4">
-<h4 id="SmartParentheses"><span class="section-number-4">4.8.2</span> Smart Parentheses</h4>
+<div id="outline-container-smart-parentheses" class="outline-4">
+<h4 id="smart-parentheses"><span class="section-number-4">4.8.2</span> Smart Parentheses</h4>
 <div class="outline-text-4" id="text-4-8-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">sp-local-pair</span>
@@ -2190,8 +2196,8 @@ Radians are just better
 </div>
 </div>
 </div>
-<div id="outline-container-Ispell" class="outline-4">
-<h4 id="Ispell"><span class="section-number-4">4.8.3</span> ispell</h4>
+<div id="outline-container-ispell" class="outline-4">
+<h4 id="ispell"><span class="section-number-4">4.8.3</span> ispell</h4>
 <div class="outline-text-4" id="text-4-8-3">
 <p>
 Let&rsquo;s get a nice big dictionary from <a href="http://app.aspell.net/create">SCOWL Custom List/Dictionary Creator</a> with
@@ -2225,8 +2231,8 @@ nearby (also means that if I change the &rsquo;main&rsquo; dictionary I keep my 
 </div>
 </div>
 </div>
-<div id="outline-container-Spray" class="outline-4">
-<h4 id="Spray"><span class="section-number-4">4.8.4</span> spray</h4>
+<div id="outline-container-spray" class="outline-4">
+<h4 id="spray"><span class="section-number-4">4.8.4</span> spray</h4>
 <div class="outline-text-4" id="text-4-8-4">
 <p>
 Let&rsquo;s make this suit me slightly better.
@@ -2238,8 +2244,8 @@ Let&rsquo;s make this suit me slightly better.
 </div>
 </div>
 </div>
-<div id="outline-container-ThemeMagic" class="outline-4">
-<h4 id="ThemeMagic"><span class="section-number-4">4.8.5</span> theme magic</h4>
+<div id="outline-container-theme-magic" class="outline-4">
+<h4 id="theme-magic"><span class="section-number-4">4.8.5</span> theme magic</h4>
 <div class="outline-text-4" id="text-4-8-5">
 <p>
 Let&rsquo;s automatically update terminals on theme change
@@ -2250,8 +2256,8 @@ Let&rsquo;s automatically update terminals on theme change
 </div>
 </div>
 </div>
-<div id="outline-container-Wttrin" class="outline-4">
-<h4 id="Wttrin"><span class="section-number-4">4.8.6</span> wttrin</h4>
+<div id="outline-container-wttrin" class="outline-4">
+<h4 id="wttrin"><span class="section-number-4">4.8.6</span> wttrin</h4>
 <div class="outline-text-4" id="text-4-8-6">
 <p>
 Set the default city. It&rsquo;s initially <code>Taipei</code> but I find the IP-locating that&rsquo;s
@@ -2263,8 +2269,8 @@ done perfectly acceptable, so let&rsquo;s make that happen.
 </div>
 </div>
 </div>
-<div id="outline-container-Elcord" class="outline-4">
-<h4 id="Elcord"><span class="section-number-4">4.8.7</span> elcord</h4>
+<div id="outline-container-elcord" class="outline-4">
+<h4 id="elcord"><span class="section-number-4">4.8.7</span> elcord</h4>
 <div class="outline-text-4" id="text-4-8-7">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> elcord-use-major-mode-as-main-icon t<span style="color: #51afef;">)</span>
@@ -2272,8 +2278,8 @@ done perfectly acceptable, so let&rsquo;s make that happen.
 </div>
 </div>
 </div>
-<div id="outline-container-ErosEval" class="outline-4">
-<h4 id="ErosEval"><span class="section-number-4">4.8.8</span> eros-eval</h4>
+<div id="outline-container-eros-eval" class="outline-4">
+<h4 id="eros-eval"><span class="section-number-4">4.8.8</span> eros-eval</h4>
 <div class="outline-text-4" id="text-4-8-8">
 <p>
 This makes the result of evals with <kbd>gr</kbd> and <kbd>gR</kbd> just slightly prettier. Every bit
@@ -2285,8 +2291,8 @@ counts right?
 </div>
 </div>
 </div>
-<div id="outline-container-WhichKey" class="outline-4">
-<h4 id="WhichKey"><span class="section-number-4">4.8.9</span> which-key</h4>
+<div id="outline-container-which-key" class="outline-4">
+<h4 id="which-key"><span class="section-number-4">4.8.9</span> which-key</h4>
 <div class="outline-text-4" id="text-4-8-9">
 <p>
 Let&rsquo;s make this popup a bit faster
@@ -2310,8 +2316,8 @@ I also thing that having <kbd>evil-</kbd> appear in so many popups is a bit too 
 </div>
 </div>
 </div>
-<div id="outline-container-Projectile" class="outline-4">
-<h4 id="Projectile"><span class="section-number-4">4.8.10</span> projectile</h4>
+<div id="outline-container-projectile" class="outline-4">
+<h4 id="projectile"><span class="section-number-4">4.8.10</span> projectile</h4>
 <div class="outline-text-4" id="text-4-8-10">
 <p>
 Looking at documentation via <kbd>SPC h f</kbd> and <kbd>SPC h v</kbd> and looking at the source can
@@ -2328,12 +2334,12 @@ add package src directories to projectile. This isn&rsquo;t desirable in my opin
 </div>
 </div>
 </div>
-<div id="outline-container-LanguageConfiguration" class="outline-2">
-<h2 id="LanguageConfiguration"><span class="section-number-2">5</span> Language configuration</h2>
+<div id="outline-container-language-configuration" class="outline-2">
+<h2 id="language-configuration"><span class="section-number-2">5</span> Language configuration</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-FileTemplates" class="outline-4">
-<h4 id="FileTemplates"><span class="section-number-4">5.0.1</span> File Templates</h4>
+<div id="outline-container-file-templates" class="outline-4">
+<h4 id="file-templates"><span class="section-number-4">5.0.1</span> File Templates</h4>
 <div class="outline-text-4" id="text-5-0-1">
 <p>
 For some file types, we overwrite defaults in the <a href="./snippets">snippets</a> directory, others
@@ -2345,8 +2351,8 @@ need to have a template assigned.
 </div>
 </div>
 </div>
-<div id="outline-container-Plaintext" class="outline-3">
-<h3 id="Plaintext"><span class="section-number-3">5.1</span> Plaintext</h3>
+<div id="outline-container-plaintext" class="outline-3">
+<h3 id="plaintext"><span class="section-number-3">5.1</span> Plaintext</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 It&rsquo;s nice to see ansi colour codes displayed
@@ -2361,12 +2367,12 @@ It&rsquo;s nice to see ansi colour codes displayed
 </div>
 </div>
 </div>
-<div id="outline-container-LanguageConfigurationOrgMode" class="outline-3">
-<h3 id="LanguageConfigurationOrgMode"><span class="section-number-3">5.2</span> Org Mode</h3>
+<div id="outline-container-language-configuration-org" class="outline-3">
+<h3 id="language-configuration-org"><span class="section-number-3">5.2</span> Org Mode</h3>
 <div class="outline-text-3" id="text-5-2">
 </div>
-<div id="outline-container-SystemConfig" class="outline-4">
-<h4 id="SystemConfig"><span class="section-number-4">5.2.1</span> System config</h4>
+<div id="outline-container-system-config" class="outline-4">
+<h4 id="system-config"><span class="section-number-4">5.2.1</span> System config</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 Org mode isn&rsquo;t recognised as it&rsquo;s own mime type by default, but that can easily
@@ -2402,12 +2408,12 @@ Then set Emacs as the default editor
 </div>
 </div>
 </div>
-<div id="outline-container-Behaviour" class="outline-4">
-<h4 id="Behaviour"><span class="section-number-4">5.2.2</span> Behaviour</h4>
+<div id="outline-container-behaviour" class="outline-4">
+<h4 id="behaviour"><span class="section-number-4">5.2.2</span> Behaviour</h4>
 <div class="outline-text-4" id="text-5-2-2">
 </div>
-<div id="outline-container-TweakingDefaults" class="outline-5">
-<h5 id="TweakingDefaults"><span class="section-number-5">5.2.2.1</span> Tweaking defaults</h5>
+<div id="outline-container-tweaking-defaults" class="outline-5">
+<h5 id="tweaking-defaults"><span class="section-number-5">5.2.2.1</span> Tweaking defaults</h5>
 <div class="outline-text-5" id="text-5-2-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-directory</span> <span style="color: #7bc275;">"~/.org"</span>                      <span style="color: #62686E;">; </span><span style="color: #62686E;">let's put files here</span>
@@ -2434,8 +2440,8 @@ I also like the <code>:comments</code> header-argument, so let&rsquo;s make that
 </div>
 </div>
 </div>
-<div id="outline-container-BehaviourExtraFunctionality" class="outline-5">
-<h5 id="BehaviourExtraFunctionality"><span class="section-number-5">5.2.2.2</span> Extra functionality</h5>
+<div id="outline-container-behaviour-extra-functiona" class="outline-5">
+<h5 id="behaviour-extra-functiona"><span class="section-number-5">5.2.2.2</span> Extra functionality</h5>
 <div class="outline-text-5" id="text-5-2-2-2">
 <p>
 Let&rsquo;s also make creating an org buffer just that little bit easier.
@@ -2530,8 +2536,8 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
 </div>
 </div>
 </div>
-<div id="outline-container-SuperAgenda" class="outline-5">
-<h5 id="SuperAgenda"><span class="section-number-5">5.2.2.3</span> Super agenda</h5>
+<div id="outline-container-super-agenda" class="outline-5">
+<h5 id="super-agenda"><span class="section-number-5">5.2.2.3</span> Super agenda</h5>
 <div class="outline-text-5" id="text-5-2-2-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> org-super-agenda
@@ -2605,8 +2611,8 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
 </div>
 </div>
 </div>
-<div id="outline-container-Capture" class="outline-5">
-<h5 id="Capture"><span class="section-number-5">5.2.2.4</span> Capture</h5>
+<div id="outline-container-capture" class="outline-5">
+<h5 id="capture"><span class="section-number-5">5.2.2.4</span> Capture</h5>
 <div class="outline-text-5" id="text-5-2-2-4">
 <p>
 Let&rsquo;s setup some org-capture templates
@@ -3005,12 +3011,70 @@ no modeline.
 </div>
 </div>
 </div>
-<div id="outline-container-NicerHeadings" class="outline-5">
-<h5 id="NicerHeadings"><span class="section-number-5">5.2.2.5</span> Nicer headings</h5>
+<div id="outline-container-nicer-generated-heading" class="outline-5">
+<h5 id="nicer-generated-heading"><span class="section-number-5">5.2.2.5</span> Nicer generated heading IDs</h5>
 <div class="outline-text-5" id="text-5-2-2-5">
 <p>
 Thanks to alphapapa&rsquo;s <a href="https://github.com/alphapapa/unpackaged.el#export-to-html-with-useful-anchors">unpackaged.el</a>.
-Unfortunately this currently seems to break some of the other modifications I&rsquo;ve made.
+By default, <code>url-hexify-string</code> seemed to cause me some issues. Replacing that in
+<code>a53899</code> resolved this for me. To go one step further, I create a function for
+producing nice short links, like an inferior version of <code>reftex-label</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-heading-contraction-max-words</span> <span style="color: #e69055; font-weight: bold;">3</span>
+  <span style="color: #7e7e87;">"Maximum number of words in a heading"</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-heading-contraction-max-length</span> <span style="color: #e69055; font-weight: bold;">26</span>
+  <span style="color: #7e7e87;">"Maximum length of resulting string"</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-heading-contraction-stripped-words</span>
+  <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"the"</span> <span style="color: #7bc275;">"on"</span> <span style="color: #7bc275;">"in"</span> <span style="color: #7bc275;">"off"</span> <span style="color: #7bc275;">"a"</span> <span style="color: #7bc275;">"for"</span> <span style="color: #7bc275;">"by"</span> <span style="color: #7bc275;">"of"</span> <span style="color: #7bc275;">"and"</span> <span style="color: #7bc275;">"is"</span> <span style="color: #7bc275;">"to"</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #7e7e87;">"Unnecesary words to be removed from a heading"</span><span style="color: #51afef;">)</span>
+
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-heading-contraction</span> <span style="color: #C57BDB;">(</span>heading-string<span style="color: #C57BDB;">)</span>
+  <span style="color: #7e7e87;">"Get a contracted form of HEADING-STRING that is ascii-only and doesn't need uri percent encoding.</span>
+<span style="color: #7e7e87;">Strips 'joining' words in `</span><span style="color: #a991f1;">org-heading-contraction-stripped-words</span><span style="color: #7e7e87;">',</span>
+<span style="color: #7e7e87;">and then limits the result to the first `</span><span style="color: #a991f1;">org-heading-contraction-max-words</span><span style="color: #7e7e87;">' words.</span>
+<span style="color: #7e7e87;">If the total length is &gt; `</span><span style="color: #a991f1;">org-heading-contraction-max-length</span><span style="color: #7e7e87;">' then individual words are</span>
+<span style="color: #7e7e87;">truncated to fit within the limit"</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>heading-words
+         <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">-filter</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>word<span style="color: #51afef;">)</span>
+                    <span style="color: #51afef;">(</span><span style="color: #a991f1;">not</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">member</span> word <span style="color: #DFDFDF;">org-heading-contraction-stripped-words</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                  <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">split-string</span>
+                   <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">s-snake-case</span>
+                    <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"[</span><span style="color: #C57BDB; font-weight: bold;">^</span><span style="color: #7bc275;">A-Za-z0-9-_.~ ]"</span> <span style="color: #7bc275;">""</span>
+                                              heading-string<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #7bc275;">"_"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">&gt;</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">length</span> heading-words<span style="color: #C57BDB;">)</span>
+             <span style="color: #DFDFDF;">org-heading-contraction-max-words</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> heading-words
+            <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">subseq</span> heading-words <span style="color: #e69055; font-weight: bold;">0</span> <span style="color: #DFDFDF;">org-heading-contraction-max-words</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">&gt;</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">+</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">-sum</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">length</span> heading-words<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                <span style="color: #7bc275;">(</span><span style="color: #a991f1;">1-</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">length</span> heading-words<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+             <span style="color: #DFDFDF;">org-heading-contraction-max-length</span><span style="color: #51afef;">)</span>
+      <span style="color: #62686E;">;; </span><span style="color: #62686E;">trucate each word to a max word length determined by</span>
+      <span style="color: #62686E;">;;   </span><span style="color: #62686E;">max length = \floor{ \frac{total length - chars for seperators - \sum_{word \leq average length} length(word) }{num(words) &gt; average length} }</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> heading-words <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let*</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>total-length-budget <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">-</span> <span style="color: #DFDFDF;">org-heading-contraction-max-length</span>  <span style="color: #62686E;">; </span><span style="color: #62686E;">how many non-separator chars we can use</span>
+                                                         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">1-</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">length</span> heading-words<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                                 <span style="color: #51afef;">(</span>word-length-budget <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">/</span> total-length-budget                  <span style="color: #62686E;">; </span><span style="color: #62686E;">max length of each word to keep within budget</span>
+                                                        <span style="color: #DFDFDF;">org-heading-contraction-max-words</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                                 <span style="color: #51afef;">(</span>num-overlong <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">-count</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>word<span style="color: #51afef;">)</span>                             <span style="color: #62686E;">; </span><span style="color: #62686E;">how many words exceed that budget</span>
+                                                         <span style="color: #51afef;">(</span><span style="color: #a991f1;">&gt;</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">length</span> word<span style="color: #C57BDB;">)</span> word-length-budget<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                                                       heading-words<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                                 <span style="color: #51afef;">(</span>total-short-length <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">-sum</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>word<span style="color: #C57BDB;">)</span>                 <span style="color: #62686E;">; </span><span style="color: #62686E;">total length of words under that budget</span>
+                                                                     <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">&lt;=</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">length</span> word<span style="color: #51afef;">)</span> word-length-budget<span style="color: #7bc275;">)</span>
+                                                                         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">length</span> word<span style="color: #7bc275;">)</span> <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                                                                   heading-words<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                                 <span style="color: #51afef;">(</span>max-length <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">/</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">-</span> total-length-budget total-short-length<span style="color: #7bc275;">)</span>   <span style="color: #62686E;">; </span><span style="color: #62686E;">max(max-length) that we can have to fit within the budget</span>
+                                                num-overlong<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                            <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>word<span style="color: #C57BDB;">)</span>
+                                      <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">&lt;=</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">length</span> word<span style="color: #51afef;">)</span> max-length<span style="color: #7bc275;">)</span>
+                                          word
+                                        <span style="color: #7bc275;">(</span><span style="color: #a991f1;">substring</span> word <span style="color: #e69055; font-weight: bold;">0</span> max-length<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                                    heading-words<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">string-join</span> heading-words <span style="color: #7bc275;">"-"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+<p>
+Now here&rsquo;s alphapapa&rsquo;s subtley tweaked mode.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">define-minor-mode</span> <span style="color: #DFDFDF;">unpackaged/org-export-html-with-useful-ids-mode</span>
@@ -3106,8 +3170,8 @@ Unfortunately this currently seems to break some of the other modifications I&rs
 </div>
 </div>
 </div>
-<div id="outline-container-NicerOrgReturn" class="outline-5">
-<h5 id="NicerOrgReturn"><span class="section-number-5">5.2.2.6</span> Nicer <code>org-return</code></h5>
+<div id="outline-container-nicer-org-return" class="outline-5">
+<h5 id="nicer-org-return"><span class="section-number-5">5.2.2.6</span> Nicer <code>org-return</code></h5>
 <div class="outline-text-5" id="text-5-2-2-6">
 <p>
 Once again, from <a href="https://github.com/alphapapa/unpackaged.el#org-return-dwim">unpackaged.el</a>
@@ -3216,16 +3280,16 @@ Once again, from <a href="https://github.com/alphapapa/unpackaged.el#org-return-
 </div>
 </div>
 </div>
-<div id="outline-container-OrgModeVisuals" class="outline-4">
-<h4 id="OrgModeVisuals"><span class="section-number-4">5.2.3</span> Visuals</h4>
+<div id="outline-container-org-mode-visuals" class="outline-4">
+<h4 id="org-mode-visuals"><span class="section-number-4">5.2.3</span> Visuals</h4>
 <div class="outline-text-4" id="text-5-2-3">
 </div>
-<div id="outline-container-InEditor" class="outline-5">
-<h5 id="InEditor"><span class="section-number-5">5.2.3.1</span> In editor</h5>
+<div id="outline-container-editor" class="outline-5">
+<h5 id="editor"><span class="section-number-5">5.2.3.1</span> In editor</h5>
 <div class="outline-text-5" id="text-5-2-3-1">
 </div>
-<div id="outline-container-FontDisplay" class="outline-6">
-<h6 id="FontDisplay"><span class="section-number-6">5.2.3.1.1</span> Font Display</h6>
+<div id="outline-container-font-display" class="outline-6">
+<h6 id="font-display"><span class="section-number-6">5.2.3.1.1</span> Font Display</h6>
 <div class="outline-text-6" id="text-5-2-3-1-1">
 <p>
 Mixed pitch is great. As is <code>+org-pretty-mode</code>, let&rsquo;s use them.
@@ -3259,8 +3323,8 @@ Let&rsquo;s make headings a bit bigger
 </div>
 </div>
 </div>
-<div id="outline-container-Symbols" class="outline-6">
-<h6 id="Symbols"><span class="section-number-6">5.2.3.1.2</span> Symbols</h6>
+<div id="outline-container-symbols" class="outline-6">
+<h6 id="symbols"><span class="section-number-6">5.2.3.1.2</span> Symbols</h6>
 <div class="outline-text-6" id="text-5-2-3-1-2">
 <p>
 It&rsquo;s also nice to change the character used for collapsed items (by default <code>…</code>),
@@ -3369,8 +3433,8 @@ We also like <code>org-fragtog</code>, and that wants a hook.
 </div>
 </div>
 </div>
-<div id="outline-container-LaTeXFragments" class="outline-6">
-<h6 id="LaTeXFragments"><span class="section-number-6">5.2.3.1.3</span> LaTeX Fragments</h6>
+<div id="outline-container-latex-fragments" class="outline-6">
+<h6 id="latex-fragments"><span class="section-number-6">5.2.3.1.3</span> LaTeX Fragments</h6>
 <div class="outline-text-6" id="text-5-2-3-1-3">
 <p>
 It&rsquo;s nice to customise the look of LaTeX fragments so they fit better in the
@@ -3509,7 +3573,7 @@ Now let&rsquo;s combine this to see what&rsquo;s best
 </table>
 
 <p>
-So, let&rsquo;s use <code>dvipng</code> for previewing LaTeX fragments in-Emacs, but <code>dvisvgm</code> for <a href="#ExportingToHtml">LaTeX Rendering</a>.
+So, let&rsquo;s use <code>dvipng</code> for previewing LaTeX fragments in-Emacs, but <code>dvisvgm</code> for <a href="#exporting-html">LaTeX Rendering</a>.
 <i>Unfortunately: it seems that svg sizing is annoying ATM, so let&rsquo;s actually not do this right now.</i>
 </p>
 
@@ -3544,8 +3608,8 @@ NB: This doesn&rsquo;t work at the moment.
 </div>
 </div>
 </div>
-<div id="outline-container-StolenFromHttpsGithubComJkitchinScimaxScimaxSemiWorkingRightNow" class="outline-6">
-<h6 id="StolenFromHttpsGithubComJkitchinScimaxScimaxSemiWorkingRightNow"><span class="section-number-6">5.2.3.1.4</span> Stolen from <a href="https://github.com/jkitchin/scimax">scimax</a> (semi-working right now)</h6>
+<div id="outline-container-stolen-from-scimax" class="outline-6">
+<h6 id="stolen-from-scimax"><span class="section-number-6">5.2.3.1.4</span> Stolen from <a href="https://github.com/jkitchin/scimax">scimax</a> (semi-working right now)</h6>
 <div class="outline-text-6" id="text-5-2-3-1-4">
 <p>
 I want fragment justification
@@ -3671,8 +3735,8 @@ There&rsquo;s also this lovely equation numbering stuff I&rsquo;ll nick
 </div>
 </div>
 </div>
-<div id="outline-container-ExportingGeneral" class="outline-5">
-<h5 id="ExportingGeneral"><span class="section-number-5">5.2.3.2</span> Exporting (general)</h5>
+<div id="outline-container-exporting-general" class="outline-5">
+<h5 id="exporting-general"><span class="section-number-5">5.2.3.2</span> Exporting (general)</h5>
 <div class="outline-text-5" id="text-5-2-3-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-export-headline-levels</span> <span style="color: #e69055; font-weight: bold;">5</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">I like nesting</span>
@@ -3693,17 +3757,17 @@ the final documents.
 </div>
 </div>
 </div>
-<div id="outline-container-ExportingToHtml" class="outline-5">
-<h5 id="ExportingToHtml"><span class="section-number-5">5.2.3.3</span> Exporting to HTML</h5>
+<div id="outline-container-exporting-html" class="outline-5">
+<h5 id="exporting-html"><span class="section-number-5">5.2.3.3</span> Exporting to HTML</h5>
 <div class="outline-text-5" id="text-5-2-3-3">
 </div>
-<div id="outline-container-CustomCssJs" class="outline-6">
-<h6 id="CustomCssJs"><span class="section-number-6">5.2.3.3.1</span> Custom CSS/JS</h6>
+<div id="outline-container-custom-css-js" class="outline-6">
+<h6 id="custom-css-js"><span class="section-number-6">5.2.3.3.1</span> Custom CSS/JS</h6>
 <div class="outline-text-6" id="text-5-2-3-3-1">
 <p>
 There is a fantastic exporter config (<a href="https://github.com/fniessen/org-html-themes">fniessen/org-html-themes</a>) which we can
 setup to be used with all our org files. Since most of the syntax highlighting
-colours from our <a href="#Theme">2.3.1.2</a> gets used, we benefit from customising the code block style.
+colours from our <a href="#theme">2.3.1.2</a> gets used, we benefit from customising the code block style.
 </p>
 <p>
 We also want to make the background and foreground colours of the <code>&lt;pre&gt;</code> blocks
@@ -3937,8 +4001,8 @@ match out theme (they don&rsquo;t by default), so I scraped some code from <code
 </div>
 </div>
 </div>
-<div id="outline-container-MakeVerbatimDifferentToCode" class="outline-6">
-<h6 id="MakeVerbatimDifferentToCode"><span class="section-number-6">5.2.3.3.2</span> Make verbatim different to code</h6>
+<div id="outline-container-make-verbatim-different" class="outline-6">
+<h6 id="make-verbatim-different"><span class="section-number-6">5.2.3.3.2</span> Make verbatim different to code</h6>
 <div class="outline-text-6" id="text-5-2-3-3-2">
 <p>
 Since we have <kbd>verbatim</kbd> and <code>code</code>, let&rsquo;s use <kbd>verbatim</kbd> for key strokes.
@@ -3955,8 +4019,8 @@ Since we have <kbd>verbatim</kbd> and <code>code</code>, let&rsquo;s use <kbd>ve
 </div>
 </div>
 </div>
-<div id="outline-container-ChangeCheckboxType" class="outline-6">
-<h6 id="ChangeCheckboxType"><span class="section-number-6">5.2.3.3.3</span> Change checkbox type</h6>
+<div id="outline-container-change-checkbox-type" class="outline-6">
+<h6 id="change-checkbox-type"><span class="section-number-6">5.2.3.3.3</span> Change checkbox type</h6>
 <div class="outline-text-6" id="text-5-2-3-3-3">
 <p>
 We also want to use HTML checkboxes, however we want to get a bit fancier than default
@@ -3977,8 +4041,8 @@ We also want to use HTML checkboxes, however we want to get a bit fancier than d
 </ul>
 </div>
 </div>
-<div id="outline-container-LaTeXRendering" class="outline-6">
-<h6 id="LaTeXRendering"><span class="section-number-6">5.2.3.3.4</span> LaTeX Rendering</h6>
+<div id="outline-container-latex-rendering" class="outline-6">
+<h6 id="latex-rendering"><span class="section-number-6">5.2.3.3.4</span> LaTeX Rendering</h6>
 <div class="outline-text-6" id="text-5-2-3-3-4">
 <p>
 On the maths side of things, I consider <code>dvisvgm</code> to be a rather compelling
@@ -3991,8 +4055,8 @@ option. However this isn&rsquo;t sized very well at the moment.
 </div>
 </div>
 </div>
-<div id="outline-container-ExportingToLaTeX" class="outline-5">
-<h5 id="ExportingToLaTeX"><span class="section-number-5">5.2.3.4</span> Exporting to LaTeX</h5>
+<div id="outline-container-exporting-latex" class="outline-5">
+<h5 id="exporting-latex"><span class="section-number-5">5.2.3.4</span> Exporting to LaTeX</h5>
 <div class="outline-text-5" id="text-5-2-3-4">
 <p>
 I like automatically using spaced small caps for acronyms. For strings I want to
@@ -4131,8 +4195,8 @@ Now for a few more adjustments.
 </pre>
 </div>
 </div>
-<div id="outline-container-ChameleonAkaMatchTheme" class="outline-6">
-<h6 id="ChameleonAkaMatchTheme"><span class="section-number-6">5.2.3.4.1</span> Chameleon &#x2014; aka. match theme</h6>
+<div id="outline-container-chameleon-aka-match" class="outline-6">
+<h6 id="chameleon-aka-match"><span class="section-number-6">5.2.3.4.1</span> Chameleon &#x2014; aka. match theme</h6>
 <div class="outline-text-6" id="text-5-2-3-4-1">
 <p>
 Once the idea of having the look of the LaTeX document produced match the
@@ -4283,8 +4347,8 @@ Since have just gone to so much effort above let&rsquo;s make the most of it by 
 </div>
 </div>
 </div>
-<div id="outline-container-ExportingToBeamer" class="outline-5">
-<h5 id="ExportingToBeamer"><span class="section-number-5">5.2.3.5</span> Exporting to Beamer</h5>
+<div id="outline-container-exporting-beamer" class="outline-5">
+<h5 id="exporting-beamer"><span class="section-number-5">5.2.3.5</span> Exporting to Beamer</h5>
 <div class="outline-text-5" id="text-5-2-3-5">
 <p>
 It&rsquo;s nice to use a different theme
@@ -4311,8 +4375,8 @@ frame from <code>1</code> to <code>2</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-ExportingToGfm" class="outline-5">
-<h5 id="ExportingToGfm"><span class="section-number-5">5.2.3.6</span> Exporting to GFM</h5>
+<div id="outline-container-exporting-gfm" class="outline-5">
+<h5 id="exporting-gfm"><span class="section-number-5">5.2.3.6</span> Exporting to GFM</h5>
 <div class="outline-text-5" id="text-5-2-3-6">
 <p>
 We just need to load <code>ox-gfm</code> for org-mode documents
@@ -4325,8 +4389,8 @@ We just need to load <code>ox-gfm</code> for org-mode documents
 </div>
 </div>
 </div>
-<div id="outline-container-Babel" class="outline-4">
-<h4 id="Babel"><span class="section-number-4">5.2.4</span> Babel</h4>
+<div id="outline-container-babel" class="outline-4">
+<h4 id="babel"><span class="section-number-4">5.2.4</span> Babel</h4>
 <div class="outline-text-4" id="text-5-2-4">
 <p>
 Doom lazy-loads babel languages, with is lovely.
@@ -4354,8 +4418,8 @@ We also like auto-completion here
 </div>
 </div>
 </div>
-<div id="outline-container-OrgModeEss" class="outline-4">
-<h4 id="OrgModeEss"><span class="section-number-4">5.2.5</span> ESS</h4>
+<div id="outline-container-org-mode-ess" class="outline-4">
+<h4 id="org-mode-ess"><span class="section-number-4">5.2.5</span> ESS</h4>
 <div class="outline-text-4" id="text-5-2-5">
 <p>
 We don&rsquo;t want <code>R</code> evaluation to hang the editor, hence
@@ -4385,12 +4449,12 @@ Syntax highlighting is nice, so let&rsquo;s turn all of that on
 </div>
 </div>
 </div>
-<div id="outline-container-LaTeX" class="outline-3">
-<h3 id="LaTeX"><span class="section-number-3">5.3</span> LaTeX</h3>
+<div id="outline-container-latex" class="outline-3">
+<h3 id="latex"><span class="section-number-3">5.3</span> LaTeX</h3>
 <div class="outline-text-3" id="text-5-3">
 </div>
-<div id="outline-container-ToBeImplementedIdeas" class="outline-4">
-<h4 id="ToBeImplementedIdeas"><span class="section-number-4">5.3.1</span> To-be-implemented ideas</h4>
+<div id="outline-container-be-implemented-ideas" class="outline-4">
+<h4 id="be-implemented-ideas"><span class="section-number-4">5.3.1</span> To-be-implemented ideas</h4>
 <div class="outline-text-4" id="text-5-3-1">
 <ul class="org-ul">
 <li>Paste image from clipboard
@@ -4419,8 +4483,8 @@ filename as variable maybe?)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-Compilation" class="outline-4">
-<h4 id="Compilation"><span class="section-number-4">5.3.2</span> Compilation</h4>
+<div id="outline-container-compilation" class="outline-4">
+<h4 id="compilation"><span class="section-number-4">5.3.2</span> Compilation</h4>
 <div class="outline-text-4" id="text-5-3-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">TeX-save-query</span> nil
@@ -4432,8 +4496,8 @@ filename as variable maybe?)</li>
 </div>
 </div>
 </div>
-<div id="outline-container-SnippetValue" class="outline-4">
-<h4 id="SnippetValue"><span class="section-number-4">5.3.3</span> Snippet value</h4>
+<div id="outline-container-snippet-value" class="outline-4">
+<h4 id="snippet-value"><span class="section-number-4">5.3.3</span> Snippet value</h4>
 <div class="outline-text-4" id="text-5-3-3">
 <p>
 For use in the new-file template, let&rsquo;s set out a nice preamble we may want to use.
@@ -4479,8 +4543,8 @@ Then let&rsquo;s bind the content to a function, and define some nice helpers.
 </div>
 </div>
 </div>
-<div id="outline-container-EditorVisuals" class="outline-4">
-<h4 id="EditorVisuals"><span class="section-number-4">5.3.4</span> Editor visuals</h4>
+<div id="outline-container-editor-visuals" class="outline-4">
+<h4 id="editor-visuals"><span class="section-number-4">5.3.4</span> Editor visuals</h4>
 <div class="outline-text-4" id="text-5-3-4">
 <p>
 Once again, <i>all hail mixed pitch mode!</i>
@@ -4637,8 +4701,8 @@ And enable shell escape for the preview
 </div>
 </div>
 </div>
-<div id="outline-container-CdLaTeX" class="outline-4">
-<h4 id="CdLaTeX"><span class="section-number-4">5.3.5</span> CDLaTeX</h4>
+<div id="outline-container-cdlatex" class="outline-4">
+<h4 id="cdlatex"><span class="section-number-4">5.3.5</span> CDLaTeX</h4>
 <div class="outline-text-4" id="text-5-3-5">
 <p>
 The symbols and modifies are very nice by default, but could do with a bit of
@@ -4683,12 +4747,12 @@ but more convenient, like <kbd>;</kbd>.
 </div>
 </div>
 </div>
-<div id="outline-container-R" class="outline-3">
-<h3 id="R"><span class="section-number-3">5.4</span> R</h3>
+<div id="outline-container-r" class="outline-3">
+<h3 id="r"><span class="section-number-3">5.4</span> R</h3>
 <div class="outline-text-3" id="text-5-4">
 </div>
-<div id="outline-container-REditorVisuals" class="outline-4">
-<h4 id="REditorVisuals"><span class="section-number-4">5.4.1</span> Editor Visuals</h4>
+<div id="outline-container-r-editor-visuals" class="outline-4">
+<h4 id="r-editor-visuals"><span class="section-number-4">5.4.1</span> Editor Visuals</h4>
 <div class="outline-text-4" id="text-5-4-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> ess-r-mode
@@ -4719,8 +4783,8 @@ but more convenient, like <kbd>;</kbd>.
 </div>
 </div>
 </div>
-<div id="outline-container-Hledger" class="outline-3">
-<h3 id="Hledger"><span class="section-number-3">5.5</span> hledger</h3>
+<div id="outline-container-hledger" class="outline-3">
+<h3 id="hledger"><span class="section-number-3">5.5</span> hledger</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 <code>ledger-mode</code> is great and all, but <code>hledger</code> seems to be more actively maintained.
@@ -4742,8 +4806,8 @@ and produced by John Wiegley &#x2014; author of <code>ledger</code> and current 
 </div>
 </div>
 </div>
-<div id="outline-container-Markdown" class="outline-3">
-<h3 id="Markdown"><span class="section-number-3">5.6</span> Markdown</h3>
+<div id="outline-container-markdown" class="outline-3">
+<h3 id="markdown"><span class="section-number-3">5.6</span> Markdown</h3>
 <div class="outline-text-3" id="text-5-6">
 <p>
 Let&rsquo;s use mixed pitch, because it&rsquo;s great
@@ -4762,8 +4826,8 @@ will do it&rsquo;s own line wrapping, hence we <i>only</i> want to use visual li
 </div>
 </div>
 </div>
-<div id="outline-container-Beancount" class="outline-3">
-<h3 id="Beancount"><span class="section-number-3">5.7</span> Beancount</h3>
+<div id="outline-container-beancount" class="outline-3">
+<h3 id="beancount"><span class="section-number-3">5.7</span> Beancount</h3>
 <div class="outline-text-3" id="text-5-7">
 <p>
 The <a href="https://bitbucket.org/blais/beancount/src/tip/editors/emacs/beancount.el">beancount package</a> online has been put into <code>./lisp</code>, we just need to load and
@@ -4791,7 +4855,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-04-14 Tue 23:22</p>
+<p class="date">Created: 2020-04-24 Fri 20:52</p>
 </div>
 </body>
 </html>
