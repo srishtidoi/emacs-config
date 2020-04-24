@@ -16,7 +16,7 @@
 
 (doom! :completion
        (company            ; the ultimate code completion backend
-        +childframe)       ; ... when your children the better version of you
+        +childframe)       ; ... when your children are better than you
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        (ivy                ; a search engine for love and life
@@ -133,7 +133,7 @@
        (latex             ; writing papers in Emacs has never been so fun
         +latexmk         ; what else would you use?
         +cdlatex         ; quick maths symbols
-        +fold)           ; TeX-fold nicities
+        +fold)           ; fold the clutter away nicities
        ;;lean
        ;;factor
        ledger            ; an accounting system in Emacs
