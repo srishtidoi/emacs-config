@@ -479,6 +479,10 @@
   (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
 ;; projectile:1 ends here
 
+;; [[file:~/.config/doom/config.org::*vterm][vterm:1]]
+(setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=yes")
+;; vterm:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*File%20Templates][File Templates:1]]
 (set-file-template! "\\.tex$" :trigger "__" :mode 'latex-mode)
 ;; File Templates:1 ends here
@@ -588,6 +592,7 @@
       org-agenda-skip-deadline-if-done t
       org-agenda-include-deadlines t
       org-agenda-block-separator nil
+      org-agenda-tags-column 100 ;; from testing this seems to be a good value
       org-agenda-compact-blocks t)
 
 (setq org-agenda-custom-commands
@@ -625,12 +630,12 @@
                           (:name "Issues"
                                  :tag "Issue"
                                  :order 12)
-                          (:name "Projects"
-                                 :tag "Project"
-                                 :order 14)
                           (:name "Emacs"
                                  :tag "Emacs"
                                  :order 13)
+                          (:name "Projects"
+                                 :tag "Project"
+                                 :order 14)
                           (:name "Research"
                                  :tag "Research"
                                  :order 15)
@@ -640,6 +645,9 @@
                           (:name "Waiting"
                                  :todo "WAITING"
                                  :order 20)
+                          (:name "University"
+                                 :tag "uni"
+                                 :order 32)
                           (:name "Trivial"
                                  :priority<= "E"
                                  :tag ("Trivial" "Unimportant")
@@ -924,7 +932,63 @@
         (org-capture)))
 ;; Capture:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Nicer%20headings][Nicer headings:1]]
+;; [[file:~/.config/doom/config.org::*Nicer%20generated%20heading%20IDs][Nicer generated heading IDs:1]]
+(defvar org-heading-contraction-max-words 3
+  "Maximum number of words in a heading")
+(defvar org-heading-contraction-max-length 35
+  "Maximum length of resulting string")
+(defvar org-heading-contraction-stripped-words
+  '("the" "on" "in" "off" "a" "for" "by" "of" "and" "is" "to")
+  "Unnecesary words to be removed from a heading")
+
+(defun org-heading-contraction (heading-string)
+  "Get a contracted form of HEADING-STRING that is onlu contains alphanumeric charachters.
+Strips 'joining' words in `org-heading-contraction-stripped-words',
+and then limits the result to the first `org-heading-contraction-max-words' words.
+If the total length is > `org-heading-contraction-max-length' then individual words are
+truncated to fit within the limit"
+  (let ((heading-words
+         (-filter (lambda (word)
+                    (not (member word org-heading-contraction-stripped-words)))
+                  (split-string
+                   (->> heading-string
+                        s-downcase
+                        (replace-regexp-in-string "\\[\\[[^]]+\\]\\[\\([^]]+\\)\\]\\]" "\\1") ; get description from org-link
+                        (replace-regexp-in-string "[-/ ]+" " ") ; replace seperator-type chars with space
+                        (replace-regexp-in-string "[^a-z0-9 ]" "") ; strip chars which need %-encoding in a uri
+                        ) " "))))
+    (when (> (length heading-words)
+             org-heading-contraction-max-words)
+      (setq heading-words
+            (subseq heading-words 0 org-heading-contraction-max-words)))
+
+    (when (> (+ (-sum (mapcar #'length heading-words))
+                (1- (length heading-words)))
+             org-heading-contraction-max-length)
+      ;; trucate each word to a max word length determined by
+      ;;   max length = \floor{ \frac{total length - chars for seperators - \sum_{word \leq average length} length(word) }{num(words) > average length} }
+      (setq heading-words (let* ((total-length-budget (- org-heading-contraction-max-length  ; how many non-separator chars we can use
+                                                         (1- (length heading-words))))
+                                 (word-length-budget (/ total-length-budget                  ; max length of each word to keep within budget
+                                                        org-heading-contraction-max-words))
+                                 (num-overlong (-count (lambda (word)                             ; how many words exceed that budget
+                                                         (> (length word) word-length-budget))
+                                                       heading-words))
+                                 (total-short-length (-sum (mapcar (lambda (word)                 ; total length of words under that budget
+                                                                     (if (<= (length word) word-length-budget)
+                                                                         (length word) 0))
+                                                                   heading-words)))
+                                 (max-length (/ (- total-length-budget total-short-length)   ; max(max-length) that we can have to fit within the budget
+                                                num-overlong)))
+                            (mapcar (lambda (word)
+                                      (if (<= (length word) max-length)
+                                          word
+                                        (substring word 0 max-length)))
+                                    heading-words))))
+    (string-join heading-words "-")))
+;; Nicer generated heading IDs:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Nicer%20generated%20heading%20IDs][Nicer generated heading IDs:2]]
 (define-minor-mode unpackaged/org-export-html-with-useful-ids-mode
   "Attempt to export Org as HTML with useful link IDs.
 Instead of random IDs like \"#orga1b2c3\", use heading titles,
@@ -997,7 +1061,7 @@ made unique when necessary."
                                   (setf ,place (format "%s--%s" s1 (cl-incf suffix)))))))
     (let* ((title (org-element-property :raw-value datum))
            ;; get ascii-only form of title without needing percent-encoding
-           (ref (replace-regexp-in-string "[^A-Za-z0-9\\-\\_\\.\\~]" "" (s-upper-camel-case (substring-no-properties title))))
+           (ref (org-heading-contraction (substring-no-properties title)))
            (parent (org-element-property :parent datum)))
       (while (--any (equal ref (car it))
                     cache)
@@ -1007,14 +1071,14 @@ made unique when necessary."
             (setf title (concat (org-element-property :raw-value parent)
                                 "--" title)
                   ;; get ascii-only form of title without needing percent-encoding
-                  ref (replace-regexp-in-string "[^A-Za-z0-9\\-\\_\\.\\~]" "" (s-upper-camel-case (substring-no-properties title)))
+                  ref (org-heading-contraction (substring-no-properties title))
                   parent (org-element-property :parent parent))
           ;; No more ancestors: add and increment a number.
           (inc-suffixf ref)))
       ref)))
 
 (add-hook 'org-load-hook #'unpackaged/org-export-html-with-useful-ids-mode)
-;; Nicer headings:1 ends here
+;; Nicer generated heading IDs:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Nicer%20~org-return~][Nicer ~org-return~:1]]
 (after! org
@@ -1141,7 +1205,7 @@ appropriate.  In tables, insert a new row or end the table."
 (use-package org-fancy-priorities
   :diminish
   :defines org-fancy-priorities-list
-  :hook (org-mode . org-fancy-priorities-mode)
+  :hook (org-agenda-mode . org-fancy-priorities-mode)
   :config
   (unless (char-displayable-p ?❗)
     (setq org-fancy-priorities-list '("HIGH" "MID" "LOW" "OPTIONAL"))))
@@ -1150,15 +1214,20 @@ appropriate.  In tables, insert a new row or end the table."
   (use-package org-pretty-tags
   :config
    (setq org-pretty-tags-surrogate-strings
-         '(("uni" . "🎓")
-           ("assignment" . "📓")
-           ("email" . "🖂")
-           ("read" . "🕮")
-           ("article" . "🖹")
-           ("web" . "🌐")
-           ("info" . "🛈")
-           ("issue" . "🐛")
-           ("emacs" . "ɛ")))
+         `(("uni"        . ,(all-the-icons-faicon   "graduation-cap" :face 'all-the-icons-purple  :v-adjust 0.01))
+           ("ucc"        . ,(all-the-icons-material "computer"       :face 'all-the-icons-silver  :v-adjust 0.01))
+           ("assignment" . ,(all-the-icons-material "library_books"  :face 'all-the-icons-orange  :v-adjust 0.01))
+           ("test"       . ,(all-the-icons-material "timer"          :face 'all-the-icons-red     :v-adjust 0.01))
+           ("lecture"    . ,(all-the-icons-fileicon "keynote"        :face 'all-the-icons-orange  :v-adjust 0.01))
+           ("email"      . ,(all-the-icons-faicon   "envelope"       :face 'all-the-icons-blue    :v-adjust 0.01))
+           ("read"       . ,(all-the-icons-octicon  "book"           :face 'all-the-icons-lblue   :v-adjust 0.01))
+           ("article"    . ,(all-the-icons-octicon  "file-text"      :face 'all-the-icons-yellow  :v-adjust 0.01))
+           ("web"        . ,(all-the-icons-faicon   "globe"          :face 'all-the-icons-green   :v-adjust 0.01))
+           ("info"       . ,(all-the-icons-faicon   "info-circle"    :face 'all-the-icons-blue    :v-adjust 0.01))
+           ("issue"      . ,(all-the-icons-faicon   "bug"            :face 'all-the-icons-red     :v-adjust 0.01))
+           ("someday"    . ,(all-the-icons-faicon   "calendar-o"     :face 'all-the-icons-cyan    :v-adjust 0.01))
+           ("idea"       . ,(all-the-icons-octicon  "light-bulb"     :face 'all-the-icons-yellow  :v-adjust 0.01))
+           ("emacs"      . ,(all-the-icons-fileicon "emacs"          :face 'all-the-icons-lpurple :v-adjust 0.01))))
    (org-pretty-tags-global-mode)))
 
 (after! org-superstar
@@ -1186,42 +1255,54 @@ appropriate.  In tables, insert a new row or end the table."
 ;; [[file:~/.config/doom/config.org::*Symbols][Symbols:2]]
 (after! org
   (appendq! +pretty-code-symbols
-            '(:checkbox     "☐"
-              :pending      "◼"
-              :checkedbox   "☑"
-              :results      "🠶"
-              :property     "☸"
-              :properties   "⚙"
-              :end          "∎"
-              :options      "⌥"
-              :title        "𝙏"
-              :author       "𝘼"
-              :date         "𝘿"
-              :latex_header "⇥"
-              :begin_quote  "❮"
-              :end_quote    "❯"
-              :begin_export "⯮"
-              :end_export "⯬"
-              :em_dash      "—"))
+            `(:checkbox      "☐"
+              :pending       "◼"
+              :checkedbox    "☑"
+              :list_property "∷"
+              :results       "🠶"
+              :property      "☸"
+              :properties    "⚙"
+              :end           "∎"
+              :options       "⌥"
+              :title         "𝙏"
+              :author        "𝘼"
+              :date          "𝘿"
+              :latex_header  "⇥"
+              :begin_quote   "❮"
+              :end_quote     "❯"
+              :begin_export  "⯮"
+              :end_export    "⯬"
+              :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
+              :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
+              :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
+              :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
+              :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)
+              :em_dash       "—"))
   (set-pretty-symbols! 'org-mode
     :merge t
-    :checkbox     "[ ]"
-    :pending      "[-]"
-    :checkedbox   "[X]"
-    :results      "#+RESULTS:"
-    :property     "#+PROPERTY:"
-    :property     ":PROPERTIES:"
-    :end          ":END:"
-    :options      "#+OPTIONS:"
-    :title        "#+TITLE:"
-    :author       "#+AUTHOR:"
-    :date         "#+DATE:"
-    :latex_header "#+LATEX_HEADER:"
-    :begin_quote  "#+BEGIN_QUOTE"
-    :end_quote    "#+END_QUOTE"
-    :begin_export "#+BEGIN_EXPORT"
-    :end_export   "#+END_EXPORT"
-    :em_dash      "---")
+    :checkbox      "[ ]"
+    :pending       "[-]"
+    :checkedbox    "[X]"
+    :list_property "::"
+    :results       "#+RESULTS:"
+    :property      "#+PROPERTY:"
+    :property      ":PROPERTIES:"
+    :end           ":END:"
+    :options       "#+OPTIONS:"
+    :title         "#+TITLE:"
+    :author        "#+AUTHOR:"
+    :date          "#+DATE:"
+    :latex_header  "#+LATEX_HEADER:"
+    :begin_quote   "#+BEGIN_QUOTE"
+    :end_quote     "#+END_QUOTE"
+    :begin_export  "#+BEGIN_EXPORT"
+    :end_export    "#+END_EXPORT"
+    :priority_a    "[#A]"
+    :priority_b    "[#B]"
+    :priority_c    "[#C]"
+    :priority_d    "[#D]"
+    :priority_e    "[#E]"
+    :em_dash       "---")
 )
 (plist-put +pretty-code-symbols :name "⁍") ; or › could be good?
 ;; Symbols:2 ends here
@@ -1413,7 +1494,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
      org-html-head-extra
      (concat
       (if (s-contains-p "<!––tec/custom-head-start-->" org-html-head-extra)
-          (s-replace-regexp "<!––tec/custom-head-start-->.*<!––tec/custom-head-end-->" "" org-html-head-extra)
+          (s-replace-regexp "<!––tec\\/custom-head-start-->[^🙜]*<!––tec\\/custom-head-end-->" "" org-html-head-extra)
         org-html-head-extra)
       (format "<!––tec/custom-head-start-->
 <style type=\"text/css\">
@@ -1781,35 +1862,48 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 ;; Exporting to LaTeX:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Chameleon%20---%20aka.%20match%20theme][Chameleon --- aka. match theme:1]]
-(defvar ox-chameleon-base-class "fancy-article"
-  "The base class that chameleon builds on")
+(after! ox
+  (defvar ox-chameleon-base-class "fancy-article"
+    "The base class that chameleon builds on")
 
-(defvar ox-chameleon--p nil
-  "Used to indicate whether the current export is trying to blend in. Set just before being accessed.")
+  (defvar ox-chameleon--p nil
+    "Used to indicate whether the current export is trying to blend in. Set just before being accessed.")
 
-;; TODO make this less hacky. One ideas was as follows
-;; (map-put (org-export-backend-filters (org-export-get-backend 'latex))
-;;           :filter-latex-class 'ox-chameleon-latex-class-detector-filter))
-;; Never seemed to execute though
-(defadvice! ox-chameleon-org-latex-detect (orig-fun info)
-  :around #'org-export-install-filters
-  (setq ox-chameleon--p (when (equal (plist-get info :latex-class)
-                                     "chameleon")
-                          (plist-put info :latex-class ox-chameleon-base-class)
-                          t))
-  (funcall orig-fun info))
+  ;; (setf (alist-get :filter-latex-class
+  ;;                  (org-export-backend-filters
+  ;;                   (org-export-get-backend 'latex)))
+  ;;       'ox-chameleon-latex-class-detector-filter)
 
-(defadvice! ox-chameleon-org-latex-export (orig-fn info)
-  :around #'org-latex-make-preamble
-  (funcall orig-fn info)
-  (if (not ox-chameleon--p)
-      (funcall orig-fn info)
-    (concat (funcall orig-fn info)
-            (ox-chameleon-generate-colourings))))
+  ;; (defun ox-chameleon-latex-class-detector-filter (info backend)
+  ;;   ""
+  ;;   (setq ox-chameleon--p (when (equal (plist-get info :latex-class)
+  ;;                                      "chameleon")
+  ;;                           (plist-put info :latex-class ox-chameleon-base-class)
+  ;;                           t)))
 
-(defun ox-chameleon-generate-colourings ()
-  (apply #'format
-         "%% make document follow Emacs theme
+  ;; TODO make this less hacky. One ideas was as follows
+  ;; (map-put (org-export-backend-filters (org-export-get-backend 'latex))
+  ;;           :filter-latex-class 'ox-chameleon-latex-class-detector-filter))
+  ;; Never seemed to execute though
+  (defadvice! ox-chameleon-org-latex-detect (orig-fun info)
+    :around #'org-export-install-filters
+    (setq ox-chameleon--p (when (equal (plist-get info :latex-class)
+                                       "chameleon")
+                            (plist-put info :latex-class ox-chameleon-base-class)
+                            t))
+    (funcall orig-fun info))
+
+  (defadvice! ox-chameleon-org-latex-export (orig-fn info &optional template snippet?)
+    :around #'org-latex-make-preamble
+    (funcall orig-fn info)
+    (if (not ox-chameleon--p)
+        (funcall orig-fn info template snippet?)
+      (concat (funcall orig-fn info template snippet?)
+              (ox-chameleon-generate-colourings))))
+
+  (defun ox-chameleon-generate-colourings ()
+    (apply #'format
+           "%% make document follow Emacs theme
 \\definecolor{bg}{HTML}{%s}
 \\definecolor{fg}{HTML}{%s}
 
@@ -1870,38 +1964,39 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 \\makeatother
 %% end customisations
 "
-         (mapcar (doom-rpartial #'substring 1)
-                 (list
-                  (face-attribute 'solaire-default-face :background)
-                  (face-attribute 'default :foreground)
-                  ;;
-                  (doom-color 'red)
-                  (doom-color 'orange)
-                  (doom-color 'green)
-                  (doom-color 'teal)
-                  (doom-color 'yellow)
-                  (doom-color 'blue)
-                  (doom-color 'dark-blue)
-                  (doom-color 'magenta)
-                  (doom-color 'violet)
-                  (doom-color 'cyan)
-                  (doom-color 'dark-cyan)
-                  ;;
-                  (face-attribute 'outline-1 :foreground)
-                  (face-attribute 'outline-2 :foreground)
-                  (face-attribute 'outline-3 :foreground)
-                  (face-attribute 'outline-4 :foreground)
-                  (face-attribute 'outline-5 :foreground)
-                  (face-attribute 'outline-6 :foreground)
-                  (face-attribute 'outline-7 :foreground)
-                  (face-attribute 'outline-8 :foreground)
-                  ;;
-                  (face-attribute 'link :foreground)
-                  (or (face-attribute 'org-ref-cite-face :foreground) (doom-color 'yellow))
-                  (face-attribute 'org-list-dt :foreground)
-                  (face-attribute 'org-code :foreground)
-                  (face-attribute 'org-verbatim :foreground)
-                  ))))
+           (mapcar (doom-rpartial #'substring 1)
+                   (list
+                    (face-attribute 'solaire-default-face :background)
+                    (face-attribute 'default :foreground)
+                    ;;
+                    (doom-color 'red)
+                    (doom-color 'orange)
+                    (doom-color 'green)
+                    (doom-color 'teal)
+                    (doom-color 'yellow)
+                    (doom-color 'blue)
+                    (doom-color 'dark-blue)
+                    (doom-color 'magenta)
+                    (doom-color 'violet)
+                    (doom-color 'cyan)
+                    (doom-color 'dark-cyan)
+                    ;;
+                    (face-attribute 'outline-1 :foreground)
+                    (face-attribute 'outline-2 :foreground)
+                    (face-attribute 'outline-3 :foreground)
+                    (face-attribute 'outline-4 :foreground)
+                    (face-attribute 'outline-5 :foreground)
+                    (face-attribute 'outline-6 :foreground)
+                    (face-attribute 'outline-7 :foreground)
+                    (face-attribute 'outline-8 :foreground)
+                    ;;
+                    (face-attribute 'link :foreground)
+                    (or (face-attribute 'org-ref-cite-face :foreground) (doom-color 'yellow))
+                    (face-attribute 'org-list-dt :foreground)
+                    (face-attribute 'org-code :foreground)
+                    (face-attribute 'org-verbatim :foreground)
+                    ))))
+  )
 ;; Chameleon --- aka. match theme:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Make%20verbatim%20different%20to%20code][Make verbatim different to code:1]]
@@ -2146,6 +2241,8 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
    cdlatex-math-symbol-alist
    '( ;; adding missing functions to 3rd level symbols
      (?_    ("\\downarrow"  ""           "\\inf"))
+     (?2    ("^2"           "\\sqrt{?}"     ""     ))
+     (?3    ("^3"           "\\sqrt[3]{?}"  ""     ))
      (?^    ("\\uparrow"    ""           "\\sup"))
      (?k    ("\\kappa"      ""           "\\ker"))
      (?m    ("\\mu"         ""           "\\lim"))
@@ -2163,6 +2260,29 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
      (?B    "\\mathbb"        nil          t    nil  nil)
      (?a    "\\abs"           nil          t    nil  nil))))
 ;; CDLaTeX:1 ends here
+
+;; [[file:~/.config/doom/config.org::*CDLaTeX][CDLaTeX:2]]
+(defun prvt/auto-number-subscript ()
+  (interactive)
+  (if (and (or (and (>= (char-before) ?a) (<= (char-before) ?z))
+               (and (>= (char-before) ?A) (<= (char-before) ?Z)))
+           (cl-digit-char-p (string-to-char (this-command-keys)))
+           (texmathp))
+      (insert "_" (this-command-keys))
+    (insert (this-command-keys))))
+
+(map!
+ :after tex :map LaTeX-mode-map
+ :i "1" #'prvt/auto-number-subscript
+ :i "2" #'prvt/auto-number-subscript
+ :i "3" #'prvt/auto-number-subscript
+ :i "4" #'prvt/auto-number-subscript
+ :i "5" #'prvt/auto-number-subscript
+ :i "6" #'prvt/auto-number-subscript
+ :i "7" #'prvt/auto-number-subscript
+ :i "8" #'prvt/auto-number-subscript
+ :i "9" #'prvt/auto-number-subscript)
+;; CDLaTeX:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*SyncTeX][SyncTeX:1]]
 (after! tex

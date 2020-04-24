@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-24 Fri 21:17 -->
+<!-- 2020-04-24 Fri 22:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,8 +195,6 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
-
-
 <!––tec/custom-head-start-->
 <style type="text/css">
    :root {
@@ -676,6 +674,26 @@ Now I&rsquo;ve discovered the wonders of literate programming, and am becoming m
 settled by the day. This is my config.
 </p>
 </div>
+
+<div id="outline-container-notes-unwary-adventurer" class="outline-3">
+<h3 id="notes-unwary-adventurer"><span class="section-number-3">1.1</span> Notes for the unwary adventurer</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+If you are so bold as to wish to steal bits of my config (or if I upgrade and
+wonder why things aren&rsquo;t working), here&rsquo;s a list of sections which rely on
+externally setup (i.e. outside of this config).
+</p>
+
+<dl class="org-dl">
+<dt>libvterm</dt><dd>I rely on my distro-provided <kbd>libvterm.so</kbd>, <a href="#vterm">vterm</a> sets a compile flag.
+If this causes issues, just delete the <code>(setq term-module-cmake-args ...)</code> bit.</dd>
+<dt>dictionary</dt><dd>I&rsquo;ve downloaded a custom <a href="http://app.aspell.com/create">SCOWL</a> dictionary, which I use in <a href="#ispell">ispell</a>.
+If this causes issues, just delete the <code>(setq ispell-dictionary ...)</code> bit.</dd>
+<dt>uni-units file</dt><dd>I&rsquo;ve got a file in <kbd>~/.org/.uni-units</kbd> which I use in <code>org-capture</code>
+If this causes issues, just remove the reference to that file in <a href="#capture">Capture</a> and
+instances of <code>unit-prompt</code> used in  <code>(doct ...)</code></dd>
+</dl>
+</div>
 </div>
 </div>
 <div id="outline-container-rudimentary-configuration" class="outline-2">
@@ -954,6 +972,9 @@ cracker! He&rsquo;s also provided me with a nice emacs-style <i>E</i>, which is 
 smaller windows. <b>@MarioRicalde</b> you have my sincere thanks, you&rsquo;re great!
 <object type="image/svg+xml" data="misc/splash-images/blackhole-lines.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
+</p>
+
+<p>
 By incrementally stripping away the outer layers of the logo one can obtain
 quite a nice resizing effect.
 </p>
@@ -1938,7 +1959,7 @@ Let&rsquo;s make this popup a bit faster
 </pre>
 </div>
 <p>
-I also thing that having <kbd>evil-</kbd> appear in so many popups is a bit too verbose, let&rsquo;s change that, and do a few other similar tweaks while we&rsquo;re at it.
+I also think that having <kbd>evil-</kbd> appear in so many popups is a bit too verbose, let&rsquo;s change that, and do a few other similar tweaks while we&rsquo;re at it.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">which-key-allow-multiple-replacements</span> t<span style="color: #51afef;">)</span>
@@ -1964,6 +1985,29 @@ add package src directories to projectile. This isn&rsquo;t desirable in my opin
 <span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #DFDFDF;">projectile-ignored-project-function</span> <span style="color: #C57BDB;">(</span>filepath<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Return t if FILEPATH is within any of `</span><span style="color: #a991f1;">projectile-ignored-projects</span><span style="color: #7e7e87;">'"</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>p<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">s-starts-with-p</span> p filepath<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #DFDFDF;">projectile-ignored-projects</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-vterm" class="outline-4">
+<h4 id="vterm"><span class="section-number-4">4.8.11</span> vterm</h4>
+<div class="outline-text-4" id="text-4-8-11">
+<p>
+On my system, I want to use the <code>vterm</code> lib in <kbd>/usr/bin/libvterm.so</kbd>. This is not
+default behaviour. Without this I see the following error message.
+</p>
+<pre class="example">
+make[2]: *** No rule to make target 'libvterm-prefix/src/libvterm/.libs/libvterm.a', needed by '../vterm-module.so'.  Stop.
+make[1]: *** [CMakeFiles/Makefile2:106: CMakeFiles/vterm-module.dir/all] Error 2
+make: *** [Makefile:84: all] Error 2
+</pre>
+<p>
+I asked about this in a <a href="https://github.com/akermu/emacs-libvterm/issues/238#issuecomment-586385773">GitHub Issue</a>, and the fix is to use the <code>cmake</code> flag
+<code>-DUSE_SYSTEM_LIBVTERM=yes</code>. This can be set for when Doom recomplies <code>vterm</code> on
+updating, which saves me manually compiling with the flag.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> vterm-module-cmake-args <span style="color: #7bc275;">"-DUSE_SYSTEM_LIBVTERM=yes"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -2142,7 +2186,7 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">cl-defmacro</span> <span style="color: #5cEfFF;">lsp-org-babel-enable</span> <span style="color: #C57BDB;">(</span>lang<span style="color: #C57BDB;">)</span>
     <span style="color: #7e7e87;">"Support LANG in org source code block."</span>
-    <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> centaur-lsp <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">lsp-mode</span><span style="color: #C57BDB;">)</span>
+    <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> centaur-lsp <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">lsp-mode</span><span style="color: #C57BDB;">)</span>
     <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">cl-check-type</span> lang stringp<span style="color: #C57BDB;">)</span>
     <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let*</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>edit-pre <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">intern</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"org-babel-edit-prep:%s"</span> lang<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
            <span style="color: #51afef;">(</span>intern-pre <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">intern</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"lsp--%s"</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">symbol-name</span> edit-pre<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
@@ -2185,6 +2229,7 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
       <span style="color: #DFDFDF;">org-agenda-skip-deadline-if-done</span> t
       <span style="color: #DFDFDF;">org-agenda-include-deadlines</span> t
       <span style="color: #DFDFDF;">org-agenda-block-separator</span> nil
+      <span style="color: #DFDFDF;">org-agenda-tags-column</span> <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
       <span style="color: #DFDFDF;">org-agenda-compact-blocks</span> t<span style="color: #51afef;">)</span>
 
 <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-custom-commands</span>
@@ -2222,12 +2267,12 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
                           <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Issues"</span>
                                  <span style="color: #C57BDB;">:tag</span> <span style="color: #7bc275;">"Issue"</span>
                                  <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">12</span><span style="color: #7bc275;">)</span>
-                          <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Projects"</span>
-                                 <span style="color: #C57BDB;">:tag</span> <span style="color: #7bc275;">"Project"</span>
-                                 <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">14</span><span style="color: #7bc275;">)</span>
                           <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Emacs"</span>
                                  <span style="color: #C57BDB;">:tag</span> <span style="color: #7bc275;">"Emacs"</span>
                                  <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">13</span><span style="color: #7bc275;">)</span>
+                          <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Projects"</span>
+                                 <span style="color: #C57BDB;">:tag</span> <span style="color: #7bc275;">"Project"</span>
+                                 <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">14</span><span style="color: #7bc275;">)</span>
                           <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Research"</span>
                                  <span style="color: #C57BDB;">:tag</span> <span style="color: #7bc275;">"Research"</span>
                                  <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #7bc275;">)</span>
@@ -2237,6 +2282,9 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
                           <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Waiting"</span>
                                  <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"WAITING"</span>
                                  <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">20</span><span style="color: #7bc275;">)</span>
+                          <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"University"</span>
+                                 <span style="color: #C57BDB;">:tag</span> <span style="color: #7bc275;">"uni"</span>
+                                 <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">32</span><span style="color: #7bc275;">)</span>
                           <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Trivial"</span>
                                  <span style="color: #C57BDB;">:priority&lt;=</span> <span style="color: #7bc275;">"E"</span>
                                  <span style="color: #C57BDB;">:tag</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"Trivial"</span> <span style="color: #7bc275;">"Unimportant"</span><span style="color: #51afef;">)</span>
@@ -2523,7 +2571,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org1f03022"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org94c4ab7"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -2659,14 +2707,14 @@ producing nice short links, like an inferior version of <code>reftex-label</code
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-heading-contraction-max-words</span> <span style="color: #e69055; font-weight: bold;">3</span>
   <span style="color: #7e7e87;">"Maximum number of words in a heading"</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-heading-contraction-max-length</span> <span style="color: #e69055; font-weight: bold;">26</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-heading-contraction-max-length</span> <span style="color: #e69055; font-weight: bold;">35</span>
   <span style="color: #7e7e87;">"Maximum length of resulting string"</span><span style="color: #51afef;">)</span>
 <span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-heading-contraction-stripped-words</span>
   <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"the"</span> <span style="color: #7bc275;">"on"</span> <span style="color: #7bc275;">"in"</span> <span style="color: #7bc275;">"off"</span> <span style="color: #7bc275;">"a"</span> <span style="color: #7bc275;">"for"</span> <span style="color: #7bc275;">"by"</span> <span style="color: #7bc275;">"of"</span> <span style="color: #7bc275;">"and"</span> <span style="color: #7bc275;">"is"</span> <span style="color: #7bc275;">"to"</span><span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Unnecesary words to be removed from a heading"</span><span style="color: #51afef;">)</span>
 
 <span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-heading-contraction</span> <span style="color: #C57BDB;">(</span>heading-string<span style="color: #C57BDB;">)</span>
-  <span style="color: #7e7e87;">"Get a contracted form of HEADING-STRING that is ascii-only and doesn't need uri percent encoding.</span>
+  <span style="color: #7e7e87;">"Get a contracted form of HEADING-STRING that is onlu contains alphanumeric charachters.</span>
 <span style="color: #7e7e87;">Strips 'joining' words in `</span><span style="color: #a991f1;">org-heading-contraction-stripped-words</span><span style="color: #7e7e87;">',</span>
 <span style="color: #7e7e87;">and then limits the result to the first `</span><span style="color: #a991f1;">org-heading-contraction-max-words</span><span style="color: #7e7e87;">' words.</span>
 <span style="color: #7e7e87;">If the total length is &gt; `</span><span style="color: #a991f1;">org-heading-contraction-max-length</span><span style="color: #7e7e87;">' then individual words are</span>
@@ -2675,9 +2723,12 @@ producing nice short links, like an inferior version of <code>reftex-label</code
          <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">-filter</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>word<span style="color: #51afef;">)</span>
                     <span style="color: #51afef;">(</span><span style="color: #a991f1;">not</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">member</span> word <span style="color: #DFDFDF;">org-heading-contraction-stripped-words</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
                   <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">split-string</span>
-                   <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">s-snake-case</span>
-                    <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"[</span><span style="color: #C57BDB; font-weight: bold;">^</span><span style="color: #7bc275;">A-Za-z0-9-_.~ ]"</span> <span style="color: #7bc275;">""</span>
-                                              heading-string<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #7bc275;">"_"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                   <span style="color: #51afef;">(</span><span style="color: #51afef;">-&gt;&gt;</span> heading-string
+                        s-downcase
+                        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"\\[\\[[</span><span style="color: #C57BDB; font-weight: bold;">^</span><span style="color: #7bc275;">]]+\\]\\[</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">(</span><span style="color: #7bc275;">[</span><span style="color: #C57BDB; font-weight: bold;">^</span><span style="color: #7bc275;">]]+</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">)</span><span style="color: #7bc275;">\\]\\]"</span> <span style="color: #7bc275;">"\\1"</span><span style="color: #C57BDB;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">get description from org-link</span>
+                        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"[-/ ]+"</span> <span style="color: #7bc275;">" "</span><span style="color: #C57BDB;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">replace seperator-type chars with space</span>
+                        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"[</span><span style="color: #C57BDB; font-weight: bold;">^</span><span style="color: #7bc275;">a-z0-9 ]"</span> <span style="color: #7bc275;">""</span><span style="color: #C57BDB;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">strip chars which need %-encoding in a uri</span>
+                        <span style="color: #51afef;">)</span> <span style="color: #7bc275;">" "</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">&gt;</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">length</span> heading-words<span style="color: #C57BDB;">)</span>
              <span style="color: #DFDFDF;">org-heading-contraction-max-words</span><span style="color: #51afef;">)</span>
       <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> heading-words
@@ -2785,7 +2836,7 @@ Now here&rsquo;s alphapapa&rsquo;s subtley tweaked mode.
                                   <span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> ,place <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s--%s"</span> s1 <span style="color: #7bc275;">(</span><span style="color: #51afef;">cl-incf</span> suffix<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>title <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-element-property</span> <span style="color: #C57BDB;">:raw-value</span> datum<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
            <span style="color: #62686E;">;; </span><span style="color: #62686E;">get ascii-only form of title without needing percent-encoding</span>
-           <span style="color: #C57BDB;">(</span>ref <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"[</span><span style="color: #C57BDB; font-weight: bold;">^</span><span style="color: #7bc275;">A-Za-z0-9\\-\\_\\.\\~]"</span> <span style="color: #7bc275;">""</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">s-upper-camel-case</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">substring-no-properties</span> title<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>ref <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-heading-contraction</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">substring-no-properties</span> title<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
            <span style="color: #C57BDB;">(</span>parent <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-element-property</span> <span style="color: #C57BDB;">:parent</span> datum<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
       <span style="color: #51afef;">(</span><span style="color: #51afef;">while</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">--any</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">equal</span> ref <span style="color: #51afef;">(</span><span style="color: #a991f1;">car</span> it<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
                     cache<span style="color: #C57BDB;">)</span>
@@ -2795,7 +2846,7 @@ Now here&rsquo;s alphapapa&rsquo;s subtley tweaked mode.
             <span style="color: #7bc275;">(</span><span style="color: #51afef;">setf</span> title <span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-element-property</span> <span style="color: #C57BDB;">:raw-value</span> parent<span style="color: #C57BDB;">)</span>
                                 <span style="color: #7bc275;">"--"</span> title<span style="color: #51afef;">)</span>
                   <span style="color: #62686E;">;; </span><span style="color: #62686E;">get ascii-only form of title without needing percent-encoding</span>
-                  ref <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"[</span><span style="color: #C57BDB; font-weight: bold;">^</span><span style="color: #7bc275;">A-Za-z0-9\\-\\_\\.\\~]"</span> <span style="color: #7bc275;">""</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">s-upper-camel-case</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">substring-no-properties</span> title<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                  ref <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">org-heading-contraction</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">substring-no-properties</span> title<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
                   parent <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">org-element-property</span> <span style="color: #C57BDB;">:parent</span> parent<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
           <span style="color: #62686E;">;; </span><span style="color: #62686E;">No more ancestors: add and increment a number.</span>
           <span style="color: #7bc275;">(</span>inc-suffixf ref<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -2971,25 +3022,30 @@ I&rsquo;ve also added some fun alternatives, just commented out.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package</span> org-fancy-priorities
   <span style="color: #C57BDB;">:diminish</span>
-  <span style="color: #C57BDB;">:defines</span> <span style="color: #DFDFDF;">org-fancy-priorities-list</span>
-  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-mode</span> . <span style="color: #DFDFDF;">org-fancy-priorities-mode</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">:defines</span> org-fancy-priorities-list
+  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-agenda-mode</span> . org-fancy-priorities-mode<span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">:config</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">unless</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">char-displayable-p</span> ?&#10071;<span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-fancy-priorities-list</span> <span style="color: #C57BDB;">'</span><span style="color: #51afef;">(</span><span style="color: #7bc275;">"HIGH"</span> <span style="color: #7bc275;">"MID"</span> <span style="color: #7bc275;">"LOW"</span> <span style="color: #7bc275;">"OPTIONAL"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> org-fancy-priorities-list <span style="color: #C57BDB;">'</span><span style="color: #51afef;">(</span><span style="color: #7bc275;">"HIGH"</span> <span style="color: #7bc275;">"MID"</span> <span style="color: #7bc275;">"LOW"</span> <span style="color: #7bc275;">"OPTIONAL"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
 <span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">use-package</span> org-pretty-tags
   <span style="color: #C57BDB;">:config</span>
    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-pretty-tags-surrogate-strings</span>
-         <span style="color: #C57BDB;">'</span><span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"uni"</span> . <span style="color: #7bc275;">"&#127891;"</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"assignment"</span> . <span style="color: #7bc275;">"&#128211;"</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"email"</span> . <span style="color: #7bc275;">"&#128386;"</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"read"</span> . <span style="color: #7bc275;">"&#128366;"</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"article"</span> . <span style="color: #7bc275;">"&#128441;"</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"web"</span> . <span style="color: #7bc275;">"&#127760;"</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"info"</span> . <span style="color: #7bc275;">"&#128712;"</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"issue"</span> . <span style="color: #7bc275;">"&#128027;"</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"emacs"</span> . <span style="color: #7bc275;">"&#603;"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+         <span style="color: #C57BDB;">`</span><span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"uni"</span>        . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-faicon</span>   <span style="color: #7bc275;">"graduation-cap"</span> <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-purple</span>  <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"ucc"</span>        . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-material</span> <span style="color: #7bc275;">"computer"</span>       <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-silver</span>  <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"assignment"</span> . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-material</span> <span style="color: #7bc275;">"library_books"</span>  <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-orange</span>  <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"test"</span>       . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-material</span> <span style="color: #7bc275;">"timer"</span>          <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-red</span>     <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"lecture"</span>    . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-fileicon</span> <span style="color: #7bc275;">"keynote"</span>        <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-orange</span>  <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"email"</span>      . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-faicon</span>   <span style="color: #7bc275;">"envelope"</span>       <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-blue</span>    <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"read"</span>       . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-octicon</span>  <span style="color: #7bc275;">"book"</span>           <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-lblue</span>   <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"article"</span>    . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-octicon</span>  <span style="color: #7bc275;">"file-text"</span>      <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-yellow</span>  <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"web"</span>        . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-faicon</span>   <span style="color: #7bc275;">"globe"</span>          <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-green</span>   <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"info"</span>       . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-faicon</span>   <span style="color: #7bc275;">"info-circle"</span>    <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-blue</span>    <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"issue"</span>      . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-faicon</span>   <span style="color: #7bc275;">"bug"</span>            <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-red</span>     <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"someday"</span>    . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-faicon</span>   <span style="color: #7bc275;">"calendar-o"</span>     <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-cyan</span>    <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"idea"</span>       . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-octicon</span>  <span style="color: #7bc275;">"light-bulb"</span>     <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-yellow</span>  <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"emacs"</span>      . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-fileicon</span> <span style="color: #7bc275;">"emacs"</span>          <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-lpurple</span> <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
    <span style="color: #7bc275;">(</span><span style="color: #DFDFDF;">org-pretty-tags-global-mode</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
 <span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org-superstar
@@ -2999,7 +3055,7 @@ I&rsquo;ve also added some fun alternatives, just commented out.
 <span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-ellipsis</span> <span style="color: #7bc275;">" &#9662; "</span>
 
-        <span style="color: #DFDFDF;">org-fancy-priorities-list</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>?A . <span style="color: #7bc275;">"&#9873;"</span><span style="color: #51afef;">)</span>  <span style="color: #62686E;">;; </span><span style="color: #62686E;">ASAP</span>
+        org-fancy-priorities-list <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>?A . <span style="color: #7bc275;">"&#9873;"</span><span style="color: #51afef;">)</span>  <span style="color: #62686E;">;; </span><span style="color: #62686E;">ASAP</span>
                                     <span style="color: #51afef;">(</span>?B . <span style="color: #7bc275;">"&#11014;"</span><span style="color: #51afef;">)</span>  <span style="color: #62686E;">;; </span><span style="color: #62686E;">High</span>
                                     <span style="color: #51afef;">(</span>?C . <span style="color: #7bc275;">"&#9632;"</span><span style="color: #51afef;">)</span>  <span style="color: #62686E;">;; </span><span style="color: #62686E;">Medium</span>
                                     <span style="color: #51afef;">(</span>?D . <span style="color: #7bc275;">"&#11015;"</span><span style="color: #51afef;">)</span>  <span style="color: #62686E;">;; </span><span style="color: #62686E;">Low</span>
@@ -3020,42 +3076,54 @@ It&rsquo;s also nice to make use of the Unicode characters for check boxes, and 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">appendq!</span> <span style="color: #DFDFDF;">+pretty-code-symbols</span>
-            <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:checkbox</span>     <span style="color: #7bc275;">"&#9744;"</span>
-              <span style="color: #C57BDB;">:pending</span>      <span style="color: #7bc275;">"&#9724;"</span>
-              <span style="color: #C57BDB;">:checkedbox</span>   <span style="color: #7bc275;">"&#9745;"</span>
-              <span style="color: #C57BDB;">:results</span>      <span style="color: #7bc275;">"&#129078;"</span>
-              <span style="color: #C57BDB;">:property</span>     <span style="color: #7bc275;">"&#9784;"</span>
-              <span style="color: #C57BDB;">:properties</span>   <span style="color: #7bc275;">"&#9881;"</span>
-              <span style="color: #C57BDB;">:end</span>          <span style="color: #7bc275;">"&#8718;"</span>
-              <span style="color: #C57BDB;">:options</span>      <span style="color: #7bc275;">"&#8997;"</span>
-              <span style="color: #C57BDB;">:title</span>        <span style="color: #7bc275;">"&#120399;"</span>
-              <span style="color: #C57BDB;">:author</span>       <span style="color: #7bc275;">"&#120380;"</span>
-              <span style="color: #C57BDB;">:date</span>         <span style="color: #7bc275;">"&#120383;"</span>
-              <span style="color: #C57BDB;">:latex_header</span> <span style="color: #7bc275;">"&#8677;"</span>
-              <span style="color: #C57BDB;">:begin_quote</span>  <span style="color: #7bc275;">"&#10094;"</span>
-              <span style="color: #C57BDB;">:end_quote</span>    <span style="color: #7bc275;">"&#10095;"</span>
-              <span style="color: #C57BDB;">:begin_export</span> <span style="color: #7bc275;">"&#11246;"</span>
-              <span style="color: #C57BDB;">:end_export</span> <span style="color: #7bc275;">"&#11244;"</span>
-              <span style="color: #C57BDB;">:em_dash</span>      <span style="color: #7bc275;">"&#8212;"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+            <span style="color: #C57BDB;">`</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:checkbox</span>      <span style="color: #7bc275;">"&#9744;"</span>
+              <span style="color: #C57BDB;">:pending</span>       <span style="color: #7bc275;">"&#9724;"</span>
+              <span style="color: #C57BDB;">:checkedbox</span>    <span style="color: #7bc275;">"&#9745;"</span>
+              <span style="color: #C57BDB;">:list_property</span> <span style="color: #7bc275;">"&#8759;"</span>
+              <span style="color: #C57BDB;">:results</span>       <span style="color: #7bc275;">"&#129078;"</span>
+              <span style="color: #C57BDB;">:property</span>      <span style="color: #7bc275;">"&#9784;"</span>
+              <span style="color: #C57BDB;">:properties</span>    <span style="color: #7bc275;">"&#9881;"</span>
+              <span style="color: #C57BDB;">:end</span>           <span style="color: #7bc275;">"&#8718;"</span>
+              <span style="color: #C57BDB;">:options</span>       <span style="color: #7bc275;">"&#8997;"</span>
+              <span style="color: #C57BDB;">:title</span>         <span style="color: #7bc275;">"&#120399;"</span>
+              <span style="color: #C57BDB;">:author</span>        <span style="color: #7bc275;">"&#120380;"</span>
+              <span style="color: #C57BDB;">:date</span>          <span style="color: #7bc275;">"&#120383;"</span>
+              <span style="color: #C57BDB;">:latex_header</span>  <span style="color: #7bc275;">"&#8677;"</span>
+              <span style="color: #C57BDB;">:begin_quote</span>   <span style="color: #7bc275;">"&#10094;"</span>
+              <span style="color: #C57BDB;">:end_quote</span>     <span style="color: #7bc275;">"&#10095;"</span>
+              <span style="color: #C57BDB;">:begin_export</span>  <span style="color: #7bc275;">"&#11246;"</span>
+              <span style="color: #C57BDB;">:end_export</span>    <span style="color: #7bc275;">"&#11244;"</span>
+              <span style="color: #C57BDB;">:priority_a</span>   ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #7bc275;">"&#9873;"</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-red</span><span style="color: #51afef;">)</span>
+              <span style="color: #C57BDB;">:priority_b</span>   ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #7bc275;">"&#11014;"</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-orange</span><span style="color: #51afef;">)</span>
+              <span style="color: #C57BDB;">:priority_c</span>   ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #7bc275;">"&#9632;"</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-yellow</span><span style="color: #51afef;">)</span>
+              <span style="color: #C57BDB;">:priority_d</span>   ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #7bc275;">"&#11015;"</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-green</span><span style="color: #51afef;">)</span>
+              <span style="color: #C57BDB;">:priority_e</span>   ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #7bc275;">"&#10067;"</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-blue</span><span style="color: #51afef;">)</span>
+              <span style="color: #C57BDB;">:em_dash</span>       <span style="color: #7bc275;">"&#8212;"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">set-pretty-symbols!</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-mode</span>
     <span style="color: #C57BDB;">:merge</span> t
-    <span style="color: #C57BDB;">:checkbox</span>     <span style="color: #7bc275;">"[ ]"</span>
-    <span style="color: #C57BDB;">:pending</span>      <span style="color: #7bc275;">"[-]"</span>
-    <span style="color: #C57BDB;">:checkedbox</span>   <span style="color: #7bc275;">"[X]"</span>
-    <span style="color: #C57BDB;">:results</span>      <span style="color: #7bc275;">"#+RESULTS:"</span>
-    <span style="color: #C57BDB;">:property</span>     <span style="color: #7bc275;">"#+PROPERTY:"</span>
-    <span style="color: #C57BDB;">:property</span>     <span style="color: #7bc275;">":PROPERTIES:"</span>
-    <span style="color: #C57BDB;">:end</span>          <span style="color: #7bc275;">":END:"</span>
-    <span style="color: #C57BDB;">:options</span>      <span style="color: #7bc275;">"#+OPTIONS:"</span>
-    <span style="color: #C57BDB;">:title</span>        <span style="color: #7bc275;">"#+TITLE:"</span>
-    <span style="color: #C57BDB;">:author</span>       <span style="color: #7bc275;">"#+AUTHOR:"</span>
-    <span style="color: #C57BDB;">:date</span>         <span style="color: #7bc275;">"#+DATE:"</span>
-    <span style="color: #C57BDB;">:latex_header</span> <span style="color: #7bc275;">"#+LATEX_HEADER:"</span>
-    <span style="color: #C57BDB;">:begin_quote</span>  <span style="color: #7bc275;">"#+BEGIN_QUOTE"</span>
-    <span style="color: #C57BDB;">:end_quote</span>    <span style="color: #7bc275;">"#+END_QUOTE"</span>
-    <span style="color: #C57BDB;">:begin_export</span> <span style="color: #7bc275;">"#+BEGIN_EXPORT"</span>
-    <span style="color: #C57BDB;">:end_export</span>   <span style="color: #7bc275;">"#+END_EXPORT"</span>
-    <span style="color: #C57BDB;">:em_dash</span>      <span style="color: #7bc275;">"---"</span><span style="color: #C57BDB;">)</span>
+    <span style="color: #C57BDB;">:checkbox</span>      <span style="color: #7bc275;">"[ ]"</span>
+    <span style="color: #C57BDB;">:pending</span>       <span style="color: #7bc275;">"[-]"</span>
+    <span style="color: #C57BDB;">:checkedbox</span>    <span style="color: #7bc275;">"[X]"</span>
+    <span style="color: #C57BDB;">:list_property</span> <span style="color: #7bc275;">"::"</span>
+    <span style="color: #C57BDB;">:results</span>       <span style="color: #7bc275;">"#+RESULTS:"</span>
+    <span style="color: #C57BDB;">:property</span>      <span style="color: #7bc275;">"#+PROPERTY:"</span>
+    <span style="color: #C57BDB;">:property</span>      <span style="color: #7bc275;">":PROPERTIES:"</span>
+    <span style="color: #C57BDB;">:end</span>           <span style="color: #7bc275;">":END:"</span>
+    <span style="color: #C57BDB;">:options</span>       <span style="color: #7bc275;">"#+OPTIONS:"</span>
+    <span style="color: #C57BDB;">:title</span>         <span style="color: #7bc275;">"#+TITLE:"</span>
+    <span style="color: #C57BDB;">:author</span>        <span style="color: #7bc275;">"#+AUTHOR:"</span>
+    <span style="color: #C57BDB;">:date</span>          <span style="color: #7bc275;">"#+DATE:"</span>
+    <span style="color: #C57BDB;">:latex_header</span>  <span style="color: #7bc275;">"#+LATEX_HEADER:"</span>
+    <span style="color: #C57BDB;">:begin_quote</span>   <span style="color: #7bc275;">"#+BEGIN_QUOTE"</span>
+    <span style="color: #C57BDB;">:end_quote</span>     <span style="color: #7bc275;">"#+END_QUOTE"</span>
+    <span style="color: #C57BDB;">:begin_export</span>  <span style="color: #7bc275;">"#+BEGIN_EXPORT"</span>
+    <span style="color: #C57BDB;">:end_export</span>    <span style="color: #7bc275;">"#+END_EXPORT"</span>
+    <span style="color: #C57BDB;">:priority_a</span>    <span style="color: #7bc275;">"[#A]"</span>
+    <span style="color: #C57BDB;">:priority_b</span>    <span style="color: #7bc275;">"[#B]"</span>
+    <span style="color: #C57BDB;">:priority_c</span>    <span style="color: #7bc275;">"[#C]"</span>
+    <span style="color: #C57BDB;">:priority_d</span>    <span style="color: #7bc275;">"[#D]"</span>
+    <span style="color: #C57BDB;">:priority_e</span>    <span style="color: #7bc275;">"[#E]"</span>
+    <span style="color: #C57BDB;">:em_dash</span>       <span style="color: #7bc275;">"---"</span><span style="color: #C57BDB;">)</span>
 <span style="color: #51afef;">)</span>
 <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-put</span> <span style="color: #DFDFDF;">+pretty-code-symbols</span> <span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"&#8269;"</span><span style="color: #51afef;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">or &#8250; could be good?</span>
 </pre>
@@ -3418,7 +3486,7 @@ match out theme (they don&rsquo;t by default), so I scraped some code from <code
      <span style="color: #DFDFDF;">org-html-head-extra</span>
      <span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span>
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">s-contains-p</span> <span style="color: #7bc275;">"&lt;!&#8211;&#8211;tec/custom-head-start--&gt;"</span> <span style="color: #DFDFDF;">org-html-head-extra</span><span style="color: #7bc275;">)</span>
-          <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">s-replace-regexp</span> <span style="color: #7bc275;">"&lt;!&#8211;&#8211;tec/custom-head-start--&gt;.*&lt;!&#8211;&#8211;tec/custom-head-end--&gt;"</span> <span style="color: #7bc275;">""</span> <span style="color: #DFDFDF;">org-html-head-extra</span><span style="color: #7bc275;">)</span>
+          <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">s-replace-regexp</span> <span style="color: #7bc275;">"&lt;!&#8211;&#8211;tec\\/custom-head-start--&gt;[</span><span style="color: #C57BDB; font-weight: bold;">^</span><span style="color: #7bc275;">&#128604;]*&lt;!&#8211;&#8211;tec\\/custom-head-end--&gt;"</span> <span style="color: #7bc275;">""</span> <span style="color: #DFDFDF;">org-html-head-extra</span><span style="color: #7bc275;">)</span>
         <span style="color: #DFDFDF;">org-html-head-extra</span><span style="color: #C57BDB;">)</span>
       <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"&lt;!&#8211;&#8211;tec/custom-head-start--&gt;</span>
 <span style="color: #7bc275;">&lt;style type=\"text/css\"&gt;</span>
@@ -3839,35 +3907,48 @@ Once the idea of having the look of the LaTeX document produced match the
 current Emacs theme, I was enraptured. The result is the pseudo-class <code>chameleon</code>.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">ox-chameleon-base-class</span> <span style="color: #7bc275;">"fancy-article"</span>
-  <span style="color: #7e7e87;">"The base class that chameleon builds on"</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> ox
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">ox-chameleon-base-class</span> <span style="color: #7bc275;">"fancy-article"</span>
+    <span style="color: #7e7e87;">"The base class that chameleon builds on"</span><span style="color: #C57BDB;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">ox-chameleon--p</span> nil
-  <span style="color: #7e7e87;">"Used to indicate whether the current export is trying to blend in. Set just before being accessed."</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">ox-chameleon--p</span> nil
+    <span style="color: #7e7e87;">"Used to indicate whether the current export is trying to blend in. Set just before being accessed."</span><span style="color: #C57BDB;">)</span>
 
-<span style="color: #62686E;">;; </span><span style="color: #FCCE7B; font-weight: bold;">TODO</span><span style="color: #62686E;"> make this less hacky. One ideas was as follows</span>
-<span style="color: #62686E;">;; </span><span style="color: #62686E;">(map-put (org-export-backend-filters (org-export-get-backend 'latex))</span>
-<span style="color: #62686E;">;;           </span><span style="color: #62686E;">:filter-latex-class 'ox-chameleon-latex-class-detector-filter))</span>
-<span style="color: #62686E;">;; </span><span style="color: #62686E;">Never seemed to execute though</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">defadvice!</span> ox-chameleon-org-latex-detect <span style="color: #C57BDB;">(</span>orig-fun info<span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">:around</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-export-install-filters</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">ox-chameleon--p</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">equal</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> info <span style="color: #C57BDB;">:latex-class</span><span style="color: #C57BDB;">)</span>
-                                     <span style="color: #7bc275;">"chameleon"</span><span style="color: #51afef;">)</span>
-                          <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-put</span> info <span style="color: #C57BDB;">:latex-class</span> <span style="color: #DFDFDF;">ox-chameleon-base-class</span><span style="color: #51afef;">)</span>
-                          t<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">funcall</span> orig-fun info<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #62686E;">;; </span><span style="color: #62686E;">(setf (alist-get :filter-latex-class</span>
+  <span style="color: #62686E;">;;                  </span><span style="color: #62686E;">(org-export-backend-filters</span>
+  <span style="color: #62686E;">;;                   </span><span style="color: #62686E;">(org-export-get-backend 'latex)))</span>
+  <span style="color: #62686E;">;;       </span><span style="color: #62686E;">'ox-chameleon-latex-class-detector-filter)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">defadvice!</span> ox-chameleon-org-latex-export <span style="color: #C57BDB;">(</span>orig-fn info<span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">:around</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-latex-make-preamble</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">funcall</span> orig-fn info<span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">not</span> <span style="color: #DFDFDF;">ox-chameleon--p</span><span style="color: #7bc275;">)</span>
-      <span style="color: #7bc275;">(</span><span style="color: #a991f1;">funcall</span> orig-fn info<span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">funcall</span> orig-fn info<span style="color: #51afef;">)</span>
-            <span style="color: #51afef;">(</span>ox-chameleon-generate-colourings<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #62686E;">;; </span><span style="color: #62686E;">(defun ox-chameleon-latex-class-detector-filter (info backend)</span>
+  <span style="color: #62686E;">;;   </span><span style="color: #62686E;">""</span>
+  <span style="color: #62686E;">;;   </span><span style="color: #62686E;">(setq ox-chameleon--p (when (equal (plist-get info :latex-class)</span>
+  <span style="color: #62686E;">;;                                      </span><span style="color: #62686E;">"chameleon")</span>
+  <span style="color: #62686E;">;;                           </span><span style="color: #62686E;">(plist-put info :latex-class ox-chameleon-base-class)</span>
+  <span style="color: #62686E;">;;                           </span><span style="color: #62686E;">t)))</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">ox-chameleon-generate-colourings</span> <span style="color: #C57BDB;">()</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">apply</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">format</span>
-         <span style="color: #7bc275;">"%% make document follow Emacs theme</span>
+  <span style="color: #62686E;">;; </span><span style="color: #FCCE7B; font-weight: bold;">TODO</span><span style="color: #62686E;"> make this less hacky. One ideas was as follows</span>
+  <span style="color: #62686E;">;; </span><span style="color: #62686E;">(map-put (org-export-backend-filters (org-export-get-backend 'latex))</span>
+  <span style="color: #62686E;">;;           </span><span style="color: #62686E;">:filter-latex-class 'ox-chameleon-latex-class-detector-filter))</span>
+  <span style="color: #62686E;">;; </span><span style="color: #62686E;">Never seemed to execute though</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> ox-chameleon-org-latex-detect <span style="color: #7bc275;">(</span>orig-fun info<span style="color: #7bc275;">)</span>
+    <span style="color: #C57BDB;">:around</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-export-install-filters</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">ox-chameleon--p</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">when</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">equal</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">plist-get</span> info <span style="color: #C57BDB;">:latex-class</span><span style="color: #7bc275;">)</span>
+                                       <span style="color: #7bc275;">"chameleon"</span><span style="color: #C57BDB;">)</span>
+                            <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-put</span> info <span style="color: #C57BDB;">:latex-class</span> <span style="color: #DFDFDF;">ox-chameleon-base-class</span><span style="color: #C57BDB;">)</span>
+                            t<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">funcall</span> orig-fun info<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> ox-chameleon-org-latex-export <span style="color: #7bc275;">(</span>orig-fn info <span style="color: #FCCE7B;">&amp;optional</span> template snippet?<span style="color: #7bc275;">)</span>
+    <span style="color: #C57BDB;">:around</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-latex-make-preamble</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">funcall</span> orig-fn info<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">not</span> <span style="color: #DFDFDF;">ox-chameleon--p</span><span style="color: #51afef;">)</span>
+        <span style="color: #51afef;">(</span><span style="color: #a991f1;">funcall</span> orig-fn info template snippet?<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">funcall</span> orig-fn info template snippet?<span style="color: #C57BDB;">)</span>
+              <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">ox-chameleon-generate-colourings</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">ox-chameleon-generate-colourings</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">apply</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">format</span>
+           <span style="color: #7bc275;">"%% make document follow Emacs theme</span>
 <span style="color: #7bc275;">\\definecolor{bg}{HTML}{%s}</span>
 <span style="color: #7bc275;">\\definecolor{fg}{HTML}{%s}</span>
 
@@ -3928,44 +4009,45 @@ current Emacs theme, I was enraptured. The result is the pseudo-class <code>cham
 <span style="color: #7bc275;">\\makeatother</span>
 <span style="color: #7bc275;">%% end customisations</span>
 <span style="color: #7bc275;">"</span>
-         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-rpartial</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">substring</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #51afef;">)</span>
-                 <span style="color: #51afef;">(</span><span style="color: #a991f1;">list</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">solaire-default-face</span> <span style="color: #C57BDB;">:background</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">default</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #62686E;">;;</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">red</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">orange</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">green</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">teal</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">yellow</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">blue</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">dark-blue</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">magenta</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">violet</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">cyan</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">dark-cyan</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #62686E;">;;</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-1</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-2</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-3</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-4</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-5</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-6</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-7</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-8</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #62686E;">;;</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">link</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-ref-cite-face</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">yellow</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-list-dt</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-code</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-verbatim</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+           <span style="color: #51afef;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">doom-rpartial</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">substring</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #C57BDB;">)</span>
+                   <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">list</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">solaire-default-face</span> <span style="color: #C57BDB;">:background</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">default</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #62686E;">;;</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">red</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">orange</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">green</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">teal</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">yellow</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">blue</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">dark-blue</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">magenta</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">violet</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">cyan</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">dark-cyan</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #62686E;">;;</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-1</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-2</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-3</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-4</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-5</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-6</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-7</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-8</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #62686E;">;;</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">link</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-ref-cite-face</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">yellow</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-list-dt</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-code</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">face-attribute</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-verbatim</span> <span style="color: #C57BDB;">:foreground</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-ExportingToLaTeXMakeVerbatimDifferentToCode" class="outline-6">
-<h6 id="ExportingToLaTeXMakeVerbatimDifferentToCode"><span class="section-number-6">5.2.3.4.2</span> Make verbatim different to code</h6>
+<div id="outline-container-exporting-latex-make" class="outline-6">
+<h6 id="exporting-latex-make"><span class="section-number-6">5.2.3.4.2</span> Make verbatim different to code</h6>
 <div class="outline-text-6" id="text-5-2-3-4-2">
 <p>
 Since have just gone to so much effort above let&rsquo;s make the most of it by making
@@ -4037,7 +4119,7 @@ We need to tell babel to use python3. Who uses python2 anymore anyway? And why
 doesn&rsquo;t <code>python</code> refer to the latest version!?
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-babel-python-command</span> <span style="color: #7bc275;">"python3"</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-babel-python-command <span style="color: #7bc275;">"python3"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 <p>
@@ -4046,7 +4128,7 @@ We also like auto-completion here
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">tec-org-python</span> <span style="color: #C57BDB;">()</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">eq</span> <span style="color: #DFDFDF;">major-mode</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">python-mode</span><span style="color: #7bc275;">)</span>
-   <span style="color: #7bc275;">(</span><span style="color: #51afef;">progn</span> <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">anaconda-mode</span> t<span style="color: #51afef;">)</span>
+   <span style="color: #7bc275;">(</span><span style="color: #51afef;">progn</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">anaconda-mode</span> t<span style="color: #51afef;">)</span>
           <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">company-mode</span> t<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #51afef;">)</span>
 <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">org-src-mode-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">tec-org-python</span><span style="color: #51afef;">)</span>
@@ -4351,6 +4433,8 @@ but more convenient, like <kbd>;</kbd>.
    <span style="color: #DFDFDF;">cdlatex-math-symbol-alist</span>
    <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">adding missing functions to 3rd level symbols</span>
      <span style="color: #51afef;">(</span>?_    <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"\\downarrow"</span>  <span style="color: #7bc275;">""</span>           <span style="color: #7bc275;">"\\inf"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+     <span style="color: #51afef;">(</span>?2    <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"^2"</span>           <span style="color: #7bc275;">"\\sqrt{?}"</span>     <span style="color: #7bc275;">""</span>     <span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+     <span style="color: #51afef;">(</span>?3    <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"^3"</span>           <span style="color: #7bc275;">"\\sqrt[3]{?}"</span>  <span style="color: #7bc275;">""</span>     <span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
      <span style="color: #51afef;">(</span>?^    <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"\\uparrow"</span>    <span style="color: #7bc275;">""</span>           <span style="color: #7bc275;">"\\sup"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
      <span style="color: #51afef;">(</span>?k    <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"\\kappa"</span>      <span style="color: #7bc275;">""</span>           <span style="color: #7bc275;">"\\ker"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
      <span style="color: #51afef;">(</span>?m    <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"\\mu"</span>         <span style="color: #7bc275;">""</span>           <span style="color: #7bc275;">"\\lim"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -4369,10 +4453,39 @@ but more convenient, like <kbd>;</kbd>.
      <span style="color: #51afef;">(</span>?a    <span style="color: #7bc275;">"\\abs"</span>           nil          t    nil  nil<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
+
+<p>
+In a smilar vein to this, really whenever I have a number after a symbol (letter
+or command) I want it as a subscript. <b>@yoavm448</b> did some lovely legwork to
+provide this:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">prvt/auto-number-subscript</span> <span style="color: #C57BDB;">()</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">interactive</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">and</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">or</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">and</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">&gt;=</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">char-before</span><span style="color: #51afef;">)</span> ?a<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">&lt;=</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">char-before</span><span style="color: #51afef;">)</span> ?z<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+               <span style="color: #C57BDB;">(</span><span style="color: #51afef;">and</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">&gt;=</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">char-before</span><span style="color: #51afef;">)</span> ?A<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">&lt;=</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">char-before</span><span style="color: #51afef;">)</span> ?Z<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+           <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">cl-digit-char-p</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">string-to-char</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">this-command-keys</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+           <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">texmathp</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+      <span style="color: #7bc275;">(</span><span style="color: #a991f1;">insert</span> <span style="color: #7bc275;">"_"</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">this-command-keys</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">insert</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">this-command-keys</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+
+<span style="color: #51afef;">(</span><span style="color: #51afef;">map!</span>
+ <span style="color: #C57BDB;">:after</span> tex <span style="color: #C57BDB;">:map</span> <span style="color: #DFDFDF;">LaTeX-mode-map</span>
+ <span style="color: #C57BDB;">:i</span> <span style="color: #7bc275;">"1"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">prvt/auto-number-subscript</span>
+ <span style="color: #C57BDB;">:i</span> <span style="color: #7bc275;">"2"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">prvt/auto-number-subscript</span>
+ <span style="color: #C57BDB;">:i</span> <span style="color: #7bc275;">"3"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">prvt/auto-number-subscript</span>
+ <span style="color: #C57BDB;">:i</span> <span style="color: #7bc275;">"4"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">prvt/auto-number-subscript</span>
+ <span style="color: #C57BDB;">:i</span> <span style="color: #7bc275;">"5"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">prvt/auto-number-subscript</span>
+ <span style="color: #C57BDB;">:i</span> <span style="color: #7bc275;">"6"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">prvt/auto-number-subscript</span>
+ <span style="color: #C57BDB;">:i</span> <span style="color: #7bc275;">"7"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">prvt/auto-number-subscript</span>
+ <span style="color: #C57BDB;">:i</span> <span style="color: #7bc275;">"8"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">prvt/auto-number-subscript</span>
+ <span style="color: #C57BDB;">:i</span> <span style="color: #7bc275;">"9"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">prvt/auto-number-subscript</span><span style="color: #51afef;">)</span>
+</pre>
 </div>
 </div>
-<div id="outline-container-SyncTeX" class="outline-4">
-<h4 id="SyncTeX"><span class="section-number-4">5.3.6</span> SyncTeX</h4>
+</div>
+<div id="outline-container-synctex" class="outline-4">
+<h4 id="synctex"><span class="section-number-4">5.3.6</span> SyncTeX</h4>
 <div class="outline-text-4" id="text-5-3-6">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> tex
@@ -4491,7 +4604,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-04-24 Fri 21:17</p>
+<p class="date">Created: 2020-04-24 Fri 22:45</p>
 </div>
 </body>
 </html>
