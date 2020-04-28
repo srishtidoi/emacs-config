@@ -93,7 +93,10 @@
 ;; [[file:~/.config/doom/config.org::*Window%20title][Window title:1]]
 (setq frame-title-format
     '(""
-      "%b"
+      (:eval
+       (if (s-contains-p org-roam-directory buffer-file-name)
+           (replace-regexp-in-string ".*/[0-9]+-" "🢔 " buffer-file-name)
+         "%b"))
       (:eval
        (let ((project-name (projectile-project-name)))
          (unless (string= "-" project-name)
@@ -931,6 +934,22 @@
         (set-window-parameter nil 'mode-line-format 'none)
         (org-capture)))
 ;; Capture:3 ends here
+
+;; [[file:~/.config/doom/config.org::*Basic%20settings][Basic settings:1]]
+(setq org-roam-directory "~/Desktop/TEC/Organisation/Roam")
+;; Basic settings:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Graph%20visuals][Graph visuals:1]]
+(setq org-roam-graph-node-extra-config '(("shape"      . "\"underline\"")
+                                         ("style"      . "\"rounded,filled\"")
+                                         ("fillcolor"  . "\"#EEEEEE\"")
+                                         ("color"      . "\"#C9C9C9\"")
+                                         ("fontcolor"  . "\"#111111\"")
+                                         ("fontname"   . "\"Overpass\""))
+      org-roam-graph-edge-extra-config '(("color"      . "\"#333333\""))
+      org-roam-graph-extra-config      `(("stylesheet" . ,(concat "\"" doom-private-dir
+                                                                  "misc/roam-graphviz-style.css\""))))
+;; Graph visuals:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Nicer%20generated%20heading%20IDs][Nicer generated heading IDs:1]]
 (defvar org-heading-contraction-max-words 3

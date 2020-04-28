@@ -150,7 +150,8 @@
         +pandoc                     ; export-with-pandoc support
         +gnuplot                    ; who doesn't like pretty pictures
         ;;+pomodoro                 ; be fruitful with the tomato technique
-        +present)                   ; using org-mode for presentations
+        +present                    ; using org-mode for presentations
+        +roam)                      ; wander around notes
        ;;perl                       ; write code no one else can comprehend
        ;;php                        ; perl's insecure younger brother
        ;;plantuml                   ; diagrams for confusing people more

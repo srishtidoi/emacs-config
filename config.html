@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-28 Tue 02:21 -->
+<!-- 2020-04-29 Wed 02:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,6 +195,7 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
+
 <!––tec/custom-head-start-->
 <style type="text/css">
    :root {
@@ -574,8 +575,15 @@
 <li><a href="#behaviour-extra-functionality">5.2.2.2. Extra functionality</a></li>
 <li><a href="#super-agenda">5.2.2.3. Super agenda</a></li>
 <li><a href="#capture">5.2.2.4. Capture</a></li>
-<li><a href="#nicer-generated-heading">5.2.2.5. Nicer generated heading IDs</a></li>
-<li><a href="#nicer-org-return">5.2.2.6. Nicer <code>org-return</code></a></li>
+<li><a href="#roam">5.2.2.5. Roam</a>
+<ul>
+<li><a href="#basic-settings">5.2.2.5.1. Basic settings</a></li>
+<li><a href="#registering-roam-protocol">5.2.2.5.2. Registering roam protocol</a></li>
+<li><a href="#graph-visuals">5.2.2.5.3. Graph visuals</a></li>
+</ul>
+</li>
+<li><a href="#nicer-generated-heading">5.2.2.6. Nicer generated heading IDs</a></li>
+<li><a href="#nicer-org-return">5.2.2.7. Nicer <code>org-return</code></a></li>
 </ul>
 </li>
 <li><a href="#org-mode-visuals">5.2.3. Visuals</a>
@@ -954,7 +962,10 @@ I&rsquo;d like to have just the buffer name, then if applicable the project fold
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">frame-title-format</span>
     <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">""</span>
-      <span style="color: #7bc275;">"%b"</span>
+      <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:eval</span>
+       <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">s-contains-p</span> <span style="color: #DFDFDF;">org-roam-directory</span> <span style="color: #DFDFDF;">buffer-file-name</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">".*/[0-9]+-"</span> <span style="color: #7bc275;">"&#129172; "</span> <span style="color: #DFDFDF;">buffer-file-name</span><span style="color: #C57BDB;">)</span>
+         <span style="color: #7bc275;">"%b"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
       <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:eval</span>
        <span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>project-name <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">projectile-project-name</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
          <span style="color: #C57BDB;">(</span><span style="color: #51afef;">unless</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">string=</span> <span style="color: #7bc275;">"-"</span> project-name<span style="color: #7bc275;">)</span>
@@ -2571,7 +2582,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org8dc9900"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org9409dd3"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -2695,9 +2706,95 @@ no modeline.
 </div>
 </div>
 </div>
-<div id="outline-container-nicer-generated-heading" class="outline-5">
-<h5 id="nicer-generated-heading"><span class="section-number-5">5.2.2.5</span> Nicer generated heading IDs</h5>
+<div id="outline-container-roam" class="outline-5">
+<h5 id="roam"><span class="section-number-5">5.2.2.5</span> Roam</h5>
 <div class="outline-text-5" id="text-5-2-2-5">
+</div>
+<div id="outline-container-basic-settings" class="outline-6">
+<h6 id="basic-settings"><span class="section-number-6">5.2.2.5.1</span> Basic settings</h6>
+<div class="outline-text-6" id="text-5-2-2-5-1">
+<p>
+I&rsquo;ll just set this to be within <kbd>Organisation</kbd> folder for now, in the future it
+could be worth seeing if I could hook this up to a <a href="https://nextcloud.com/">Nextcloud</a> instance.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-roam-directory</span> <span style="color: #7bc275;">"~/Desktop/TEC/Organisation/Roam"</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-registering-roam-protocol" class="outline-6">
+<h6 id="registering-roam-protocol"><span class="section-number-6">5.2.2.5.2</span> Registering roam protocol</h6>
+<div class="outline-text-6" id="text-5-2-2-5-2">
+<p>
+The recommended method of registering a protocal is by registering a desktop
+application, which seems reasonable.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf">[<span style="color: #FCCE7B;">Desktop Entry</span>]
+<span style="color: #DFDFDF;">Name</span>=Org-Protocol
+<span style="color: #DFDFDF;">Exec</span>=emacsclient %u
+<span style="color: #DFDFDF;">Icon</span>=emacs-icon
+<span style="color: #DFDFDF;">Type</span>=Application
+<span style="color: #DFDFDF;">Terminal</span>=false
+<span style="color: #DFDFDF;">MimeType</span>=x-scheme-handler/org-protocol
+</pre>
+</div>
+<p>
+To associate <code>org-protocol://</code> links with the desktop file,
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-graph-visuals" class="outline-6">
+<h6 id="graph-visuals"><span class="section-number-6">5.2.2.5.3</span> Graph visuals</h6>
+<div class="outline-text-6" id="text-5-2-2-5-3">
+<p>
+By default roam uses an unstyled <code>graphviz</code> dot. This is both uncomplicated, and
+underwhelming. We can do substantially better.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-roam-graph-node-extra-config</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"shape"</span>      . <span style="color: #7bc275;">"\"underline\""</span><span style="color: #7bc275;">)</span>
+                                         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"style"</span>      . <span style="color: #7bc275;">"\"rounded,filled\""</span><span style="color: #7bc275;">)</span>
+                                         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"fillcolor"</span>  . <span style="color: #7bc275;">"\"#EEEEEE\""</span><span style="color: #7bc275;">)</span>
+                                         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"color"</span>      . <span style="color: #7bc275;">"\"#C9C9C9\""</span><span style="color: #7bc275;">)</span>
+                                         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"fontcolor"</span>  . <span style="color: #7bc275;">"\"#111111\""</span><span style="color: #7bc275;">)</span>
+                                         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"fontname"</span>   . <span style="color: #7bc275;">"\"Overpass\""</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+      <span style="color: #DFDFDF;">org-roam-graph-edge-extra-config</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"color"</span>      . <span style="color: #7bc275;">"\"#333333\""</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+      <span style="color: #DFDFDF;">org-roam-graph-extra-config</span>      <span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"stylesheet"</span> . ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"\""</span> <span style="color: #DFDFDF;">doom-private-dir</span>
+                                                                  <span style="color: #7bc275;">"misc/roam-graphviz-style.css\""</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+<p>
+Now, let&rsquo;s go the next step and add that svg stylesheet.
+</p>
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #51afef;">svg </span>{
+  <span style="color: #7bc275;">position</span>: relative;
+  <span style="color: #7bc275;">top</span>: <span style="color: #e69055; font-weight: bold;">50</span>%;
+  <span style="color: #7bc275;">left</span>: <span style="color: #e69055; font-weight: bold;">50</span>%;
+  <span style="color: #7bc275;">transform</span>: translate(-50%, -50%);
+}
+
+<span style="color: #51afef;">a &gt; polygon </span>{
+  <span style="color: #7bc275;">transition-duration</span>: 200ms;
+  <span style="color: #7bc275;">transition-property</span>: fill;
+}
+
+<span style="color: #51afef;">a:hover &gt; polygon </span>{
+  <span style="color: #7bc275;">fill</span>: <span style="color: #000000; background-color: #d4d4d4;">#d4d4d4</span>;
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-nicer-generated-heading" class="outline-5">
+<h5 id="nicer-generated-heading"><span class="section-number-5">5.2.2.6</span> Nicer generated heading IDs</h5>
+<div class="outline-text-5" id="text-5-2-2-6">
 <p>
 Thanks to alphapapa&rsquo;s <a href="https://github.com/alphapapa/unpackaged.el#export-to-html-with-useful-anchors">unpackaged.el</a>.
 By default, <code>url-hexify-string</code> seemed to cause me some issues. Replacing that in
@@ -2858,8 +2955,8 @@ Now here&rsquo;s alphapapa&rsquo;s subtley tweaked mode.
 </div>
 </div>
 <div id="outline-container-nicer-org-return" class="outline-5">
-<h5 id="nicer-org-return"><span class="section-number-5">5.2.2.6</span> Nicer <code>org-return</code></h5>
-<div class="outline-text-5" id="text-5-2-2-6">
+<h5 id="nicer-org-return"><span class="section-number-5">5.2.2.7</span> Nicer <code>org-return</code></h5>
+<div class="outline-text-5" id="text-5-2-2-7">
 <p>
 Once again, from <a href="https://github.com/alphapapa/unpackaged.el#org-return-dwim">unpackaged.el</a>
 </p>
@@ -4606,7 +4703,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-04-28 Tue 02:21</p>
+<p class="date">Created: 2020-04-29 Wed 02:41</p>
 </div>
 </body>
 </html>
