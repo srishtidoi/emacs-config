@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-24 Fri 22:45 -->
+<!-- 2020-04-28 Tue 02:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -524,7 +524,7 @@
 <li><a href="#company-ess">4.3.2. ESS</a></li>
 </ul>
 </li>
-<li><a href="#emacs-anywhere-configurati">4.4. Emacs Anywhere configuration</a></li>
+<li><a href="#emacs-anywhere-configuration">4.4. Emacs Anywhere configuration</a></li>
 <li><a href="#flyspell">4.5. Flyspell</a></li>
 <li><a href="#tramp">4.6. Tramp</a>
 <ul>
@@ -540,7 +540,7 @@
 </ul>
 </li>
 <li><a href="#treemacs">4.7. Treemacs</a></li>
-<li><a href="#package-configur-miscella">4.8. Miscellaneous</a>
+<li><a href="#package-configuration-miscellaneous">4.8. Miscellaneous</a>
 <ul>
 <li><a href="#calc">4.8.1. calc</a></li>
 <li><a href="#smart-parentheses">4.8.2. Smart Parentheses</a></li>
@@ -571,7 +571,7 @@
 <li><a href="#behaviour">5.2.2. Behaviour</a>
 <ul>
 <li><a href="#tweaking-defaults">5.2.2.1. Tweaking defaults</a></li>
-<li><a href="#behaviour-extra-functiona">5.2.2.2. Extra functionality</a></li>
+<li><a href="#behaviour-extra-functionality">5.2.2.2. Extra functionality</a></li>
 <li><a href="#super-agenda">5.2.2.3. Super agenda</a></li>
 <li><a href="#capture">5.2.2.4. Capture</a></li>
 <li><a href="#nicer-generated-heading">5.2.2.5. Nicer generated heading IDs</a></li>
@@ -1619,8 +1619,8 @@ We then configure the dictionary we&rsquo;re using in <a href="#ispell">ispell</
 </div>
 </div>
 </div>
-<div id="outline-container-emacs-anywhere-configurati" class="outline-3">
-<h3 id="emacs-anywhere-configurati"><span class="section-number-3">4.4</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration</h3>
+<div id="outline-container-emacs-anywhere-configuration" class="outline-3">
+<h3 id="emacs-anywhere-configuration"><span class="section-number-3">4.4</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 It&rsquo;s nice to recognise GitHub (so we can use <code>GFM</code>), and other apps which we know
@@ -1819,8 +1819,8 @@ Now, we just identify the files in question.
 </div>
 </div>
 </div>
-<div id="outline-container-package-configur-miscella" class="outline-3">
-<h3 id="package-configur-miscella"><span class="section-number-3">4.8</span> Miscellaneous</h3>
+<div id="outline-container-package-configuration-miscellaneous" class="outline-3">
+<h3 id="package-configuration-miscellaneous"><span class="section-number-3">4.8</span> Miscellaneous</h3>
 <div class="outline-text-3" id="text-4-8">
 </div>
 <div id="outline-container-calc" class="outline-4">
@@ -2120,8 +2120,8 @@ I also like the <code>:comments</code> header-argument, so let&rsquo;s make that
 </div>
 </div>
 </div>
-<div id="outline-container-behaviour-extra-functiona" class="outline-5">
-<h5 id="behaviour-extra-functiona"><span class="section-number-5">5.2.2.2</span> Extra functionality</h5>
+<div id="outline-container-behaviour-extra-functionality" class="outline-5">
+<h5 id="behaviour-extra-functionality"><span class="section-number-5">5.2.2.2</span> Extra functionality</h5>
 <div class="outline-text-5" id="text-5-2-2-2">
 <p>
 Let&rsquo;s also make creating an org buffer just that little bit easier.
@@ -2571,7 +2571,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org94c4ab7"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org8dc9900"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -3089,6 +3089,7 @@ It&rsquo;s also nice to make use of the Unicode characters for check boxes, and 
               <span style="color: #C57BDB;">:author</span>        <span style="color: #7bc275;">"&#120380;"</span>
               <span style="color: #C57BDB;">:date</span>          <span style="color: #7bc275;">"&#120383;"</span>
               <span style="color: #C57BDB;">:latex_header</span>  <span style="color: #7bc275;">"&#8677;"</span>
+              <span style="color: #C57BDB;">:latex_class</span>   <span style="color: #7bc275;">"&#127282;"</span>
               <span style="color: #C57BDB;">:begin_quote</span>   <span style="color: #7bc275;">"&#10094;"</span>
               <span style="color: #C57BDB;">:end_quote</span>     <span style="color: #7bc275;">"&#10095;"</span>
               <span style="color: #C57BDB;">:begin_export</span>  <span style="color: #7bc275;">"&#11246;"</span>
@@ -3113,6 +3114,7 @@ It&rsquo;s also nice to make use of the Unicode characters for check boxes, and 
     <span style="color: #C57BDB;">:title</span>         <span style="color: #7bc275;">"#+TITLE:"</span>
     <span style="color: #C57BDB;">:author</span>        <span style="color: #7bc275;">"#+AUTHOR:"</span>
     <span style="color: #C57BDB;">:date</span>          <span style="color: #7bc275;">"#+DATE:"</span>
+    <span style="color: #C57BDB;">:latex_class</span>   <span style="color: #7bc275;">"#+LATEX_CLASS:"</span>
     <span style="color: #C57BDB;">:latex_header</span>  <span style="color: #7bc275;">"#+LATEX_HEADER:"</span>
     <span style="color: #C57BDB;">:begin_quote</span>   <span style="color: #7bc275;">"#+BEGIN_QUOTE"</span>
     <span style="color: #C57BDB;">:end_quote</span>     <span style="color: #7bc275;">"#+END_QUOTE"</span>
@@ -4604,7 +4606,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-04-24 Fri 22:45</p>
+<p class="date">Created: 2020-04-28 Tue 02:21</p>
 </div>
 </body>
 </html>
