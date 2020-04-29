@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-29 Wed 02:41 -->
+<!-- 2020-04-29 Wed 16:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,6 +195,8 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
+
+
 
 <!––tec/custom-head-start-->
 <style type="text/css">
@@ -518,44 +520,40 @@
 <li><a href="#package-configuration">4. Package configuration</a>
 <ul>
 <li><a href="#abbrev-mode">4.1. Abbrev mode</a></li>
-<li><a href="#centaur-tabs">4.2. Centaur Tabs</a></li>
-<li><a href="#company">4.3. Company</a>
+<li><a href="#calc">4.2. Calc</a></li>
+<li><a href="#centaur-tabs">4.3. Centaur Tabs</a></li>
+<li><a href="#company">4.4. Company</a>
 <ul>
-<li><a href="#plain-text">4.3.1. Plain Text</a></li>
-<li><a href="#company-ess">4.3.2. ESS</a></li>
+<li><a href="#plain-text">4.4.1. Plain Text</a></li>
+<li><a href="#company-ess">4.4.2. ESS</a></li>
 </ul>
 </li>
-<li><a href="#emacs-anywhere-configuration">4.4. Emacs Anywhere configuration</a></li>
-<li><a href="#flyspell">4.5. Flyspell</a></li>
-<li><a href="#tramp">4.6. Tramp</a>
+<li><a href="#elcord">4.5. Elcord</a></li>
+<li><a href="#emacs-anywhere-configuration">4.6. Emacs Anywhere configuration</a></li>
+<li><a href="#eros-eval">4.7. Eros-eval</a></li>
+<li><a href="#flyspell">4.8. Flyspell</a></li>
+<li><a href="#ispell">4.9. Ispell</a></li>
+<li><a href="#projectile">4.10. Projectile</a></li>
+<li><a href="#smart-parentheses">4.11. Smart Parentheses</a></li>
+<li><a href="#spray">4.12. Spray</a></li>
+<li><a href="#theme-magic">4.13. Theme magic</a></li>
+<li><a href="#tramp">4.14. Tramp</a>
 <ul>
 <li>
 <ul>
-<li><a href="#troubleshooting">4.6.0.1. Troubleshooting</a>
+<li><a href="#troubleshooting">4.14.0.1. Troubleshooting</a>
 <ul>
-<li><a href="#zsh">4.6.0.1.1. Zsh</a></li>
+<li><a href="#zsh">4.14.0.1.1. Zsh</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#treemacs">4.7. Treemacs</a></li>
-<li><a href="#package-configuration-miscellaneous">4.8. Miscellaneous</a>
-<ul>
-<li><a href="#calc">4.8.1. calc</a></li>
-<li><a href="#smart-parentheses">4.8.2. Smart Parentheses</a></li>
-<li><a href="#ispell">4.8.3. ispell</a></li>
-<li><a href="#spray">4.8.4. spray</a></li>
-<li><a href="#theme-magic">4.8.5. theme magic</a></li>
-<li><a href="#wttrin">4.8.6. wttrin</a></li>
-<li><a href="#elcord">4.8.7. elcord</a></li>
-<li><a href="#eros-eval">4.8.8. eros-eval</a></li>
-<li><a href="#which-key">4.8.9. which-key</a></li>
-<li><a href="#projectile">4.8.10. projectile</a></li>
-<li><a href="#vterm">4.8.11. vterm</a></li>
-</ul>
-</li>
+<li><a href="#treemacs">4.15. Treemacs</a></li>
+<li><a href="#vterm">4.16. VTerm</a></li>
+<li><a href="#which-key">4.17. Which-key</a></li>
+<li><a href="#wttrin">4.18. Wttrin</a></li>
 </ul>
 </li>
 <li><a href="#language-configuration">5. Language configuration</a>
@@ -1543,9 +1541,27 @@ have the following.
 </div>
 </div>
 </div>
-<div id="outline-container-centaur-tabs" class="outline-3">
-<h3 id="centaur-tabs"><span class="section-number-3">4.2</span> Centaur Tabs</h3>
+<div id="outline-container-calc" class="outline-3">
+<h3 id="calc"><span class="section-number-3">4.2</span> Calc</h3>
 <div class="outline-text-3" id="text-4-2">
+<p>
+Radians are just better
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> calc-angle-mode <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">rad</span>  <span style="color: #62686E;">;; </span><span style="color: #62686E;">radians are rad</span>
+      calc-algebraic-mode t <span style="color: #62686E;">;; </span><span style="color: #62686E;">allows '2*x instead of 'x&lt;RET&gt;2*</span>
+      calc-symbolic-mode t<span style="color: #51afef;">)</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">keeps stuff like &#8730;2 irrational for as long as possible</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> calctex
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> calctex-format-latex-header <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> calctex-format-latex-header
+                                            <span style="color: #7bc275;">"\n\\usepackage{arevmath}"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">calc-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">calctex-mode</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-centaur-tabs" class="outline-3">
+<h3 id="centaur-tabs"><span class="section-number-3">4.3</span> Centaur Tabs</h3>
+<div class="outline-text-3" id="text-4-3">
 <p>
 We want to make the tabs a nice, comfy size (<code>36</code>), with icons. The modifier
 marker is nice, but the particular default Unicode one causes a lag spike, so
@@ -1573,8 +1589,8 @@ well somehow, so let&rsquo;s switch to &rsquo;P22 Underground Book&rsquo;; it lo
 </div>
 </div>
 <div id="outline-container-company" class="outline-3">
-<h3 id="company"><span class="section-number-3">4.3</span> Company</h3>
-<div class="outline-text-3" id="text-4-3">
+<h3 id="company"><span class="section-number-3">4.4</span> Company</h3>
+<div class="outline-text-3" id="text-4-4">
 <p>
 It&rsquo;s nice to have completions almost all the time, in my opinion. Key strokes
 are just waiting to be saved!
@@ -1598,8 +1614,8 @@ let&rsquo;s improve that memory.
 </div>
 </div>
 <div id="outline-container-plain-text" class="outline-4">
-<h4 id="plain-text"><span class="section-number-4">4.3.1</span> Plain Text</h4>
-<div class="outline-text-4" id="text-4-3-1">
+<h4 id="plain-text"><span class="section-number-4">4.4.1</span> Plain Text</h4>
+<div class="outline-text-4" id="text-4-4-1">
 <p>
 <code>ispell</code> is nice, let&rsquo;s have it in <code>text</code>, <code>markdown</code>, and <code>GFM</code>.
 </p>
@@ -1618,8 +1634,8 @@ We then configure the dictionary we&rsquo;re using in <a href="#ispell">ispell</
 </div>
 </div>
 <div id="outline-container-company-ess" class="outline-4">
-<h4 id="company-ess"><span class="section-number-4">4.3.2</span> ESS</h4>
-<div class="outline-text-4" id="text-4-3-2">
+<h4 id="company-ess"><span class="section-number-4">4.4.2</span> ESS</h4>
+<div class="outline-text-4" id="text-4-4-2">
 <p>
 <code>company-dabbrev-code</code> is nice. Let&rsquo;s have it.
 </p>
@@ -1630,9 +1646,18 @@ We then configure the dictionary we&rsquo;re using in <a href="#ispell">ispell</
 </div>
 </div>
 </div>
+<div id="outline-container-elcord" class="outline-3">
+<h3 id="elcord"><span class="section-number-3">4.5</span> Elcord</h3>
+<div class="outline-text-3" id="text-4-5">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> elcord-use-major-mode-as-main-icon t<span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
 <div id="outline-container-emacs-anywhere-configuration" class="outline-3">
-<h3 id="emacs-anywhere-configuration"><span class="section-number-3">4.4</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration</h3>
-<div class="outline-text-3" id="text-4-4">
+<h3 id="emacs-anywhere-configuration"><span class="section-number-3">4.6</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration</h3>
+<div class="outline-text-3" id="text-4-6">
 <p>
 It&rsquo;s nice to recognise GitHub (so we can use <code>GFM</code>), and other apps which we know
 take markdown
@@ -1713,9 +1738,22 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
 </div>
 </div>
 </div>
+<div id="outline-container-eros-eval" class="outline-3">
+<h3 id="eros-eval"><span class="section-number-3">4.7</span> Eros-eval</h3>
+<div class="outline-text-3" id="text-4-7">
+<p>
+This makes the result of evals with <kbd>gr</kbd> and <kbd>gR</kbd> just slightly prettier. Every bit
+counts right?
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">eros-eval-result-prefix</span> <span style="color: #7bc275;">"&#10233; "</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
 <div id="outline-container-flyspell" class="outline-3">
-<h3 id="flyspell"><span class="section-number-3">4.5</span> Flyspell</h3>
-<div class="outline-text-3" id="text-4-5">
+<h3 id="flyspell"><span class="section-number-3">4.8</span> Flyspell</h3>
+<div class="outline-text-3" id="text-4-8">
 <p>
 At one point, typing became noticeably laggy, Profiling revealed
 <code>flyspell-post-command-hook</code> was responsible for 47% of CPU cycles by itself!
@@ -1727,9 +1765,97 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 </div>
 </div>
 </div>
+<div id="outline-container-ispell" class="outline-3">
+<h3 id="ispell"><span class="section-number-3">4.9</span> Ispell</h3>
+<div class="outline-text-3" id="text-4-9">
+<p>
+Let&rsquo;s get a nice big dictionary from <a href="http://app.aspell.net/create">SCOWL Custom List/Dictionary Creator</a> with
+the following configuration
+</p>
+<dl class="org-dl">
+<dt>size</dt><dd>80 (huge)</dd>
+<dt>spellings</dt><dd>British(-ise) and Australian</dd>
+<dt>spelling variants level</dt><dd>0</dd>
+<dt>diacritics</dt><dd>keep</dd>
+<dt>extra lists</dt><dd>hacker, roman numerals</dd>
+</dl>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">ispell-dictionary</span> <span style="color: #7bc275;">"en_GBs_au_SCOWL_80_0_k_hr"</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+<p>
+Oh, and by the way, if <code>company-ispell-dictionary</code> is <code>nil</code>, then
+<code>ispell-complete-word-dict</code> is used instead, which once again when <code>nil</code> is
+<code>ispell-alternate-dictionary</code>, which at the moment maps to a plaintext version of
+the above.
+</p>
+
+<p>
+It seems reasonable to want to keep an eye on my personal dict, let&rsquo;s have it
+nearby (also means that if I change the &rsquo;main&rsquo; dictionary I keep my addition).
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">ispell-personal-dictionary</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">expand-file-name</span> <span style="color: #7bc275;">".hunspell_personal"</span> <span style="color: #DFDFDF;">doom-private-dir</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-projectile" class="outline-3">
+<h3 id="projectile"><span class="section-number-3">4.10</span> Projectile</h3>
+<div class="outline-text-3" id="text-4-10">
+<p>
+Looking at documentation via <kbd>SPC h f</kbd> and <kbd>SPC h v</kbd> and looking at the source can
+add package src directories to projectile. This isn&rsquo;t desirable in my opinion.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">projectile-ignored-projects</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"~/"</span> <span style="color: #7bc275;">"/tmp"</span> <span style="color: #7bc275;">"~/.emacs.d/.local/straight/repos/"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #DFDFDF;">projectile-ignored-project-function</span> <span style="color: #C57BDB;">(</span>filepath<span style="color: #C57BDB;">)</span>
+  <span style="color: #7e7e87;">"Return t if FILEPATH is within any of `</span><span style="color: #a991f1;">projectile-ignored-projects</span><span style="color: #7e7e87;">'"</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>p<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">s-starts-with-p</span> p filepath<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #DFDFDF;">projectile-ignored-projects</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-smart-parentheses" class="outline-3">
+<h3 id="smart-parentheses"><span class="section-number-3">4.11</span> Smart Parentheses</h3>
+<div class="outline-text-3" id="text-4-11">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">sp-local-pair</span>
+     <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>org-mode<span style="color: #C57BDB;">)</span>
+     <span style="color: #7bc275;">"&lt;&lt;"</span> <span style="color: #7bc275;">"&gt;&gt;"</span>
+     <span style="color: #C57BDB;">:actions</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>insert<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-spray" class="outline-3">
+<h3 id="spray"><span class="section-number-3">4.12</span> Spray</h3>
+<div class="outline-text-3" id="text-4-12">
+<p>
+Let&rsquo;s make this suit me slightly better.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> spray-wpm <span style="color: #e69055; font-weight: bold;">500</span>
+      spray-height <span style="color: #e69055; font-weight: bold;">700</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-theme-magic" class="outline-3">
+<h3 id="theme-magic"><span class="section-number-3">4.13</span> Theme magic</h3>
+<div class="outline-text-3" id="text-4-13">
+<p>
+Let&rsquo;s automatically update terminals on theme change
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">doom-load-theme-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">theme-magic-from-emacs</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
 <div id="outline-container-tramp" class="outline-3">
-<h3 id="tramp"><span class="section-number-3">4.6</span> Tramp</h3>
-<div class="outline-text-3" id="text-4-6">
+<h3 id="tramp"><span class="section-number-3">4.14</span> Tramp</h3>
+<div class="outline-text-3" id="text-4-14">
 <p>
 Let&rsquo;s try to make tramp handle prompts better
 </p>
@@ -1741,15 +1867,15 @@ Let&rsquo;s try to make tramp handle prompts better
 </div>
 </div>
 <div id="outline-container-troubleshooting" class="outline-5">
-<h5 id="troubleshooting"><span class="section-number-5">4.6.0.1</span> Troubleshooting</h5>
-<div class="outline-text-5" id="text-4-6-0-1">
+<h5 id="troubleshooting"><span class="section-number-5">4.14.0.1</span> Troubleshooting</h5>
+<div class="outline-text-5" id="text-4-14-0-1">
 <p>
 In case the remote shell is misbehaving, here are some things to try
 </p>
 </div>
 <div id="outline-container-zsh" class="outline-6">
-<h6 id="zsh"><span class="section-number-6">4.6.0.1.1</span> Zsh</h6>
-<div class="outline-text-6" id="text-4-6-0-1-1">
+<h6 id="zsh"><span class="section-number-6">4.14.0.1.1</span> Zsh</h6>
+<div class="outline-text-6" id="text-4-14-0-1-1">
 <p>
 There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more considerately.
 </p>
@@ -1767,8 +1893,8 @@ There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more
 </div>
 </div>
 <div id="outline-container-treemacs" class="outline-3">
-<h3 id="treemacs"><span class="section-number-3">4.7</span> Treemacs</h3>
-<div class="outline-text-3" id="text-4-7">
+<h3 id="treemacs"><span class="section-number-3">4.15</span> Treemacs</h3>
+<div class="outline-text-3" id="text-4-15">
 <p>
 Quite often there are superfluous files I&rsquo;m not that interested in. There&rsquo;s no
 good reason for them to take up space. Let&rsquo;s add a mechanism to ignore them.
@@ -1830,138 +1956,32 @@ Now, we just identify the files in question.
 </div>
 </div>
 </div>
-<div id="outline-container-package-configuration-miscellaneous" class="outline-3">
-<h3 id="package-configuration-miscellaneous"><span class="section-number-3">4.8</span> Miscellaneous</h3>
-<div class="outline-text-3" id="text-4-8">
-</div>
-<div id="outline-container-calc" class="outline-4">
-<h4 id="calc"><span class="section-number-4">4.8.1</span> calc</h4>
-<div class="outline-text-4" id="text-4-8-1">
+<div id="outline-container-vterm" class="outline-3">
+<h3 id="vterm"><span class="section-number-3">4.16</span> VTerm</h3>
+<div class="outline-text-3" id="text-4-16">
 <p>
-Radians are just better
+On my system, I want to use the <code>vterm</code> lib in <kbd>/usr/bin/libvterm.so</kbd>. This is not
+default behaviour. Without this I see the following error message.
+</p>
+<pre class="example">
+make[2]: *** No rule to make target 'libvterm-prefix/src/libvterm/.libs/libvterm.a', needed by '../vterm-module.so'.  Stop.
+make[1]: *** [CMakeFiles/Makefile2:106: CMakeFiles/vterm-module.dir/all] Error 2
+make: *** [Makefile:84: all] Error 2
+</pre>
+<p>
+I asked about this in a <a href="https://github.com/akermu/emacs-libvterm/issues/238#issuecomment-586385773">GitHub Issue</a>, and the fix is to use the <code>cmake</code> flag
+<code>-DUSE_SYSTEM_LIBVTERM=yes</code>. This can be set for when Doom recomplies <code>vterm</code> on
+updating, which saves me manually compiling with the flag.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> calc-angle-mode <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">rad</span>  <span style="color: #62686E;">;; </span><span style="color: #62686E;">radians are rad</span>
-      calc-algebraic-mode t <span style="color: #62686E;">;; </span><span style="color: #62686E;">allows '2*x instead of 'x&lt;RET&gt;2*</span>
-      calc-symbolic-mode t<span style="color: #51afef;">)</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">keeps stuff like &#8730;2 irrational for as long as possible</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> calctex
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> calctex-format-latex-header <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> calctex-format-latex-header
-                                            <span style="color: #7bc275;">"\n\\usepackage{arevmath}"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">calc-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">calctex-mode</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> vterm-module-cmake-args <span style="color: #7bc275;">"-DUSE_SYSTEM_LIBVTERM=yes"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-smart-parentheses" class="outline-4">
-<h4 id="smart-parentheses"><span class="section-number-4">4.8.2</span> Smart Parentheses</h4>
-<div class="outline-text-4" id="text-4-8-2">
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">sp-local-pair</span>
-     <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>org-mode<span style="color: #C57BDB;">)</span>
-     <span style="color: #7bc275;">"&lt;&lt;"</span> <span style="color: #7bc275;">"&gt;&gt;"</span>
-     <span style="color: #C57BDB;">:actions</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>insert<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-ispell" class="outline-4">
-<h4 id="ispell"><span class="section-number-4">4.8.3</span> ispell</h4>
-<div class="outline-text-4" id="text-4-8-3">
-<p>
-Let&rsquo;s get a nice big dictionary from <a href="http://app.aspell.net/create">SCOWL Custom List/Dictionary Creator</a> with
-the following configuration
-</p>
-<dl class="org-dl">
-<dt>size</dt><dd>80 (huge)</dd>
-<dt>spellings</dt><dd>British(-ise) and Australian</dd>
-<dt>spelling variants level</dt><dd>0</dd>
-<dt>diacritics</dt><dd>keep</dd>
-<dt>extra lists</dt><dd>hacker, roman numerals</dd>
-</dl>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">ispell-dictionary</span> <span style="color: #7bc275;">"en_GBs_au_SCOWL_80_0_k_hr"</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
-<p>
-Oh, and by the way, if <code>company-ispell-dictionary</code> is <code>nil</code>, then
-<code>ispell-complete-word-dict</code> is used instead, which once again when <code>nil</code> is
-<code>ispell-alternate-dictionary</code>, which at the moment maps to a plaintext version of
-the above.
-</p>
-
-<p>
-It seems reasonable to want to keep an eye on my personal dict, let&rsquo;s have it
-nearby (also means that if I change the &rsquo;main&rsquo; dictionary I keep my addition).
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">ispell-personal-dictionary</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">expand-file-name</span> <span style="color: #7bc275;">".hunspell_personal"</span> <span style="color: #DFDFDF;">doom-private-dir</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-spray" class="outline-4">
-<h4 id="spray"><span class="section-number-4">4.8.4</span> spray</h4>
-<div class="outline-text-4" id="text-4-8-4">
-<p>
-Let&rsquo;s make this suit me slightly better.
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> spray-wpm <span style="color: #e69055; font-weight: bold;">500</span>
-      spray-height <span style="color: #e69055; font-weight: bold;">700</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-theme-magic" class="outline-4">
-<h4 id="theme-magic"><span class="section-number-4">4.8.5</span> theme magic</h4>
-<div class="outline-text-4" id="text-4-8-5">
-<p>
-Let&rsquo;s automatically update terminals on theme change
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">doom-load-theme-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">theme-magic-from-emacs</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-wttrin" class="outline-4">
-<h4 id="wttrin"><span class="section-number-4">4.8.6</span> wttrin</h4>
-<div class="outline-text-4" id="text-4-8-6">
-<p>
-Set the default city. It&rsquo;s initially <code>Taipei</code> but I find the IP-locating that&rsquo;s
-done perfectly acceptable, so let&rsquo;s make that happen.
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> wttrin-default-cities <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">""</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-elcord" class="outline-4">
-<h4 id="elcord"><span class="section-number-4">4.8.7</span> elcord</h4>
-<div class="outline-text-4" id="text-4-8-7">
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> elcord-use-major-mode-as-main-icon t<span style="color: #51afef;">)</span>
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-eros-eval" class="outline-4">
-<h4 id="eros-eval"><span class="section-number-4">4.8.8</span> eros-eval</h4>
-<div class="outline-text-4" id="text-4-8-8">
-<p>
-This makes the result of evals with <kbd>gr</kbd> and <kbd>gR</kbd> just slightly prettier. Every bit
-counts right?
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">eros-eval-result-prefix</span> <span style="color: #7bc275;">"&#10233; "</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-which-key" class="outline-4">
-<h4 id="which-key"><span class="section-number-4">4.8.9</span> which-key</h4>
-<div class="outline-text-4" id="text-4-8-9">
+<div id="outline-container-which-key" class="outline-3">
+<h3 id="which-key"><span class="section-number-3">4.17</span> Which-key</h3>
+<div class="outline-text-3" id="text-4-17">
 <p>
 Let&rsquo;s make this popup a bit faster
 </p>
@@ -1984,43 +2004,16 @@ I also think that having <kbd>evil-</kbd> appear in so many popups is a bit too 
 </div>
 </div>
 </div>
-<div id="outline-container-projectile" class="outline-4">
-<h4 id="projectile"><span class="section-number-4">4.8.10</span> projectile</h4>
-<div class="outline-text-4" id="text-4-8-10">
+<div id="outline-container-wttrin" class="outline-3">
+<h3 id="wttrin"><span class="section-number-3">4.18</span> Wttrin</h3>
+<div class="outline-text-3" id="text-4-18">
 <p>
-Looking at documentation via <kbd>SPC h f</kbd> and <kbd>SPC h v</kbd> and looking at the source can
-add package src directories to projectile. This isn&rsquo;t desirable in my opinion.
+Set the default city. It&rsquo;s initially <code>Taipei</code> but I find the IP-locating that&rsquo;s
+done perfectly acceptable, so let&rsquo;s make that happen.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">projectile-ignored-projects</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"~/"</span> <span style="color: #7bc275;">"/tmp"</span> <span style="color: #7bc275;">"~/.emacs.d/.local/straight/repos/"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #DFDFDF;">projectile-ignored-project-function</span> <span style="color: #C57BDB;">(</span>filepath<span style="color: #C57BDB;">)</span>
-  <span style="color: #7e7e87;">"Return t if FILEPATH is within any of `</span><span style="color: #a991f1;">projectile-ignored-projects</span><span style="color: #7e7e87;">'"</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>p<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">s-starts-with-p</span> p filepath<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #DFDFDF;">projectile-ignored-projects</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> wttrin-default-cities <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">""</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
-</div>
-</div>
-</div>
-<div id="outline-container-vterm" class="outline-4">
-<h4 id="vterm"><span class="section-number-4">4.8.11</span> vterm</h4>
-<div class="outline-text-4" id="text-4-8-11">
-<p>
-On my system, I want to use the <code>vterm</code> lib in <kbd>/usr/bin/libvterm.so</kbd>. This is not
-default behaviour. Without this I see the following error message.
-</p>
-<pre class="example">
-make[2]: *** No rule to make target 'libvterm-prefix/src/libvterm/.libs/libvterm.a', needed by '../vterm-module.so'.  Stop.
-make[1]: *** [CMakeFiles/Makefile2:106: CMakeFiles/vterm-module.dir/all] Error 2
-make: *** [Makefile:84: all] Error 2
-</pre>
-<p>
-I asked about this in a <a href="https://github.com/akermu/emacs-libvterm/issues/238#issuecomment-586385773">GitHub Issue</a>, and the fix is to use the <code>cmake</code> flag
-<code>-DUSE_SYSTEM_LIBVTERM=yes</code>. This can be set for when Doom recomplies <code>vterm</code> on
-updating, which saves me manually compiling with the flag.
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> vterm-module-cmake-args <span style="color: #7bc275;">"-DUSE_SYSTEM_LIBVTERM=yes"</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
 </div>
 </div>
 </div>
@@ -2236,25 +2229,25 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
 <span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org-agenda
   <span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">org-super-agenda-mode</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-skip-scheduled-if-done</span> t
-      <span style="color: #DFDFDF;">org-agenda-skip-deadline-if-done</span> t
-      <span style="color: #DFDFDF;">org-agenda-include-deadlines</span> t
-      <span style="color: #DFDFDF;">org-agenda-block-separator</span> nil
-      <span style="color: #DFDFDF;">org-agenda-tags-column</span> <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
-      <span style="color: #DFDFDF;">org-agenda-compact-blocks</span> t<span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-block-separator nil
+      org-agenda-tags-column <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
+      org-agenda-compact-blocks t<span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-custom-commands</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-agenda-custom-commands
       <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"o"</span> <span style="color: #7bc275;">"Overview"</span>
-         <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>agenda <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-agenda-span</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">day</span><span style="color: #51afef;">)</span>
-                      <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-super-agenda-groups</span>
+         <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>agenda <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-agenda-span <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">day</span><span style="color: #51afef;">)</span>
+                      <span style="color: #51afef;">(</span>org-super-agenda-groups
                        <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Today"</span>
                                 <span style="color: #C57BDB;">:time-grid</span> t
                                 <span style="color: #C57BDB;">:date</span> today
                                 <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"TODAY"</span>
                                 <span style="color: #C57BDB;">:scheduled</span> today
                                 <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-          <span style="color: #C57BDB;">(</span>alltodo <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-agenda-overriding-header</span> <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
-                       <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-super-agenda-groups</span>
+          <span style="color: #C57BDB;">(</span>alltodo <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-agenda-overriding-header <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
+                       <span style="color: #51afef;">(</span>org-super-agenda-groups
                         <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Next to do"</span>
                                  <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"NEXT"</span>
                                  <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #7bc275;">)</span>
@@ -2582,7 +2575,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org9409dd3"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org470154b"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -2697,7 +2690,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -3120,7 +3113,7 @@ I&rsquo;ve also added some fun alternatives, just commented out.
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package</span> org-fancy-priorities
   <span style="color: #C57BDB;">:diminish</span>
   <span style="color: #C57BDB;">:defines</span> org-fancy-priorities-list
-  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-agenda-mode</span> . org-fancy-priorities-mode<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span>org-agenda-mode . org-fancy-priorities-mode<span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">:config</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">unless</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">char-displayable-p</span> ?&#10071;<span style="color: #7bc275;">)</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> org-fancy-priorities-list <span style="color: #C57BDB;">'</span><span style="color: #51afef;">(</span><span style="color: #7bc275;">"HIGH"</span> <span style="color: #7bc275;">"MID"</span> <span style="color: #7bc275;">"LOW"</span> <span style="color: #7bc275;">"OPTIONAL"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -4703,7 +4696,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-04-29 Wed 02:41</p>
+<p class="date">Created: 2020-04-29 Wed 16:47</p>
 </div>
 </body>
 </html>

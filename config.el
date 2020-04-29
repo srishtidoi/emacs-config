@@ -246,6 +246,16 @@
   (setq save-abbrevs 'silently))
 ;; Abbrev mode:1 ends here
 
+;; [[file:~/.config/doom/config.org::*Calc][Calc:1]]
+(setq calc-angle-mode 'rad  ;; radians are rad
+      calc-algebraic-mode t ;; allows '2*x instead of 'x<RET>2*
+      calc-symbolic-mode t) ;; keeps stuff like √2 irrational for as long as possible
+(after! calctex
+  (setq calctex-format-latex-header (concat calctex-format-latex-header
+                                            "\n\\usepackage{arevmath}")))
+(add-hook 'calc-mode-hook #'calctex-mode)
+;; Calc:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*Centaur%20Tabs][Centaur Tabs:1]]
 (after! centaur-tabs
   (centaur-tabs-mode -1)
@@ -284,6 +294,10 @@
 ;; [[file:~/.config/doom/config.org::*ESS][ESS:1]]
 (set-company-backend! 'ess-r-mode '(company-R-args company-R-objects company-dabbrev-code :separate))
 ;; ESS:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Elcord][Elcord:1]]
+(setq elcord-use-major-mode-as-main-icon t)
+;; Elcord:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*%5B%5Bhttps://github.com/zachcurry/emacs-anywhere%5D%5BEmacs%20Anywhere%5D%5D%20configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1]]
 (defun markdown-window-p (window-title)
@@ -354,9 +368,44 @@
 (add-hook 'ea-popup-hook 'ea-popup-handler)
 ;; [[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2 ends here
 
+;; [[file:~/.config/doom/config.org::*Eros-eval][Eros-eval:1]]
+(setq eros-eval-result-prefix "⟹ ")
+;; Eros-eval:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*Flyspell][Flyspell:1]]
 (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
 ;; Flyspell:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Ispell][Ispell:1]]
+(setq ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")
+;; Ispell:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Ispell][Ispell:2]]
+(setq ispell-personal-dictionary (expand-file-name ".hunspell_personal" doom-private-dir))
+;; Ispell:2 ends here
+
+;; [[file:~/.config/doom/config.org::*Projectile][Projectile:1]]
+(setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
+(defun projectile-ignored-project-function (filepath)
+  "Return t if FILEPATH is within any of `projectile-ignored-projects'"
+  (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
+;; Projectile:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Smart%20Parentheses][Smart Parentheses:1]]
+(sp-local-pair
+     '(org-mode)
+     "<<" ">>"
+     :actions '(insert))
+;; Smart Parentheses:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Spray][Spray:1]]
+(setq spray-wpm 500
+      spray-height 700)
+;; Spray:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Theme%20magic][Theme magic:1]]
+(add-hook 'doom-load-theme-hook 'theme-magic-from-emacs)
+;; Theme magic:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Tramp][Tramp:1]]
 (after! tramp
@@ -415,57 +464,15 @@
                                    "*/_region_.tex"))
 ;; Treemacs:2 ends here
 
-;; [[file:~/.config/doom/config.org::*calc][calc:1]]
-(setq calc-angle-mode 'rad  ;; radians are rad
-      calc-algebraic-mode t ;; allows '2*x instead of 'x<RET>2*
-      calc-symbolic-mode t) ;; keeps stuff like √2 irrational for as long as possible
-(after! calctex
-  (setq calctex-format-latex-header (concat calctex-format-latex-header
-                                            "\n\\usepackage{arevmath}")))
-(add-hook 'calc-mode-hook #'calctex-mode)
-;; calc:1 ends here
+;; [[file:~/.config/doom/config.org::*VTerm][VTerm:1]]
+(setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=yes")
+;; VTerm:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Smart%20Parentheses][Smart Parentheses:1]]
-(sp-local-pair
-     '(org-mode)
-     "<<" ">>"
-     :actions '(insert))
-;; Smart Parentheses:1 ends here
-
-;; [[file:~/.config/doom/config.org::*ispell][ispell:1]]
-(setq ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")
-;; ispell:1 ends here
-
-;; [[file:~/.config/doom/config.org::*ispell][ispell:2]]
-(setq ispell-personal-dictionary (expand-file-name ".hunspell_personal" doom-private-dir))
-;; ispell:2 ends here
-
-;; [[file:~/.config/doom/config.org::*spray][spray:1]]
-(setq spray-wpm 500
-      spray-height 700)
-;; spray:1 ends here
-
-;; [[file:~/.config/doom/config.org::*theme%20magic][theme magic:1]]
-(add-hook 'doom-load-theme-hook 'theme-magic-from-emacs)
-;; theme magic:1 ends here
-
-;; [[file:~/.config/doom/config.org::*wttrin][wttrin:1]]
-(setq wttrin-default-cities '(""))
-;; wttrin:1 ends here
-
-;; [[file:~/.config/doom/config.org::*elcord][elcord:1]]
-(setq elcord-use-major-mode-as-main-icon t)
-;; elcord:1 ends here
-
-;; [[file:~/.config/doom/config.org::*eros-eval][eros-eval:1]]
-(setq eros-eval-result-prefix "⟹ ")
-;; eros-eval:1 ends here
-
-;; [[file:~/.config/doom/config.org::*which-key][which-key:1]]
+;; [[file:~/.config/doom/config.org::*Which-key][Which-key:1]]
 (setq which-key-idle-delay 0.5) ;; I need the help, I really do
-;; which-key:1 ends here
+;; Which-key:1 ends here
 
-;; [[file:~/.config/doom/config.org::*which-key][which-key:2]]
+;; [[file:~/.config/doom/config.org::*Which-key][Which-key:2]]
 (setq which-key-allow-multiple-replacements t)
 (after! which-key
   (pushnew!
@@ -473,18 +480,11 @@
    '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
    '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
    ))
-;; which-key:2 ends here
+;; Which-key:2 ends here
 
-;; [[file:~/.config/doom/config.org::*projectile][projectile:1]]
-(setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
-(defun projectile-ignored-project-function (filepath)
-  "Return t if FILEPATH is within any of `projectile-ignored-projects'"
-  (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
-;; projectile:1 ends here
-
-;; [[file:~/.config/doom/config.org::*vterm][vterm:1]]
-(setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=yes")
-;; vterm:1 ends here
+;; [[file:~/.config/doom/config.org::*Wttrin][Wttrin:1]]
+(setq wttrin-default-cities '(""))
+;; Wttrin:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*File%20Templates][File Templates:1]]
 (set-file-template! "\\.tex$" :trigger "__" :mode 'latex-mode)
