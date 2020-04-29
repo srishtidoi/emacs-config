@@ -1,6 +1,4 @@
-;; [[file:~/.config/doom/config.org::*Package%20loading][Package loading:1]]
 ;; -*- no-byte-compile: t; -*-
-;; Package loading:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Auto-complete][Auto-complete:1]]
 (package! company-tabnine ; tab9 autocomplete
@@ -69,7 +67,7 @@
 ;; [[file:~/.config/doom/config.org::*Improve%20agenda/capture][Improve agenda/capture:2]]
 (package! doct
   :recipe (:host github :repo "progfolio/doct")
-  :pin "c237e72e0b")
+  :pin "4b4c6ff631")
 ;; Improve agenda/capture:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Visuals][Visuals:1]]
@@ -91,7 +89,7 @@
 ;; Extra functionality:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:2]]
-(package! org-ref :pin "5bb9be2232")
+(package! org-ref :pin "1eb4ddda00")
 ;; Extra functionality:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:3]]
@@ -99,5 +97,5 @@
 ;; Extra functionality:3 ends here
 
 ;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:4]]
-(package! org-chef :pin "67f50aa2a2")
+(package! org-chef :pin "e8b4ba8a10")
 ;; Extra functionality:4 ends here
