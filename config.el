@@ -1,6 +1,4 @@
-;; [[file:~/.config/doom/config.org::*Rudimentary%20configuration][Rudimentary configuration:1]]
 ;;; config.el -*- lexical-binding: t; -*-
-;; Rudimentary configuration:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Personal%20Information][Personal Information:1]]
 (setq user-full-name "tecosaur"
@@ -95,7 +93,7 @@
     '(""
       (:eval
        (if (s-contains-p org-roam-directory buffer-file-name)
-           (replace-regexp-in-string ".*/[0-9]+-" "🢔 " buffer-file-name)
+           (replace-regexp-in-string ".*/[0-9]+-" "🢔 " (or buffer-file-name ""))
          "%b"))
       (:eval
        (let ((project-name (projectile-project-name)))
@@ -383,6 +381,11 @@
 ;; [[file:~/.config/doom/config.org::*Ispell][Ispell:2]]
 (setq ispell-personal-dictionary (expand-file-name ".hunspell_personal" doom-private-dir))
 ;; Ispell:2 ends here
+
+;; [[file:~/.config/doom/config.org::*Magit][Magit:1]]
+;; (after! magit
+;;   (magit-delta-mode +1))
+;; Magit:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Projectile][Projectile:1]]
 (setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))

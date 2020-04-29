@@ -54,6 +54,10 @@
 (package! ess-view :pin "d4e5a340b7")
 ;; ESS:1 ends here
 
+;; [[file:~/.config/doom/config.org::*Magit%20Delta][Magit Delta:1]]
+;; (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta") :pin "2ceb6077fa")
+;; Magit Delta:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*Systemd][Systemd:1]]
 (package! systemd :pin "51c148e09a")
 ;; Systemd:1 ends here

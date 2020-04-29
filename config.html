@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-29 Wed 16:47 -->
+<!-- 2020-04-29 Wed 18:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,6 +195,10 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
+
+
+
+
 
 
 
@@ -437,7 +441,11 @@
 <ul>
 <li><a href="#intro">1. Intro</a>
 <ul>
-<li><a href="#notes-unwary-adventurer">1.1. Notes for the unwary adventurer</a></li>
+<li><a href="#notes-unwary-adventurer">1.1. Notes for the unwary adventurer</a>
+<ul>
+<li><a href="#extra-requirements">1.1.1. Extra Requirements</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#rudimentary-configuration">2. Rudimentary configuration</a>
@@ -494,11 +502,12 @@
 <li><a href="#prettification">3.2.2. Prettification</a></li>
 <li><a href="#window-management">3.2.3. Window management</a></li>
 <li><a href="#fun">3.2.4. Fun</a></li>
-<li><a href="#other">3.2.5. Other</a>
+<li><a href="#improving-features">3.2.5. Improving features</a>
 <ul>
 <li><a href="#flyspell-lazy">3.2.5.1. Flyspell-lazy</a></li>
 <li><a href="#calctex">3.2.5.2. CalcTeX</a></li>
 <li><a href="#ess">3.2.5.3. ESS</a></li>
+<li><a href="#magit-delta">3.2.5.4. Magit Delta</a></li>
 </ul>
 </li>
 </ul>
@@ -533,27 +542,28 @@
 <li><a href="#eros-eval">4.7. Eros-eval</a></li>
 <li><a href="#flyspell">4.8. Flyspell</a></li>
 <li><a href="#ispell">4.9. Ispell</a></li>
-<li><a href="#projectile">4.10. Projectile</a></li>
-<li><a href="#smart-parentheses">4.11. Smart Parentheses</a></li>
-<li><a href="#spray">4.12. Spray</a></li>
-<li><a href="#theme-magic">4.13. Theme magic</a></li>
-<li><a href="#tramp">4.14. Tramp</a>
+<li><a href="#magit">4.10. Magit</a></li>
+<li><a href="#projectile">4.11. Projectile</a></li>
+<li><a href="#smart-parentheses">4.12. Smart Parentheses</a></li>
+<li><a href="#spray">4.13. Spray</a></li>
+<li><a href="#theme-magic">4.14. Theme magic</a></li>
+<li><a href="#tramp">4.15. Tramp</a>
 <ul>
 <li>
 <ul>
-<li><a href="#troubleshooting">4.14.0.1. Troubleshooting</a>
+<li><a href="#troubleshooting">4.15.0.1. Troubleshooting</a>
 <ul>
-<li><a href="#zsh">4.14.0.1.1. Zsh</a></li>
+<li><a href="#zsh">4.15.0.1.1. Zsh</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#treemacs">4.15. Treemacs</a></li>
-<li><a href="#vterm">4.16. VTerm</a></li>
-<li><a href="#which-key">4.17. Which-key</a></li>
-<li><a href="#wttrin">4.18. Wttrin</a></li>
+<li><a href="#treemacs">4.16. Treemacs</a></li>
+<li><a href="#vterm">4.17. VTerm</a></li>
+<li><a href="#which-key">4.18. Which-key</a></li>
+<li><a href="#wttrin">4.19. Wttrin</a></li>
 </ul>
 </li>
 <li><a href="#language-configuration">5. Language configuration</a>
@@ -564,7 +574,7 @@
 </ul>
 </li>
 <li><a href="#plaintext">5.1. Plaintext</a></li>
-<li><a href="#language-configuration-org">5.2. Org Mode</a>
+<li><a href="#org">5.2. Org Mode</a>
 <ul>
 <li><a href="#system-config">5.2.1. System config</a></li>
 <li><a href="#behaviour">5.2.2. Behaviour</a>
@@ -708,6 +718,13 @@ The lovely <code>doom doctor</code> is good at diagnosing most missing things, b
 few extras.
 </p>
 <ul class="org-ul">
+<li><p>
+The <a href="https://github.com/dandavison/delta/">Delta</a> binary. It&rsquo;s packaged for some distributions but I installed it with
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">cargo install git-delta
+</pre>
+</div></li>
 <li>A <a href="https://www.tug.org/texlive/">LaTeX Compiler</a> is required for the mathematics rendering performed in <a href="#org">Org</a>,
 and by <a href="#calctex">CalcTeX</a>.</li>
 <li>I use the <a href="https://overpassfont.org/">Overpass</a> font as a go-to sans serif.
@@ -996,7 +1013,7 @@ I&rsquo;d like to have just the buffer name, then if applicable the project fold
     <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">""</span>
       <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:eval</span>
        <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">s-contains-p</span> <span style="color: #DFDFDF;">org-roam-directory</span> <span style="color: #DFDFDF;">buffer-file-name</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">".*/[0-9]+-"</span> <span style="color: #7bc275;">"&#129172; "</span> <span style="color: #DFDFDF;">buffer-file-name</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">".*/[0-9]+-"</span> <span style="color: #7bc275;">"&#129172; "</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> <span style="color: #DFDFDF;">buffer-file-name</span> <span style="color: #7bc275;">""</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
          <span style="color: #7bc275;">"%b"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
       <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:eval</span>
        <span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>project-name <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">projectile-project-name</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
@@ -1154,7 +1171,7 @@ For running a systemd service for a Emacs server I have the following
 which is then enabled by
 </p>
 <div class="org-src-container">
-<pre class="src src-sh">systemctl --user enable emacs.service
+<pre class="src src-shell">systemctl --user enable emacs.service
 </pre>
 </div>
 </div>
@@ -1382,8 +1399,8 @@ about it?
 </div>
 </div>
 </div>
-<div id="outline-container-other" class="outline-4">
-<h4 id="other"><span class="section-number-4">3.2.5</span> Other</h4>
+<div id="outline-container-improving-features" class="outline-4">
+<h4 id="improving-features"><span class="section-number-4">3.2.5</span> Improving features</h4>
 <div class="outline-text-4" id="text-3-2-5">
 </div>
 <div id="outline-container-flyspell-lazy" class="outline-5">
@@ -1419,6 +1436,19 @@ View data frames better with
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> ess-view <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"d4e5a340b7"</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-magit-delta" class="outline-5">
+<h5 id="magit-delta"><span class="section-number-5">3.2.5.4</span> Magit Delta</h5>
+<div class="outline-text-5" id="text-3-2-5-4">
+<p>
+<a href="https://github.com/dandavison/delta/">Delta</a> is a git diff syntax highlighter written in rust. The author also wrote a
+package to hook this into the magit diff view. This requires the <code>delta</code> binary.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #62686E;">;; </span><span style="color: #62686E;">(package! magit-delta :recipe (:host github :repo "dandavison/magit-delta") :pin "2ceb6077fa")</span>
 </pre>
 </div>
 </div>
@@ -1834,9 +1864,28 @@ nearby (also means that if I change the &rsquo;main&rsquo; dictionary I keep my 
 </div>
 </div>
 </div>
-<div id="outline-container-projectile" class="outline-3">
-<h3 id="projectile"><span class="section-number-3">4.10</span> Projectile</h3>
+<div id="outline-container-magit" class="outline-3">
+<h3 id="magit"><span class="section-number-3">4.10</span> Magit</h3>
 <div class="outline-text-3" id="text-4-10">
+<p>
+Magit is pretty nice by default. The diffs don&rsquo;t get any
+syntax-highlighting-love though which is a bit sad. Thankfully
+<a href="https://github.com/dandavison/magit-delta">dandavison/magit-delta</a> exists, which we can put to use.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #62686E;">;; </span><span style="color: #62686E;">(after! magit</span>
+<span style="color: #62686E;">;;   </span><span style="color: #62686E;">(magit-delta-mode +1))</span>
+</pre>
+</div>
+<p>
+Unfortunately this seems to mess things up, which is something I&rsquo;ll want to look
+into later.
+</p>
+</div>
+</div>
+<div id="outline-container-projectile" class="outline-3">
+<h3 id="projectile"><span class="section-number-3">4.11</span> Projectile</h3>
+<div class="outline-text-3" id="text-4-11">
 <p>
 Looking at documentation via <kbd>SPC h f</kbd> and <kbd>SPC h v</kbd> and looking at the source can
 add package src directories to projectile. This isn&rsquo;t desirable in my opinion.
@@ -1851,8 +1900,8 @@ add package src directories to projectile. This isn&rsquo;t desirable in my opin
 </div>
 </div>
 <div id="outline-container-smart-parentheses" class="outline-3">
-<h3 id="smart-parentheses"><span class="section-number-3">4.11</span> Smart Parentheses</h3>
-<div class="outline-text-3" id="text-4-11">
+<h3 id="smart-parentheses"><span class="section-number-3">4.12</span> Smart Parentheses</h3>
+<div class="outline-text-3" id="text-4-12">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">sp-local-pair</span>
      <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>org-mode<span style="color: #C57BDB;">)</span>
@@ -1863,8 +1912,8 @@ add package src directories to projectile. This isn&rsquo;t desirable in my opin
 </div>
 </div>
 <div id="outline-container-spray" class="outline-3">
-<h3 id="spray"><span class="section-number-3">4.12</span> Spray</h3>
-<div class="outline-text-3" id="text-4-12">
+<h3 id="spray"><span class="section-number-3">4.13</span> Spray</h3>
+<div class="outline-text-3" id="text-4-13">
 <p>
 Let&rsquo;s make this suit me slightly better.
 </p>
@@ -1876,8 +1925,8 @@ Let&rsquo;s make this suit me slightly better.
 </div>
 </div>
 <div id="outline-container-theme-magic" class="outline-3">
-<h3 id="theme-magic"><span class="section-number-3">4.13</span> Theme magic</h3>
-<div class="outline-text-3" id="text-4-13">
+<h3 id="theme-magic"><span class="section-number-3">4.14</span> Theme magic</h3>
+<div class="outline-text-3" id="text-4-14">
 <p>
 Let&rsquo;s automatically update terminals on theme change
 </p>
@@ -1888,8 +1937,8 @@ Let&rsquo;s automatically update terminals on theme change
 </div>
 </div>
 <div id="outline-container-tramp" class="outline-3">
-<h3 id="tramp"><span class="section-number-3">4.14</span> Tramp</h3>
-<div class="outline-text-3" id="text-4-14">
+<h3 id="tramp"><span class="section-number-3">4.15</span> Tramp</h3>
+<div class="outline-text-3" id="text-4-15">
 <p>
 Let&rsquo;s try to make tramp handle prompts better
 </p>
@@ -1901,15 +1950,15 @@ Let&rsquo;s try to make tramp handle prompts better
 </div>
 </div>
 <div id="outline-container-troubleshooting" class="outline-5">
-<h5 id="troubleshooting"><span class="section-number-5">4.14.0.1</span> Troubleshooting</h5>
-<div class="outline-text-5" id="text-4-14-0-1">
+<h5 id="troubleshooting"><span class="section-number-5">4.15.0.1</span> Troubleshooting</h5>
+<div class="outline-text-5" id="text-4-15-0-1">
 <p>
 In case the remote shell is misbehaving, here are some things to try
 </p>
 </div>
 <div id="outline-container-zsh" class="outline-6">
-<h6 id="zsh"><span class="section-number-6">4.14.0.1.1</span> Zsh</h6>
-<div class="outline-text-6" id="text-4-14-0-1-1">
+<h6 id="zsh"><span class="section-number-6">4.15.0.1.1</span> Zsh</h6>
+<div class="outline-text-6" id="text-4-15-0-1-1">
 <p>
 There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more considerately.
 </p>
@@ -1927,8 +1976,8 @@ There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more
 </div>
 </div>
 <div id="outline-container-treemacs" class="outline-3">
-<h3 id="treemacs"><span class="section-number-3">4.15</span> Treemacs</h3>
-<div class="outline-text-3" id="text-4-15">
+<h3 id="treemacs"><span class="section-number-3">4.16</span> Treemacs</h3>
+<div class="outline-text-3" id="text-4-16">
 <p>
 Quite often there are superfluous files I&rsquo;m not that interested in. There&rsquo;s no
 good reason for them to take up space. Let&rsquo;s add a mechanism to ignore them.
@@ -1991,8 +2040,8 @@ Now, we just identify the files in question.
 </div>
 </div>
 <div id="outline-container-vterm" class="outline-3">
-<h3 id="vterm"><span class="section-number-3">4.16</span> VTerm</h3>
-<div class="outline-text-3" id="text-4-16">
+<h3 id="vterm"><span class="section-number-3">4.17</span> VTerm</h3>
+<div class="outline-text-3" id="text-4-17">
 <p>
 On my system, I want to use the <code>vterm</code> lib in <kbd>/usr/bin/libvterm.so</kbd>. This is not
 default behaviour. Without this I see the following error message.
@@ -2014,8 +2063,8 @@ updating, which saves me manually compiling with the flag.
 </div>
 </div>
 <div id="outline-container-which-key" class="outline-3">
-<h3 id="which-key"><span class="section-number-3">4.17</span> Which-key</h3>
-<div class="outline-text-3" id="text-4-17">
+<h3 id="which-key"><span class="section-number-3">4.18</span> Which-key</h3>
+<div class="outline-text-3" id="text-4-18">
 <p>
 Let&rsquo;s make this popup a bit faster
 </p>
@@ -2039,8 +2088,8 @@ I also think that having <kbd>evil-</kbd> appear in so many popups is a bit too 
 </div>
 </div>
 <div id="outline-container-wttrin" class="outline-3">
-<h3 id="wttrin"><span class="section-number-3">4.18</span> Wttrin</h3>
-<div class="outline-text-3" id="text-4-18">
+<h3 id="wttrin"><span class="section-number-3">4.19</span> Wttrin</h3>
+<div class="outline-text-3" id="text-4-19">
 <p>
 Set the default city. It&rsquo;s initially <code>Taipei</code> but I find the IP-locating that&rsquo;s
 done perfectly acceptable, so let&rsquo;s make that happen.
@@ -2085,9 +2134,9 @@ It&rsquo;s nice to see ansi colour codes displayed
 </div>
 </div>
 </div>
-<div id="outline-container-language-configuration-org" class="outline-3">
-<h3 id="language-configuration-org"><span class="section-number-3">5.2</span> Org Mode</h3>
-<div class="outline-text-3" id="text-5-2">
+<div id="outline-container-org" class="outline-3">
+<h3 id="org"><span class="section-number-3">5.2</span> Org Mode</h3>
+<div class="outline-text-3" id="text-org">
 </div>
 <div id="outline-container-system-config" class="outline-4">
 <h4 id="system-config"><span class="section-number-4">5.2.1</span> System config</h4>
@@ -2263,25 +2312,25 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
 <span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org-agenda
   <span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">org-super-agenda-mode</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-include-deadlines t
-      org-agenda-block-separator nil
-      org-agenda-tags-column <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
-      org-agenda-compact-blocks t<span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-skip-scheduled-if-done</span> t
+      <span style="color: #DFDFDF;">org-agenda-skip-deadline-if-done</span> t
+      <span style="color: #DFDFDF;">org-agenda-include-deadlines</span> t
+      <span style="color: #DFDFDF;">org-agenda-block-separator</span> nil
+      <span style="color: #DFDFDF;">org-agenda-tags-column</span> <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
+      <span style="color: #DFDFDF;">org-agenda-compact-blocks</span> t<span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-agenda-custom-commands
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-custom-commands</span>
       <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"o"</span> <span style="color: #7bc275;">"Overview"</span>
-         <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>agenda <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-agenda-span <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">day</span><span style="color: #51afef;">)</span>
-                      <span style="color: #51afef;">(</span>org-super-agenda-groups
+         <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>agenda <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-agenda-span</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">day</span><span style="color: #51afef;">)</span>
+                      <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-super-agenda-groups</span>
                        <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Today"</span>
                                 <span style="color: #C57BDB;">:time-grid</span> t
                                 <span style="color: #C57BDB;">:date</span> today
                                 <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"TODAY"</span>
                                 <span style="color: #C57BDB;">:scheduled</span> today
                                 <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-          <span style="color: #C57BDB;">(</span>alltodo <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-agenda-overriding-header <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
-                       <span style="color: #51afef;">(</span>org-super-agenda-groups
+          <span style="color: #C57BDB;">(</span>alltodo <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-agenda-overriding-header</span> <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
+                       <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-super-agenda-groups</span>
                         <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Next to do"</span>
                                  <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"NEXT"</span>
                                  <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #7bc275;">)</span>
@@ -2609,7 +2658,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org470154b"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org427eba9"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -3147,7 +3196,7 @@ I&rsquo;ve also added some fun alternatives, just commented out.
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package</span> org-fancy-priorities
   <span style="color: #C57BDB;">:diminish</span>
   <span style="color: #C57BDB;">:defines</span> org-fancy-priorities-list
-  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span>org-agenda-mode . org-fancy-priorities-mode<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-agenda-mode</span> . org-fancy-priorities-mode<span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">:config</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">unless</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">char-displayable-p</span> ?&#10071;<span style="color: #7bc275;">)</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> org-fancy-priorities-list <span style="color: #C57BDB;">'</span><span style="color: #51afef;">(</span><span style="color: #7bc275;">"HIGH"</span> <span style="color: #7bc275;">"MID"</span> <span style="color: #7bc275;">"LOW"</span> <span style="color: #7bc275;">"OPTIONAL"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -4730,7 +4779,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-04-29 Wed 16:47</p>
+<p class="date">Created: 2020-04-29 Wed 18:29</p>
 </div>
 </body>
 </html>
