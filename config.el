@@ -92,8 +92,8 @@
 (setq frame-title-format
     '(""
       (:eval
-       (if (s-contains-p org-roam-directory buffer-file-name)
-           (replace-regexp-in-string ".*/[0-9]+-" "🢔 " (or buffer-file-name ""))
+       (if (s-contains-p org-roam-directory (or buffer-file-name ""))
+           (replace-regexp-in-string ".*/[0-9]+-" "🢔 " buffer-file-name "")
          "%b"))
       (:eval
        (let ((project-name (projectile-project-name)))
