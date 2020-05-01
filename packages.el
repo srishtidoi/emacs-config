@@ -1,11 +1,5 @@
 ;; -*- no-byte-compile: t; -*-
 
-;; [[file:~/.config/doom/config.org::*Auto-complete][Auto-complete:1]]
-(package! company-tabnine ; tab9 autocomplete
-  :recipe (:host github :repo "TommyX12/company-tabnine"
-           :files ("company-tabnine.el" "fetch-binaries.sh")) :pin "e986a4ad0d")
-;; Auto-complete:1 ends here
-
 ;; [[file:~/.config/doom/config.org::*Prettification][Prettification:1]]
 (package! prettify-utils ; simplify messing with prettify-mode
   :recipe (:host github :repo "Ilazki/prettify-utils.el") :pin "8b783d316c")
@@ -80,7 +74,6 @@
 ;; Visuals:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Visuals][Visuals:3]]
-(package! org-fancy-priorities :pin "819bb993b7")
 (package! org-pretty-tags :pin "40fd72f3e7")
 ;; Visuals:3 ends here
 

@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-01 Fri 16:48 -->
+<!-- 2020-05-01 Fri 20:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -491,16 +491,15 @@
 </li>
 <li><a href="#general-packages">3.2. General packages</a>
 <ul>
-<li><a href="#auto-complete">3.2.1. Auto-complete</a></li>
-<li><a href="#prettification">3.2.2. Prettification</a></li>
-<li><a href="#window-management">3.2.3. Window management</a></li>
-<li><a href="#fun">3.2.4. Fun</a></li>
-<li><a href="#improving-features">3.2.5. Improving features</a>
+<li><a href="#prettification">3.2.1. Prettification</a></li>
+<li><a href="#window-management">3.2.2. Window management</a></li>
+<li><a href="#fun">3.2.3. Fun</a></li>
+<li><a href="#improving-features">3.2.4. Improving features</a>
 <ul>
-<li><a href="#flyspell-lazy">3.2.5.1. Flyspell-lazy</a></li>
-<li><a href="#calctex">3.2.5.2. CalcTeX</a></li>
-<li><a href="#ess">3.2.5.3. ESS</a></li>
-<li><a href="#magit-delta">3.2.5.4. Magit Delta</a></li>
+<li><a href="#flyspell-lazy">3.2.4.1. Flyspell-lazy</a></li>
+<li><a href="#calctex">3.2.4.2. CalcTeX</a></li>
+<li><a href="#ess">3.2.4.3. ESS</a></li>
+<li><a href="#magit-delta">3.2.4.4. Magit Delta</a></li>
 </ul>
 </li>
 </ul>
@@ -1303,20 +1302,9 @@ our package manager can&rsquo;t deal with; see <a href="https://github.com/raxod
 <h3 id="general-packages"><span class="section-number-3">3.2</span> General packages</h3>
 <div class="outline-text-3" id="text-3-2">
 </div>
-<div id="outline-container-auto-complete" class="outline-4">
-<h4 id="auto-complete"><span class="section-number-4">3.2.1</span> Auto-complete</h4>
-<div class="outline-text-4" id="text-3-2-1">
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> company-tabnine <span style="color: #62686E;">; </span><span style="color: #62686E;">tab9 autocomplete</span>
-  <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"TommyX12/company-tabnine"</span>
-           <span style="color: #C57BDB;">:files</span> <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"company-tabnine.el"</span> <span style="color: #7bc275;">"fetch-binaries.sh"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"e986a4ad0d"</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
-</div>
-</div>
 <div id="outline-container-prettification" class="outline-4">
-<h4 id="prettification"><span class="section-number-4">3.2.2</span> Prettification</h4>
-<div class="outline-text-4" id="text-3-2-2">
+<h4 id="prettification"><span class="section-number-4">3.2.1</span> Prettification</h4>
+<div class="outline-text-4" id="text-3-2-1">
 <p>
 <code>prettify-mode</code> is nice and all, but adding substitutions is a little verbose.
 This helps with that.
@@ -1329,8 +1317,8 @@ This helps with that.
 </div>
 </div>
 <div id="outline-container-window-management" class="outline-4">
-<h4 id="window-management"><span class="section-number-4">3.2.3</span> Window management</h4>
-<div class="outline-text-4" id="text-3-2-3">
+<h4 id="window-management"><span class="section-number-4">3.2.2</span> Window management</h4>
+<div class="outline-text-4" id="text-3-2-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> rotate <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"091b5ac4fc"</span><span style="color: #51afef;">)</span>
 </pre>
@@ -1338,8 +1326,8 @@ This helps with that.
 </div>
 </div>
 <div id="outline-container-fun" class="outline-4">
-<h4 id="fun"><span class="section-number-4">3.2.4</span> Fun</h4>
-<div class="outline-text-4" id="text-3-2-4">
+<h4 id="fun"><span class="section-number-4">3.2.3</span> Fun</h4>
+<div class="outline-text-4" id="text-3-2-3">
 <p>
 Sometimes one just wants a little fun.
 XKCD comics are fun.
@@ -1393,12 +1381,12 @@ about it?
 </div>
 </div>
 <div id="outline-container-improving-features" class="outline-4">
-<h4 id="improving-features"><span class="section-number-4">3.2.5</span> Improving features</h4>
-<div class="outline-text-4" id="text-3-2-5">
+<h4 id="improving-features"><span class="section-number-4">3.2.4</span> Improving features</h4>
+<div class="outline-text-4" id="text-3-2-4">
 </div>
 <div id="outline-container-flyspell-lazy" class="outline-5">
-<h5 id="flyspell-lazy"><span class="section-number-5">3.2.5.1</span> Flyspell-lazy</h5>
-<div class="outline-text-5" id="text-3-2-5-1">
+<h5 id="flyspell-lazy"><span class="section-number-5">3.2.4.1</span> Flyspell-lazy</h5>
+<div class="outline-text-5" id="text-3-2-4-1">
 <p>
 To alleviate some <a href="#flyspell">issues with flyspell</a>
 </p>
@@ -1409,8 +1397,8 @@ To alleviate some <a href="#flyspell">issues with flyspell</a>
 </div>
 </div>
 <div id="outline-container-calctex" class="outline-5">
-<h5 id="calctex"><span class="section-number-5">3.2.5.2</span> CalcTeX</h5>
-<div class="outline-text-5" id="text-3-2-5-2">
+<h5 id="calctex"><span class="section-number-5">3.2.4.2</span> CalcTeX</h5>
+<div class="outline-text-5" id="text-3-2-4-2">
 <p>
 This is a nice extension to <code>calc</code>
 </p>
@@ -1422,8 +1410,8 @@ This is a nice extension to <code>calc</code>
 </div>
 </div>
 <div id="outline-container-ess" class="outline-5">
-<h5 id="ess"><span class="section-number-5">3.2.5.3</span> ESS</h5>
-<div class="outline-text-5" id="text-3-2-5-3">
+<h5 id="ess"><span class="section-number-5">3.2.4.3</span> ESS</h5>
+<div class="outline-text-5" id="text-3-2-4-3">
 <p>
 View data frames better with
 </p>
@@ -1434,8 +1422,8 @@ View data frames better with
 </div>
 </div>
 <div id="outline-container-magit-delta" class="outline-5">
-<h5 id="magit-delta"><span class="section-number-5">3.2.5.4</span> Magit Delta</h5>
-<div class="outline-text-5" id="text-3-2-5-4">
+<h5 id="magit-delta"><span class="section-number-5">3.2.4.4</span> Magit Delta</h5>
+<div class="outline-text-5" id="text-3-2-4-4">
 <p>
 <a href="https://github.com/dandavison/delta/">Delta</a> is a git diff syntax highlighter written in rust. The author also wrote a
 package to hook this into the magit diff view. This requires the <code>delta</code> binary.
@@ -1514,12 +1502,10 @@ For automatically toggling LaTeX fragment previews there&rsquo;s this nice packa
 </div>
 
 <p>
-<code>org-superstar-mode</code> is great. While we&rsquo;re at it we may as well make priorities and
-tags prettier as well :)
+<code>org-superstar-mode</code> is great. While we&rsquo;re at it we may as well make tags prettier as well :)
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-fancy-priorities <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"819bb993b7"</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-pretty-tags <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"40fd72f3e7"</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-pretty-tags <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"40fd72f3e7"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -2305,25 +2291,25 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
 <span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org-agenda
   <span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">org-super-agenda-mode</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-include-deadlines t
-      org-agenda-block-separator nil
-      org-agenda-tags-column <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
-      org-agenda-compact-blocks t<span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-skip-scheduled-if-done</span> t
+      <span style="color: #DFDFDF;">org-agenda-skip-deadline-if-done</span> t
+      <span style="color: #DFDFDF;">org-agenda-include-deadlines</span> t
+      <span style="color: #DFDFDF;">org-agenda-block-separator</span> nil
+      <span style="color: #DFDFDF;">org-agenda-tags-column</span> <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
+      <span style="color: #DFDFDF;">org-agenda-compact-blocks</span> t<span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-agenda-custom-commands
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-custom-commands</span>
       <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"o"</span> <span style="color: #7bc275;">"Overview"</span>
-         <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>agenda <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-agenda-span <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">day</span><span style="color: #51afef;">)</span>
-                      <span style="color: #51afef;">(</span>org-super-agenda-groups
+         <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>agenda <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-agenda-span</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">day</span><span style="color: #51afef;">)</span>
+                      <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-super-agenda-groups</span>
                        <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Today"</span>
                                 <span style="color: #C57BDB;">:time-grid</span> t
                                 <span style="color: #C57BDB;">:date</span> today
                                 <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"TODAY"</span>
                                 <span style="color: #C57BDB;">:scheduled</span> today
                                 <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-          <span style="color: #C57BDB;">(</span>alltodo <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-agenda-overriding-header <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
-                       <span style="color: #51afef;">(</span>org-super-agenda-groups
+          <span style="color: #C57BDB;">(</span>alltodo <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-agenda-overriding-header</span> <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
+                       <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-super-agenda-groups</span>
                         <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Next to do"</span>
                                  <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"NEXT"</span>
                                  <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #7bc275;">)</span>
@@ -2651,7 +2637,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org607fefb"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org2237f9e"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -2766,7 +2752,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -3238,7 +3224,7 @@ I&rsquo;ve also added some fun alternatives, just commented out.
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package</span> org-fancy-priorities
   <span style="color: #C57BDB;">:diminish</span>
   <span style="color: #C57BDB;">:defines</span> org-fancy-priorities-list
-  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span>org-agenda-mode . org-fancy-priorities-mode<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-agenda-mode</span> . org-fancy-priorities-mode<span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">:config</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">unless</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">char-displayable-p</span> ?&#10071;<span style="color: #7bc275;">)</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> org-fancy-priorities-list <span style="color: #C57BDB;">'</span><span style="color: #51afef;">(</span><span style="color: #7bc275;">"HIGH"</span> <span style="color: #7bc275;">"MID"</span> <span style="color: #7bc275;">"LOW"</span> <span style="color: #7bc275;">"OPTIONAL"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -4399,7 +4385,7 @@ Syntax highlighting is nice, so let&rsquo;s turn all of that on
 Use <code>xclip</code> to save file to graphics folder, or current directory (whichever applies)
 </p>
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #C57BDB;">command</span> -v xclip &gt;/dev/null <span style="color: #e69055; font-weight: bold;">2</span>&gt;&amp;<span style="color: #e69055; font-weight: bold;">1</span> || <span style="color: #51afef;">{</span> <span style="color: #FCCE7B;">echo</span> &gt;&amp;<span style="color: #e69055; font-weight: bold;">1</span> <span style="color: #7bc275;">"no xclip"</span>; <span style="color: #51afef;">exit</span> <span style="color: #e69055; font-weight: bold;">1</span>; <span style="color: #51afef;">}</span>
+<pre class="src src-shell">command -v xclip &gt;/dev/null <span style="color: #e69055; font-weight: bold;">2</span>&gt;&amp;<span style="color: #e69055; font-weight: bold;">1</span> || <span style="color: #51afef;">{</span> <span style="color: #FCCE7B;">echo</span> &gt;&amp;<span style="color: #e69055; font-weight: bold;">1</span> <span style="color: #7bc275;">"no xclip"</span>; <span style="color: #51afef;">exit</span> <span style="color: #e69055; font-weight: bold;">1</span>; <span style="color: #51afef;">}</span>
 
 <span style="color: #51afef;">if</span>
 xclip -selection clipboard -target image/png -o &gt;/dev/null <span style="color: #e69055; font-weight: bold;">2</span>&gt;&amp;<span style="color: #e69055; font-weight: bold;">1</span>
@@ -4820,7 +4806,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-01 Fri 16:48</p>
+<p class="date">Created: 2020-05-01 Fri 20:49</p>
 </div>
 </body>
 </html>
