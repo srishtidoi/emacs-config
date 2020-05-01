@@ -942,10 +942,30 @@
 (setq org-roam-directory "~/Desktop/TEC/Organisation/Roam")
 ;; Basic settings:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Graph%20visuals][Graph visuals:1]]
-(setq org-roam-graph-extra-config `(("stylesheet" . ,(concat "\"" doom-private-dir
-                                                             "misc/roam-graphviz-style.css\""))))
-;; Graph visuals:1 ends here
+;; [[file:~/.config/doom/config.org::*Graph%20Behaviour][Graph Behaviour:2]]
+(after! org-roam
+  (setq +org-roam-graph--html-template (replace-regexp-in-string "%\\([^s]\\)" "%%\\1" (f-read-text (concat doom-private-dir "misc/org-roam-template.html"))))
+
+  (defadvice! +org-roam-graph--build-html (&optional node-query)
+    "Generate a graph showing the relations between nodes in NODE-QUERY. HTML style."
+    :override #'org-roam-graph--build
+    (unless org-roam-graph-executable
+      (user-error "Can't find %s executable.  Please check if it is in your path"
+                  org-roam-graph-executable))
+    (let* ((node-query (or node-query
+                           `[:select [file titles]
+                                     :from titles
+                                     ,@(org-roam-graph--expand-matcher 'file t)]))
+           (graph      (org-roam-graph--dot node-query))
+           (temp-dot   (make-temp-file "graph." nil ".dot" graph))
+           (temp-graph (make-temp-file "graph." nil ".svg"))
+           (temp-html  (make-temp-file "graph." nil ".html")))
+      (call-process org-roam-graph-executable nil 0 nil
+                    temp-dot "-Tsvg" "-o" temp-graph)
+      (sleep-for 0.1)
+      (write-region (format +org-roam-graph--html-template (f-read-text temp-graph)) nil temp-html)
+      temp-html)))
+;; Graph Behaviour:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Nicer%20generated%20heading%20IDs][Nicer generated heading IDs:1]]
 (defvar org-heading-contraction-max-words 3
@@ -1225,25 +1245,25 @@ appropriate.  In tables, insert a new row or end the table."
   (unless (char-displayable-p ?❗)
     (setq org-fancy-priorities-list '("HIGH" "MID" "LOW" "OPTIONAL"))))
 
-(after! org
-  (use-package org-pretty-tags
-  :config
-   (setq org-pretty-tags-surrogate-strings
-         `(("uni"        . ,(all-the-icons-faicon   "graduation-cap" :face 'all-the-icons-purple  :v-adjust 0.01))
-           ("ucc"        . ,(all-the-icons-material "computer"       :face 'all-the-icons-silver  :v-adjust 0.01))
-           ("assignment" . ,(all-the-icons-material "library_books"  :face 'all-the-icons-orange  :v-adjust 0.01))
-           ("test"       . ,(all-the-icons-material "timer"          :face 'all-the-icons-red     :v-adjust 0.01))
-           ("lecture"    . ,(all-the-icons-fileicon "keynote"        :face 'all-the-icons-orange  :v-adjust 0.01))
-           ("email"      . ,(all-the-icons-faicon   "envelope"       :face 'all-the-icons-blue    :v-adjust 0.01))
-           ("read"       . ,(all-the-icons-octicon  "book"           :face 'all-the-icons-lblue   :v-adjust 0.01))
-           ("article"    . ,(all-the-icons-octicon  "file-text"      :face 'all-the-icons-yellow  :v-adjust 0.01))
-           ("web"        . ,(all-the-icons-faicon   "globe"          :face 'all-the-icons-green   :v-adjust 0.01))
-           ("info"       . ,(all-the-icons-faicon   "info-circle"    :face 'all-the-icons-blue    :v-adjust 0.01))
-           ("issue"      . ,(all-the-icons-faicon   "bug"            :face 'all-the-icons-red     :v-adjust 0.01))
-           ("someday"    . ,(all-the-icons-faicon   "calendar-o"     :face 'all-the-icons-cyan    :v-adjust 0.01))
-           ("idea"       . ,(all-the-icons-octicon  "light-bulb"     :face 'all-the-icons-yellow  :v-adjust 0.01))
-           ("emacs"      . ,(all-the-icons-fileicon "emacs"          :face 'all-the-icons-lpurple :v-adjust 0.01))))
-   (org-pretty-tags-global-mode)))
+;; (after! org
+;;   (use-package org-pretty-tags
+;;   :config
+;;    (setq org-pretty-tags-surrogate-strings
+;;          `(("uni"        . ,(all-the-icons-faicon   "graduation-cap" :face 'all-the-icons-purple  :v-adjust 0.01))
+;;            ("ucc"        . ,(all-the-icons-material "computer"       :face 'all-the-icons-silver  :v-adjust 0.01))
+;;            ("assignment" . ,(all-the-icons-material "library_books"  :face 'all-the-icons-orange  :v-adjust 0.01))
+;;            ("test"       . ,(all-the-icons-material "timer"          :face 'all-the-icons-red     :v-adjust 0.01))
+;;            ("lecture"    . ,(all-the-icons-fileicon "keynote"        :face 'all-the-icons-orange  :v-adjust 0.01))
+;;            ("email"      . ,(all-the-icons-faicon   "envelope"       :face 'all-the-icons-blue    :v-adjust 0.01))
+;;            ("read"       . ,(all-the-icons-octicon  "book"           :face 'all-the-icons-lblue   :v-adjust 0.01))
+;;            ("article"    . ,(all-the-icons-octicon  "file-text"      :face 'all-the-icons-yellow  :v-adjust 0.01))
+;;            ("web"        . ,(all-the-icons-faicon   "globe"          :face 'all-the-icons-green   :v-adjust 0.01))
+;;            ("info"       . ,(all-the-icons-faicon   "info-circle"    :face 'all-the-icons-blue    :v-adjust 0.01))
+;;            ("issue"      . ,(all-the-icons-faicon   "bug"            :face 'all-the-icons-red     :v-adjust 0.01))
+;;            ("someday"    . ,(all-the-icons-faicon   "calendar-o"     :face 'all-the-icons-cyan    :v-adjust 0.01))
+;;            ("idea"       . ,(all-the-icons-octicon  "light-bulb"     :face 'all-the-icons-yellow  :v-adjust 0.01))
+;;            ("emacs"      . ,(all-the-icons-fileicon "emacs"          :face 'all-the-icons-lpurple :v-adjust 0.01))))
+;;    (org-pretty-tags-global-mode)))
 
 (after! org-superstar
   (setq org-superstar-headline-bullets-list '("◉" "○" "✸" "✿" "✤" "✜" "◆" "▶")
@@ -1319,8 +1339,7 @@ appropriate.  In tables, insert a new row or end the table."
     :priority_c    "[#C]"
     :priority_d    "[#D]"
     :priority_e    "[#E]"
-    :em_dash       "---")
-)
+    :em_dash       "---"))
 (plist-put +pretty-code-symbols :name "⁍") ; or › could be good?
 ;; Symbols:2 ends here
 

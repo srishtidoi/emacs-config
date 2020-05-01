@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-01 Fri 01:52 -->
+<!-- 2020-05-01 Fri 16:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,7 +195,6 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
-
 <!––tec/custom-head-start-->
 <style type="text/css">
    :root {
@@ -581,7 +580,7 @@
 <ul>
 <li><a href="#basic-settings">5.2.2.5.1. Basic settings</a></li>
 <li><a href="#registering-roam-protocol">5.2.2.5.2. Registering roam protocol</a></li>
-<li><a href="#graph-visuals">5.2.2.5.3. Graph visuals</a></li>
+<li><a href="#graph-behaviour">5.2.2.5.3. Graph Behaviour</a></li>
 </ul>
 </li>
 <li><a href="#nicer-generated-heading">5.2.2.6. Nicer generated heading IDs</a></li>
@@ -1006,8 +1005,8 @@ I&rsquo;d like to have just the buffer name, then if applicable the project fold
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">frame-title-format</span>
     <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">""</span>
       <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:eval</span>
-       <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">s-contains-p</span> <span style="color: #DFDFDF;">org-roam-directory</span> <span style="color: #DFDFDF;">buffer-file-name</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">".*/[0-9]+-"</span> <span style="color: #7bc275;">"&#129172; "</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> <span style="color: #DFDFDF;">buffer-file-name</span> <span style="color: #7bc275;">""</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+       <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">s-contains-p</span> <span style="color: #DFDFDF;">org-roam-directory</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> <span style="color: #DFDFDF;">buffer-file-name</span> <span style="color: #7bc275;">""</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">".*/[0-9]+-"</span> <span style="color: #7bc275;">"&#129172; "</span> <span style="color: #DFDFDF;">buffer-file-name</span> <span style="color: #7bc275;">""</span><span style="color: #C57BDB;">)</span>
          <span style="color: #7bc275;">"%b"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
       <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:eval</span>
        <span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>project-name <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">projectile-project-name</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
@@ -2306,25 +2305,25 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
 <span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org-agenda
   <span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">org-super-agenda-mode</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-skip-scheduled-if-done</span> t
-      <span style="color: #DFDFDF;">org-agenda-skip-deadline-if-done</span> t
-      <span style="color: #DFDFDF;">org-agenda-include-deadlines</span> t
-      <span style="color: #DFDFDF;">org-agenda-block-separator</span> nil
-      <span style="color: #DFDFDF;">org-agenda-tags-column</span> <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
-      <span style="color: #DFDFDF;">org-agenda-compact-blocks</span> t<span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-block-separator nil
+      org-agenda-tags-column <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
+      org-agenda-compact-blocks t<span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-custom-commands</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-agenda-custom-commands
       <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"o"</span> <span style="color: #7bc275;">"Overview"</span>
-         <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>agenda <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-agenda-span</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">day</span><span style="color: #51afef;">)</span>
-                      <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-super-agenda-groups</span>
+         <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>agenda <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-agenda-span <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">day</span><span style="color: #51afef;">)</span>
+                      <span style="color: #51afef;">(</span>org-super-agenda-groups
                        <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Today"</span>
                                 <span style="color: #C57BDB;">:time-grid</span> t
                                 <span style="color: #C57BDB;">:date</span> today
                                 <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"TODAY"</span>
                                 <span style="color: #C57BDB;">:scheduled</span> today
                                 <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-          <span style="color: #C57BDB;">(</span>alltodo <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-agenda-overriding-header</span> <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
-                       <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-super-agenda-groups</span>
+          <span style="color: #C57BDB;">(</span>alltodo <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-agenda-overriding-header <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
+                       <span style="color: #51afef;">(</span>org-super-agenda-groups
                         <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Next to do"</span>
                                  <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"NEXT"</span>
                                  <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #7bc275;">)</span>
@@ -2652,7 +2651,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org7670012"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org607fefb"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -2819,37 +2818,93 @@ To associate <code>org-protocol://</code> links with the desktop file,
 </div>
 </div>
 </div>
-<div id="outline-container-graph-visuals" class="outline-6">
-<h6 id="graph-visuals"><span class="section-number-6">5.2.2.5.3</span> Graph visuals</h6>
+<div id="outline-container-graph-behaviour" class="outline-6">
+<h6 id="graph-behaviour"><span class="section-number-6">5.2.2.5.3</span> Graph Behaviour</h6>
 <div class="outline-text-6" id="text-5-2-2-5-3">
 <p>
-By default roam uses an unstyled <code>graphviz</code> dot. This is both uncomplicated, and
-underwhelming. We can do substantially better.
+By default, clicking on an <code>org-protocal://</code> link messes with the <kbd>svg</kbd> view. To fix
+this we can use an <code>iframe</code>, however that requires shifting to an <kbd>html</kbd> file.
+Hence, we need to do a bit of overriding.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-roam-graph-extra-config</span> <span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"stylesheet"</span> . ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"\""</span> <span style="color: #DFDFDF;">doom-private-dir</span>
-                                                             <span style="color: #7bc275;">"misc/roam-graphviz-style.css\""</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-html"><span style="color: #7bc275;">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color: #5cEfFF;">html</span>&gt;
+    &lt;<span style="color: #5cEfFF;">head</span>&gt;
+        &lt;<span style="color: #5cEfFF;">meta</span> <span style="color: #DFDFDF;">charset</span>=<span style="color: #7bc275;">"utf-8"</span>&gt;
+        &lt;<span style="color: #5cEfFF;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Roam Graph</span>&lt;/<span style="color: #5cEfFF;">title</span>&gt;
+        &lt;<span style="color: #5cEfFF;">meta</span> <span style="color: #DFDFDF;">name</span>=<span style="color: #7bc275;">"viewport"</span> <span style="color: #DFDFDF;">content</span>=<span style="color: #7bc275;">"width=device-width"</span>&gt;
+        &lt;<span style="color: #5cEfFF;">style</span> <span style="color: #DFDFDF;">type</span>=<span style="color: #7bc275;">"text/css"</span>&gt;
+         svg {
+             position: relative;
+             top: 50vh;
+             left: 50vw;
+             transform: translate(-50%, -50%);
+         }
+
+         a &gt; polygon {
+             transition-duration: 200ms;
+             transition-property: fill;
+         }
+
+         a &gt; polyline {
+             transition-duration: 400ms;
+             transition-property: stroke;
+         }
+
+         a:hover &gt; polygon {
+             fill: #d4d4d4;
+         }
+         a:hover &gt; polyline {
+             stroke: #888;
+         }
+        &lt;/<span style="color: #5cEfFF;">style</span>&gt;
+        &lt;<span style="color: #5cEfFF;">script</span> <span style="color: #DFDFDF;">type</span>=<span style="color: #7bc275;">"text/javascript"</span>&gt;
+         function create_iframe (url) {
+             i = document.createElement(<span style="color: #7bc275;">'iframe'</span>);
+             i.setAttribute(<span style="color: #7bc275;">'src'</span>, url);
+             i.style.setProperty(<span style="color: #7bc275;">'display'</span>, <span style="color: #7bc275;">'none'</span>);
+             document.body.append(i);
+         }
+         function listen_on_all_a () {
+             document.querySelectorAll(<span style="color: #7bc275;">"svg a"</span>).forEach(elem =&gt; {
+                 elem.addEventListener(<span style="color: #7bc275;">'click'</span>, (e) =&gt; {
+                     e.preventDefault();
+                     create_iframe(elem.href.baseVal);
+                 });
+             });
+         }
+        &lt;/<span style="color: #5cEfFF;">script</span>&gt;
+    &lt;/<span style="color: #5cEfFF;">head</span>&gt;
+    &lt;<span style="color: #5cEfFF;">body</span> <span style="color: #DFDFDF;">onload</span>=<span style="color: #7bc275;">"listen_on_all_a()"</span>&gt;
+<span style="color: #DFDFDF;">%s</span>
+    &lt;/<span style="color: #5cEfFF;">body</span>&gt;
+&lt;/<span style="color: #5cEfFF;">html</span>&gt;
 </pre>
 </div>
-<p>
-Now, let&rsquo;s go the next step and add that svg stylesheet.
-</p>
+
 <div class="org-src-container">
-<pre class="src src-css"><span style="color: #51afef;">svg </span>{
-  <span style="color: #7bc275;">position</span>: relative;
-  <span style="color: #7bc275;">top</span>: <span style="color: #e69055; font-weight: bold;">50</span>%;
-  <span style="color: #7bc275;">left</span>: <span style="color: #e69055; font-weight: bold;">50</span>%;
-  <span style="color: #7bc275;">transform</span>: translate(-50%, -50%);
-}
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org-roam
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> +org-roam-graph--html-template <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"%</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">(</span><span style="color: #7bc275;">[</span><span style="color: #C57BDB; font-weight: bold;">^</span><span style="color: #7bc275;">s]</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">)</span><span style="color: #7bc275;">"</span> <span style="color: #7bc275;">"%%\\1"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">f-read-text</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #DFDFDF;">doom-private-dir</span> <span style="color: #7bc275;">"misc/org-roam-template.html"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
-<span style="color: #51afef;">a &gt; polygon </span>{
-  <span style="color: #7bc275;">transition-duration</span>: 200ms;
-  <span style="color: #7bc275;">transition-property</span>: fill;
-}
-
-<span style="color: #51afef;">a:hover &gt; polygon </span>{
-  <span style="color: #7bc275;">fill</span>: <span style="color: #000000; background-color: #d4d4d4;">#d4d4d4</span>;
-}
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> +org-roam-graph--build-html <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> node-query<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Generate a graph showing the relations between nodes in NODE-QUERY. HTML style."</span>
+    <span style="color: #C57BDB;">:override</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-roam-graph--build</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">unless</span> <span style="color: #DFDFDF;">org-roam-graph-executable</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">user-error</span> <span style="color: #7bc275;">"Can't find %s executable.  Please check if it is in your path"</span>
+                  <span style="color: #DFDFDF;">org-roam-graph-executable</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>node-query <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> node-query
+                           <span style="color: #C57BDB;">`</span><span style="color: #51afef;">[</span><span style="color: #C57BDB;">:select</span> <span style="color: #C57BDB;">[</span>file titles<span style="color: #C57BDB;">]</span>
+                                     <span style="color: #C57BDB;">:from</span> titles
+                                     ,@<span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-roam-graph--expand-matcher</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">file</span> t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">]</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>graph      <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-roam-graph--dot</span> node-query<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>temp-dot   <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">make-temp-file</span> <span style="color: #7bc275;">"graph."</span> nil <span style="color: #7bc275;">".dot"</span> graph<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>temp-graph <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">make-temp-file</span> <span style="color: #7bc275;">"graph."</span> nil <span style="color: #7bc275;">".svg"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>temp-html  <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">make-temp-file</span> <span style="color: #7bc275;">"graph."</span> nil <span style="color: #7bc275;">".html"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">call-process</span> <span style="color: #DFDFDF;">org-roam-graph-executable</span> nil <span style="color: #e69055; font-weight: bold;">0</span> nil
+                    temp-dot <span style="color: #7bc275;">"-Tsvg"</span> <span style="color: #7bc275;">"-o"</span> temp-graph<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">sleep-for</span> <span style="color: #e69055; font-weight: bold;">0.1</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">write-region</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> +org-roam-graph--html-template <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">f-read-text</span> temp-graph<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span> nil temp-html<span style="color: #51afef;">)</span>
+      temp-html<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -3183,30 +3238,30 @@ I&rsquo;ve also added some fun alternatives, just commented out.
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package</span> org-fancy-priorities
   <span style="color: #C57BDB;">:diminish</span>
   <span style="color: #C57BDB;">:defines</span> org-fancy-priorities-list
-  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-agenda-mode</span> . org-fancy-priorities-mode<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span>org-agenda-mode . org-fancy-priorities-mode<span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">:config</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">unless</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">char-displayable-p</span> ?&#10071;<span style="color: #7bc275;">)</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> org-fancy-priorities-list <span style="color: #C57BDB;">'</span><span style="color: #51afef;">(</span><span style="color: #7bc275;">"HIGH"</span> <span style="color: #7bc275;">"MID"</span> <span style="color: #7bc275;">"LOW"</span> <span style="color: #7bc275;">"OPTIONAL"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">use-package</span> org-pretty-tags
-  <span style="color: #C57BDB;">:config</span>
-   <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-pretty-tags-surrogate-strings</span>
-         <span style="color: #C57BDB;">`</span><span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"uni"</span>        . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-faicon</span>   <span style="color: #7bc275;">"graduation-cap"</span> <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-purple</span>  <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"ucc"</span>        . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-material</span> <span style="color: #7bc275;">"computer"</span>       <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-silver</span>  <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"assignment"</span> . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-material</span> <span style="color: #7bc275;">"library_books"</span>  <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-orange</span>  <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"test"</span>       . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-material</span> <span style="color: #7bc275;">"timer"</span>          <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-red</span>     <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"lecture"</span>    . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-fileicon</span> <span style="color: #7bc275;">"keynote"</span>        <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-orange</span>  <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"email"</span>      . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-faicon</span>   <span style="color: #7bc275;">"envelope"</span>       <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-blue</span>    <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"read"</span>       . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-octicon</span>  <span style="color: #7bc275;">"book"</span>           <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-lblue</span>   <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"article"</span>    . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-octicon</span>  <span style="color: #7bc275;">"file-text"</span>      <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-yellow</span>  <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"web"</span>        . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-faicon</span>   <span style="color: #7bc275;">"globe"</span>          <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-green</span>   <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"info"</span>       . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-faicon</span>   <span style="color: #7bc275;">"info-circle"</span>    <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-blue</span>    <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"issue"</span>      . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-faicon</span>   <span style="color: #7bc275;">"bug"</span>            <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-red</span>     <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"someday"</span>    . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-faicon</span>   <span style="color: #7bc275;">"calendar-o"</span>     <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-cyan</span>    <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"idea"</span>       . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-octicon</span>  <span style="color: #7bc275;">"light-bulb"</span>     <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-yellow</span>  <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"emacs"</span>      . ,<span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-fileicon</span> <span style="color: #7bc275;">"emacs"</span>          <span style="color: #C57BDB;">:face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">all-the-icons-lpurple</span> <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.01</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-   <span style="color: #7bc275;">(</span><span style="color: #DFDFDF;">org-pretty-tags-global-mode</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+<span style="color: #62686E;">;; </span><span style="color: #62686E;">(after! org</span>
+<span style="color: #62686E;">;;   </span><span style="color: #62686E;">(use-package org-pretty-tags</span>
+<span style="color: #62686E;">;;   </span><span style="color: #62686E;">:config</span>
+<span style="color: #62686E;">;;    </span><span style="color: #62686E;">(setq org-pretty-tags-surrogate-strings</span>
+<span style="color: #62686E;">;;          </span><span style="color: #62686E;">`(("uni"        . ,(all-the-icons-faicon   "graduation-cap" :face 'all-the-icons-purple  :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("ucc"        . ,(all-the-icons-material "computer"       :face 'all-the-icons-silver  :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("assignment" . ,(all-the-icons-material "library_books"  :face 'all-the-icons-orange  :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("test"       . ,(all-the-icons-material "timer"          :face 'all-the-icons-red     :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("lecture"    . ,(all-the-icons-fileicon "keynote"        :face 'all-the-icons-orange  :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("email"      . ,(all-the-icons-faicon   "envelope"       :face 'all-the-icons-blue    :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("read"       . ,(all-the-icons-octicon  "book"           :face 'all-the-icons-lblue   :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("article"    . ,(all-the-icons-octicon  "file-text"      :face 'all-the-icons-yellow  :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("web"        . ,(all-the-icons-faicon   "globe"          :face 'all-the-icons-green   :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("info"       . ,(all-the-icons-faicon   "info-circle"    :face 'all-the-icons-blue    :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("issue"      . ,(all-the-icons-faicon   "bug"            :face 'all-the-icons-red     :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("someday"    . ,(all-the-icons-faicon   "calendar-o"     :face 'all-the-icons-cyan    :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("idea"       . ,(all-the-icons-octicon  "light-bulb"     :face 'all-the-icons-yellow  :v-adjust 0.01))</span>
+<span style="color: #62686E;">;;            </span><span style="color: #62686E;">("emacs"      . ,(all-the-icons-fileicon "emacs"          :face 'all-the-icons-lpurple :v-adjust 0.01))))</span>
+<span style="color: #62686E;">;;    </span><span style="color: #62686E;">(org-pretty-tags-global-mode)))</span>
 
 <span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org-superstar
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-superstar-headline-bullets-list</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#9673;"</span> <span style="color: #7bc275;">"&#9675;"</span> <span style="color: #7bc275;">"&#10040;"</span> <span style="color: #7bc275;">"&#10047;"</span> <span style="color: #7bc275;">"&#10020;"</span> <span style="color: #7bc275;">"&#10012;"</span> <span style="color: #7bc275;">"&#9670;"</span> <span style="color: #7bc275;">"&#9654;"</span><span style="color: #7bc275;">)</span>
@@ -3285,8 +3340,7 @@ It&rsquo;s also nice to make use of the Unicode characters for check boxes, and 
     <span style="color: #C57BDB;">:priority_c</span>    <span style="color: #7bc275;">"[#C]"</span>
     <span style="color: #C57BDB;">:priority_d</span>    <span style="color: #7bc275;">"[#D]"</span>
     <span style="color: #C57BDB;">:priority_e</span>    <span style="color: #7bc275;">"[#E]"</span>
-    <span style="color: #C57BDB;">:em_dash</span>       <span style="color: #7bc275;">"---"</span><span style="color: #C57BDB;">)</span>
-<span style="color: #51afef;">)</span>
+    <span style="color: #C57BDB;">:em_dash</span>       <span style="color: #7bc275;">"---"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-put</span> <span style="color: #DFDFDF;">+pretty-code-symbols</span> <span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"&#8269;"</span><span style="color: #51afef;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">or &#8250; could be good?</span>
 </pre>
 </div>
@@ -4766,7 +4820,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-01 Fri 01:52</p>
+<p class="date">Created: 2020-05-01 Fri 16:48</p>
 </div>
 </body>
 </html>
