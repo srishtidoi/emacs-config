@@ -943,15 +943,8 @@
 ;; Basic settings:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Graph%20visuals][Graph visuals:1]]
-(setq org-roam-graph-node-extra-config '(("shape"      . "\"underline\"")
-                                         ("style"      . "\"rounded,filled\"")
-                                         ("fillcolor"  . "\"#EEEEEE\"")
-                                         ("color"      . "\"#C9C9C9\"")
-                                         ("fontcolor"  . "\"#111111\"")
-                                         ("fontname"   . "\"Overpass\""))
-      org-roam-graph-edge-extra-config '(("color"      . "\"#333333\""))
-      org-roam-graph-extra-config      `(("stylesheet" . ,(concat "\"" doom-private-dir
-                                                                  "misc/roam-graphviz-style.css\""))))
+(setq org-roam-graph-extra-config `(("stylesheet" . ,(concat "\"" doom-private-dir
+                                                             "misc/roam-graphviz-style.css\""))))
 ;; Graph visuals:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Nicer%20generated%20heading%20IDs][Nicer generated heading IDs:1]]

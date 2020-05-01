@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-29 Wed 22:18 -->
+<!-- 2020-05-01 Fri 01:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -2652,7 +2652,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org556eddb"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org7670012"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -2827,15 +2827,8 @@ By default roam uses an unstyled <code>graphviz</code> dot. This is both uncompl
 underwhelming. We can do substantially better.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-roam-graph-node-extra-config</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"shape"</span>      . <span style="color: #7bc275;">"\"underline\""</span><span style="color: #7bc275;">)</span>
-                                         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"style"</span>      . <span style="color: #7bc275;">"\"rounded,filled\""</span><span style="color: #7bc275;">)</span>
-                                         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"fillcolor"</span>  . <span style="color: #7bc275;">"\"#EEEEEE\""</span><span style="color: #7bc275;">)</span>
-                                         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"color"</span>      . <span style="color: #7bc275;">"\"#C9C9C9\""</span><span style="color: #7bc275;">)</span>
-                                         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"fontcolor"</span>  . <span style="color: #7bc275;">"\"#111111\""</span><span style="color: #7bc275;">)</span>
-                                         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"fontname"</span>   . <span style="color: #7bc275;">"\"Overpass\""</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-      <span style="color: #DFDFDF;">org-roam-graph-edge-extra-config</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"color"</span>      . <span style="color: #7bc275;">"\"#333333\""</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-      <span style="color: #DFDFDF;">org-roam-graph-extra-config</span>      <span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"stylesheet"</span> . ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"\""</span> <span style="color: #DFDFDF;">doom-private-dir</span>
-                                                                  <span style="color: #7bc275;">"misc/roam-graphviz-style.css\""</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-roam-graph-extra-config</span> <span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"stylesheet"</span> . ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"\""</span> <span style="color: #DFDFDF;">doom-private-dir</span>
+                                                             <span style="color: #7bc275;">"misc/roam-graphviz-style.css\""</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 <p>
@@ -4773,7 +4766,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-04-29 Wed 22:18</p>
+<p class="date">Created: 2020-05-01 Fri 01:52</p>
 </div>
 </body>
 </html>
