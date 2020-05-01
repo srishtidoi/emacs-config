@@ -1237,14 +1237,6 @@ appropriate.  In tables, insert a new row or end the table."
 ;; Font Display:3 ends here
 
 ;; [[file:~/.config/doom/config.org::*Symbols][Symbols:1]]
-(use-package org-fancy-priorities
-  :diminish
-  :defines org-fancy-priorities-list
-  :hook (org-agenda-mode . org-fancy-priorities-mode)
-  :config
-  (unless (char-displayable-p ?❗)
-    (setq org-fancy-priorities-list '("HIGH" "MID" "LOW" "OPTIONAL"))))
-
 ;; (after! org
 ;;   (use-package org-pretty-tags
 ;;   :config
@@ -1271,17 +1263,6 @@ appropriate.  In tables, insert a new row or end the table."
         org-superstar-prettify-item-bullets t ))
 (after! org
   (setq org-ellipsis " ▾ "
-
-        org-fancy-priorities-list '((?A . "⚑")  ;; ASAP
-                                    (?B . "⬆")  ;; High
-                                    (?C . "■")  ;; Medium
-                                    (?D . "⬇")  ;; Low
-                                    (?E . "❓")) ;; Optional
-        org-priority-faces '((?A . all-the-icons-red)
-                             (?B . all-the-icons-orange)
-                             (?C . all-the-icons-yellow)
-                             (?D . all-the-icons-green)
-                             (?E . all-the-icons-blue))
         org-priority-highest ?A
         org-priority-lowest ?E
         ))
