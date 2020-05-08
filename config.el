@@ -387,6 +387,11 @@
 ;;   (magit-delta-mode +1))
 ;; Magit:1 ends here
 
+;; [[file:~/.config/doom/config.org::*Org%20Chef][Org Chef:1]]
+(use-package! org-chef
+  :commands (org-chef-insert-recipe org-chef-get-recipe-from-url))
+;; Org Chef:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*Projectile][Projectile:1]]
 (setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
 (defun projectile-ignored-project-function (filepath)
@@ -774,6 +779,7 @@
     (when buffer (kill-buffer buffer))))))
   (advice-add 'org-mks :override #'org-mks-pretty)
   (setq +org-capture-uni-units (split-string (f-read-text "~/.org/.uni-units")))
+  (setq +org-capture-recipies  "~/Desktop/TEC/Organisation/recipies.org")
   (add-transient-hook! 'org-capture-select-template
     (setq org-capture-templates
           (doct `((,(format "%s\tPersonal todo" (all-the-icons-octicon "checklist" :face 'all-the-icons-green :v-adjust 0.01))
@@ -846,6 +852,12 @@
                                :keys "a"
                                :desc ""
                                :i-type "read:reaserch"
+                               )
+                              (,(format "%s\t\tRecipie" (all-the-icons-faicon "spoon" :face 'all-the-icons-dorange :v-adjust 0.01))
+                               :keys "r"
+                               :file +org-capture-recipies
+                               :headline "Unsorted"
+                               :template "%(org-chef-get-recipe-from-url)"
                                )
                               (,(format "%s\tInformation" (all-the-icons-faicon "info-circle" :face 'all-the-icons-blue :v-adjust 0.01))
                                :keys "i"
