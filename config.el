@@ -1265,7 +1265,12 @@ appropriate.  In tables, insert a new row or end the table."
   (setq org-ellipsis " ▾ "
         org-priority-highest ?A
         org-priority-lowest ?E
-        ))
+        org-priority-faces
+        '((?A . 'all-the-icons-red)
+          (?B . 'all-the-icons-orange)
+          (?C . 'all-the-icons-yellow)
+          (?D . 'all-the-icons-green)
+          (?E . 'all-the-icons-blue))))
 ;; Symbols:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Symbols][Symbols:2]]
