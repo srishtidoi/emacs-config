@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-09 Sat 17:08 -->
+<!-- 2020-05-10 Sun 02:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,6 +195,11 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
+
+
+
+
+
 <!––tec/custom-head-start-->
 <style type="text/css">
    :root {
@@ -437,6 +442,12 @@
 <li><a href="#notes-unwary-adventurer">1.1. Notes for the unwary adventurer</a>
 <ul>
 <li><a href="#extra-requirements">1.1.1. Extra Requirements</a></li>
+</ul>
+</li>
+<li><a href="#current-issues">1.2. Current Issues</a>
+<ul>
+<li><a href="#magit-push-daemon">1.2.1. Magit push in daemon</a></li>
+<li><a href="#calctex-brings-up">1.2.2. CalcTeX brings up compilation buffer</a></li>
 </ul>
 </li>
 </ul>
@@ -743,6 +754,38 @@ using cargo.
 </pre>
 </div></li>
 </ul>
+</div>
+</div>
+</div>
+<div id="outline-container-current-issues" class="outline-3">
+<h3 id="current-issues"><span class="section-number-3">1.2</span> Current Issues</h3>
+<div class="outline-text-3" id="text-1-2">
+</div>
+<div id="outline-container-magit-push-daemon" class="outline-4">
+<h4 id="magit-push-daemon"><span class="section-number-4">1.2.1</span> Magit push in daemon</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+Quite often trying to push to a remote in the emacs daemon produces as error like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-fundamental">128 git &#8230; push -v origin refs/heads/master\:refs/heads/master
+Pushing to git@github.com:tecosaur/emacs-config.git
+
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-calctex-brings-up" class="outline-4">
+<h4 id="calctex-brings-up"><span class="section-number-4">1.2.2</span> CalcTeX brings up compilation buffer</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+With my <a href="#calc">Calc</a> hook, the first call of <kbd>M-x calc</kbd> brings up a compilation buffer
+from CalcTeX. I&rsquo;m guessing this is from the compilation of the preamble / <code>.fmt</code> file.
+</p>
 </div>
 </div>
 </div>
@@ -1593,13 +1636,13 @@ have the following.
 Radians are just better
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> calc-angle-mode <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">rad</span>  <span style="color: #62686E;">;; </span><span style="color: #62686E;">radians are rad</span>
-      calc-algebraic-mode t <span style="color: #62686E;">;; </span><span style="color: #62686E;">allows '2*x instead of 'x&lt;RET&gt;2*</span>
-      calc-symbolic-mode t<span style="color: #51afef;">)</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">keeps stuff like &#8730;2 irrational for as long as possible</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">calc-angle-mode</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">rad</span>  <span style="color: #62686E;">;; </span><span style="color: #62686E;">radians are rad</span>
+      <span style="color: #DFDFDF;">calc-algebraic-mode</span> t <span style="color: #62686E;">;; </span><span style="color: #62686E;">allows '2*x instead of 'x&lt;RET&gt;2*</span>
+      <span style="color: #DFDFDF;">calc-symbolic-mode</span> t<span style="color: #51afef;">)</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">keeps stuff like &#8730;2 irrational for as long as possible</span>
 <span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> calctex
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> calctex-format-latex-header <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> calctex-format-latex-header
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">calctex-format-latex-header</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #DFDFDF;">calctex-format-latex-header</span>
                                             <span style="color: #7bc275;">"\n\\usepackage{arevmath}"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">calc-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">calctex-mode</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">calc-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">calctex-mode</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -1731,7 +1774,7 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
                                               <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-ctrl-c-ctrl-c</span><span style="color: #7bc275;">)</span>
                                             <span style="color: #7bc275;">(</span><span style="color: #a991f1;">delete-frame</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
            <span style="color: #62686E;">;; </span><span style="color: #62686E;">Abort edit. emacs-anywhere saves the current edit for next time.</span>
-           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">kbd</span> <span style="color: #7bc275;">"C-c C-k"</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda!</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> ea-on nil<span style="color: #C57BDB;">)</span>
+           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">kbd</span> <span style="color: #7bc275;">"C-c C-k"</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda!</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">ea-on</span> nil<span style="color: #C57BDB;">)</span>
                                           <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">delete-frame</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when</span> <span style="color: #DFDFDF;">emacs-anywhere-mode</span>
     <span style="color: #62686E;">;; </span><span style="color: #62686E;">line breaking</span>
@@ -1755,11 +1798,11 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
          <span style="color: #51afef;">(</span>mouse-y <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">-</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">string-to-number</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">1</span> mousepos<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> <span style="color: #e69055; font-weight: bold;">50</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
     <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-frame-position</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">selected-frame</span><span style="color: #51afef;">)</span> mouse-x mouse-y<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
-  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">set-frame-name</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"Quick Edit &#8759; "</span> ea-app-name <span style="color: #7bc275;">" &#8212; "</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">set-frame-name</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"Quick Edit &#8759; "</span> <span style="color: #DFDFDF;">ea-app-name</span> <span style="color: #7bc275;">" &#8212; "</span>
                           <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">truncate-string-to-width</span>
                            <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">string-trim</span>
                             <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">string-trim-right</span> window-title
-                                               <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"-[A-Za-z0-9 ]*%s"</span> ea-app-name<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                                               <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"-[A-Za-z0-9 ]*%s"</span> <span style="color: #DFDFDF;">ea-app-name</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
                             <span style="color: #7bc275;">"[\s-]+"</span> <span style="color: #7bc275;">"[\s-]+"</span><span style="color: #C57BDB;">)</span>
                            <span style="color: #e69055; font-weight: bold;">45</span> nil nil <span style="color: #7bc275;">"&#8230;"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">message</span> <span style="color: #7bc275;">"window-title: %s"</span> window-title<span style="color: #C57BDB;">)</span>
@@ -1778,7 +1821,7 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">evil-insert-state</span><span style="color: #C57BDB;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">start in insert</span>
   <span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">emacs-anywhere-mode</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">ea-popup-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">ea-popup-handler</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">ea-popup-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">ea-popup-handler</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -2671,7 +2714,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org5435292"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org023a64a"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -2786,7 +2829,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -4441,8 +4484,6 @@ filename as variable maybe?)</li>
 <div class="outline-text-4" id="text-5-3-3">
 <p>
 For use in the new-file template, let&rsquo;s set out a nice preamble we may want to use.
-</p>
-<p>
 Then let&rsquo;s bind the content to a function, and define some nice helpers.
 </p>
 <div class="org-src-container">
@@ -4840,7 +4881,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-09 Sat 17:08</p>
+<p class="date">Created: 2020-05-10 Sun 02:59</p>
 </div>
 </body>
 </html>
