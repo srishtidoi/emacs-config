@@ -637,14 +637,15 @@
 <li><a href="#synctex">5.3.6. SyncTeX</a></li>
 </ul>
 </li>
-<li><a href="#r">5.4. R</a>
+<li><a href="#python">5.4. Python</a></li>
+<li><a href="#r">5.5. R</a>
 <ul>
-<li><a href="#r-editor-visuals">5.4.1. Editor Visuals</a></li>
+<li><a href="#r-editor-visuals">5.5.1. Editor Visuals</a></li>
 </ul>
 </li>
-<li><a href="#hledger">5.5. hledger</a></li>
-<li><a href="#markdown">5.6. Markdown</a></li>
-<li><a href="#beancount">5.7. Beancount</a></li>
+<li><a href="#hledger">5.6. hledger</a></li>
+<li><a href="#markdown">5.7. Markdown</a></li>
+<li><a href="#beancount">5.8. Beancount</a></li>
 </ul>
 </li>
 </ul>
@@ -4713,13 +4714,27 @@ provide this:
 </div>
 </div>
 </div>
-<div id="outline-container-r" class="outline-3">
-<h3 id="r"><span class="section-number-3">5.4</span> R</h3>
+<div id="outline-container-python" class="outline-3">
+<h3 id="python"><span class="section-number-3">5.4</span> Python</h3>
 <div class="outline-text-3" id="text-5-4">
+<p>
+Since I&rsquo;m using <kbd>mypyls</kbd>, as suggested in <a href="file:///home/tec/.emacs.d/modules/lang/python/README.html#MissingReference">:lang python LSP support</a> I&rsquo;ll tweak the
+priority of <kbd>mypyls</kbd>
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> lsp-python-ms
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">set-lsp-priority!</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">mspyls</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-r" class="outline-3">
+<h3 id="r"><span class="section-number-3">5.5</span> R</h3>
+<div class="outline-text-3" id="text-5-5">
 </div>
 <div id="outline-container-r-editor-visuals" class="outline-4">
-<h4 id="r-editor-visuals"><span class="section-number-4">5.4.1</span> Editor Visuals</h4>
-<div class="outline-text-4" id="text-5-4-1">
+<h4 id="r-editor-visuals"><span class="section-number-4">5.5.1</span> Editor Visuals</h4>
+<div class="outline-text-4" id="text-5-5-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> ess-r-mode
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">appendq!</span> <span style="color: #DFDFDF;">+pretty-code-symbols</span>
@@ -4750,8 +4765,8 @@ provide this:
 </div>
 </div>
 <div id="outline-container-hledger" class="outline-3">
-<h3 id="hledger"><span class="section-number-3">5.5</span> hledger</h3>
-<div class="outline-text-3" id="text-5-5">
+<h3 id="hledger"><span class="section-number-3">5.6</span> hledger</h3>
+<div class="outline-text-3" id="text-5-6">
 <p>
 <code>ledger-mode</code> is great and all, but <code>hledger</code> seems to be more actively maintained.
 For example, from 2018&#x2013;2020, the most prolific contributor to <code>ledger</code> produced
@@ -4773,8 +4788,8 @@ and produced by John Wiegley &#x2014; author of <code>ledger</code> and current 
 </div>
 </div>
 <div id="outline-container-markdown" class="outline-3">
-<h3 id="markdown"><span class="section-number-3">5.6</span> Markdown</h3>
-<div class="outline-text-3" id="text-5-6">
+<h3 id="markdown"><span class="section-number-3">5.7</span> Markdown</h3>
+<div class="outline-text-3" id="text-5-7">
 <p>
 Let&rsquo;s use mixed pitch, because it&rsquo;s great
 </p>
@@ -4793,8 +4808,8 @@ will do it&rsquo;s own line wrapping, hence we <i>only</i> want to use visual li
 </div>
 </div>
 <div id="outline-container-beancount" class="outline-3">
-<h3 id="beancount"><span class="section-number-3">5.7</span> Beancount</h3>
-<div class="outline-text-3" id="text-5-7">
+<h3 id="beancount"><span class="section-number-3">5.8</span> Beancount</h3>
+<div class="outline-text-3" id="text-5-8">
 <p>
 The <a href="https://bitbucket.org/blais/beancount/src/tip/editors/emacs/beancount.el">beancount package</a> online has been put into <code>./lisp</code>, we just need to load and
 enable it for <code>.beancount</code> files.

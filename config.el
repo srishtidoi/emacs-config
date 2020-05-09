@@ -2324,6 +2324,11 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
   (add-to-list 'TeX-view-program-selection '(output-pdf "Evince")))
 ;; SyncTeX:1 ends here
 
+;; [[file:~/.config/doom/config.org::*Python][Python:1]]
+(after! lsp-python-ms
+  (set-lsp-priority! 'mspyls 1))
+;; Python:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*Editor%20Visuals][Editor Visuals:1]]
 (after! ess-r-mode
   (appendq! +pretty-code-symbols
