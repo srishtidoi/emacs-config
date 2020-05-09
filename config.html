@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-08 Fri 14:38 -->
+<!-- 2020-05-09 Sat 17:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,13 +195,6 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
-
-
-
-
-
-
-
 <!––tec/custom-head-start-->
 <style type="text/css">
    :root {
@@ -2207,6 +2200,17 @@ I also like the <code>:comments</code> header-argument, so let&rsquo;s make that
                                       <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:comments</span> . <span style="color: #7bc275;">"link"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
+<p>
+By default, <code>visual-line-mode</code> is turned <kbd>on</kbd>, and <code>auto-fill-mode</code> <kbd>off</kbd> by a hook.
+However this messes with tables in Org-mode, and other plaintext files (e.g.
+markdown, \LaTeX) so I&rsquo;ll turn it off for this, and manually enable it for more
+specific modes as desired.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">remove-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">text-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">visual-line-mode</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">text-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">auto-fill-mode</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
 </div>
 </div>
 <div id="outline-container-behaviour-extra-functionality" class="outline-5">
@@ -2667,7 +2671,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgc002c91"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org5435292"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -2782,7 +2786,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -4836,7 +4840,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-08 Fri 14:38</p>
+<p class="date">Created: 2020-05-09 Sat 17:08</p>
 </div>
 </body>
 </html>

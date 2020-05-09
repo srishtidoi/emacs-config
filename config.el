@@ -526,6 +526,11 @@
                                       (:comments . "link")))
 ;; Tweaking defaults:2 ends here
 
+;; [[file:~/.config/doom/config.org::*Tweaking%20defaults][Tweaking defaults:3]]
+(remove-hook 'text-mode-hook #'visual-line-mode)
+(add-hook 'text-mode-hook #'auto-fill-mode)
+;; Tweaking defaults:3 ends here
+
 ;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:1]]
 (evil-define-command evil-buffer-org-new (count file)
   "Creates a new ORG buffer replacing the current window, optionally
