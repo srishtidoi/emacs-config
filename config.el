@@ -93,7 +93,7 @@
     '(""
       (:eval
        (if (s-contains-p org-roam-directory (or buffer-file-name ""))
-           (replace-regexp-in-string ".*/[0-9]+-" "🢔 " buffer-file-name "")
+           (replace-regexp-in-string ".*/[0-9]+-" "🢔 " buffer-file-name)
          "%b"))
       (:eval
        (let ((project-name (projectile-project-name)))
@@ -983,6 +983,19 @@
       (write-region (format +org-roam-graph--html-template (f-read-text temp-graph)) nil temp-html)
       temp-html)))
 ;; Graph Behaviour:2 ends here
+
+;; [[file:~/.config/doom/config.org::*Modeline%20file%20name][Modeline file name:1]]
+(defadvice! doom-modeline--reformat-roam (orig-fun)
+  :around #'doom-modeline-buffer-file-name
+  (message "Reformat?")
+  (message (buffer-file-name))
+  (if (s-contains-p org-roam-directory (or buffer-file-name ""))
+      (replace-regexp-in-string
+       "\\(?:^\\|.*/\\)\\([0-9]\\{4\\}\\)\\([0-9]\\{2\\}\\)\\([0-9]\\{2\\}\\)[0-9]*-"
+       "🢔(\\1-\\2-\\3) "
+       (funcall orig-fun))
+    (funcall orig-fun)))
+;; Modeline file name:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Nicer%20generated%20heading%20IDs][Nicer generated heading IDs:1]]
 (defvar org-heading-contraction-max-words 3
