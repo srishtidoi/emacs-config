@@ -198,8 +198,6 @@
 
 
 
-
-
 <!––tec/custom-head-start-->
 <style type="text/css">
    :root {
@@ -2092,13 +2090,18 @@ make: *** [Makefile:84: all] Error 2
 </pre>
 <p>
 I asked about this in a <a href="https://github.com/akermu/emacs-libvterm/issues/238#issuecomment-586385773">GitHub Issue</a>, and the fix is to use the <code>cmake</code> flag
-<code>-DUSE_SYSTEM_LIBVTERM=yes</code>. This can be set for when Doom recomplies <code>vterm</code> on
+<code>-DUSE_SYSTEM_LIBVTERM=yes</code>. This can be set for when Doom recompiles <code>vterm</code> on
 updating, which saves me manually compiling with the flag.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> vterm-module-cmake-args <span style="color: #7bc275;">"-DUSE_SYSTEM_LIBVTERM=yes"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
+<p>
+I also use a &rsquo;fancy powerline setup&rsquo; with <a href="https://github.com/romkatv/powerlevel10k">Powerlevel10k</a>, so I need to use a
+patched font for my terminal. Unfortunately I haven&rsquo;t quite figured out how to
+do this yet.
+</p>
 </div>
 </div>
 <div id="outline-container-which-key" class="outline-3">
