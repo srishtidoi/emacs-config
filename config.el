@@ -1894,8 +1894,10 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
   (setq org-latex-tables-booktabs t)
 
   (setq org-latex-hyperref-template "
-\\providecolor{link}{HTML}{blue!70!green}
-\\providecolor{cite}{HTML}{blue!40!green}
+\\colorlet{greenyblue}{blue!70!green}
+\\colorlet{blueygreen}{blue!40!green}
+\\providecolor{link}{named}{greenyblue}
+\\providecolor{cite}{named}{blueygreen}
 \\hypersetup{
   pdfauthor={%a},
   pdftitle={%t},
