@@ -92,3 +92,7 @@
 ;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:4]]
 (package! org-chef :pin "1dd73fd3db")
 ;; Extra functionality:4 ends here
+
+;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:5]]
+(package! org-plot :recipe (:local-repo "lisp" :no-byte-compile t))
+;; Extra functionality:5 ends here

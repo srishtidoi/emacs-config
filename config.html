@@ -791,25 +791,112 @@ from CalcTeX. I&rsquo;m guessing this is from the compilation of the preamble / 
 </p>
 </div>
 </div>
-<div id="outline-container-i-cant-get" class="outline-4">
-<h4 id="i-cant-get"><span class="section-number-4">1.2.3</span> I can&rsquo;t get low effort pretty gnuplots</h4>
-<div class="outline-text-4" id="text-1-2-3">
+</div>
+<div id="outline-container-editor-comparison" class="outline-3">
+<h3 id="editor-comparison"><span class="section-number-3">1.3</span> Editor comparison</h3>
+<div class="outline-text-3" id="text-1-3">
 <p>
-I&rsquo;d like to have some pretty defaults, and some nice presets like <code>:preset radar</code>.
-Perhaps an <code>defadvice!</code> is in <code>org-plot/gnuplot</code>&rsquo;s near future?
+Over the years I have tried out (spent at least a year using as my primary
+editor) the following applications
 </p>
-</div>
-
-<div id="outline-container-wish-list" class="outline-5">
-<h5 id="wish-list"><span class="section-number-5">1.2.3.1</span> Wish list</h5>
-<div class="outline-text-5" id="text-1-2-3-1">
 <ul class="org-ul">
-<li>Nice default font, line thicknesses etc.</li>
-<li>Colours based on current doom theme</li>
-<li>a <code>:preset</code> key, which takes a string/variable/function.
-A bit like <code>TeX-fold-math-spec-alist</code>.</li>
+<li>Python IDLE</li>
+<li>Komodo Edit</li>
+<li>Brackets</li>
+<li>VSCode</li>
+<li>and now, Emacs</li>
 </ul>
-</div>
+
+<p>
+<img src='https://imgs.xkcd.com/comics/real_programmers.png' title='Real programmers set the universal constants at the start such that the universe evolves to contain the disk with the data they want.' alt='Real Programmers'>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Editor</th>
+<th scope="col" class="org-right">Extensibility</th>
+<th scope="col" class="org-right">Ecosystem</th>
+<th scope="col" class="org-right">Ease of Use</th>
+<th scope="col" class="org-right">Comfort</th>
+<th scope="col" class="org-right">Completion</th>
+<th scope="col" class="org-right">Performance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">IDLE</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">3</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Komodo Edit</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">3</td>
+<td class="org-right">2</td>
+<td class="org-right">2</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">Brackets</td>
+<td class="org-right">2.5</td>
+<td class="org-right">2</td>
+<td class="org-right">3</td>
+<td class="org-right">3</td>
+<td class="org-right">2.5</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">VSCode</td>
+<td class="org-right">3</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">3.5</td>
+<td class="org-right">4</td>
+<td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-left">Emacs</td>
+<td class="org-right">4</td>
+<td class="org-right">4</td>
+<td class="org-right">2</td>
+<td class="org-right">4</td>
+<td class="org-right">3.5</td>
+<td class="org-right">3</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><img src="misc/editor-comparison.png" alt="editor-comparison.png" />
+</p>
 </div>
 </div>
 </div>
@@ -1615,7 +1702,15 @@ I <b>need</b> this in my life. It take a URL to a recipe from a common site, and
 inserts an org-ified version at point. Isn&rsquo;t that just great.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-chef <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"e8b4ba8a10"</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-chef <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"1dd73fd3db"</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+I have my own custom version of <code>org-plot</code>, so let&rsquo;s replace that
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-plot <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:local-repo</span> <span style="color: #7bc275;">"lisp"</span> <span style="color: #C57BDB;">:no-byte-compile</span> t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -2204,7 +2299,107 @@ It&rsquo;s nice to see ansi colour codes displayed
 <div id="outline-container-org" class="outline-3">
 <h3 id="org"><span class="section-number-3">5.2</span> Org Mode</h3>
 <div class="outline-text-3" id="text-org">
+<p>
+I really like org mode, I&rsquo;ve given some thought to why, and below is the result.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Format</th>
+<th scope="col" class="org-right">Fine-grained-control</th>
+<th scope="col" class="org-right">Initial Effort</th>
+<th scope="col" class="org-right">Syntax simplicity</th>
+<th scope="col" class="org-right">Editor Support</th>
+<th scope="col" class="org-right">Integrations</th>
+<th scope="col" class="org-right">Ease-of-referencing</th>
+<th scope="col" class="org-right">Versatility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Word</td>
+<td class="org-right">2</td>
+<td class="org-right">4</td>
+<td class="org-right">4</td>
+<td class="org-right">2</td>
+<td class="org-right">3</td>
+<td class="org-right">2</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-left">LaTeX</td>
+<td class="org-right">4</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">3</td>
+<td class="org-right">2</td>
+<td class="org-right">4</td>
+<td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-left">Org Mode</td>
+<td class="org-right">4</td>
+<td class="org-right">2</td>
+<td class="org-right">3.5</td>
+<td class="org-right">1</td>
+<td class="org-right">4</td>
+<td class="org-right">4</td>
+<td class="org-right">4</td>
+</tr>
+
+<tr>
+<td class="org-left">Markdown</td>
+<td class="org-right">1</td>
+<td class="org-right">3</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">3</td>
+<td class="org-right">3</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-left">Markdown + Pandoc</td>
+<td class="org-right">2.5</td>
+<td class="org-right">2.5</td>
+<td class="org-right">2.5</td>
+<td class="org-right">3</td>
+<td class="org-right">3</td>
+<td class="org-right">3</td>
+<td class="org-right">2</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><img src="misc/document-format-comparison.png" alt="document-format-comparison.png" />
+</p>
 </div>
+</div>
+
 <div id="outline-container-system-config" class="outline-4">
 <h4 id="system-config"><span class="section-number-4">5.2.1</span> System config</h4>
 <div class="outline-text-4" id="text-5-2-1">
