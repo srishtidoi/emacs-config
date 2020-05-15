@@ -34,7 +34,7 @@
 ;; Fun:6 ends here
 
 ;; [[file:~/.config/doom/config.org::*Flyspell-lazy][Flyspell-lazy:1]]
-(package! flyspell-lazy)
+(package! flyspell-lazy :pin "3ebf68cc9e")
 ;; Flyspell-lazy:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*CalcTeX][CalcTeX:1]]
@@ -47,7 +47,7 @@
 ;; ESS:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Magit%20Delta][Magit Delta:1]]
-;; (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta") :pin "2ceb6077fa")
+;; (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta") :pin "0c7d8b2359")
 ;; Magit Delta:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Systemd][Systemd:1]]
@@ -61,7 +61,7 @@
 ;; [[file:~/.config/doom/config.org::*Improve%20agenda/capture][Improve agenda/capture:2]]
 (package! doct
   :recipe (:host github :repo "progfolio/doct")
-  :pin "4b4c6ff631")
+  :pin "1bcec209e1")
 ;; Improve agenda/capture:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Visuals][Visuals:1]]
@@ -82,7 +82,7 @@
 ;; Extra functionality:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:2]]
-(package! org-ref :pin "1eb4ddda00")
+(package! org-ref :pin "4ce8064437")
 ;; Extra functionality:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:3]]
@@ -90,5 +90,5 @@
 ;; Extra functionality:3 ends here
 
 ;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:4]]
-(package! org-chef :pin "e8b4ba8a10")
+(package! org-chef :pin "1dd73fd3db")
 ;; Extra functionality:4 ends here
