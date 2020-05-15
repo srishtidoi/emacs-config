@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-12 Tue 01:47 -->
+<!-- 2020-05-15 Fri 17:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,8 +195,6 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
-
-
 <!––tec/custom-head-start-->
 <style type="text/css">
    :root {
@@ -445,13 +443,9 @@
 <ul>
 <li><a href="#magit-push-daemon">1.2.1. Magit push in daemon</a></li>
 <li><a href="#calctex-brings-up">1.2.2. CalcTeX brings up compilation buffer</a></li>
-<li><a href="#i-cant-get">1.2.3. I can&rsquo;t get low effort pretty gnuplots</a>
-<ul>
-<li><a href="#wish-list">1.2.3.1. Wish list</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li><a href="#editor-comparison">1.3. Editor comparison</a></li>
 </ul>
 </li>
 <li><a href="#rudimentary-configuration">2. Rudimentary configuration</a>
@@ -545,31 +539,32 @@
 <li><a href="#elcord">4.5. Elcord</a></li>
 <li><a href="#emacs-anywhere-configuration">4.6. Emacs Anywhere configuration</a></li>
 <li><a href="#eros-eval">4.7. Eros-eval</a></li>
-<li><a href="#flyspell">4.8. Flyspell</a></li>
-<li><a href="#ispell">4.9. Ispell</a></li>
-<li><a href="#magit">4.10. Magit</a></li>
-<li><a href="#org-chef">4.11. Org Chef</a></li>
-<li><a href="#projectile">4.12. Projectile</a></li>
-<li><a href="#smart-parentheses">4.13. Smart Parentheses</a></li>
-<li><a href="#spray">4.14. Spray</a></li>
-<li><a href="#theme-magic">4.15. Theme magic</a></li>
-<li><a href="#tramp">4.16. Tramp</a>
+<li><a href="#evil">4.8. EVIL</a></li>
+<li><a href="#flyspell">4.9. Flyspell</a></li>
+<li><a href="#ispell">4.10. Ispell</a></li>
+<li><a href="#magit">4.11. Magit</a></li>
+<li><a href="#org-chef">4.12. Org Chef</a></li>
+<li><a href="#projectile">4.13. Projectile</a></li>
+<li><a href="#smart-parentheses">4.14. Smart Parentheses</a></li>
+<li><a href="#spray">4.15. Spray</a></li>
+<li><a href="#theme-magic">4.16. Theme magic</a></li>
+<li><a href="#tramp">4.17. Tramp</a>
 <ul>
 <li>
 <ul>
-<li><a href="#troubleshooting">4.16.0.1. Troubleshooting</a>
+<li><a href="#troubleshooting">4.17.0.1. Troubleshooting</a>
 <ul>
-<li><a href="#zsh">4.16.0.1.1. Zsh</a></li>
+<li><a href="#zsh">4.17.0.1.1. Zsh</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#treemacs">4.17. Treemacs</a></li>
-<li><a href="#vterm">4.18. VTerm</a></li>
-<li><a href="#which-key">4.19. Which-key</a></li>
-<li><a href="#wttrin">4.20. Wttrin</a></li>
+<li><a href="#treemacs">4.18. Treemacs</a></li>
+<li><a href="#vterm">4.19. VTerm</a></li>
+<li><a href="#which-key">4.20. Which-key</a></li>
+<li><a href="#wttrin">4.21. Wttrin</a></li>
 </ul>
 </li>
 <li><a href="#language-configuration">5. Language configuration</a>
@@ -599,6 +594,8 @@
 </li>
 <li><a href="#nicer-generated-heading">5.2.2.6. Nicer generated heading IDs</a></li>
 <li><a href="#nicer-org-return">5.2.2.7. Nicer <code>org-return</code></a></li>
+<li><a href="#org-plot">5.2.2.8. Org Plot</a></li>
+<li><a href="#extra-links">5.2.2.9. Extra links</a></li>
 </ul>
 </li>
 <li><a href="#org-mode-visuals">5.2.3. Visuals</a>
@@ -695,7 +692,11 @@ TLDR; it&rsquo;s great.
 
 <p>
 Now I&rsquo;ve discovered the wonders of literate programming, and am becoming more
-settled by the day. This is my config.
+settled by the day. This is my config, and also a cautionary tale.
+</p>
+
+<p>
+<img src='https://imgs.xkcd.com/comics/cautionary.png' title='This really is a true story, and she doesn't know I put it in my comic because her wifi hasn't worked for weeks.' alt='Cautionary'>
 </p>
 </div>
 
@@ -717,6 +718,13 @@ If this causes issues, just delete the <code>(setq ispell-dictionary ...)</code>
 If this causes issues, just remove the reference to that file in <a href="#capture">Capture</a> and
 instances of <code>unit-prompt</code> used in  <code>(doct ...)</code></dd>
 </dl>
+
+<p>
+Oh, did I mention that I started this config when I didn&rsquo;t know any <kbd>elisp</kbd>, and
+this whole thing is a hack job? If you can suggest any improvements, please do
+so, no matter how much critisism you include I&rsquo;ll appreciate it :)
+<img src='https://imgs.xkcd.com/comics/code_quality.png' title='I honestly didn't think you could even USE emoji in variable names. Or that there were so many different crying ones.' alt='Code Quality'>
+</p>
 </div>
 <div id="outline-container-extra-requirements" class="outline-4">
 <h4 id="extra-requirements"><span class="section-number-4">1.1.1</span> Extra Requirements</h4>
@@ -1547,7 +1555,7 @@ about it?
 To alleviate some <a href="#flyspell">issues with flyspell</a>
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> flyspell-lazy<span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> flyspell-lazy <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"3ebf68cc9e"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -1585,7 +1593,7 @@ View data frames better with
 package to hook this into the magit diff view. This requires the <code>delta</code> binary.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #62686E;">;; </span><span style="color: #62686E;">(package! magit-delta :recipe (:host github :repo "dandavison/magit-delta") :pin "2ceb6077fa")</span>
+<pre class="src src-emacs-lisp"><span style="color: #62686E;">;; </span><span style="color: #62686E;">(package! magit-delta :recipe (:host github :repo "dandavison/magit-delta") :pin "0c7d8b2359")</span>
 </pre>
 </div>
 </div>
@@ -1630,7 +1638,7 @@ set up org-capture.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> doct
   <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"progfolio/doct"</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"4b4c6ff631"</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"1bcec209e1"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -1644,7 +1652,7 @@ redraw them in the buffer with box-drawing characters. Sounds like an
 improvement to me! Just need to get it working&#x2026;
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> <span style="color: #DFDFDF;">org-pretty-table-mode</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-pretty-table-mode
   <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"Fuco1/org-pretty-table"</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"88380f865a"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
@@ -1685,7 +1693,7 @@ features that GitHub has. Initialised in <a href="#exporting-gfm">5.2.3.6</a>.
 Now and then citations need to happen
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-ref <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"1eb4ddda00"</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-ref <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"4ce8064437"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -1755,13 +1763,13 @@ have the following.
 Radians are just better
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">calc-angle-mode</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">rad</span>  <span style="color: #62686E;">;; </span><span style="color: #62686E;">radians are rad</span>
-      <span style="color: #DFDFDF;">calc-algebraic-mode</span> t <span style="color: #62686E;">;; </span><span style="color: #62686E;">allows '2*x instead of 'x&lt;RET&gt;2*</span>
-      <span style="color: #DFDFDF;">calc-symbolic-mode</span> t<span style="color: #51afef;">)</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">keeps stuff like &#8730;2 irrational for as long as possible</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> calc-angle-mode <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">rad</span>  <span style="color: #62686E;">;; </span><span style="color: #62686E;">radians are rad</span>
+      calc-algebraic-mode t <span style="color: #62686E;">;; </span><span style="color: #62686E;">allows '2*x instead of 'x&lt;RET&gt;2*</span>
+      calc-symbolic-mode t<span style="color: #51afef;">)</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">keeps stuff like &#8730;2 irrational for as long as possible</span>
 <span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> calctex
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">calctex-format-latex-header</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #DFDFDF;">calctex-format-latex-header</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> calctex-format-latex-header <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> calctex-format-latex-header
                                             <span style="color: #7bc275;">"\n\\usepackage{arevmath}"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">calc-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">calctex-mode</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">calc-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">calctex-mode</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -1893,7 +1901,7 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
                                               <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-ctrl-c-ctrl-c</span><span style="color: #7bc275;">)</span>
                                             <span style="color: #7bc275;">(</span><span style="color: #a991f1;">delete-frame</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
            <span style="color: #62686E;">;; </span><span style="color: #62686E;">Abort edit. emacs-anywhere saves the current edit for next time.</span>
-           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">kbd</span> <span style="color: #7bc275;">"C-c C-k"</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda!</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">ea-on</span> nil<span style="color: #C57BDB;">)</span>
+           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">kbd</span> <span style="color: #7bc275;">"C-c C-k"</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda!</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> ea-on nil<span style="color: #C57BDB;">)</span>
                                           <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">delete-frame</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when</span> <span style="color: #DFDFDF;">emacs-anywhere-mode</span>
     <span style="color: #62686E;">;; </span><span style="color: #62686E;">line breaking</span>
@@ -1917,11 +1925,11 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
          <span style="color: #51afef;">(</span>mouse-y <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">-</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">string-to-number</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">1</span> mousepos<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> <span style="color: #e69055; font-weight: bold;">50</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
     <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-frame-position</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">selected-frame</span><span style="color: #51afef;">)</span> mouse-x mouse-y<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
-  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">set-frame-name</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"Quick Edit &#8759; "</span> <span style="color: #DFDFDF;">ea-app-name</span> <span style="color: #7bc275;">" &#8212; "</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">set-frame-name</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"Quick Edit &#8759; "</span> ea-app-name <span style="color: #7bc275;">" &#8212; "</span>
                           <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">truncate-string-to-width</span>
                            <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">string-trim</span>
                             <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">string-trim-right</span> window-title
-                                               <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"-[A-Za-z0-9 ]*%s"</span> <span style="color: #DFDFDF;">ea-app-name</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                                               <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"-[A-Za-z0-9 ]*%s"</span> ea-app-name<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
                             <span style="color: #7bc275;">"[\s-]+"</span> <span style="color: #7bc275;">"[\s-]+"</span><span style="color: #C57BDB;">)</span>
                            <span style="color: #e69055; font-weight: bold;">45</span> nil nil <span style="color: #7bc275;">"&#8230;"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">message</span> <span style="color: #7bc275;">"window-title: %s"</span> window-title<span style="color: #C57BDB;">)</span>
@@ -1940,7 +1948,7 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">evil-insert-state</span><span style="color: #C57BDB;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">start in insert</span>
   <span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">emacs-anywhere-mode</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">ea-popup-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">ea-popup-handler</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">ea-popup-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">ea-popup-handler</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -1958,9 +1966,23 @@ counts right?
 </div>
 </div>
 </div>
-<div id="outline-container-flyspell" class="outline-3">
-<h3 id="flyspell"><span class="section-number-3">4.8</span> Flyspell</h3>
+<div id="outline-container-evil" class="outline-3">
+<h3 id="evil"><span class="section-number-3">4.8</span> EVIL</h3>
 <div class="outline-text-3" id="text-4-8">
+<p>
+I don&rsquo;t use <code>evil-escape-mode</code>, so I may as well turn it off, I&rsquo;ve heard it
+contributes a typing delay. I&rsquo;m not sure it&rsquo;s much, but it is an extra
+<code>pre-command-hook</code> that I don&rsquo;t benefit from, so&#x2026;
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> evil <span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">evil-escape-mode</span> nil<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-flyspell" class="outline-3">
+<h3 id="flyspell"><span class="section-number-3">4.9</span> Flyspell</h3>
+<div class="outline-text-3" id="text-4-9">
 <p>
 At one point, typing became noticeably laggy, Profiling revealed
 <code>flyspell-post-command-hook</code> was responsible for 47% of CPU cycles by itself!
@@ -1973,8 +1995,8 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 </div>
 </div>
 <div id="outline-container-ispell" class="outline-3">
-<h3 id="ispell"><span class="section-number-3">4.9</span> Ispell</h3>
-<div class="outline-text-3" id="text-4-9">
+<h3 id="ispell"><span class="section-number-3">4.10</span> Ispell</h3>
+<div class="outline-text-3" id="text-4-10">
 <p>
 Let&rsquo;s get a nice big dictionary from <a href="http://app.aspell.net/create">SCOWL Custom List/Dictionary Creator</a> with
 the following configuration
@@ -2008,8 +2030,8 @@ nearby (also means that if I change the &rsquo;main&rsquo; dictionary I keep my 
 </div>
 </div>
 <div id="outline-container-magit" class="outline-3">
-<h3 id="magit"><span class="section-number-3">4.10</span> Magit</h3>
-<div class="outline-text-3" id="text-4-10">
+<h3 id="magit"><span class="section-number-3">4.11</span> Magit</h3>
+<div class="outline-text-3" id="text-4-11">
 <p>
 Magit is pretty nice by default. The diffs don&rsquo;t get any
 syntax-highlighting-love though which is a bit sad. Thankfully
@@ -2027,8 +2049,8 @@ into later.
 </div>
 </div>
 <div id="outline-container-org-chef" class="outline-3">
-<h3 id="org-chef"><span class="section-number-3">4.11</span> Org Chef</h3>
-<div class="outline-text-3" id="text-4-11">
+<h3 id="org-chef"><span class="section-number-3">4.12</span> Org Chef</h3>
+<div class="outline-text-3" id="text-4-12">
 <p>
 Loading after org seems a bit premature. Let&rsquo;s just load it when we try to use
 it, either by command or in a capture template.
@@ -2041,8 +2063,8 @@ it, either by command or in a capture template.
 </div>
 </div>
 <div id="outline-container-projectile" class="outline-3">
-<h3 id="projectile"><span class="section-number-3">4.12</span> Projectile</h3>
-<div class="outline-text-3" id="text-4-12">
+<h3 id="projectile"><span class="section-number-3">4.13</span> Projectile</h3>
+<div class="outline-text-3" id="text-4-13">
 <p>
 Looking at documentation via <kbd>SPC h f</kbd> and <kbd>SPC h v</kbd> and looking at the source can
 add package src directories to projectile. This isn&rsquo;t desirable in my opinion.
@@ -2057,8 +2079,8 @@ add package src directories to projectile. This isn&rsquo;t desirable in my opin
 </div>
 </div>
 <div id="outline-container-smart-parentheses" class="outline-3">
-<h3 id="smart-parentheses"><span class="section-number-3">4.13</span> Smart Parentheses</h3>
-<div class="outline-text-3" id="text-4-13">
+<h3 id="smart-parentheses"><span class="section-number-3">4.14</span> Smart Parentheses</h3>
+<div class="outline-text-3" id="text-4-14">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">sp-local-pair</span>
      <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>org-mode<span style="color: #C57BDB;">)</span>
@@ -2069,8 +2091,8 @@ add package src directories to projectile. This isn&rsquo;t desirable in my opin
 </div>
 </div>
 <div id="outline-container-spray" class="outline-3">
-<h3 id="spray"><span class="section-number-3">4.14</span> Spray</h3>
-<div class="outline-text-3" id="text-4-14">
+<h3 id="spray"><span class="section-number-3">4.15</span> Spray</h3>
+<div class="outline-text-3" id="text-4-15">
 <p>
 Let&rsquo;s make this suit me slightly better.
 </p>
@@ -2082,8 +2104,8 @@ Let&rsquo;s make this suit me slightly better.
 </div>
 </div>
 <div id="outline-container-theme-magic" class="outline-3">
-<h3 id="theme-magic"><span class="section-number-3">4.15</span> Theme magic</h3>
-<div class="outline-text-3" id="text-4-15">
+<h3 id="theme-magic"><span class="section-number-3">4.16</span> Theme magic</h3>
+<div class="outline-text-3" id="text-4-16">
 <p>
 Let&rsquo;s automatically update terminals on theme change
 </p>
@@ -2094,8 +2116,8 @@ Let&rsquo;s automatically update terminals on theme change
 </div>
 </div>
 <div id="outline-container-tramp" class="outline-3">
-<h3 id="tramp"><span class="section-number-3">4.16</span> Tramp</h3>
-<div class="outline-text-3" id="text-4-16">
+<h3 id="tramp"><span class="section-number-3">4.17</span> Tramp</h3>
+<div class="outline-text-3" id="text-4-17">
 <p>
 Let&rsquo;s try to make tramp handle prompts better
 </p>
@@ -2107,15 +2129,15 @@ Let&rsquo;s try to make tramp handle prompts better
 </div>
 </div>
 <div id="outline-container-troubleshooting" class="outline-5">
-<h5 id="troubleshooting"><span class="section-number-5">4.16.0.1</span> Troubleshooting</h5>
-<div class="outline-text-5" id="text-4-16-0-1">
+<h5 id="troubleshooting"><span class="section-number-5">4.17.0.1</span> Troubleshooting</h5>
+<div class="outline-text-5" id="text-4-17-0-1">
 <p>
 In case the remote shell is misbehaving, here are some things to try
 </p>
 </div>
 <div id="outline-container-zsh" class="outline-6">
-<h6 id="zsh"><span class="section-number-6">4.16.0.1.1</span> Zsh</h6>
-<div class="outline-text-6" id="text-4-16-0-1-1">
+<h6 id="zsh"><span class="section-number-6">4.17.0.1.1</span> Zsh</h6>
+<div class="outline-text-6" id="text-4-17-0-1-1">
 <p>
 There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more considerately.
 </p>
@@ -2133,8 +2155,8 @@ There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more
 </div>
 </div>
 <div id="outline-container-treemacs" class="outline-3">
-<h3 id="treemacs"><span class="section-number-3">4.17</span> Treemacs</h3>
-<div class="outline-text-3" id="text-4-17">
+<h3 id="treemacs"><span class="section-number-3">4.18</span> Treemacs</h3>
+<div class="outline-text-3" id="text-4-18">
 <p>
 Quite often there are superfluous files I&rsquo;m not that interested in. There&rsquo;s no
 good reason for them to take up space. Let&rsquo;s add a mechanism to ignore them.
@@ -2197,8 +2219,8 @@ Now, we just identify the files in question.
 </div>
 </div>
 <div id="outline-container-vterm" class="outline-3">
-<h3 id="vterm"><span class="section-number-3">4.18</span> VTerm</h3>
-<div class="outline-text-3" id="text-4-18">
+<h3 id="vterm"><span class="section-number-3">4.19</span> VTerm</h3>
+<div class="outline-text-3" id="text-4-19">
 <p>
 On my system, I want to use the <code>vterm</code> lib in <kbd>/usr/bin/libvterm.so</kbd>. This is not
 default behaviour. Without this I see the following error message.
@@ -2225,8 +2247,8 @@ do this yet.
 </div>
 </div>
 <div id="outline-container-which-key" class="outline-3">
-<h3 id="which-key"><span class="section-number-3">4.19</span> Which-key</h3>
-<div class="outline-text-3" id="text-4-19">
+<h3 id="which-key"><span class="section-number-3">4.20</span> Which-key</h3>
+<div class="outline-text-3" id="text-4-20">
 <p>
 Let&rsquo;s make this popup a bit faster
 </p>
@@ -2250,8 +2272,8 @@ I also think that having <kbd>evil-</kbd> appear in so many popups is a bit too 
 </div>
 </div>
 <div id="outline-container-wttrin" class="outline-3">
-<h3 id="wttrin"><span class="section-number-3">4.20</span> Wttrin</h3>
-<div class="outline-text-3" id="text-4-20">
+<h3 id="wttrin"><span class="section-number-3">4.21</span> Wttrin</h3>
+<div class="outline-text-3" id="text-4-21">
 <p>
 Set the default city. It&rsquo;s initially <code>Taipei</code> but I find the IP-locating that&rsquo;s
 done perfectly acceptable, so let&rsquo;s make that happen.
@@ -2440,6 +2462,9 @@ Then set Emacs as the default editor
 <div id="outline-container-behaviour" class="outline-4">
 <h4 id="behaviour"><span class="section-number-4">5.2.2</span> Behaviour</h4>
 <div class="outline-text-4" id="text-5-2-2">
+<p>
+<img src='https://imgs.xkcd.com/comics/automation.png' title=''Automating' comes from the roots 'auto-' meaning 'self-', and 'mating', meaning 'screwing'.' alt='Automation'>
+</p>
 </div>
 <div id="outline-container-tweaking-defaults" class="outline-5">
 <h5 id="tweaking-defaults"><span class="section-number-5">5.2.2.1</span> Tweaking defaults</h5>
@@ -2786,7 +2811,7 @@ Let&rsquo;s setup some org-capture templates
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+doct-iconify-capture-templates</span> <span style="color: #7bc275;">(</span>groups<span style="color: #7bc275;">)</span>
     <span style="color: #7e7e87;">"Add declaration's :icon to each template group in GROUPS."</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>templates <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doct-flatten-lists-in</span> groups<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">doct-templates</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>template<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> doct-templates <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>template<span style="color: #51afef;">)</span>
                                      <span style="color: #51afef;">(</span><span style="color: #51afef;">when-let*</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>props <span style="color: #51afef;">(</span><span style="color: #a991f1;">nthcdr</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">=</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">length</span> template<span style="color: #51afef;">)</span> <span style="color: #e69055; font-weight: bold;">4</span><span style="color: #7bc275;">)</span> <span style="color: #e69055; font-weight: bold;">2</span> <span style="color: #e69055; font-weight: bold;">5</span><span style="color: #C57BDB;">)</span> template<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
                                                  <span style="color: #7bc275;">(</span>spec <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-get</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> props <span style="color: #C57BDB;">:doct</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">:icon</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
                                        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setf</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">1</span> template<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+doct-icon-declaration-to-icon</span> spec<span style="color: #51afef;">)</span>
@@ -2795,7 +2820,7 @@ Let&rsquo;s setup some org-capture templates
                                      template<span style="color: #7bc275;">)</span>
                                    templates<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">doct-after-conversion-functions</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>+doct-iconify-capture-templates<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> doct-after-conversion-functions <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>+doct-iconify-capture-templates<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">add-transient-hook!</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-capture-select-template</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-capture-templates</span>
@@ -2961,7 +2986,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org4239b71"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org247b48a"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -3513,11 +3538,125 @@ Once again, from <a href="https://github.com/alphapapa/unpackaged.el#org-return-
 </div>
 </div>
 </div>
+<div id="outline-container-org-plot" class="outline-5">
+<h5 id="org-plot"><span class="section-number-5">5.2.2.8</span> Org Plot</h5>
+<div class="outline-text-5" id="text-5-2-2-8">
+<p>
+There are two main bits of extra functionality I wan to add
+</p>
+<ul class="org-ul">
+<li>the ability to transpose tables (internally)</li>
+<li>a radar type</li>
+</ul>
+
+<p>
+To accomplish this, overriding the <code>org-plot/gnuplot</code> function seems to be the
+clear way. I tried this, and overrode so much that it seemed to make sense
+just to modify <kbd>org-plot.el</kbd> instead, as it was only ~350 lines and I functions
+that encompassed most of that line count.
+</p>
+
+<p>
+Given that my <a href="lisp/org-plot.el">org-plot.el</a> is now ~600 lines, this seems to have been a good call.
+</p>
+
+<p>
+For transposition, I&rsquo;ve added the following (equivalent) keys
+</p>
+<ul class="org-ul">
+<li><code>[transpose|t]</code></li>
+<li><code>t</code></li>
+</ul>
+<p>
+When set to <code>yes</code>, <code>y</code>, or <code>t</code> the table is internally transposed (i.e. the <kbd>elisp</kbd> data
+form of the table only).
+</p>
+
+<p>
+The radar chart is a lot more involved, and I&rsquo;ve added the following keys
+</p>
+<ul class="org-ul">
+<li><code>type:radar</code>
+This uses the radar template, the result of which can be seen in <a id="org695442a"></a></li>
+<li><code>[min|ymin]:0..n</code>
+This sets the start value of <i>every</i> axis.</li>
+<li><code>[max|ymax]:0..n</code>
+This sets the end value of <i>every</i> axis.
+If both <code>ymin</code> and <code>ymax</code> are set, only the first axis gets tick labels.</li>
+<li><code>ticks:0..n</code>
+This sets the number of ticks. Only works for \(n>2\), or \(n=0\) in which
+case no ticks are shown.</li>
+</ul>
 </div>
+</div>
+<div id="outline-container-extra-links" class="outline-5">
+<h5 id="extra-links"><span class="section-number-5">5.2.2.9</span> Extra links</h5>
+<div class="outline-text-5" id="text-5-2-2-9">
+<p>
+Let&rsquo;s start off with an xkcd link, why not.
+Nice youtube embed as well, for fun.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-link-set-parameters</span> <span style="color: #7bc275;">"xkcd"</span>
+                           <span style="color: #C57BDB;">:image-data-fun</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+org-xkcd-image-fn</span>
+                           <span style="color: #C57BDB;">:follow</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+org-xkcd-open-fn</span>
+                           <span style="color: #C57BDB;">:export</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+org-xkcd-export</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-open-fn</span> <span style="color: #7bc275;">(</span>link<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+org-xkcd-image-fn</span> nil link nil<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-fetch-info</span> <span style="color: #7bc275;">(</span>num<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">require</span> <span style="color: #C57BDB;">'</span><span style="color: #a991f1;">xkcd</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>url <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"http://xkcd.com/%d/info.0.json"</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>out <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">xkcd-get-json</span> url num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>json-assoc <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">json-read-from-string</span> out<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      json-assoc<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-image-fn</span> <span style="color: #7bc275;">(</span>_protocol link _description<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>json-assoc <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+org-xkcd-fetch-info</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">string-to-number</span> link<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>img <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">img</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>alt <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">alt</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">message</span> alt<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+org-http-image-data-fn</span> <span style="color: #7bc275;">"https"</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">substring</span> img <span style="color: #e69055; font-weight: bold;">6</span><span style="color: #C57BDB;">)</span> nil<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-export</span> <span style="color: #7bc275;">(</span>path desc backend _com<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>json-assoc <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+org-xkcd-fetch-info</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">string-to-number</span> path<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span>img <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">img</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span>alt <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">alt</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                  <span style="color: #C57BDB;">(</span>title <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">title</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">cond</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">html</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"&lt;img src='%s' title='%s' alt='%s'&gt;"</span> img alt title<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+            <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">latex</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"\\href{https://xkcd.com/%s}{%s}"</span> path <span style="color: #51afef;">(</span><span style="color: #51afef;">or</span> desc <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"xkcd: "</span> title<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+            <span style="color: #C57BDB;">(</span>t <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"https://xkcd.com/%s"</span> path<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-link-set-parameters</span> <span style="color: #7bc275;">"yt"</span> <span style="color: #C57BDB;">:export</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+org-export-yt</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-export-yt</span> <span style="color: #7bc275;">(</span>path desc backend _com<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">cond</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">html</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"&lt;iframe width='440' \</span>
+<span style="color: #7bc275;">height='335' \</span>
+<span style="color: #7bc275;">src='https://www.youtube.com/embed/%s' \</span>
+<span style="color: #7bc275;">frameborder='0' \</span>
+<span style="color: #7bc275;">allowfullscreen&gt;%s&lt;/iframe&gt;"</span> path <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> <span style="color: #7bc275;">""</span> desc<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+          <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">latex</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"\\href{https://youtu.be/%s}{%s}"</span> path <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> desc <span style="color: #7bc275;">"youtube"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+          <span style="color: #51afef;">(</span>t <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"https://youtu.be/%s"</span> path<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org-mode-visuals" class="outline-4">
 <h4 id="org-mode-visuals"><span class="section-number-4">5.2.3</span> Visuals</h4>
 <div class="outline-text-4" id="text-5-2-3">
+<p>
+Here I try to do two things: improve the styling of the various documents, via
+font changes etc, and also propagate colours from the current theme.
+</p>
+
+<p>
+<img src='https://imgs.xkcd.com/comics/color_models.png' title='What if what *I* see as blue, *you* see as a slightly different blue because you're using Chrome instead of Firefox and despite a decade of messing with profiles we STILL can't get this right somehow.' alt='Color Models'>
+</p>
 </div>
+
 <div id="outline-container-editor" class="outline-5">
 <h5 id="editor"><span class="section-number-5">5.2.3.1</span> In editor</h5>
 <div class="outline-text-5" id="text-5-2-3-1">
@@ -4413,8 +4552,10 @@ Now for a few more adjustments.
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-latex-tables-booktabs</span> t<span style="color: #C57BDB;">)</span>
 
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-latex-hyperref-template</span> <span style="color: #7bc275;">"</span>
-<span style="color: #7bc275;">\\providecolor{link}{HTML}{blue!70!green}</span>
-<span style="color: #7bc275;">\\providecolor{cite}{HTML}{blue!40!green}</span>
+<span style="color: #7bc275;">\\colorlet{greenyblue}{blue!70!green}</span>
+<span style="color: #7bc275;">\\colorlet{blueygreen}{blue!40!green}</span>
+<span style="color: #7bc275;">\\providecolor{link}{named}{greenyblue}</span>
+<span style="color: #7bc275;">\\providecolor{cite}{named}{blueygreen}</span>
 <span style="color: #7bc275;">\\hypersetup{</span>
 <span style="color: #7bc275;">  pdfauthor={%a},</span>
 <span style="color: #7bc275;">  pdftitle={%t},</span>
@@ -4704,6 +4845,9 @@ Syntax highlighting is nice, so let&rsquo;s turn all of that on
 <div id="outline-container-latex" class="outline-3">
 <h3 id="latex"><span class="section-number-3">5.3</span> LaTeX</h3>
 <div class="outline-text-3" id="text-5-3">
+<p>
+<img src='https://imgs.xkcd.com/comics/file_extensions.png' title='I have never been lied to by data in a .txt file which has been hand-aligned.' alt='File Extensions'>
+</p>
 </div>
 <div id="outline-container-be-implemented-ideas" class="outline-4">
 <h4 id="be-implemented-ideas"><span class="section-number-4">5.3.1</span> To-be-implemented ideas</h4>
@@ -5150,7 +5294,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-12 Tue 01:47</p>
+<p class="date">Created: 2020-05-15 Fri 17:45</p>
 </div>
 </body>
 </html>

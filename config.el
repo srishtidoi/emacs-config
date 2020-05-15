@@ -370,6 +370,10 @@
 (setq eros-eval-result-prefix "⟹ ")
 ;; Eros-eval:1 ends here
 
+;; [[file:~/.config/doom/config.org::*EVIL][EVIL:1]]
+(after! evil (evil-escape-mode nil))
+;; EVIL:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*Flyspell][Flyspell:1]]
 (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
 ;; Flyspell:1 ends here
@@ -1268,6 +1272,50 @@ appropriate.  In tables, insert a new row or end the table."
         (org-return t)))))
   (advice-add #'org-return-indent :override #'unpackaged/org-return-dwim))
 ;; Nicer ~org-return~:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Extra%20links][Extra links:1]]
+(after! org
+  (org-link-set-parameters "xkcd"
+                           :image-data-fun #'+org-xkcd-image-fn
+                           :follow #'+org-xkcd-open-fn
+                           :export #'+org-xkcd-export)
+  (defun +org-xkcd-open-fn (link)
+    (+org-xkcd-image-fn nil link nil))
+  (defun +org-xkcd-fetch-info (num)
+    (require 'xkcd)
+    (let* ((url (format "http://xkcd.com/%d/info.0.json" num))
+           (out (xkcd-get-json url num))
+           (json-assoc (json-read-from-string out)))
+      json-assoc))
+  (defun +org-xkcd-image-fn (_protocol link _description)
+    (let* ((json-assoc (+org-xkcd-fetch-info (string-to-number link)))
+           (img (cdr (assoc 'img json-assoc)))
+           (alt (cdr (assoc 'alt json-assoc))))
+      (message alt)
+      (+org-http-image-data-fn "https" (substring img 6) nil)))
+  (defun +org-xkcd-export (path desc backend _com)
+    (let* ((json-assoc (+org-xkcd-fetch-info (string-to-number path)))
+                  (img (cdr (assoc 'img json-assoc)))
+                  (alt (cdr (assoc 'alt json-assoc)))
+                  (title (cdr (assoc 'title json-assoc))))
+      (cond ((org-export-derived-backend-p backend 'html)
+             (format "<img src='%s' title='%s' alt='%s'>" img alt title))
+            ((org-export-derived-backend-p backend 'latex)
+             (format "\\href{https://xkcd.com/%s}{%s}" path (or desc (concat "xkcd: " title))))
+            (t (format "https://xkcd.com/%s" path)))))
+
+  (org-link-set-parameters "yt" :export #'+org-export-yt)
+  (defun +org-export-yt (path desc backend _com)
+    (cond ((org-export-derived-backend-p backend 'html)
+           (format "<iframe width='440' \
+height='335' \
+src='https://www.youtube.com/embed/%s' \
+frameborder='0' \
+allowfullscreen>%s</iframe>" path (or "" desc)))
+          ((org-export-derived-backend-p backend 'latex)
+           (format "\\href{https://youtu.be/%s}{%s}" path (or desc "youtube")))
+          (t (format "https://youtu.be/%s" path)))))
+;; Extra links:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Font%20Display][Font Display:1]]
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
