@@ -195,6 +195,7 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
+
 <!––tec/custom-head-start-->
 <style type="text/css">
    :root {
@@ -595,7 +596,12 @@
 <li><a href="#nicer-generated-heading">5.2.2.6. Nicer generated heading IDs</a></li>
 <li><a href="#nicer-org-return">5.2.2.7. Nicer <code>org-return</code></a></li>
 <li><a href="#org-plot">5.2.2.8. Org Plot</a></li>
-<li><a href="#extra-links">5.2.2.9. Extra links</a></li>
+<li><a href="#extra-links">5.2.2.9. Extra links</a>
+<ul>
+<li><a href="#xkcd">5.2.2.9.1. xkcd</a></li>
+<li><a href="#youtube">5.2.2.9.2. YouTube</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#org-mode-visuals">5.2.3. Visuals</a>
@@ -696,7 +702,7 @@ settled by the day. This is my config, and also a cautionary tale.
 </p>
 
 <p>
-<img src='https://imgs.xkcd.com/comics/cautionary.png' title='This really is a true story, and she doesn't know I put it in my comic because her wifi hasn't worked for weeks.' alt='Cautionary'>
+<img src='https://imgs.xkcd.com/comics/cautionary.png' title="This really is a true story, and she doesn't know I put it in my comic because her wifi hasn't worked for weeks." alt='Cautionary'>
 </p>
 </div>
 
@@ -723,7 +729,7 @@ instances of <code>unit-prompt</code> used in  <code>(doct ...)</code></dd>
 Oh, did I mention that I started this config when I didn&rsquo;t know any <kbd>elisp</kbd>, and
 this whole thing is a hack job? If you can suggest any improvements, please do
 so, no matter how much critisism you include I&rsquo;ll appreciate it :)
-<img src='https://imgs.xkcd.com/comics/code_quality.png' title='I honestly didn't think you could even USE emoji in variable names. Or that there were so many different crying ones.' alt='Code Quality'>
+<img src='https://imgs.xkcd.com/comics/code_quality.png' title="I honestly didn't think you could even USE emoji in variable names. Or that there were so many different crying ones." alt='Code Quality'>
 </p>
 </div>
 <div id="outline-container-extra-requirements" class="outline-4">
@@ -816,7 +822,7 @@ editor) the following applications
 </ul>
 
 <p>
-<img src='https://imgs.xkcd.com/comics/real_programmers.png' title='Real programmers set the universal constants at the start such that the universe evolves to contain the disk with the data they want.' alt='Real Programmers'>
+<img src='https://imgs.xkcd.com/comics/real_programmers.png' title="Real programmers set the universal constants at the start such that the universe evolves to contain the disk with the data they want." alt='Real Programmers'>
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2463,7 +2469,7 @@ Then set Emacs as the default editor
 <h4 id="behaviour"><span class="section-number-4">5.2.2</span> Behaviour</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
-<img src='https://imgs.xkcd.com/comics/automation.png' title=''Automating' comes from the roots 'auto-' meaning 'self-', and 'mating', meaning 'screwing'.' alt='Automation'>
+<img src='https://imgs.xkcd.com/comics/automation.png' title="'Automating' comes from the roots 'auto-' meaning 'self-', and 'mating', meaning 'screwing'." alt='Automation'>
 </p>
 </div>
 <div id="outline-container-tweaking-defaults" class="outline-5">
@@ -2811,7 +2817,7 @@ Let&rsquo;s setup some org-capture templates
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+doct-iconify-capture-templates</span> <span style="color: #7bc275;">(</span>groups<span style="color: #7bc275;">)</span>
     <span style="color: #7e7e87;">"Add declaration's :icon to each template group in GROUPS."</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>templates <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">doct-flatten-lists-in</span> groups<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> doct-templates <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>template<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">doct-templates</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>template<span style="color: #51afef;">)</span>
                                      <span style="color: #51afef;">(</span><span style="color: #51afef;">when-let*</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>props <span style="color: #51afef;">(</span><span style="color: #a991f1;">nthcdr</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">=</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">length</span> template<span style="color: #51afef;">)</span> <span style="color: #e69055; font-weight: bold;">4</span><span style="color: #7bc275;">)</span> <span style="color: #e69055; font-weight: bold;">2</span> <span style="color: #e69055; font-weight: bold;">5</span><span style="color: #C57BDB;">)</span> template<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
                                                  <span style="color: #7bc275;">(</span>spec <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-get</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> props <span style="color: #C57BDB;">:doct</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">:icon</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
                                        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setf</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">1</span> template<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+doct-icon-declaration-to-icon</span> spec<span style="color: #51afef;">)</span>
@@ -2820,7 +2826,7 @@ Let&rsquo;s setup some org-capture templates
                                      template<span style="color: #7bc275;">)</span>
                                    templates<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> doct-after-conversion-functions <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>+doct-iconify-capture-templates<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">doct-after-conversion-functions</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>+doct-iconify-capture-templates<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">add-transient-hook!</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-capture-select-template</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-capture-templates</span>
@@ -2986,7 +2992,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org247b48a"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="orga7f33b8"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -3101,7 +3107,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -3557,7 +3563,7 @@ that encompassed most of that line count.
 </p>
 
 <p>
-Given that my <a href="lisp/org-plot.el">org-plot.el</a> is now ~600 lines, this seems to have been a good call.
+Given that my <a href="lisp/org-plot.el">org-plot.el</a> is now ~700 lines, this seems to have been a good call.
 </p>
 
 <p>
@@ -3577,7 +3583,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="org695442a"></a></li>
+This uses the radar template, the result of which can be seen in <a id="org9df6d39"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -3592,41 +3598,138 @@ case no ticks are shown.</li>
 <div id="outline-container-extra-links" class="outline-5">
 <h5 id="extra-links"><span class="section-number-5">5.2.2.9</span> Extra links</h5>
 <div class="outline-text-5" id="text-5-2-2-9">
+</div>
+<div id="outline-container-xkcd" class="outline-6">
+<h6 id="xkcd"><span class="section-number-6">5.2.2.9.1</span> xkcd</h6>
+<div class="outline-text-6" id="text-5-2-2-9-1">
 <p>
-Let&rsquo;s start off with an xkcd link, why not.
-Nice youtube embed as well, for fun.
+Because xkcd is cool, let&rsquo;s make it as easy and fun as possible to insert them.
+Saving seconds adds up after all! (but only so much)
 </p>
+
+<p>
+<img src='https://imgs.xkcd.com/comics/is_it_worth_the_time.png' title="Don't forget the time you spend finding the chart to look up what you save. And the time spent reading this reminder about the time spent. And the time trying to figure out if either of those actually make sense. Remember, every second counts toward your life total, including these right now." alt='Is It Worth the Time?'>
+</p>
+
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-link-set-parameters</span> <span style="color: #7bc275;">"xkcd"</span>
                            <span style="color: #C57BDB;">:image-data-fun</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+org-xkcd-image-fn</span>
                            <span style="color: #C57BDB;">:follow</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+org-xkcd-open-fn</span>
-                           <span style="color: #C57BDB;">:export</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+org-xkcd-export</span><span style="color: #C57BDB;">)</span>
+                           <span style="color: #C57BDB;">:export</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+org-xkcd-export</span>
+                           <span style="color: #C57BDB;">:complete</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+org-xkcd-complete</span><span style="color: #C57BDB;">)</span>
+
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-open-fn</span> <span style="color: #7bc275;">(</span>link<span style="color: #7bc275;">)</span>
     <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+org-xkcd-image-fn</span> nil link nil<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-fetch-info</span> <span style="color: #7bc275;">(</span>num<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Fetch the parsed json info for comic NUM"</span>
     <span style="color: #7bc275;">(</span><span style="color: #a991f1;">require</span> <span style="color: #C57BDB;">'</span><span style="color: #a991f1;">xkcd</span><span style="color: #7bc275;">)</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>url <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"http://xkcd.com/%d/info.0.json"</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span>out <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">xkcd-get-json</span> url num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span>json-assoc <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">json-read-from-string</span> out<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+           <span style="color: #C57BDB;">(</span>json-assoc
+            <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> num <span style="color: #DFDFDF;">+org-xkcd-stored-info</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> num <span style="color: #DFDFDF;">+org-xkcd-stored-info</span><span style="color: #51afef;">)</span>
+              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">json-read-from-string</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">xkcd-get-json</span> url num<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
       json-assoc<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-image-fn</span> <span style="color: #7bc275;">(</span>_protocol link _description<span style="color: #7bc275;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">+org-xkcd-latest-num</span> <span style="color: #e69055; font-weight: bold;">0</span>
+    <span style="color: #7e7e87;">"Latest xkcd number"</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-complete</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> arg<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Complete xkcd using `</span><span style="color: #a991f1;">+org-xkcd-stored-info</span><span style="color: #7e7e87;">'"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+org-xkcd-update-stored-info</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"xkcd:"</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>num
+                           <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">ivy-read</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"xkcd (%s): "</span> <span style="color: #DFDFDF;">+org-xkcd-latest-num</span><span style="color: #C57BDB;">)</span>
+                                     <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>info-assoc<span style="color: #51afef;">)</span>
+                                               <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%-4s  %-30s %s"</span>
+                                                       <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">number-to-string</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">car</span> info-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                                                                   <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">counsel-key-binding</span><span style="color: #C57BDB;">)</span>
+                                                       <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">title</span> info-assoc<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                                                       <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">alt</span> info-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                                                                   <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>variable-pitch <span style="color: #DFDFDF;">font-lock-comment-face</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                                             <span style="color: #DFDFDF;">+org-xkcd-stored-info</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                      <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">equal</span> <span style="color: #7bc275;">""</span> num<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">number-to-string</span> <span style="color: #DFDFDF;">+org-xkcd-latest-num</span><span style="color: #7bc275;">)</span>
+                        <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">(</span><span style="color: #7bc275;">[0-9]+</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">)</span><span style="color: #7bc275;">.*"</span> <span style="color: #7bc275;">"\\1"</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #62686E;">;; </span><span style="color: #62686E;">initialise `</span><span style="color: #a991f1;">+org-xkcd-latest-num</span><span style="color: #62686E;">' and `</span><span style="color: #a991f1;">+org-xkcd-stored-info</span><span style="color: #62686E;">' with latest xkcd</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">add-transient-hook!</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">+org-xkcd-complete</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>out <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">xkcd-get-json</span> <span style="color: #7bc275;">"http://xkcd.com/info.0.json"</span>  <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>json-assoc <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">json-read-from-string</span> out<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-xkcd-latest-num</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">num</span> json-assoc<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-xkcd-stored-info</span> <span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>,<span style="color: #DFDFDF;">+org-xkcd-latest-num</span> . ,json-assoc<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">+org-xkcd-stored-info</span> nil
+    <span style="color: #7e7e87;">"Basic info on downloaded xkcds, in the form ((num . title) ...)"</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-update-stored-info</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Compare the json files in `</span><span style="color: #a991f1;">xkcd-cache-dir</span><span style="color: #7e7e87;">' to the info in `</span><span style="color: #a991f1;">+org-xkcd-stored-info</span><span style="color: #7e7e87;">'</span>
+<span style="color: #7e7e87;">and ensure that `</span><span style="color: #a991f1;">+org-xkcd-stored-info</span><span style="color: #7e7e87;">' has info for every file"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>file-nums <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>f<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">string-to-number</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"\\.json"</span> <span style="color: #7bc275;">""</span> f<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                              <span style="color: #51afef;">(</span><span style="color: #a991f1;">directory-files</span> <span style="color: #DFDFDF;">xkcd-cache-dir</span> nil <span style="color: #7bc275;">"\\.json"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>stored-nums <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">car</span> <span style="color: #DFDFDF;">+org-xkcd-stored-info</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>new-nums <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">set-difference</span> file-nums stored-nums<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">dolist</span> <span style="color: #C57BDB;">(</span>num new-nums<span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>xkcd-info <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+org-xkcd-fetch-info</span> num<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+          <span style="color: #7bc275;">(</span><span style="color: #51afef;">push</span> <span style="color: #C57BDB;">`</span><span style="color: #51afef;">(</span>,num . ,xkcd-info<span style="color: #51afef;">)</span> <span style="color: #DFDFDF;">+org-xkcd-stored-info</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> xkcd-get-json--and-cache <span style="color: #7bc275;">(</span>url <span style="color: #FCCE7B;">&amp;optional</span> num<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Fetch the Json coming from URL.</span>
+<span style="color: #7e7e87;">If the file NUM.json exists, use it instead.</span>
+<span style="color: #7e7e87;">If NUM is 0, always download from URL.</span>
+<span style="color: #7e7e87;">The return value is a string."</span>
+    <span style="color: #C57BDB;">:override</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-get-json</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>file <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s%d.json"</span> <span style="color: #DFDFDF;">xkcd-cache-dir</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>cached <span style="color: #7bc275;">(</span><span style="color: #51afef;">and</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">file-exists-p</span> file<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">not</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">eq</span> num <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>out <span style="color: #7bc275;">(</span><span style="color: #51afef;">with-current-buffer</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> cached
+                                         <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">find-file</span> file<span style="color: #C57BDB;">)</span>
+                                       <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">url-retrieve-synchronously</span> url<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                  <span style="color: #51afef;">(</span><span style="color: #a991f1;">goto-char</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">point-min</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                  <span style="color: #51afef;">(</span><span style="color: #51afef;">unless</span> cached <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">re-search-forward</span> <span style="color: #7bc275;">"^$"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                  <span style="color: #51afef;">(</span><span style="color: #51afef;">prog1</span>
+                      <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">buffer-substring-no-properties</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">point</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">point-max</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                    <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">kill-buffer</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">current-buffer</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">unless</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> cached <span style="color: #7bc275;">(</span><span style="color: #a991f1;">eq</span> num <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">xkcd-cache-json</span> num out<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      out<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-image-fn</span> <span style="color: #7bc275;">(</span>protocol link description<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Get image data for xkcd num LINK"</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>json-assoc <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+org-xkcd-fetch-info</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">string-to-number</span> link<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
            <span style="color: #C57BDB;">(</span>img <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">img</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
            <span style="color: #C57BDB;">(</span>alt <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">alt</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
       <span style="color: #51afef;">(</span><span style="color: #a991f1;">message</span> alt<span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+org-http-image-data-fn</span> <span style="color: #7bc275;">"https"</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">substring</span> img <span style="color: #e69055; font-weight: bold;">6</span><span style="color: #C57BDB;">)</span> nil<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-export</span> <span style="color: #7bc275;">(</span>path desc backend _com<span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>json-assoc <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+org-xkcd-fetch-info</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">string-to-number</span> path<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span>img <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">img</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span>alt <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">alt</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-                  <span style="color: #C57BDB;">(</span>title <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">title</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #51afef;">cond</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">html</span><span style="color: #7bc275;">)</span>
-             <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"&lt;img src='%s' title='%s' alt='%s'&gt;"</span> img alt title<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-            <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">latex</span><span style="color: #7bc275;">)</span>
-             <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"\\href{https://xkcd.com/%s}{%s}"</span> path <span style="color: #51afef;">(</span><span style="color: #51afef;">or</span> desc <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"xkcd: "</span> title<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-            <span style="color: #C57BDB;">(</span>t <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"https://xkcd.com/%s"</span> path<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+org-image-file-data-fn</span> protocol <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">xkcd-download</span> img <span style="color: #7bc275;">(</span><span style="color: #a991f1;">string-to-number</span> link<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span> description<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-export</span> <span style="color: #7bc275;">(</span>path desc backend _com<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Convert xkcd to html/LaTeX form"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>json-assoc <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+org-xkcd-fetch-info</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">string-to-number</span> path<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>img <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">img</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>alt <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">alt</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>title <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">title</span> json-assoc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>file <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">xkcd-download</span> img <span style="color: #51afef;">(</span><span style="color: #a991f1;">string-to-number</span> path<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">cond</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">html</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"&lt;img src='%s' title=\"%s\" alt='%s'&gt;"</span> img <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">subst-char-in-string</span> ?\" ?&#8220; alt<span style="color: #51afef;">)</span> title<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+            <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">latex</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"\\begin{figure}[!htb]</span>
+<span style="color: #7bc275;">  \\centering</span>
+<span style="color: #7bc275;">  \\includegraphics[scale=0.4]{%s}</span>
+<span style="color: #7bc275;">  \\caption*{\\label{xkcd:%s} %s}</span>
+<span style="color: #7bc275;">\\end{figure}"</span> file path <span style="color: #51afef;">(</span><span style="color: #51afef;">or</span> desc
+                             <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"\\textbf{%s} %s"</span> title alt<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+            <span style="color: #C57BDB;">(</span>t <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"https://xkcd.com/%s"</span> path<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-youtube" class="outline-6">
+<h6 id="youtube"><span class="section-number-6">5.2.2.9.2</span> YouTube</h6>
+<div class="outline-text-6" id="text-5-2-2-9-2">
+<p>
+The <code>[[yt:...]]</code> links preview nicely, but don&rsquo;t export nicely. Thankfully, we can
+fix that.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-link-set-parameters</span> <span style="color: #7bc275;">"yt"</span> <span style="color: #C57BDB;">:export</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+org-export-yt</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-export-yt</span> <span style="color: #7bc275;">(</span>path desc backend _com<span style="color: #7bc275;">)</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">cond</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">html</span><span style="color: #C57BDB;">)</span>
@@ -3643,6 +3746,7 @@ Nice youtube embed as well, for fun.
 </div>
 </div>
 </div>
+</div>
 
 <div id="outline-container-org-mode-visuals" class="outline-4">
 <h4 id="org-mode-visuals"><span class="section-number-4">5.2.3</span> Visuals</h4>
@@ -3653,7 +3757,7 @@ font changes etc, and also propagate colours from the current theme.
 </p>
 
 <p>
-<img src='https://imgs.xkcd.com/comics/color_models.png' title='What if what *I* see as blue, *you* see as a slightly different blue because you're using Chrome instead of Firefox and despite a decade of messing with profiles we STILL can't get this right somehow.' alt='Color Models'>
+<img src='https://imgs.xkcd.com/comics/color_models.png' title="What if what *I* see as blue, *you* see as a slightly different blue because you're using Chrome instead of Firefox and despite a decade of messing with profiles we STILL can't get this right somehow." alt='Color Models'>
 </p>
 </div>
 
@@ -4846,7 +4950,7 @@ Syntax highlighting is nice, so let&rsquo;s turn all of that on
 <h3 id="latex"><span class="section-number-3">5.3</span> LaTeX</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
-<img src='https://imgs.xkcd.com/comics/file_extensions.png' title='I have never been lied to by data in a .txt file which has been hand-aligned.' alt='File Extensions'>
+<img src='https://imgs.xkcd.com/comics/file_extensions.png' title="I have never been lied to by data in a .txt file which has been hand-aligned." alt='File Extensions'>
 </p>
 </div>
 <div id="outline-container-be-implemented-ideas" class="outline-4">

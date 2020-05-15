@@ -1273,37 +1273,116 @@ appropriate.  In tables, insert a new row or end the table."
   (advice-add #'org-return-indent :override #'unpackaged/org-return-dwim))
 ;; Nicer ~org-return~:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra%20links][Extra links:1]]
+;; [[file:~/.config/doom/config.org::*xkcd][xkcd:1]]
 (after! org
   (org-link-set-parameters "xkcd"
                            :image-data-fun #'+org-xkcd-image-fn
                            :follow #'+org-xkcd-open-fn
-                           :export #'+org-xkcd-export)
+                           :export #'+org-xkcd-export
+                           :complete #'+org-xkcd-complete)
+
   (defun +org-xkcd-open-fn (link)
     (+org-xkcd-image-fn nil link nil))
+
   (defun +org-xkcd-fetch-info (num)
+    "Fetch the parsed json info for comic NUM"
     (require 'xkcd)
     (let* ((url (format "http://xkcd.com/%d/info.0.json" num))
-           (out (xkcd-get-json url num))
-           (json-assoc (json-read-from-string out)))
+           (json-assoc
+            (if (assoc num +org-xkcd-stored-info)
+                (assoc num +org-xkcd-stored-info)
+              (json-read-from-string (xkcd-get-json url num)))))
       json-assoc))
-  (defun +org-xkcd-image-fn (_protocol link _description)
+
+  (defvar +org-xkcd-latest-num 0
+    "Latest xkcd number")
+
+  (defun +org-xkcd-complete (&optional arg)
+    "Complete xkcd using `+org-xkcd-stored-info'"
+    (+org-xkcd-update-stored-info)
+    (concat "xkcd:" (let ((num
+                           (ivy-read (format "xkcd (%s): " +org-xkcd-latest-num)
+                                     (mapcar (lambda (info-assoc)
+                                               (format "%-4s  %-30s %s"
+                                                       (propertize (number-to-string (car info-assoc))
+                                                                   'face 'counsel-key-binding)
+                                                       (cdr (assoc 'title info-assoc))
+                                                       (propertize (cdr (assoc 'alt info-assoc))
+                                                                   'face '(variable-pitch font-lock-comment-face))))
+                                             +org-xkcd-stored-info))))
+                      (if (equal "" num) (number-to-string +org-xkcd-latest-num)
+                        (replace-regexp-in-string "\\([0-9]+\\).*" "\\1" num)))))
+
+  ;; initialise `+org-xkcd-latest-num' and `+org-xkcd-stored-info' with latest xkcd
+  (add-transient-hook! '+org-xkcd-complete
+    (let* ((out (xkcd-get-json "http://xkcd.com/info.0.json"  0))
+           (json-assoc (json-read-from-string out)))
+      (setq +org-xkcd-latest-num (cdr (assoc 'num json-assoc)))
+      (setq +org-xkcd-stored-info `((,+org-xkcd-latest-num . ,json-assoc)))))
+
+  (defvar +org-xkcd-stored-info nil
+    "Basic info on downloaded xkcds, in the form ((num . title) ...)")
+
+  (defun +org-xkcd-update-stored-info ()
+    "Compare the json files in `xkcd-cache-dir' to the info in `+org-xkcd-stored-info'
+and ensure that `+org-xkcd-stored-info' has info for every file"
+    (let* ((file-nums (mapcar (lambda (f) (string-to-number (replace-regexp-in-string "\\.json" "" f)))
+                              (directory-files xkcd-cache-dir nil "\\.json")))
+           (stored-nums (mapcar #'car +org-xkcd-stored-info))
+           (new-nums (set-difference file-nums stored-nums)))
+      (dolist (num new-nums)
+        (let ((xkcd-info (+org-xkcd-fetch-info num)))
+          (push `(,num . ,xkcd-info) +org-xkcd-stored-info)))))
+
+  (defadvice! xkcd-get-json--and-cache (url &optional num)
+    "Fetch the Json coming from URL.
+If the file NUM.json exists, use it instead.
+If NUM is 0, always download from URL.
+The return value is a string."
+    :override #'xkcd-get-json
+    (let* ((file (format "%s%d.json" xkcd-cache-dir num))
+           (cached (and (file-exists-p file) (not (eq num 0))))
+           (out (with-current-buffer (if cached
+                                         (find-file file)
+                                       (url-retrieve-synchronously url))
+                  (goto-char (point-min))
+                  (unless cached (re-search-forward "^$"))
+                  (prog1
+                      (buffer-substring-no-properties (point) (point-max))
+                    (kill-buffer (current-buffer))))))
+      (unless (or cached (eq num 0))
+        (xkcd-cache-json num out))
+      out))
+
+  (defun +org-xkcd-image-fn (protocol link description)
+    "Get image data for xkcd num LINK"
     (let* ((json-assoc (+org-xkcd-fetch-info (string-to-number link)))
            (img (cdr (assoc 'img json-assoc)))
            (alt (cdr (assoc 'alt json-assoc))))
       (message alt)
-      (+org-http-image-data-fn "https" (substring img 6) nil)))
-  (defun +org-xkcd-export (path desc backend _com)
-    (let* ((json-assoc (+org-xkcd-fetch-info (string-to-number path)))
-                  (img (cdr (assoc 'img json-assoc)))
-                  (alt (cdr (assoc 'alt json-assoc)))
-                  (title (cdr (assoc 'title json-assoc))))
-      (cond ((org-export-derived-backend-p backend 'html)
-             (format "<img src='%s' title='%s' alt='%s'>" img alt title))
-            ((org-export-derived-backend-p backend 'latex)
-             (format "\\href{https://xkcd.com/%s}{%s}" path (or desc (concat "xkcd: " title))))
-            (t (format "https://xkcd.com/%s" path)))))
+      (+org-image-file-data-fn protocol (xkcd-download img (string-to-number link)) description)))
 
+  (defun +org-xkcd-export (path desc backend _com)
+    "Convert xkcd to html/LaTeX form"
+    (let* ((json-assoc (+org-xkcd-fetch-info (string-to-number path)))
+           (img (cdr (assoc 'img json-assoc)))
+           (alt (cdr (assoc 'alt json-assoc)))
+           (title (cdr (assoc 'title json-assoc)))
+           (file (xkcd-download img (string-to-number path))))
+      (cond ((org-export-derived-backend-p backend 'html)
+             (format "<img src='%s' title=\"%s\" alt='%s'>" img (subst-char-in-string ?\" ?“ alt) title))
+            ((org-export-derived-backend-p backend 'latex)
+             (format "\\begin{figure}[!htb]
+  \\centering
+  \\includegraphics[scale=0.4]{%s}
+  \\caption*{\\label{xkcd:%s} %s}
+\\end{figure}" file path (or desc
+                             (format "\\textbf{%s} %s" title alt))))
+            (t (format "https://xkcd.com/%s" path))))))
+;; xkcd:1 ends here
+
+;; [[file:~/.config/doom/config.org::*YouTube][YouTube:1]]
+(after! org
   (org-link-set-parameters "yt" :export #'+org-export-yt)
   (defun +org-export-yt (path desc backend _com)
     (cond ((org-export-derived-backend-p backend 'html)
@@ -1315,7 +1394,7 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
           ((org-export-derived-backend-p backend 'latex)
            (format "\\href{https://youtu.be/%s}{%s}" path (or desc "youtube")))
           (t (format "https://youtu.be/%s" path)))))
-;; Extra links:1 ends here
+;; YouTube:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Font%20Display][Font Display:1]]
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
