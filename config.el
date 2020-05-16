@@ -58,7 +58,8 @@
 ;; [[file:~/.config/doom/config.org::*Font%20Face][Font Face:1]]
 (setq doom-font (font-spec :family "JetBrains Mono" :size 24)
       doom-big-font (font-spec :family "JetBrains Mono" :size 36)
-      doom-variable-pitch-font (font-spec :family "Overpass" :size 24))
+      doom-variable-pitch-font (font-spec :family "Overpass" :size 24)
+      doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 ;; Font Face:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Theme][Theme:1]]
@@ -377,6 +378,15 @@
 ;; [[file:~/.config/doom/config.org::*Flyspell][Flyspell:1]]
 (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
 ;; Flyspell:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Info%20colors][Info colors:1]]
+(use-package! info-colors
+  :commands (info-colors-fontify-node))
+
+(add-hook 'Info-selection-hook 'info-colors-fontify-node)
+
+(add-hook 'Info-mode-hook #'mixed-pitch-mode)
+;; Info colors:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Ispell][Ispell:1]]
 (setq ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")

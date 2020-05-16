@@ -50,6 +50,10 @@
 ;; (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta") :pin "0c7d8b2359")
 ;; Magit Delta:1 ends here
 
+;; [[file:~/.config/doom/config.org::*Info%20colours][Info colours:1]]
+(package! info-colors :pin "47ee73cc19")
+;; Info colours:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*Systemd][Systemd:1]]
 (package! systemd :pin "51c148e09a")
 ;; Systemd:1 ends here
