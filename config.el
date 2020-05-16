@@ -1891,22 +1891,22 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 <script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
 
 <style>
-   pre.src {
+ pre.src {
      background-color: var(--theme-bg);
      color: var(--theme-fg);
      scrollbar-color:#bbb6#9992;
      scrollbar-width: thin;
      margin: 0;
      border: none;
-   }
-   div.org-src-container {
+ }
+ div.org-src-container {
      border-radius: 12px;
      overflow: hidden;
      margin-bottom: 24px;
      margin-top: 1px;
      border: 1px solid#e1e4e5;
-   }
-   pre.src::before {
+ }
+ pre.src::before {
      background-color:#6666;
      top: 8px;
      border: none;
@@ -1915,23 +1915,23 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
      border: 2px solid var(--theme-bg);
      opacity: 0;
      transition: opacity 200ms;
-   }
-   pre.src:hover::before { opacity: 1; }
-   pre.src:active::before { opacity: 0; }
+ }
+ pre.src:hover::before { opacity: 1; }
+ pre.src:active::before { opacity: 0; }
 
-   pre.example {
+ pre.example {
      border-radius: 12px;
      background: var(--theme-bg-alt);
      color: var(--theme-fg);
-   }
+ }
 
-   code {
+ code {
      border-radius: 5px;
      background:#e8e8e8;
      font-size: 80%;
-   }
+ }
 
-   kbd {
+ kbd {
      display: inline-block;
      padding: 3px 5px;
      font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
@@ -1943,45 +1943,45 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
      border: 1px solid#d1d5da;
      border-radius: 3px;
      box-shadow: inset 0 -1px 0#d1d5da;
-   }
+ }
 
-   table {
+ table {
      max-width: 100%;
      overflow-x: auto;
      display: block;
      border-top: none;
-   }
+ }
 
-   a {
-       text-decoration: none;
-       background-image: linear-gradient(#d8dce9, #d8dce9);
-       background-position: 0% 100%;
-       background-repeat: no-repeat;
-       background-size: 0% 2px;
-       transition: background-size .3s;
-   }
-   \#table-of-contents a {
-       background-image: none;
-   }
-   a:hover, a:focus {
-       background-size: 100% 2px;
-   }
-   a[href^='#'] { font-variant-numeric: oldstyle-nums; }
-   a[href^='#']:visited { color:#3091d1; }
+ a {
+     text-decoration: none;
+     background-image: linear-gradient(#d8dce9, #d8dce9);
+     background-position: 0% 100%;
+     background-repeat: no-repeat;
+     background-size: 0% 2px;
+     transition: background-size .3s;
+ }
+ \#table-of-contents a {
+     background-image: none;
+ }
+ a:hover, a:focus {
+     background-size: 100% 2px;
+ }
+ a[href^='#'] { font-variant-numeric: oldstyle-nums; }
+ a[href^='#']:visited { color:#3091d1; }
 
-   li .checkbox {
-       display: inline-block;
-       width: 0.9em;
-       height: 0.9em;
-       border-radius: 3px;
-       margin: 3px;
-       top: 4px;
-       position: relative;
-   }
-   li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
-   li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
-   li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
-   li.on > .checkbox::after {
+ li .checkbox {
+     display: inline-block;
+     width: 0.9em;
+     height: 0.9em;
+     border-radius: 3px;
+     margin: 3px;
+     top: 4px;
+     position: relative;
+ }
+ li.on > .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }
+ li.trans > .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }
+ li.off > .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }
+ li.on > .checkbox::after {
      content: '';
      height: 0.45em;
      width: 0.225em;
@@ -1994,45 +1994,49 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
      left: 0.10em;
      top: 0.45em;
      position: absolute;
-   }
-   li.trans > .checkbox::after {
-       content: '';
-       font-weight: bold;
-       font-size: 1.6em;
-       position: absolute;
-       top: 0.23em;
-       left: 0.09em;
-       width: 0.35em;
-       height: 0.12em;
-       background:#fff;
-       opacity: 0.9;
-       border-radius: 0.1em;
-   }
-   li.off > .checkbox::after {
-    content: '✖';
-    color:#fff;
-    opacity: 0.9;
-    position: relative;
-    top: -0.40rem;
-    left: 0.17em;
-    font-size: 0.75em;
-  }
+ }
+ li.trans > .checkbox::after {
+     content: '';
+     font-weight: bold;
+     font-size: 1.6em;
+     position: absolute;
+     top: 0.23em;
+     left: 0.09em;
+     width: 0.35em;
+     height: 0.12em;
+     background:#fff;
+     opacity: 0.9;
+     border-radius: 0.1em;
+ }
+ li.off > .checkbox::after {
+     content: '✖';
+     color:#fff;
+     opacity: 0.9;
+     position: relative;
+     top: -0.40rem;
+     left: 0.17em;
+     font-size: 0.75em;
+ }
 
-   span.timestamp {
-       color: #003280;
-       background: #647CFF44;
-       border-radius: 3px;
-       line-height: 1.25;
-   }
+ span.timestamp {
+     color: #003280;
+     background: #647CFF44;
+     border-radius: 3px;
+     line-height: 1.25;
+ }
 
-   \#table-of-contents { overflow-y: auto; }
-   blockquote p { margin: 8px 0px 16px 0px; }
-   \#postamble .date { color: var(--theme-green); }
+ \#content img {
+     border-radius: 3px;
+ }
 
-   ::-webkit-scrollbar { width: 10px; height: 8px; }
-   ::-webkit-scrollbar-track { background:#9992; }
-   ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
-   ::-webkit-scrollbar-thumb:hover { background:#888; }
+ \#table-of-contents { overflow-y: auto; }
+ blockquote p { margin: 8px 0px 16px 0px; }
+ \#postamble .date { color: var(--theme-green); }
+
+ ::-webkit-scrollbar { width: 10px; height: 8px; }
+ ::-webkit-scrollbar-track { background:#9992; }
+ ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
+ ::-webkit-scrollbar-thumb:hover { background:#888; }
 </style>
 <!––tec/custom-head-end-->
 "
