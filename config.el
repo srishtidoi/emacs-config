@@ -1327,7 +1327,7 @@ appropriate.  In tables, insert a new row or end the table."
 
   (defun +org-xkcd-complete (&optional arg)
     "Complete xkcd using `+xkcd-stored-info'"
-    (concat "xkcd:" (+xkcd-select)))
+    (format "xkcd:%d" (+xkcd-select)))
 
   (defun +xkcd-select ()
     "Prompt the user for an xkcd using `ivy-read' and `+xkcd-select-format'. Return the xkcd number or nil"
@@ -1335,8 +1335,8 @@ appropriate.  In tables, insert a new row or end the table."
            (ivy-read (format "xkcd (%s): " xkcd-latest)
                      (mapcar #'+xkcd-select-format
                              +xkcd-stored-info))))
-      (if (equal "" num) (number-to-string xkcd-latest)
-        (replace-regexp-in-string "\\([0-9]+\\).*" "\\1" num))))
+      (if (equal "" num) xkcd-latest
+        (string-to-number (replace-regexp-in-string "\\([0-9]+\\).*" "\\1" num)))))
 
   (defun +xkcd-select-format (xkcd-info)
     "Creates each ivy-read line from an xkcd info plist. Must start with the xkcd number"
@@ -1367,8 +1367,14 @@ appropriate.  In tables, insert a new row or end the table."
     "Prompt the user for an xkcd using `+xkcd-select' and copy url to clipboard"
     (interactive)
     (let ((num (+xkcd-select)))
-      (gui-select-text (format "https://xkcd.com/%s" num))
-      (message "xkcd.com/%s copied to clipboard" num)))
+      (gui-select-text (format "https://xkcd.com/%d" num))
+      (message "xkcd.com/%d copied to clipboard" num)))
+
+  (defun +xkcd-find-and-view ()
+    "Prompt the user for an xkcd using `+xkcd-select' and copy url to clipboard"
+    (interactive)
+    (xkcd-get (+xkcd-select))
+    (switch-to-buffer "*xkcd*"))
 
   (defvar +xkcd-latest-max-age (* 60 60 12)
     "Time after which xkcd-latest should be refreshed, in seconds")
