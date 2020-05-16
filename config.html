@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-16 Sat 18:18 -->
+<!-- 2020-05-17 Sun 02:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,7 +195,6 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
-
 <!––tec/custom-head-start-->
 <style type="text/css">
    :root {
@@ -2340,7 +2339,282 @@ We wan&rsquo;t to set this up so it loads nicely in <a href="#extra-links">Extra
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> xkcd
-  <span style="color: #C57BDB;">:commands</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">xkcd-get-json</span> xkcd-download<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">:commands</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">xkcd-get-json</span> xkcd-download xkcd-get
+             <span style="color: #62686E;">;; </span><span style="color: #62686E;">now for funcs from my extension of this pkg</span>
+             +xkcd-find-and-copy +xkcd-find-and-view
+             +xkcd-fetch-info +xkcd-select<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">:config</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">evil-snipe-disabled-modes</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">xkcd-mode</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">:general</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:states</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">normal</span>
+            <span style="color: #C57BDB;">:keymaps</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">xkcd-mode-map</span>
+            <span style="color: #7bc275;">"&lt;right&gt;"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-next</span>
+            <span style="color: #7bc275;">"n"</span>       <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-next</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">evil-ish</span>
+            <span style="color: #7bc275;">"&lt;left&gt;"</span>  <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-prev</span>
+            <span style="color: #7bc275;">"N"</span>       <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-prev</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">evil-ish</span>
+            <span style="color: #7bc275;">"r"</span>       <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-rand</span>
+            <span style="color: #7bc275;">"a"</span>       <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-rand</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">because image-rotate can interfere</span>
+            <span style="color: #7bc275;">"t"</span>       <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-alt-text</span>
+            <span style="color: #7bc275;">"q"</span>       <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-kill-buffer</span>
+            <span style="color: #7bc275;">"o"</span>       <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-open-browser</span>
+            <span style="color: #7bc275;">"e"</span>       <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-open-explanation-browser</span>
+            <span style="color: #62686E;">;; </span><span style="color: #62686E;">extras</span>
+            <span style="color: #7bc275;">"s"</span>       <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+xkcd-find-and-view</span>
+            <span style="color: #7bc275;">"/"</span>       <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+xkcd-find-and-view</span>
+            <span style="color: #7bc275;">"y"</span>       <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+xkcd-copy</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+Let&rsquo;s also extend the functionality a whole bunch.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> xkcd
+  <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">require</span> <span style="color: #C57BDB;">'</span><span style="color: #a991f1;">emacsql-sqlite</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-select</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Prompt the user for an xkcd using `</span><span style="color: #a991f1;">ivy-read</span><span style="color: #7e7e87;">' and `</span><span style="color: #a991f1;">+xkcd-select-format</span><span style="color: #7e7e87;">'. Return the xkcd number or nil"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span>prompt-lines
+           <span style="color: #C57BDB;">(</span>-dummy <span style="color: #7bc275;">(</span><span style="color: #a991f1;">maphash</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>key xkcd-info<span style="color: #C57BDB;">)</span>
+                              <span style="color: #C57BDB;">(</span><span style="color: #51afef;">push</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-select-format</span> xkcd-info<span style="color: #7bc275;">)</span> prompt-lines<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                            <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>num <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">ivy-read</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"xkcd (%s): "</span> <span style="color: #DFDFDF;">xkcd-latest</span><span style="color: #51afef;">)</span> prompt-lines<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">equal</span> <span style="color: #7bc275;">""</span> num<span style="color: #C57BDB;">)</span> <span style="color: #DFDFDF;">xkcd-latest</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">string-to-number</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">(</span><span style="color: #7bc275;">[0-9]+</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">)</span><span style="color: #7bc275;">.*"</span> <span style="color: #7bc275;">"\\1"</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-select-format</span> <span style="color: #7bc275;">(</span>xkcd-info<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Creates each ivy-read line from an xkcd info plist. Must start with the xkcd number"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%-4s  %-30s %s"</span>
+            <span style="color: #51afef;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">number-to-string</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">plist-get</span> xkcd-info <span style="color: #C57BDB;">:num</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                        <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">counsel-key-binding</span><span style="color: #51afef;">)</span>
+            <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-get</span> xkcd-info <span style="color: #C57BDB;">:title</span><span style="color: #51afef;">)</span>
+            <span style="color: #51afef;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> xkcd-info <span style="color: #C57BDB;">:alt</span><span style="color: #C57BDB;">)</span>
+                        <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>variable-pitch <span style="color: #DFDFDF;">font-lock-comment-face</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-fetch-info</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> num<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Fetch the parsed json info for comic NUM. Fetches latest when omitted or 0"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">require</span> <span style="color: #C57BDB;">'</span><span style="color: #a991f1;">xkcd</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">or</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">not</span> num<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">=</span> num <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-check-latest</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> num <span style="color: #DFDFDF;">xkcd-latest</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>res <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">gethash</span> num <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #51afef;">)</span>
+                   <span style="color: #51afef;">(</span><span style="color: #a991f1;">puthash</span> num <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-db-read</span> num<span style="color: #C57BDB;">)</span> <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">unless</span> res
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-db-write</span>
+         <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>url <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"http://xkcd.com/%d/info.0.json"</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                <span style="color: #C57BDB;">(</span>json-assoc
+                 <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> num <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #51afef;">)</span>
+                     <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> num <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #51afef;">)</span>
+                   <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">json-read-from-string</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">xkcd-get-json</span> url num<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+           json-assoc<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> res <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-db-read</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      res<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #62686E;">;; </span><span style="color: #62686E;">since we've done this, we may as well go one little step further</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-find-and-copy</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Prompt for an xkcd using `</span><span style="color: #a991f1;">+xkcd-select</span><span style="color: #7e7e87;">' and copy url to clipboard"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-copy</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-select</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-copy</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> num<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Copy a url to xkcd NUM to the clipboard"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span> <span style="color: #7bc275;">"i"</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>num <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> num <span style="color: #DFDFDF;">xkcd-cur</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">gui-select-text</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"https://xkcd.com/%d"</span> num<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">message</span> <span style="color: #7bc275;">"xkcd.com/%d copied to clipboard"</span> num<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-find-and-view</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Prompt for an xkcd using `</span><span style="color: #a991f1;">+xkcd-select</span><span style="color: #7e7e87;">' and view it"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">xkcd-get</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-select</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">switch-to-buffer</span> <span style="color: #7bc275;">"*xkcd*"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">+xkcd-latest-max-age</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">*</span> <span style="color: #e69055; font-weight: bold;">60</span> <span style="color: #e69055; font-weight: bold;">60</span><span style="color: #7bc275;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">1 hour</span>
+    <span style="color: #7e7e87;">"Time after which xkcd-latest should be refreshed, in seconds"</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #62686E;">;; </span><span style="color: #62686E;">initialise `</span><span style="color: #a991f1;">xkcd-latest</span><span style="color: #62686E;">' and `</span><span style="color: #a991f1;">+xkcd-stored-info</span><span style="color: #62686E;">' with latest xkcd</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">add-transient-hook!</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">+xkcd-select</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">require</span> <span style="color: #C57BDB;">'</span><span style="color: #a991f1;">xkcd</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-fetch-info</span> <span style="color: #DFDFDF;">xkcd-latest</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+xkcd-stored-info</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-db-read-all</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">add-transient-hook!</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">+xkcd-fetch-info</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">xkcd-update-latest</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-check-latest</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Use value in `</span><span style="color: #a991f1;">xkcd-cache-latest</span><span style="color: #7e7e87;">' as long as it isn't older thabn `</span><span style="color: #a991f1;">+xkcd-latest-max-age</span><span style="color: #7e7e87;">'"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">unless</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">and</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">file-exists-p</span> <span style="color: #DFDFDF;">xkcd-cache-latest</span><span style="color: #C57BDB;">)</span>
+                 <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">&lt;</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">-</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">time-to-seconds</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">current-time</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                       <span style="color: #51afef;">(</span><span style="color: #a991f1;">time-to-seconds</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">file-attribute-modification-time</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">file-attributes</span> <span style="color: #DFDFDF;">xkcd-cache-latest</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                    <span style="color: #DFDFDF;">+xkcd-latest-max-age</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">let*</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>out <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">xkcd-get-json</span> <span style="color: #7bc275;">"http://xkcd.com/info.0.json"</span> <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span>json-assoc <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">json-read-from-string</span> out<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span>latest <span style="color: #51afef;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">num</span> json-assoc<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">/=</span> <span style="color: #DFDFDF;">xkcd-latest</span> latest<span style="color: #7bc275;">)</span>
+          <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-db-write</span> json-assoc<span style="color: #7bc275;">)</span>
+          <span style="color: #7bc275;">(</span><span style="color: #51afef;">with-current-buffer</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">find-file</span> <span style="color: #DFDFDF;">xkcd-cache-latest</span><span style="color: #51afef;">)</span>
+            <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">xkcd-latest</span> latest<span style="color: #51afef;">)</span>
+            <span style="color: #51afef;">(</span><span style="color: #a991f1;">erase-buffer</span><span style="color: #51afef;">)</span>
+            <span style="color: #51afef;">(</span><span style="color: #a991f1;">insert</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">number-to-string</span> latest<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+            <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">save-buffer</span><span style="color: #51afef;">)</span>
+            <span style="color: #51afef;">(</span><span style="color: #a991f1;">kill-buffer</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">current-buffer</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">shell-command</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"touch %s"</span> <span style="color: #DFDFDF;">xkcd-cache-latest</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">+xkcd-stored-info</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">make-hash-table</span> <span style="color: #C57BDB;">:test</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">eql</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Basic info on downloaded xkcds, in the form of a hashtable"</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> xkcd-get-json--and-cache <span style="color: #7bc275;">(</span>url <span style="color: #FCCE7B;">&amp;optional</span> num<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Fetch the Json coming from URL.</span>
+<span style="color: #7e7e87;">If the file NUM.json exists, use it instead.</span>
+<span style="color: #7e7e87;">If NUM is 0, always download from URL.</span>
+<span style="color: #7e7e87;">The return value is a string."</span>
+    <span style="color: #C57BDB;">:override</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-get-json</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>file <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s%d.json"</span> <span style="color: #DFDFDF;">xkcd-cache-dir</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>cached <span style="color: #7bc275;">(</span><span style="color: #51afef;">and</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">file-exists-p</span> file<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">not</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">eq</span> num <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>out <span style="color: #7bc275;">(</span><span style="color: #51afef;">with-current-buffer</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> cached
+                                         <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">find-file</span> file<span style="color: #C57BDB;">)</span>
+                                       <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">url-retrieve-synchronously</span> url<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                  <span style="color: #51afef;">(</span><span style="color: #a991f1;">goto-char</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">point-min</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                  <span style="color: #51afef;">(</span><span style="color: #51afef;">unless</span> cached <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">re-search-forward</span> <span style="color: #7bc275;">"^$"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                  <span style="color: #51afef;">(</span><span style="color: #51afef;">prog1</span>
+                      <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">buffer-substring-no-properties</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">point</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">point-max</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                    <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">kill-buffer</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">current-buffer</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">unless</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> cached <span style="color: #7bc275;">(</span><span style="color: #a991f1;">eq</span> num <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">xkcd-cache-json</span> num out<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      out<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> +xkcd-get <span style="color: #7bc275;">(</span>num<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Get the xkcd number NUM."</span>
+    <span style="color: #C57BDB;">:override</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">xkcd-get</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span> <span style="color: #7bc275;">"nEnter comic number: "</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">xkcd-update-latest</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">get-buffer-create</span> <span style="color: #7bc275;">"*xkcd*"</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">switch-to-buffer</span> <span style="color: #7bc275;">"*xkcd*"</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">xkcd-mode</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">buffer-read-only</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">erase-buffer</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">xkcd-cur</span> num<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">let*</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>xkcd-data <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-fetch-info</span> num<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span>num <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-get</span> xkcd-data <span style="color: #C57BDB;">:num</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span>img <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-get</span> xkcd-data <span style="color: #C57BDB;">:img</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span>safe-title <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-get</span> xkcd-data <span style="color: #C57BDB;">:safe-title</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span>alt <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-get</span> xkcd-data <span style="color: #C57BDB;">:alt</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+             title file<span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">message</span> <span style="color: #7bc275;">"Getting comic..."</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> file <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">xkcd-download</span> img num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> title <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%d: %s"</span> num safe-title<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">insert</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">propertize</span> title
+                            <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">outline-1</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">center-line</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">insert</span> <span style="color: #7bc275;">"\n"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">xkcd-insert-image</span> file num<span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">eq</span> <span style="color: #DFDFDF;">xkcd-cur</span> <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #7bc275;">)</span>
+            <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">xkcd-cur</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">xkcd-alt</span> alt<span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">message</span> <span style="color: #7bc275;">"%s"</span> title<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defconst</span> <span style="color: #DFDFDF;">+xkcd-db--sqlite-available-p</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">with-demoted-errors</span> <span style="color: #7bc275;">"+org-xkcd initialization: %S"</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">emacsql-sqlite-ensure-binary</span><span style="color: #51afef;">)</span>
+      t<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">+xkcd-db--connection</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">make-hash-table</span> <span style="color: #C57BDB;">:test</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">equal</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Database connection to +org-xkcd database."</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db--get</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Return the sqlite db file."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">expand-file-name</span> <span style="color: #7bc275;">"xkcd.db"</span> <span style="color: #DFDFDF;">xkcd-cache-dir</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db--get-connection</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Return the database connection, if any."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">gethash</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">file-truename</span> <span style="color: #DFDFDF;">xkcd-cache-dir</span><span style="color: #51afef;">)</span>
+             <span style="color: #DFDFDF;">+xkcd-db--connection</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defconst</span> <span style="color: #DFDFDF;">+xkcd-db--table-schema</span>
+    <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>xkcds
+       <span style="color: #C57BDB;">[</span><span style="color: #7bc275;">(</span>num integer <span style="color: #C57BDB;">:unique</span> <span style="color: #C57BDB;">:primary-key</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>year        <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>month       <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>link        <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>news        <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>safe_title  <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>title       <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>transcript  <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>alt         <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span>img         <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">]</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db--init</span> <span style="color: #7bc275;">(</span>db<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Initialize database DB with the correct schema and user version."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">emacsql-with-transaction</span> db
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">pcase-dolist</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">`</span><span style="color: #7bc275;">(</span>,table . ,schema<span style="color: #7bc275;">)</span> <span style="color: #DFDFDF;">+xkcd-db--table-schema</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">emacsql</span> db <span style="color: #7bc275;">[</span><span style="color: #C57BDB;">:create-table</span> $i1 $S2<span style="color: #7bc275;">]</span> table schema<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Entrypoint to the +org-xkcd sqlite database.</span>
+<span style="color: #7e7e87;">Initializes and stores the database, and the database connection.</span>
+<span style="color: #7e7e87;">Performs a database upgrade when required."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">unless</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">and</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-db--get-connection</span><span style="color: #C57BDB;">)</span>
+                 <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">emacsql-live-p</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-db--get-connection</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">let*</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>db-file <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-db--get</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span>init-db <span style="color: #51afef;">(</span><span style="color: #a991f1;">not</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">file-exists-p</span> db-file<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">make-directory</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">file-name-directory</span> db-file<span style="color: #7bc275;">)</span> t<span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>conn <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">emacsql-sqlite</span> db-file<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+          <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-process-query-on-exit-flag</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">emacsql-process</span> conn<span style="color: #51afef;">)</span> nil<span style="color: #7bc275;">)</span>
+          <span style="color: #7bc275;">(</span><span style="color: #a991f1;">puthash</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">file-truename</span> <span style="color: #DFDFDF;">xkcd-cache-dir</span><span style="color: #51afef;">)</span>
+                   conn
+                   <span style="color: #DFDFDF;">+xkcd-db--connection</span><span style="color: #7bc275;">)</span>
+          <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> init-db
+            <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-db--init</span> conn<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-db--get-connection</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db-query</span> <span style="color: #7bc275;">(</span>sql <span style="color: #FCCE7B;">&amp;rest</span> args<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Run SQL query on +org-xkcd database with ARGS.</span>
+<span style="color: #7e7e87;">SQL can be either the emacsql vector representation, or a string."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span>  <span style="color: #51afef;">(</span><span style="color: #a991f1;">stringp</span> sql<span style="color: #51afef;">)</span>
+        <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">emacsql</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-db</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">apply</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">format</span> sql args<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">apply</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">emacsql</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-db</span><span style="color: #C57BDB;">)</span> sql args<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db-read</span> <span style="color: #7bc275;">(</span>num<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when-let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>res
+                <span style="color: #7bc275;">(</span><span style="color: #a991f1;">car</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-db-query</span> <span style="color: #C57BDB;">[</span><span style="color: #C57BDB;">:select</span> * <span style="color: #C57BDB;">:from</span> xkcds
+                                      <span style="color: #C57BDB;">:where</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">=</span> num $s1<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">]</span>
+                                     num
+                                     <span style="color: #C57BDB;">:limit</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-db-list-to-plist</span> res<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db-read-all</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>xkcd-table <span style="color: #7bc275;">(</span><span style="color: #a991f1;">make-hash-table</span> <span style="color: #C57BDB;">:test</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">eql</span> <span style="color: #C57BDB;">:size</span> <span style="color: #e69055; font-weight: bold;">4000</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">(</span>xkcd-info-list<span style="color: #7bc275;">)</span>
+                <span style="color: #7bc275;">(</span><span style="color: #a991f1;">puthash</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">car</span> xkcd-info-list<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-db-list-to-plist</span> xkcd-info-list<span style="color: #51afef;">)</span> xkcd-table<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+              <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-db-query</span> <span style="color: #7bc275;">[</span><span style="color: #C57BDB;">:select</span> * <span style="color: #C57BDB;">:from</span> xkcds<span style="color: #7bc275;">]</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      xkcd-table<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db-list-to-plist</span> <span style="color: #7bc275;">(</span>xkcd-datalist<span style="color: #7bc275;">)</span>
+    <span style="color: #C57BDB;">`</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:num</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">0</span> xkcd-datalist<span style="color: #51afef;">)</span>
+      <span style="color: #C57BDB;">:year</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">1</span> xkcd-datalist<span style="color: #51afef;">)</span>
+      <span style="color: #C57BDB;">:month</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">2</span> xkcd-datalist<span style="color: #51afef;">)</span>
+      <span style="color: #C57BDB;">:link</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">3</span> xkcd-datalist<span style="color: #51afef;">)</span>
+      <span style="color: #C57BDB;">:news</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">4</span> xkcd-datalist<span style="color: #51afef;">)</span>
+      <span style="color: #C57BDB;">:safe-title</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">5</span> xkcd-datalist<span style="color: #51afef;">)</span>
+      <span style="color: #C57BDB;">:title</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">6</span> xkcd-datalist<span style="color: #51afef;">)</span>
+      <span style="color: #C57BDB;">:transcript</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">7</span> xkcd-datalist<span style="color: #51afef;">)</span>
+      <span style="color: #C57BDB;">:alt</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">8</span> xkcd-datalist<span style="color: #51afef;">)</span>
+      <span style="color: #C57BDB;">:img</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">9</span> xkcd-datalist<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db-write</span> <span style="color: #7bc275;">(</span>data<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-db-query</span> <span style="color: #51afef;">[</span><span style="color: #C57BDB;">:insert-into</span> xkcds
+                     <span style="color: #C57BDB;">:values</span> $v1<span style="color: #51afef;">]</span>
+                    <span style="color: #51afef;">(</span><span style="color: #a991f1;">list</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">vector</span>
+                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">num</span>        data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">year</span>       data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">month</span>      data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">link</span>       data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">news</span>       data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">safe_title</span> data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">title</span>      data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">transcript</span> data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">alt</span>        data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">img</span>        data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                           <span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -3047,7 +3321,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org05093cf"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org5a68b38"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -3162,7 +3436,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -3638,7 +3912,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="org7c58879"></a></li>
+This uses the radar template, the result of which can be seen in <a id="orge8fb6c5"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -3705,210 +3979,7 @@ Saving seconds adds up after all! (but only so much)
 
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+org-xkcd-complete</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> arg<span style="color: #7bc275;">)</span>
     <span style="color: #7e7e87;">"Complete xkcd using `</span><span style="color: #a991f1;">+xkcd-stored-info</span><span style="color: #7e7e87;">'"</span>
-    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"xkcd:%d"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-select</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-select</span> <span style="color: #7bc275;">()</span>
-    <span style="color: #7e7e87;">"Prompt the user for an xkcd using `</span><span style="color: #a991f1;">ivy-read</span><span style="color: #7e7e87;">' and `</span><span style="color: #a991f1;">+xkcd-select-format</span><span style="color: #7e7e87;">'. Return the xkcd number or nil"</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>num
-           <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">ivy-read</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"xkcd (%s): "</span> <span style="color: #DFDFDF;">xkcd-latest</span><span style="color: #51afef;">)</span>
-                     <span style="color: #51afef;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">+xkcd-select-format</span>
-                             <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">equal</span> <span style="color: #7bc275;">""</span> num<span style="color: #C57BDB;">)</span> <span style="color: #DFDFDF;">xkcd-latest</span>
-        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">string-to-number</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">(</span><span style="color: #7bc275;">[0-9]+</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">)</span><span style="color: #7bc275;">.*"</span> <span style="color: #7bc275;">"\\1"</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-select-format</span> <span style="color: #7bc275;">(</span>xkcd-info<span style="color: #7bc275;">)</span>
-    <span style="color: #7e7e87;">"Creates each ivy-read line from an xkcd info plist. Must start with the xkcd number"</span>
-    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%-4s  %-30s %s"</span>
-            <span style="color: #51afef;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">number-to-string</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">plist-get</span> xkcd-info <span style="color: #C57BDB;">:num</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-                        <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">counsel-key-binding</span><span style="color: #51afef;">)</span>
-            <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-get</span> xkcd-info <span style="color: #C57BDB;">:title</span><span style="color: #51afef;">)</span>
-            <span style="color: #51afef;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> xkcd-info <span style="color: #C57BDB;">:alt</span><span style="color: #C57BDB;">)</span>
-                        <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>variable-pitch <span style="color: #DFDFDF;">font-lock-comment-face</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-fetch-info</span> <span style="color: #7bc275;">(</span>num<span style="color: #7bc275;">)</span>
-    <span style="color: #7e7e87;">"Fetch the parsed json info for comic NUM"</span>
-    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">require</span> <span style="color: #C57BDB;">'</span><span style="color: #a991f1;">xkcd</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>res <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-db-read</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #51afef;">unless</span> res
-        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-db-write</span>
-         <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>url <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"http://xkcd.com/%d/info.0.json"</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-                <span style="color: #C57BDB;">(</span>json-assoc
-                 <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> num <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #51afef;">)</span>
-                     <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> num <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #51afef;">)</span>
-                   <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">json-read-from-string</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">xkcd-get-json</span> url num<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-           json-assoc<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> res <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-db-read</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      res<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #62686E;">;; </span><span style="color: #62686E;">since we've done this, we may as well go one little step further</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-find-and-copy</span> <span style="color: #7bc275;">()</span>
-    <span style="color: #7e7e87;">"Prompt the user for an xkcd using `</span><span style="color: #a991f1;">+xkcd-select</span><span style="color: #7e7e87;">' and copy url to clipboard"</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>num <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-select</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">gui-select-text</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"https://xkcd.com/%d"</span> num<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #a991f1;">message</span> <span style="color: #7bc275;">"xkcd.com/%d copied to clipboard"</span> num<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-find-and-view</span> <span style="color: #7bc275;">()</span>
-    <span style="color: #7e7e87;">"Prompt the user for an xkcd using `</span><span style="color: #a991f1;">+xkcd-select</span><span style="color: #7e7e87;">' and copy url to clipboard"</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">xkcd-get</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-select</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">switch-to-buffer</span> <span style="color: #7bc275;">"*xkcd*"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">+xkcd-latest-max-age</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">*</span> <span style="color: #e69055; font-weight: bold;">60</span> <span style="color: #e69055; font-weight: bold;">60</span> <span style="color: #e69055; font-weight: bold;">12</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7e7e87;">"Time after which xkcd-latest should be refreshed, in seconds"</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #62686E;">;; </span><span style="color: #62686E;">initialise `</span><span style="color: #a991f1;">xkcd-latest</span><span style="color: #62686E;">' and `</span><span style="color: #a991f1;">+xkcd-stored-info</span><span style="color: #62686E;">' with latest xkcd</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">add-transient-hook!</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">+xkcd-select</span>
-    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">require</span> <span style="color: #C57BDB;">'</span><span style="color: #a991f1;">xkcd</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">xkcd-update-latest</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">unless</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">and</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">file-exists-p</span> <span style="color: #DFDFDF;">xkcd-cache-latest</span><span style="color: #C57BDB;">)</span>
-                 <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">&lt;</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">-</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">time-to-seconds</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">current-time</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-                       <span style="color: #51afef;">(</span><span style="color: #a991f1;">time-to-seconds</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">file-attribute-modification-time</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">file-attributes</span> <span style="color: #DFDFDF;">xkcd-cache-latest</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                    <span style="color: #DFDFDF;">+xkcd-latest-max-age</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #51afef;">let*</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>out <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">xkcd-get-json</span> <span style="color: #7bc275;">"http://xkcd.com/info.0.json"</span> <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-             <span style="color: #7bc275;">(</span>json-assoc <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">json-read-from-string</span> out<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-             <span style="color: #7bc275;">(</span>latest <span style="color: #51afef;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">num</span> json-assoc<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">/=</span> <span style="color: #DFDFDF;">xkcd-latest</span> latest<span style="color: #7bc275;">)</span>
-          <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-db-write</span> json-assoc<span style="color: #7bc275;">)</span>
-          <span style="color: #7bc275;">(</span><span style="color: #51afef;">with-current-buffer</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">find-file</span> <span style="color: #DFDFDF;">xkcd-cache-latest</span><span style="color: #51afef;">)</span>
-            <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">xkcd-latest</span> latest<span style="color: #51afef;">)</span>
-            <span style="color: #51afef;">(</span><span style="color: #a991f1;">erase-buffer</span><span style="color: #51afef;">)</span>
-            <span style="color: #51afef;">(</span><span style="color: #a991f1;">insert</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">number-to-string</span> latest<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-            <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">save-buffer</span><span style="color: #51afef;">)</span>
-            <span style="color: #51afef;">(</span><span style="color: #a991f1;">kill-buffer</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">current-buffer</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+xkcd-stored-info</span> <span style="color: #C57BDB;">`</span><span style="color: #51afef;">(</span>,<span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-fetch-info</span> <span style="color: #DFDFDF;">xkcd-latest</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-update-stored-info</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">+xkcd-stored-info</span> nil
-    <span style="color: #7e7e87;">"Basic info on downloaded xkcds, in the form ((num . title) ...)"</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-update-stored-info</span> <span style="color: #7bc275;">()</span>
-    <span style="color: #7e7e87;">"Compare the json files in `</span><span style="color: #a991f1;">xkcd-cache-dir</span><span style="color: #7e7e87;">' to the info in `</span><span style="color: #a991f1;">+xkcd-stored-info</span><span style="color: #7e7e87;">'</span>
-<span style="color: #7e7e87;">and ensure that `</span><span style="color: #a991f1;">+xkcd-stored-info</span><span style="color: #7e7e87;">' has info for every file"</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>file-nums <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>f<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">string-to-number</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"\\.json"</span> <span style="color: #7bc275;">""</span> f<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-                              <span style="color: #51afef;">(</span><span style="color: #a991f1;">directory-files</span> <span style="color: #DFDFDF;">xkcd-cache-dir</span> nil <span style="color: #7bc275;">"\\.json"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span>stored-nums <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">car</span> <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span>new-nums <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">set-difference</span> file-nums stored-nums<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #51afef;">dolist</span> <span style="color: #C57BDB;">(</span>num new-nums<span style="color: #C57BDB;">)</span>
-        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">push</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-fetch-info</span> num<span style="color: #7bc275;">)</span> <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> xkcd-get-json--and-cache <span style="color: #7bc275;">(</span>url <span style="color: #FCCE7B;">&amp;optional</span> num<span style="color: #7bc275;">)</span>
-    <span style="color: #7e7e87;">"Fetch the Json coming from URL.</span>
-<span style="color: #7e7e87;">If the file NUM.json exists, use it instead.</span>
-<span style="color: #7e7e87;">If NUM is 0, always download from URL.</span>
-<span style="color: #7e7e87;">The return value is a string."</span>
-    <span style="color: #C57BDB;">:override</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">xkcd-get-json</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>file <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s%d.json"</span> <span style="color: #DFDFDF;">xkcd-cache-dir</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span>cached <span style="color: #7bc275;">(</span><span style="color: #51afef;">and</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">file-exists-p</span> file<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">not</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">eq</span> num <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span>out <span style="color: #7bc275;">(</span><span style="color: #51afef;">with-current-buffer</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> cached
-                                         <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">find-file</span> file<span style="color: #C57BDB;">)</span>
-                                       <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">url-retrieve-synchronously</span> url<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-                  <span style="color: #51afef;">(</span><span style="color: #a991f1;">goto-char</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">point-min</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-                  <span style="color: #51afef;">(</span><span style="color: #51afef;">unless</span> cached <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">re-search-forward</span> <span style="color: #7bc275;">"^$"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-                  <span style="color: #51afef;">(</span><span style="color: #51afef;">prog1</span>
-                      <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">buffer-substring-no-properties</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">point</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">point-max</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-                    <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">kill-buffer</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">current-buffer</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #51afef;">unless</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> cached <span style="color: #7bc275;">(</span><span style="color: #a991f1;">eq</span> num <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">xkcd-cache-json</span> num out<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      out<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defconst</span> <span style="color: #DFDFDF;">+xkcd-db--sqlite-available-p</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">with-demoted-errors</span> <span style="color: #7bc275;">"+org-xkcd initialization: %S"</span>
-      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">emacsql-sqlite-ensure-binary</span><span style="color: #51afef;">)</span>
-      t<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">+xkcd-db--connection</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">make-hash-table</span> <span style="color: #C57BDB;">:test</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">equal</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7e7e87;">"Database connection to +org-xkcd database."</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db--get</span> <span style="color: #7bc275;">()</span>
-    <span style="color: #7e7e87;">"Return the sqlite db file."</span>
-    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">expand-file-name</span> <span style="color: #7bc275;">"xkcd.db"</span> <span style="color: #DFDFDF;">xkcd-cache-dir</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db--get-connection</span> <span style="color: #7bc275;">()</span>
-    <span style="color: #7e7e87;">"Return the database connection, if any."</span>
-    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">gethash</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">file-truename</span> <span style="color: #DFDFDF;">xkcd-cache-dir</span><span style="color: #51afef;">)</span>
-             <span style="color: #DFDFDF;">+xkcd-db--connection</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defconst</span> <span style="color: #DFDFDF;">+xkcd-db--table-schema</span>
-    <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>xkcds
-       <span style="color: #C57BDB;">[</span><span style="color: #7bc275;">(</span>num integer <span style="color: #C57BDB;">:unique</span> <span style="color: #C57BDB;">:primary-key</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span>year        <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span>month       <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span>link        <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span>news        <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span>safe_title  <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span>title       <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span>transcript  <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span>alt         <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span>img         <span style="color: #C57BDB;">:not-null</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">]</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db--init</span> <span style="color: #7bc275;">(</span>db<span style="color: #7bc275;">)</span>
-    <span style="color: #7e7e87;">"Initialize database DB with the correct schema and user version."</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">emacsql-with-transaction</span> db
-      <span style="color: #51afef;">(</span><span style="color: #51afef;">pcase-dolist</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">`</span><span style="color: #7bc275;">(</span>,table . ,schema<span style="color: #7bc275;">)</span> <span style="color: #DFDFDF;">+xkcd-db--table-schema</span><span style="color: #C57BDB;">)</span>
-        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">emacsql</span> db <span style="color: #7bc275;">[</span><span style="color: #C57BDB;">:create-table</span> $i1 $S2<span style="color: #7bc275;">]</span> table schema<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db</span> <span style="color: #7bc275;">()</span>
-    <span style="color: #7e7e87;">"Entrypoint to the +org-xkcd sqlite database.</span>
-<span style="color: #7e7e87;">Initializes and stores the database, and the database connection.</span>
-<span style="color: #7e7e87;">Performs a database upgrade when required."</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">unless</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">and</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-db--get-connection</span><span style="color: #C57BDB;">)</span>
-                 <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">emacsql-live-p</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-db--get-connection</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #51afef;">let*</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>db-file <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-db--get</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-             <span style="color: #7bc275;">(</span>init-db <span style="color: #51afef;">(</span><span style="color: #a991f1;">not</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">file-exists-p</span> db-file<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">make-directory</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">file-name-directory</span> db-file<span style="color: #7bc275;">)</span> t<span style="color: #C57BDB;">)</span>
-        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>conn <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">emacsql-sqlite</span> db-file<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-          <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-process-query-on-exit-flag</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">emacsql-process</span> conn<span style="color: #51afef;">)</span> nil<span style="color: #7bc275;">)</span>
-          <span style="color: #7bc275;">(</span><span style="color: #a991f1;">puthash</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">file-truename</span> <span style="color: #DFDFDF;">xkcd-cache-dir</span><span style="color: #51afef;">)</span>
-                   conn
-                   <span style="color: #DFDFDF;">+xkcd-db--connection</span><span style="color: #7bc275;">)</span>
-          <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> init-db
-            <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-db--init</span> conn<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-db--get-connection</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db-query</span> <span style="color: #7bc275;">(</span>sql <span style="color: #FCCE7B;">&amp;rest</span> args<span style="color: #7bc275;">)</span>
-    <span style="color: #7e7e87;">"Run SQL query on +org-xkcd database with ARGS.</span>
-<span style="color: #7e7e87;">SQL can be either the emacsql vector representation, or a string."</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span>  <span style="color: #51afef;">(</span><span style="color: #a991f1;">stringp</span> sql<span style="color: #51afef;">)</span>
-        <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">emacsql</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-db</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">apply</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">format</span> sql args<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #a991f1;">apply</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">emacsql</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-db</span><span style="color: #C57BDB;">)</span> sql args<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db-read</span> <span style="color: #7bc275;">(</span>num<span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when-let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>res
-                <span style="color: #7bc275;">(</span><span style="color: #a991f1;">car</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-db-query</span> <span style="color: #C57BDB;">[</span><span style="color: #C57BDB;">:select</span> * <span style="color: #C57BDB;">:from</span> xkcds
-                                      <span style="color: #C57BDB;">:where</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">=</span> num $s1<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">]</span>
-                                     num
-                                     <span style="color: #C57BDB;">:limit</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-db-list-to-plist</span> res<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db-list-to-plist</span> <span style="color: #7bc275;">(</span>xkcd-datalist<span style="color: #7bc275;">)</span>
-    <span style="color: #C57BDB;">`</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:num</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">0</span> xkcd-datalist<span style="color: #51afef;">)</span>
-      <span style="color: #C57BDB;">:year</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">1</span> xkcd-datalist<span style="color: #51afef;">)</span>
-      <span style="color: #C57BDB;">:month</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">2</span> xkcd-datalist<span style="color: #51afef;">)</span>
-      <span style="color: #C57BDB;">:link</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">3</span> xkcd-datalist<span style="color: #51afef;">)</span>
-      <span style="color: #C57BDB;">:news</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">4</span> xkcd-datalist<span style="color: #51afef;">)</span>
-      <span style="color: #C57BDB;">:safe-title</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">5</span> xkcd-datalist<span style="color: #51afef;">)</span>
-      <span style="color: #C57BDB;">:title</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">6</span> xkcd-datalist<span style="color: #51afef;">)</span>
-      <span style="color: #C57BDB;">:transcript</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">7</span> xkcd-datalist<span style="color: #51afef;">)</span>
-      <span style="color: #C57BDB;">:alt</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">8</span> xkcd-datalist<span style="color: #51afef;">)</span>
-      <span style="color: #C57BDB;">:img</span> ,<span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">9</span> xkcd-datalist<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+xkcd-db-write</span> <span style="color: #7bc275;">(</span>data<span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-db-query</span> <span style="color: #51afef;">[</span><span style="color: #C57BDB;">:insert-into</span> xkcds
-                     <span style="color: #C57BDB;">:values</span> $v1<span style="color: #51afef;">]</span>
-                    <span style="color: #51afef;">(</span><span style="color: #a991f1;">list</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">vector</span>
-                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">num</span>        data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">year</span>       data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">month</span>      data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">link</span>       data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">news</span>       data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">safe_title</span> data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">title</span>      data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">transcript</span> data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">alt</span>        data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">img</span>        data<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                           <span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"xkcd:%d"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">+xkcd-select</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -5594,7 +5665,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-16 Sat 18:18</p>
+<p class="date">Created: 2020-05-17 Sun 02:13</p>
 </div>
 </body>
 </html>
