@@ -56,8 +56,8 @@
 ;; Buffer defaults:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Font%20Face][Font Face:1]]
-(setq doom-font (font-spec :family "Fira Code" :size 22)
-      doom-big-font (font-spec :family "Fira Code" :size 36)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 24)
+      doom-big-font (font-spec :family "JetBrains Mono" :size 36)
       doom-variable-pitch-font (font-spec :family "Overpass" :size 24))
 ;; Font Face:1 ends here
 
