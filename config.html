@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-17 Sun 11:04 -->
+<!-- 2020-05-17 Sun 18:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,6 +195,7 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
+
 
 <!––tec/custom-head-start-->
 <style type="text/css">
@@ -572,6 +573,7 @@
 <li><a href="#vterm">4.20. VTerm</a></li>
 <li><a href="#which-key">4.21. Which-key</a></li>
 <li><a href="#xkcd">4.22. xkcd</a></li>
+<li><a href="#yasnippet">4.23. YASnippet</a></li>
 </ul>
 </li>
 <li><a href="#language-configuration">5. Language configuration</a>
@@ -1533,7 +1535,7 @@ amuse oneself. Introducing: typewriter sounds!
 <p>
 Hey, let&rsquo;s get the weather in here while we&rsquo;re at it.
 Unfortunately this seems slightly unmaintained (<a href="https://github.com/bcbcarl/emacs-wttrin/pulls">few open bugfix PRs</a>) so let&rsquo;s
-roll our own version.
+roll our <a href="wttrin.el">own version</a>.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> wttrin <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:local-repo</span> <span style="color: #7bc275;">"lisp"</span> <span style="color: #C57BDB;">:no-byte-compile</span> t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -1750,7 +1752,7 @@ inserts an org-ified version at point. Isn&rsquo;t that just great.
 </div>
 
 <p>
-I have my own custom version of <code>org-plot</code>, so let&rsquo;s replace that
+I have my own <a href="org-plot.el">modified version</a> of <code>org-plot</code>, so let&rsquo;s use that
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-plot <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:local-repo</span> <span style="color: #7bc275;">"lisp"</span> <span style="color: #C57BDB;">:no-byte-compile</span> t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -2608,6 +2610,18 @@ Let&rsquo;s also extend the functionality a whole bunch.
 </div>
 </div>
 </div>
+<div id="outline-container-yasnippet" class="outline-3">
+<h3 id="yasnippet"><span class="section-number-3">4.23</span> YASnippet</h3>
+<div class="outline-text-3" id="text-4-23">
+<p>
+Nested snippets are good, enable that.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">yas-triggers-in-field</span> t<span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 <div id="outline-container-language-configuration" class="outline-2">
 <h2 id="language-configuration"><span class="section-number-2">5</span> Language configuration</h2>
@@ -3310,7 +3324,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org149b2f0"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org3d6e2a5"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -3901,7 +3915,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="org55f9cfb"></a></li>
+This uses the radar template, the result of which can be seen in <a id="orgf605ef9"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -5320,9 +5334,9 @@ Let&rsquo;s enhance <code>TeX-fold-math</code> a bit
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8804;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"le"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8805;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"ge"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8800;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"ne"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #62686E;">;; </span><span style="color: #62686E;">conviniance shorts</span>
-        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8249;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"left"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8250;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"right"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #62686E;">;; </span><span style="color: #62686E;">conviniance shorts -- these don't work nicely ATM</span>
+        <span style="color: #62686E;">;; </span><span style="color: #62686E;">("&#8249;" ("left"))</span>
+        <span style="color: #62686E;">;; </span><span style="color: #62686E;">("&#8250;" ("right"))</span>
         <span style="color: #62686E;">;; </span><span style="color: #62686E;">private macros</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8477;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"RR"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"&#8469;"</span> <span style="color: #51afef;">(</span><span style="color: #7bc275;">"NN"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
@@ -5644,8 +5658,9 @@ enable it for <code>.beancount</code> files.
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">compilation-read-command</span> nil<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
       <span style="color: #51afef;">(</span>beancount--run <span style="color: #7bc275;">"bean-report"</span>
                       <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">file-relative-name</span> <span style="color: #DFDFDF;">buffer-file-name</span><span style="color: #C57BDB;">)</span> <span style="color: #7bc275;">"bal"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #62686E;">;; </span><span style="color: #FCCE7B; font-weight: bold;">TODO</span><span style="color: #62686E;"> make the following *work*</span>
-  <span style="color: #C57BDB;">:bind</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:map</span> beancount-mode-map <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"S-RET"</span> . <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">beancount-align-to-previous-number</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">map!</span> <span style="color: #C57BDB;">:map</span> beancount-mode-map
+        <span style="color: #C57BDB;">:n</span> <span style="color: #7bc275;">"TAB"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">beancount-align-to-previous-number</span>
+        <span style="color: #C57BDB;">:i</span> <span style="color: #7bc275;">"TAB"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">beancount-tab-dwim</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -5654,7 +5669,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-17 Sun 11:04</p>
+<p class="date">Created: 2020-05-17 Sun 18:03</p>
 </div>
 </body>
 </html>

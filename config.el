@@ -780,6 +780,10 @@ SQL can be either the emacsql vector representation, or a string."
                            )))))
 ;; xkcd:2 ends here
 
+;; [[file:~/.config/doom/config.org::*YASnippet][YASnippet:1]]
+(setq yas-triggers-in-field t)
+;; YASnippet:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*File%20Templates][File Templates:1]]
 (set-file-template! "\\.tex$" :trigger "__" :mode 'latex-mode)
 ;; File Templates:1 ends here
@@ -2538,9 +2542,9 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
         ("≤" ("le"))
         ("≥" ("ge"))
         ("≠" ("ne"))
-        ;; conviniance shorts
-        ("‹" ("left"))
-        ("›" ("right"))
+        ;; conviniance shorts -- these don't work nicely ATM
+        ;; ("‹" ("left"))
+        ;; ("›" ("right"))
         ;; private macros
         ("ℝ" ("RR"))
         ("ℕ" ("NN"))
