@@ -2771,6 +2771,7 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
     (let ((compilation-read-command nil))
       (beancount--run "bean-report"
                       (file-relative-name buffer-file-name) "bal")))
-  ;; TODO make the following *work*
-  :bind (:map beancount-mode-map ("S-RET" . #'beancount-align-to-previous-number)))
+  (map! :map beancount-mode-map
+        :n "TAB" #'beancount-align-to-previous-number
+        :i "TAB" #'beancount-tab-dwim))
 ;; Beancount:1 ends here
