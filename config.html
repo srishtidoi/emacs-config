@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-17 Sun 02:13 -->
+<!-- 2020-05-17 Sun 11:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,6 +195,7 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
+
 <!––tec/custom-head-start-->
 <style type="text/css">
    :root {
@@ -570,8 +571,7 @@
 <li><a href="#treemacs">4.19. Treemacs</a></li>
 <li><a href="#vterm">4.20. VTerm</a></li>
 <li><a href="#which-key">4.21. Which-key</a></li>
-<li><a href="#wttrin">4.22. Wttrin</a></li>
-<li><a href="#xkcd">4.23. xkcd</a></li>
+<li><a href="#xkcd">4.22. xkcd</a></li>
 </ul>
 </li>
 <li><a href="#language-configuration">5. Language configuration</a>
@@ -1532,9 +1532,11 @@ amuse oneself. Introducing: typewriter sounds!
 
 <p>
 Hey, let&rsquo;s get the weather in here while we&rsquo;re at it.
+Unfortunately this seems slightly unmaintained (<a href="https://github.com/bcbcarl/emacs-wttrin/pulls">few open bugfix PRs</a>) so let&rsquo;s
+roll our own version.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> wttrin <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"df5427ce2a"</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> wttrin <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:local-repo</span> <span style="color: #7bc275;">"lisp"</span> <span style="color: #C57BDB;">:no-byte-compile</span> t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -2318,22 +2320,9 @@ I also think that having <kbd>evil-</kbd> appear in so many popups is a bit too 
 </div>
 </div>
 </div>
-<div id="outline-container-wttrin" class="outline-3">
-<h3 id="wttrin"><span class="section-number-3">4.22</span> Wttrin</h3>
-<div class="outline-text-3" id="text-4-22">
-<p>
-Set the default city. It&rsquo;s initially <code>Taipei</code> but I find the IP-locating that&rsquo;s
-done perfectly acceptable, so let&rsquo;s make that happen.
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> wttrin-default-cities <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">""</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-</pre>
-</div>
-</div>
-</div>
 <div id="outline-container-xkcd" class="outline-3">
-<h3 id="xkcd"><span class="section-number-3">4.23</span> xkcd</h3>
-<div class="outline-text-3" id="text-4-23">
+<h3 id="xkcd"><span class="section-number-3">4.22</span> xkcd</h3>
+<div class="outline-text-3" id="text-4-22">
 <p>
 We wan&rsquo;t to set this up so it loads nicely in <a href="#extra-links">Extra links</a>.
 </p>
@@ -3321,7 +3310,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org5a68b38"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org149b2f0"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -3912,7 +3901,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="orge8fb6c5"></a></li>
+This uses the radar template, the result of which can be seen in <a id="org55f9cfb"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -5665,7 +5654,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-17 Sun 02:13</p>
+<p class="date">Created: 2020-05-17 Sun 11:04</p>
 </div>
 </body>
 </html>

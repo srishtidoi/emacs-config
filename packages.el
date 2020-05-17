@@ -18,7 +18,7 @@
 ;; Fun:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Fun][Fun:3]]
-(package! wttrin :pin "df5427ce2a")
+(package! wttrin :recipe (:local-repo "lisp" :no-byte-compile t))
 ;; Fun:3 ends here
 
 ;; [[file:~/.config/doom/config.org::*Fun][Fun:4]]

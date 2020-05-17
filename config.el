@@ -504,10 +504,6 @@
    ))
 ;; Which-key:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Wttrin][Wttrin:1]]
-(setq wttrin-default-cities '(""))
-;; Wttrin:1 ends here
-
 ;; [[file:~/.config/doom/config.org::*xkcd][xkcd:1]]
 (use-package! xkcd
   :commands (xkcd-get-json xkcd-download xkcd-get
