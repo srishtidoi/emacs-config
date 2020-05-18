@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-18 Mon 23:54 -->
+<!-- 2020-05-19 Tue 01:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,6 +195,9 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
+
+
+
 
 <!––tec/custom-head-start-->
 <style type="text/css">
@@ -598,6 +601,7 @@
 <li><a href="#cdlatex">5.2.2.2.4. cdlatex</a></li>
 <li><a href="#spellcheck">5.2.2.2.5. Spellcheck</a></li>
 <li><a href="#lsp-support-src">5.2.2.2.6. LSP support in <code>src</code> blocks</a></li>
+<li><a href="#view-exported-file">5.2.2.2.7. View exported file</a></li>
 </ul>
 </li>
 <li><a href="#super-agenda">5.2.2.3. Super agenda</a></li>
@@ -2063,9 +2067,9 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> info-colors
   <span style="color: #C57BDB;">:commands</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">info-colors-fontify-node</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">Info-selection-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">info-colors-fontify-node</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">Info-selection-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">info-colors-fontify-node</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">Info-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">mixed-pitch-mode</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">Info-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">mixed-pitch-mode</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -2991,6 +2995,43 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
 </div>
 </div>
 </div>
+<div id="outline-container-view-exported-file" class="outline-6">
+<h6 id="view-exported-file"><span class="section-number-6">5.2.2.2.7</span> View exported file</h6>
+<div class="outline-text-6" id="text-5-2-2-2-7">
+<p>
+<kbd>'localeader v</kbd> has no pre-existing binding, so I may as well use it with the same
+functionality as in LaTeX. Let&rsquo;s try viewing possible output files with this.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">map!</span> <span style="color: #C57BDB;">:map</span> <span style="color: #DFDFDF;">org-mode-map</span>
+        <span style="color: #C57BDB;">:localleader</span>
+        <span style="color: #C57BDB;">:desc</span> <span style="color: #7bc275;">"View exported file"</span> <span style="color: #7bc275;">"v"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-view-output-file</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-view-output-file</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> org-file-path<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">"Visit buffer open on the first output file (if any) found, using `</span><span style="color: #a991f1;">org-view-output-file-extensions</span><span style="color: #7bc275;">'"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>org-file-path <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> org-file-path <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">buffer-file-name</span><span style="color: #51afef;">)</span> <span style="color: #7bc275;">""</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>dir <span style="color: #7bc275;">(</span><span style="color: #a991f1;">file-name-directory</span> org-file-path<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>basename <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">file-name-base</span> org-file-path<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>output-file nil<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">dolist</span> <span style="color: #C57BDB;">(</span>ext <span style="color: #DFDFDF;">org-view-output-file-extensions</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">unless</span> output-file
+          <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">file-exists-p</span>
+                 <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span> dir basename <span style="color: #7bc275;">"."</span> ext<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                 <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> output-file <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span> dir basename <span style="color: #7bc275;">"."</span> ext<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> output-file
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">pop-to-buffer</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">find-buffer-visiting</span> output-file<span style="color: #51afef;">)</span>
+                           <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">find-file-noselect</span> output-file<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">message</span> <span style="color: #7bc275;">"No exported file found"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+
+<span style="color: #51afef;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-view-output-file-extensions</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"pdf"</span> <span style="color: #7bc275;">"md"</span> <span style="color: #7bc275;">"rst"</span> <span style="color: #7bc275;">"txt"</span> <span style="color: #7bc275;">"tex"</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #7e7e87;">"Search for output files with these extensions, in order, viewing the first that matches"</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
 <div id="outline-container-super-agenda" class="outline-5">
 <h5 id="super-agenda"><span class="section-number-5">5.2.2.3</span> Super agenda</h5>
 <div class="outline-text-5" id="text-5-2-2-3">
@@ -3376,7 +3417,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org8939a47"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="orge4eaa05"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -3491,7 +3532,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -3967,7 +4008,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="org72f8320"></a></li>
+This uses the radar template, the result of which can be seen in <a id="org576abb7"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -5601,8 +5642,8 @@ And enable shell escape for the preview
 </div>
 </div>
 </div>
-<div id="outline-container-cdlatex" class="outline-4">
-<h4 id="cdlatex"><span class="section-number-4">5.3.5</span> CDLaTeX</h4>
+<div id="outline-container-latex-cdlatex" class="outline-4">
+<h4 id="latex-cdlatex"><span class="section-number-4">5.3.5</span> CDLaTeX</h4>
 <div class="outline-text-4" id="text-5-3-5">
 <p>
 The symbols and modifies are very nice by default, but could do with a bit of
@@ -5685,7 +5726,7 @@ Let&rsquo;s face it. Being evil is fun, let&rsquo;s take it as far as we can.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> evil-tex
-  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">LaTeX-mode</span> . evil-tex-mode<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">LaTeX-mode</span> . <span style="color: #DFDFDF;">evil-tex-mode</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -5837,7 +5878,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-18 Mon 23:54</p>
+<p class="date">Created: 2020-05-19 Tue 01:49</p>
 </div>
 </body>
 </html>

@@ -886,7 +886,34 @@ SQL can be either the emacsql vector representation, or a string."
     '("go" "python" "ipython" "bash" "sh"))
   (dolist (lang org-babel-lang-list)
     (eval `(lsp-org-babel-enable ,lang)))
-;; Extra functionality:6 ends here
+;; LSP support in ~src~ blocks:1 ends here
+
+;; [[file:~/.config/doom/config.org::*View%20exported%20file][View exported file:1]]
+(after! org
+  (map! :map org-mode-map
+        :localleader
+        :desc "View exported file" "v" #'org-view-output-file)
+
+  (defun org-view-output-file (&optional org-file-path)
+    (interactive)
+    "Visit buffer open on the first output file (if any) found, using `org-view-output-file-extensions'"
+    (let* ((org-file-path (or org-file-path (buffer-file-name) ""))
+           (dir (file-name-directory org-file-path))
+           (basename (file-name-base org-file-path))
+           (output-file nil))
+      (dolist (ext org-view-output-file-extensions)
+        (unless output-file
+          (when (file-exists-p
+                 (concat dir basename "." ext))
+                 (setq output-file (concat dir basename "." ext)))))
+      (if output-file
+        (pop-to-buffer (or (find-buffer-visiting output-file)
+                           (find-file-noselect output-file)))
+        (message "No exported file found")))))
+
+(defvar org-view-output-file-extensions '("pdf" "md" "rst" "txt" "tex")
+  "Search for output files with these extensions, in order, viewing the first that matches")
+;; View exported file:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Super%20agenda][Super agenda:1]]
 (use-package! org-super-agenda
