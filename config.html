@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-17 Sun 18:03 -->
+<!-- 2020-05-18 Mon 10:57 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -5637,6 +5637,28 @@ will do it&rsquo;s own line wrapping, hence we <i>only</i> want to use visual li
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">add-hook!</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">gfm-mode</span> markdown-mode<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">visual-line-mode</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">turn-off-auto-fill</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
+
+<p>
+Since markdown is often seen as rendered HTML, let&rsquo;s try to somewhat mirror the
+style or markdown renderes.
+</p>
+
+<p>
+Most markdown renders seem to make the first three headings levels larger than
+normal text, the first two much so. Then the fourth level tends to be the same
+as body text, while the fifth and sixth are (increasingly) smaller, with the
+sixth greyed out. Since the sixth level is so small, I&rsquo;ll turn up the boldness a notch.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">custom-set-faces!</span>
+  <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>markdown-header-face-1 <span style="color: #C57BDB;">:height</span> <span style="color: #e69055; font-weight: bold;">1.25</span> <span style="color: #C57BDB;">:weight</span> extra-bold <span style="color: #C57BDB;">:inherit</span> markdown-header-face<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>markdown-header-face-2 <span style="color: #C57BDB;">:height</span> <span style="color: #e69055; font-weight: bold;">1.15</span> <span style="color: #C57BDB;">:weight</span> bold       <span style="color: #C57BDB;">:inherit</span> markdown-header-face<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>markdown-header-face-3 <span style="color: #C57BDB;">:height</span> <span style="color: #e69055; font-weight: bold;">1.08</span> <span style="color: #C57BDB;">:weight</span> bold       <span style="color: #C57BDB;">:inherit</span> markdown-header-face<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>markdown-header-face-4 <span style="color: #C57BDB;">:height</span> <span style="color: #e69055; font-weight: bold;">1.00</span> <span style="color: #C57BDB;">:weight</span> bold       <span style="color: #C57BDB;">:inherit</span> markdown-header-face<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>markdown-header-face-5 <span style="color: #C57BDB;">:height</span> <span style="color: #e69055; font-weight: bold;">0.90</span> <span style="color: #C57BDB;">:weight</span> bold       <span style="color: #C57BDB;">:inherit</span> markdown-header-face<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>markdown-header-face-6 <span style="color: #C57BDB;">:height</span> <span style="color: #e69055; font-weight: bold;">0.75</span> <span style="color: #C57BDB;">:weight</span> extra-bold <span style="color: #C57BDB;">:inherit</span> markdown-header-face<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
 </div>
 </div>
 <div id="outline-container-beancount" class="outline-3">
@@ -5669,7 +5691,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-17 Sun 18:03</p>
+<p class="date">Created: 2020-05-18 Mon 10:57</p>
 </div>
 </body>
 </html>

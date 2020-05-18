@@ -2763,6 +2763,16 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
 (add-hook! (gfm-mode markdown-mode) #'visual-line-mode #'turn-off-auto-fill)
 ;; Markdown:2 ends here
 
+;; [[file:~/.config/doom/config.org::*Markdown][Markdown:3]]
+(custom-set-faces!
+  '(markdown-header-face-1 :height 1.25 :weight extra-bold :inherit markdown-header-face)
+  '(markdown-header-face-2 :height 1.15 :weight bold       :inherit markdown-header-face)
+  '(markdown-header-face-3 :height 1.08 :weight bold       :inherit markdown-header-face)
+  '(markdown-header-face-4 :height 1.00 :weight bold       :inherit markdown-header-face)
+  '(markdown-header-face-5 :height 0.90 :weight bold       :inherit markdown-header-face)
+  '(markdown-header-face-6 :height 0.75 :weight extra-bold :inherit markdown-header-face))
+;; Markdown:3 ends here
+
 ;; [[file:~/.config/doom/config.org::*Beancount][Beancount:1]]
 (use-package! beancount
   :load-path "~/.config/doom/lisp"
