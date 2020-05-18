@@ -1742,6 +1742,8 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
 \\usepackage{textcomp,amssymb}
 \\usepackage[makeroom]{cancel}
 
+\\usepackage{booktabs}
+
 \\pagestyle{empty}             % do not remove
 % The settings below are copied from fullpage.sty
 \\setlength{\\textwidth}{\\paperwidth}
