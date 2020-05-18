@@ -54,9 +54,10 @@
 (package! info-colors :pin "47ee73cc19")
 ;; Info colours:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Systemd][Systemd:1]]
-(package! systemd :pin "51c148e09a")
-;; Systemd:1 ends here
+;; [[file:~/.config/doom/config.org::*LaTeX][LaTeX:1]]
+(package! evil-tex :recipe (:host github :repo "itai33/evil-tex")
+                            :pin "14da2c4c1d")
+;; LaTeX:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Improve%20agenda/capture][Improve agenda/capture:1]]
 (package! org-super-agenda :pin "dd0d104c26")
@@ -100,3 +101,7 @@
 ;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:5]]
 (package! org-plot :recipe (:local-repo "lisp" :no-byte-compile t))
 ;; Extra functionality:5 ends here
+
+;; [[file:~/.config/doom/config.org::*Systemd][Systemd:1]]
+(package! systemd :pin "51c148e09a")
+;; Systemd:1 ends here

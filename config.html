@@ -520,7 +520,7 @@
 </li>
 <li><a href="#language-packages">3.3. Language packages</a>
 <ul>
-<li><a href="#systemd">3.3.1. Systemd</a></li>
+<li><a href="#latex">3.3.1. LaTeX</a></li>
 <li><a href="#org-mode">3.3.2. Org Mode</a>
 <ul>
 <li><a href="#improve-agenda-capture">3.3.2.1. Improve agenda/capture</a></li>
@@ -528,6 +528,7 @@
 <li><a href="#extra-functionality">3.3.2.3. Extra functionality</a></li>
 </ul>
 </li>
+<li><a href="#systemd">3.3.3. Systemd</a></li>
 </ul>
 </li>
 </ul>
@@ -645,14 +646,20 @@
 <li><a href="#org-mode-ess">5.2.5. ESS</a></li>
 </ul>
 </li>
-<li><a href="#latex">5.3. LaTeX</a>
+<li><a href="#language-configuration-latex">5.3. LaTeX</a>
 <ul>
 <li><a href="#be-implemented-ideas">5.3.1. To-be-implemented ideas</a></li>
 <li><a href="#compilation">5.3.2. Compilation</a></li>
-<li><a href="#snippet-value">5.3.3. Snippet value</a></li>
+<li><a href="#snippet-helpers">5.3.3. Snippet helpers</a>
+<ul>
+<li><a href="#template">5.3.3.1. Template</a></li>
+<li><a href="#deliminators">5.3.3.2. Deliminators</a></li>
+</ul>
+</li>
 <li><a href="#editor-visuals">5.3.4. Editor visuals</a></li>
 <li><a href="#cdlatex">5.3.5. CDLaTeX</a></li>
 <li><a href="#synctex">5.3.6. SyncTeX</a></li>
+<li><a href="#evilification">5.3.7. Evilification</a></li>
 </ul>
 </li>
 <li><a href="#python">5.4. Python</a></li>
@@ -1641,14 +1648,12 @@ Variable pitch fontification + colouring
 <h3 id="language-packages"><span class="section-number-3">3.3</span> Language packages</h3>
 <div class="outline-text-3" id="text-3-3">
 </div>
-<div id="outline-container-systemd" class="outline-4">
-<h4 id="systemd"><span class="section-number-4">3.3.1</span> Systemd</h4>
+<div id="outline-container-latex" class="outline-4">
+<h4 id="latex"><span class="section-number-4">3.3.1</span> LaTeX</h4>
 <div class="outline-text-4" id="text-3-3-1">
-<p>
-For editing systemd unit files
-</p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> systemd <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"51c148e09a"</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> evil-tex <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"itai33/evil-tex"</span><span style="color: #C57BDB;">)</span>
+                            <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"14da2c4c1d"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -1758,6 +1763,18 @@ I have my own <a href="org-plot.el">modified version</a> of <code>org-plot</code
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-plot <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:local-repo</span> <span style="color: #7bc275;">"lisp"</span> <span style="color: #C57BDB;">:no-byte-compile</span> t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
+</div>
+</div>
+</div>
+<div id="outline-container-systemd" class="outline-4">
+<h4 id="systemd"><span class="section-number-4">3.3.3</span> Systemd</h4>
+<div class="outline-text-4" id="text-3-3-3">
+<p>
+For editing systemd unit files
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> systemd <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"51c148e09a"</span><span style="color: #51afef;">)</span>
+</pre>
 </div>
 </div>
 </div>
@@ -2038,9 +2055,9 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> info-colors
   <span style="color: #C57BDB;">:commands</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">info-colors-fontify-node</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">Info-selection-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">info-colors-fontify-node</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">Info-selection-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">info-colors-fontify-node</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">Info-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">mixed-pitch-mode</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">Info-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">mixed-pitch-mode</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -3324,7 +3341,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org3d6e2a5"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org8939a47"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -3439,7 +3456,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -3915,7 +3932,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="orgf605ef9"></a></li>
+This uses the radar template, the result of which can be seen in <a id="org72f8320"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -5543,6 +5560,19 @@ provide this:
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> tex
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">TeX-view-program-list</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"Evince"</span> <span style="color: #7bc275;">"evince %o"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">TeX-view-program-selection</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>output-pdf <span style="color: #7bc275;">"Evince"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-evilification" class="outline-4">
+<h4 id="evilification"><span class="section-number-4">5.3.7</span> Evilification</h4>
+<div class="outline-text-4" id="text-5-3-7">
+<p>
+Let&rsquo;s face it. Being evil is fun, let&rsquo;s take it as far as we can.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> evil-tex
+  <span style="color: #C57BDB;">:hook</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">LaTeX-mode</span> . evil-tex-mode<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
