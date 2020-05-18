@@ -2495,7 +2495,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
   (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t)))
 ;; Compilation:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Snippet%20value][Snippet value:2]]
+;; [[file:~/.config/doom/config.org::*Template][Template:2]]
 (setq tec/yas-latex-template-preamble "
 \\usepackage[pdfa,unicode=true,hidelinks]{hyperref}
 
@@ -2529,7 +2529,67 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
   "Based on class choice prompt for insertion of default preamble"
     (if (equal tec/yas-latex-class-choice "bmc") 'nil
              (eq (read-char-choice "Include default preamble? [Type y/n]" '(?y ?n)) ?y)))
-;; Snippet value:2 ends here
+;; Template:2 ends here
+
+;; [[file:~/.config/doom/config.org::*Deliminators][Deliminators:1]]
+(after! tex
+  (defvar tec/tex-last-delim-char nil
+    "Last open delim expanded in a tex document")
+  (defvar tec/tex-delim-dot-second t
+    "When the `tec/tex-last-delim-char' is . a second charachter (this) is prompted for")
+  (defun tec/get-open-delim-char ()
+    "Exclusivly read next char to tec/tex-last-delim-char"
+    (setq tec/tex-delim-dot-second nil)
+    (setq tec/tex-last-delim-char (read-char-exclusive "Opening deliminator, recognises: 9 ( [ { < | ."))
+    (when (eql ?. tec/tex-last-delim-char)
+      (setq tec/tex-delim-dot-second (read-char-exclusive "Other deliminator, recognises: 0 9 (  ) [ ] { } < > |"))))
+  (defun tec/tex-open-delim-from-char (&optional open-char)
+    "Find the associated opening delim as string"
+    (unless open-char (setq open-char (if (eql ?. tec/tex-last-delim-char)
+                                          tec/tex-delim-dot-second
+                                        tec/tex-last-delim-char)))
+    (case open-char
+      (?\( "(")
+      (?9  "(")
+      (?\[ "[")
+      (?\{ "\\{")
+      (?<  "<")
+      (?|  (if tec/tex-delim-dot-second "." "|"))
+      (t   ".")))
+  (defun tec/tex-close-delim-from-char (&optional open-char)
+    "Find the associated closing delim as string"
+    (if tec/tex-delim-dot-second
+        (case tec/tex-delim-dot-second
+          (?\) ")")
+          (?0  ")")
+          (?\] "]")
+          (?\} "\\}")
+          (?\> ">")
+          (?|  "|")
+          (t   "."))
+      (case (or open-char tec/tex-last-delim-char)
+        (?\( ")")
+        (?9  ")")
+        (?\[ "]")
+        (?\{ "\\}")
+        (?<  ")")
+        (?\) ")")
+        (?0  ")")
+        (?\] "]")
+        (?\} "\\}")
+        (?\> ">")
+        (?|  "|")
+        (t   "."))))
+  (defun tec/tex-next-char-smart-close-delim (&optional open-char)
+    (and (bound-and-true-p smartparens-mode)
+         (eql (char-after) (case (or open-char tec/tex-last-delim-char)
+                             (?\( ?\))
+                             (?\[ ?\])
+                             (?{ ?})
+                             (?< ?>)))))
+  (defun tec/tex-delim-yas-expand (&optional open-char)
+    (yas-expand-snippet (yas-lookup-snippet "_deliminators" 'latex-mode) (point) (+ (point) (if (tec/tex-next-char-smart-close-delim open-char) 2 1)))))
+;; Deliminators:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Editor%20visuals][Editor visuals:1]]
 (add-hook 'LaTeX-mode-hook #'mixed-pitch-mode)

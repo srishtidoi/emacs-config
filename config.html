@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-18 Mon 10:57 -->
+<!-- 2020-05-18 Mon 23:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,7 +195,6 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
-
 
 <!––tec/custom-head-start-->
 <style type="text/css">
@@ -5235,8 +5234,8 @@ Syntax highlighting is nice, so let&rsquo;s turn all of that on
 </div>
 </div>
 </div>
-<div id="outline-container-latex" class="outline-3">
-<h3 id="latex"><span class="section-number-3">5.3</span> LaTeX</h3>
+<div id="outline-container-language-configuration-latex" class="outline-3">
+<h3 id="language-configuration-latex"><span class="section-number-3">5.3</span> LaTeX</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 <img src='https://imgs.xkcd.com/comics/file_extensions.png' title="I have never been lied to by data in a .txt file which has been hand-aligned." alt='File Extensions'>
@@ -5285,9 +5284,13 @@ filename as variable maybe?)</li>
 </div>
 </div>
 </div>
-<div id="outline-container-snippet-value" class="outline-4">
-<h4 id="snippet-value"><span class="section-number-4">5.3.3</span> Snippet value</h4>
+<div id="outline-container-snippet-helpers" class="outline-4">
+<h4 id="snippet-helpers"><span class="section-number-4">5.3.3</span> Snippet helpers</h4>
 <div class="outline-text-4" id="text-5-3-3">
+</div>
+<div id="outline-container-template" class="outline-5">
+<h5 id="template"><span class="section-number-5">5.3.3.1</span> Template</h5>
+<div class="outline-text-5" id="text-5-3-3-1">
 <p>
 For use in the new-file template, let&rsquo;s set out a nice preamble we may want to use.
 Then let&rsquo;s bind the content to a function, and define some nice helpers.
@@ -5327,6 +5330,72 @@ Then let&rsquo;s bind the content to a function, and define some nice helpers.
     <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">equal</span> tec/yas-latex-class-choice <span style="color: #7bc275;">"bmc"</span><span style="color: #7bc275;">)</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">nil</span>
              <span style="color: #7bc275;">(</span><span style="color: #a991f1;">eq</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">read-char-choice</span> <span style="color: #7bc275;">"Include default preamble? [Type y/n]"</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>?y ?n<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> ?y<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
+</div>
+</div>
+</div>
+<div id="outline-container-deliminators" class="outline-5">
+<h5 id="deliminators"><span class="section-number-5">5.3.3.2</span> Deliminators</h5>
+<div class="outline-text-5" id="text-5-3-3-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> tex
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">tec/tex-last-delim-char</span> nil
+    <span style="color: #7e7e87;">"Last open delim expanded in a tex document"</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">tec/tex-delim-dot-second</span> t
+    <span style="color: #7e7e87;">"When the `</span><span style="color: #a991f1;">tec/tex-last-delim-char</span><span style="color: #7e7e87;">' is . a second charachter (this) is prompted for"</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">tec/get-open-delim-char</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Exclusivly read next char to tec/tex-last-delim-char"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">tec/tex-delim-dot-second</span> nil<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">tec/tex-last-delim-char</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">read-char-exclusive</span> <span style="color: #7bc275;">"Opening deliminator, recognises: 9 ( [ { &lt; | ."</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">eql</span> ?. <span style="color: #DFDFDF;">tec/tex-last-delim-char</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">tec/tex-delim-dot-second</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">read-char-exclusive</span> <span style="color: #7bc275;">"Other deliminator, recognises: 0 9 (  ) [ ] { } &lt; &gt; |"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">tec/tex-open-delim-from-char</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> open-char<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Find the associated opening delim as string"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">unless</span> open-char <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> open-char <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">eql</span> ?. <span style="color: #DFDFDF;">tec/tex-last-delim-char</span><span style="color: #7bc275;">)</span>
+                                          <span style="color: #DFDFDF;">tec/tex-delim-dot-second</span>
+                                        <span style="color: #DFDFDF;">tec/tex-last-delim-char</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">case</span> open-char
+      <span style="color: #51afef;">(</span>?\( <span style="color: #7bc275;">"("</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span>?9  <span style="color: #7bc275;">"("</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span>?\[ <span style="color: #7bc275;">"["</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span>?\{ <span style="color: #7bc275;">"\\{"</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span>?&lt;  <span style="color: #7bc275;">"&lt;"</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span>?|  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #DFDFDF;">tec/tex-delim-dot-second</span> <span style="color: #7bc275;">"."</span> <span style="color: #7bc275;">"|"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span>t   <span style="color: #7bc275;">"."</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">tec/tex-close-delim-from-char</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> open-char<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Find the associated closing delim as string"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #DFDFDF;">tec/tex-delim-dot-second</span>
+        <span style="color: #51afef;">(</span><span style="color: #51afef;">case</span> <span style="color: #DFDFDF;">tec/tex-delim-dot-second</span>
+          <span style="color: #C57BDB;">(</span>?\) <span style="color: #7bc275;">")"</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span>?0  <span style="color: #7bc275;">")"</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span>?\] <span style="color: #7bc275;">"]"</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span>?\} <span style="color: #7bc275;">"\\}"</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span>?\&gt; <span style="color: #7bc275;">"&gt;"</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span>?|  <span style="color: #7bc275;">"|"</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span>t   <span style="color: #7bc275;">"."</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">case</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> open-char <span style="color: #DFDFDF;">tec/tex-last-delim-char</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span>?\( <span style="color: #7bc275;">")"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span>?9  <span style="color: #7bc275;">")"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span>?\[ <span style="color: #7bc275;">"]"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span>?\{ <span style="color: #7bc275;">"\\}"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span>?&lt;  <span style="color: #7bc275;">")"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span>?\) <span style="color: #7bc275;">")"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span>?0  <span style="color: #7bc275;">")"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span>?\] <span style="color: #7bc275;">"]"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span>?\} <span style="color: #7bc275;">"\\}"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span>?\&gt; <span style="color: #7bc275;">"&gt;"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span>?|  <span style="color: #7bc275;">"|"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span>t   <span style="color: #7bc275;">"."</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">tec/tex-next-char-smart-close-delim</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> open-char<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">and</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">bound-and-true-p</span> <span style="color: #DFDFDF;">smartparens-mode</span><span style="color: #51afef;">)</span>
+         <span style="color: #51afef;">(</span><span style="color: #a991f1;">eql</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">char-after</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">case</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> open-char <span style="color: #DFDFDF;">tec/tex-last-delim-char</span><span style="color: #7bc275;">)</span>
+                             <span style="color: #7bc275;">(</span>?\( ?\)<span style="color: #7bc275;">)</span>
+                             <span style="color: #7bc275;">(</span>?\[ ?\]<span style="color: #7bc275;">)</span>
+                             <span style="color: #7bc275;">(</span>?{ ?}<span style="color: #7bc275;">)</span>
+                             <span style="color: #7bc275;">(</span>?&lt; ?&gt;<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">tec/tex-delim-yas-expand</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> open-char<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">yas-expand-snippet</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">yas-lookup-snippet</span> <span style="color: #7bc275;">"_deliminators"</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">latex-mode</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">point</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">+</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">point</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">tec/tex-next-char-smart-close-delim</span> open-char<span style="color: #7bc275;">)</span> <span style="color: #e69055; font-weight: bold;">2</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -5661,6 +5730,7 @@ Let&rsquo;s use mixed pitch, because it&rsquo;s great
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">add-hook!</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">gfm-mode</span> markdown-mode<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">mixed-pitch-mode</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
+
 <p>
 Most of the time when I write markdown, it&rsquo;s going into some app/website which
 will do it&rsquo;s own line wrapping, hence we <i>only</i> want to use visual line wrapping. No hard stuff.
@@ -5723,7 +5793,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-18 Mon 10:57</p>
+<p class="date">Created: 2020-05-18 Mon 23:54</p>
 </div>
 </body>
 </html>
