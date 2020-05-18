@@ -821,7 +821,7 @@ SQL can be either the emacsql vector representation, or a string."
 (add-hook 'text-mode-hook #'auto-fill-mode)
 ;; Tweaking defaults:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:1]]
+;; [[file:~/.config/doom/config.org::*Org%20buffer%20creation][Org buffer creation:1]]
 (evil-define-command evil-buffer-org-new (count file)
   "Creates a new ORG buffer replacing the current window, optionally
    editing a certain FILE"
@@ -836,28 +836,28 @@ SQL can be either the emacsql vector representation, or a string."
 (map! :leader
   (:prefix "b"
     :desc "New empty ORG buffer" "o" #'evil-buffer-org-new))
-;; Extra functionality:1 ends here
+;; Org buffer creation:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:2]]
+;; [[file:~/.config/doom/config.org::*List%20bullet%20sequence][List bullet sequence:1]]
 (setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+")))
-;; Extra functionality:2 ends here
+;; List bullet sequence:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:3]]
+;; [[file:~/.config/doom/config.org::*Citation][Citation:1]]
 (use-package! org-ref
    :after org
    :config
     (setq org-ref-completion-library 'org-ref-ivy-cite))
-;; Extra functionality:3 ends here
+;; Citation:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:4]]
+;; [[file:~/.config/doom/config.org::*cdlatex][cdlatex:1]]
 (after! org (add-hook 'org-mode-hook 'turn-on-org-cdlatex))
-;; Extra functionality:4 ends here
+;; cdlatex:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:5]]
+;; [[file:~/.config/doom/config.org::*Spellcheck][Spellcheck:1]]
 (after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
-;; Extra functionality:5 ends here
+;; Spellcheck:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:6]]
+;; [[file:~/.config/doom/config.org::*LSP%20support%20in%20~src~%20blocks][LSP support in ~src~ blocks:1]]
 (cl-defmacro lsp-org-babel-enable (lang)
     "Support LANG in org source code block."
     (setq centaur-lsp 'lsp-mode)

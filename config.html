@@ -590,7 +590,16 @@
 <li><a href="#behaviour">5.2.2. Behaviour</a>
 <ul>
 <li><a href="#tweaking-defaults">5.2.2.1. Tweaking defaults</a></li>
-<li><a href="#behaviour-extra-functionality">5.2.2.2. Extra functionality</a></li>
+<li><a href="#behaviour-extra-functionality">5.2.2.2. Extra functionality</a>
+<ul>
+<li><a href="#org-buffer-creation">5.2.2.2.1. Org buffer creation</a></li>
+<li><a href="#list-bullet-sequence">5.2.2.2.2. List bullet sequence</a></li>
+<li><a href="#citation">5.2.2.2.3. Citation</a></li>
+<li><a href="#cdlatex">5.2.2.2.4. cdlatex</a></li>
+<li><a href="#spellcheck">5.2.2.2.5. Spellcheck</a></li>
+<li><a href="#lsp-support-src">5.2.2.2.6. LSP support in <code>src</code> blocks</a></li>
+</ul>
+</li>
 <li><a href="#super-agenda">5.2.2.3. Super agenda</a></li>
 <li><a href="#capture">5.2.2.4. Capture</a></li>
 <li><a href="#roam">5.2.2.5. Roam</a>
@@ -656,7 +665,7 @@
 </ul>
 </li>
 <li><a href="#editor-visuals">5.3.4. Editor visuals</a></li>
-<li><a href="#cdlatex">5.3.5. CDLaTeX</a></li>
+<li><a href="#latex-cdlatex">5.3.5. CDLaTeX</a></li>
 <li><a href="#synctex">5.3.6. SyncTeX</a></li>
 <li><a href="#evilification">5.3.7. Evilification</a></li>
 </ul>
@@ -2862,6 +2871,10 @@ specific modes as desired.
 <div id="outline-container-behaviour-extra-functionality" class="outline-5">
 <h5 id="behaviour-extra-functionality"><span class="section-number-5">5.2.2.2</span> Extra functionality</h5>
 <div class="outline-text-5" id="text-5-2-2-2">
+</div>
+<div id="outline-container-org-buffer-creation" class="outline-6">
+<h6 id="org-buffer-creation"><span class="section-number-6">5.2.2.2.1</span> Org buffer creation</h6>
+<div class="outline-text-6" id="text-5-2-2-2-1">
 <p>
 Let&rsquo;s also make creating an org buffer just that little bit easier.
 </p>
@@ -2882,6 +2895,11 @@ Let&rsquo;s also make creating an org buffer just that little bit easier.
     <span style="color: #C57BDB;">:desc</span> <span style="color: #7bc275;">"New empty ORG buffer"</span> <span style="color: #7bc275;">"o"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">evil-buffer-org-new</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
+</div>
+</div>
+<div id="outline-container-list-bullet-sequence" class="outline-6">
+<h6 id="list-bullet-sequence"><span class="section-number-6">5.2.2.2.2</span> List bullet sequence</h6>
+<div class="outline-text-6" id="text-5-2-2-2-2">
 <p>
 I think it makes sense to have list bullets change with depth
 </p>
@@ -2889,6 +2907,11 @@ I think it makes sense to have list bullets change with depth
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-list-demote-modify-bullet</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"+"</span> . <span style="color: #7bc275;">"-"</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"-"</span> . <span style="color: #7bc275;">"+"</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #7bc275;">"*"</span> . <span style="color: #7bc275;">"+"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
+</div>
+</div>
+<div id="outline-container-citation" class="outline-6">
+<h6 id="citation"><span class="section-number-6">5.2.2.2.3</span> Citation</h6>
+<div class="outline-text-6" id="text-5-2-2-2-3">
 <p>
 Occasionally I want to cite something.
 </p>
@@ -2899,6 +2922,11 @@ Occasionally I want to cite something.
     <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-ref-completion-library</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">org-ref-ivy-cite</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
+</div>
+</div>
+<div id="outline-container-cdlatex" class="outline-6">
+<h6 id="cdlatex"><span class="section-number-6">5.2.2.2.4</span> cdlatex</h6>
+<div class="outline-text-6" id="text-5-2-2-2-4">
 <p>
 It&rsquo;s also nice to be able to use <code>cdlatex</code>.
 </p>
@@ -2910,7 +2938,11 @@ It&rsquo;s also nice to be able to use <code>cdlatex</code>.
 At some point in the future it could be good to investigate <a href="https://scripter.co/splitting-an-org-block-into-two/">splitting org blocks</a>.
 Likewise <a href="https://archive.casouri.cat/note/2020/insert-math-symbol-in-emacs/">this</a> looks good for symbols.
 </p>
-
+</div>
+</div>
+<div id="outline-container-spellcheck" class="outline-6">
+<h6 id="spellcheck"><span class="section-number-6">5.2.2.2.5</span> Spellcheck</h6>
+<div class="outline-text-6" id="text-5-2-2-2-5">
 <p>
 My spelling is atrocious, so let&rsquo;s get flycheck going.
 </p>
@@ -2918,7 +2950,11 @@ My spelling is atrocious, so let&rsquo;s get flycheck going.
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">org-mode-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">turn-on-flyspell</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
-
+</div>
+</div>
+<div id="outline-container-lsp-support-src" class="outline-6">
+<h6 id="lsp-support-src"><span class="section-number-6">5.2.2.2.6</span> LSP support in <code>src</code> blocks</h6>
+<div class="outline-text-6" id="text-5-2-2-2-6">
 <p>
 Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blocks.
 </p>
