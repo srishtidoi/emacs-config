@@ -1734,6 +1734,11 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
 ;; Symbols:3 ends here
 
 ;; [[file:~/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:1]]
+(after! org
+  (setq org-highlight-latex-and-related '(native script entities)))
+;; LaTeX Fragments:1 ends here
+
+;; [[file:~/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:2]]
 (setq org-format-latex-header "\\documentclass{article}
 \\usepackage[usenames]{color}
 
@@ -1761,9 +1766,9 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
 % my custom stuff
 \\usepackage{arev}
 \\usepackage{arevmath}")
-;; LaTeX Fragments:1 ends here
+;; LaTeX Fragments:2 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:2]]
+;; [[file:~/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:3]]
 (after! org
 ;; make background of fragments transparent
 ;; (let ((dvipng--plist (alist-get 'dvipng org-preview-latex-process-alist)))
@@ -1777,12 +1782,12 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
                                       'default)
                                   :background nil t))))
 )
-;; LaTeX Fragments:2 ends here
+;; LaTeX Fragments:3 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:3]]
+;; [[file:~/.config/doom/config.org::*LaTeX%20Fragments][LaTeX Fragments:4]]
 (after! org
   (add-to-list 'org-latex-regexps '("\\ce" "^\\\\ce{\\(?:[^\000{}]\\|{[^\000}]+?}\\)}" 0 nil)))
-;; LaTeX Fragments:3 ends here
+;; LaTeX Fragments:4 ends here
 
 ;; [[file:~/.config/doom/config.org::*Stolen%20from%20%5B%5Bhttps://github.com/jkitchin/scimax%5D%5Bscimax%5D%5D%20(semi-working%20right%20now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):1]]
 (after! org

@@ -4200,6 +4200,14 @@ We also like <code>org-fragtog</code>, and that wants a hook.
 <h6 id="latex-fragments"><span class="section-number-6">5.2.3.1.3</span> LaTeX Fragments</h6>
 <div class="outline-text-6" id="text-5-2-3-1-3">
 <p>
+First off, we want those fragments to look good.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-highlight-latex-and-related</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>native script entities<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+<p>
 It&rsquo;s nice to customise the look of LaTeX fragments so they fit better in the
 text &#x2014; like this \(\sqrt{\beta^2+3}-\sum_{\phi=1}^\infty \frac{x^\phi-1}{\Gamma(a)}\). Let&rsquo;s start by adding a sans font.
 </p>
