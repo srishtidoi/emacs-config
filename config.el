@@ -832,6 +832,13 @@ SQL can be either the emacsql vector representation, or a string."
 (after! org (add-hook 'org-mode-hook 'turn-on-org-cdlatex))
 ;; cdlatex:1 ends here
 
+;; [[file:~/.config/doom/config.org::*cdlatex][cdlatex:2]]
+(after! org
+  (defadvice! org-edit-latex-emv-after-insert ()
+    :after #'org-cdlatex-environment-indent
+    (org-edit-latex-environment)))
+;; cdlatex:2 ends here
+
 ;; [[file:~/.config/doom/config.org::*Spellcheck][Spellcheck:1]]
 (after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
 ;; Spellcheck:1 ends here

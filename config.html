@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-19 Tue 21:52 -->
+<!-- 2020-05-20 Wed 01:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -2080,9 +2080,9 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> info-colors
   <span style="color: #C57BDB;">:commands</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">info-colors-fontify-node</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">Info-selection-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">info-colors-fontify-node</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">Info-selection-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">info-colors-fontify-node</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">Info-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">mixed-pitch-mode</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">Info-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">mixed-pitch-mode</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -2951,6 +2951,19 @@ It&rsquo;s also nice to be able to use <code>cdlatex</code>.
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">org-mode-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">turn-on-org-cdlatex</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
+
+<p>
+It&rsquo;s handy to be able to quickly insert environments with <kbd>C-c }</kbd>. I almost always
+want to edit them afterwards though, so let&rsquo;s make that happen by default.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> org-edit-latex-emv-after-insert <span style="color: #7bc275;">()</span>
+    <span style="color: #C57BDB;">:after</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-cdlatex-environment-indent</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-edit-latex-environment</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
 <p>
 At some point in the future it could be good to investigate <a href="https://scripter.co/splitting-an-org-block-into-two/">splitting org blocks</a>.
 Likewise <a href="https://archive.casouri.cat/note/2020/insert-math-symbol-in-emacs/">this</a> looks good for symbols.
@@ -3054,25 +3067,25 @@ functionality as in LaTeX. Let&rsquo;s try viewing possible output files with th
 <span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org-agenda
   <span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">org-super-agenda-mode</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-skip-scheduled-if-done</span> t
-      <span style="color: #DFDFDF;">org-agenda-skip-deadline-if-done</span> t
-      <span style="color: #DFDFDF;">org-agenda-include-deadlines</span> t
-      <span style="color: #DFDFDF;">org-agenda-block-separator</span> nil
-      <span style="color: #DFDFDF;">org-agenda-tags-column</span> <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
-      <span style="color: #DFDFDF;">org-agenda-compact-blocks</span> t<span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-block-separator nil
+      org-agenda-tags-column <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
+      org-agenda-compact-blocks t<span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-custom-commands</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-agenda-custom-commands
       <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"o"</span> <span style="color: #7bc275;">"Overview"</span>
-         <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>agenda <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-agenda-span</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">day</span><span style="color: #51afef;">)</span>
-                      <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-super-agenda-groups</span>
+         <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>agenda <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-agenda-span <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">day</span><span style="color: #51afef;">)</span>
+                      <span style="color: #51afef;">(</span>org-super-agenda-groups
                        <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Today"</span>
                                 <span style="color: #C57BDB;">:time-grid</span> t
                                 <span style="color: #C57BDB;">:date</span> today
                                 <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"TODAY"</span>
                                 <span style="color: #C57BDB;">:scheduled</span> today
                                 <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-          <span style="color: #C57BDB;">(</span>alltodo <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-agenda-overriding-header</span> <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
-                       <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-super-agenda-groups</span>
+          <span style="color: #C57BDB;">(</span>alltodo <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-agenda-overriding-header <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
+                       <span style="color: #51afef;">(</span>org-super-agenda-groups
                         <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Next to do"</span>
                                  <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"NEXT"</span>
                                  <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #7bc275;">)</span>
@@ -3430,7 +3443,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orge843e11"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org39e9d34"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -3545,7 +3558,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -4021,7 +4034,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="org04e65a2"></a></li>
+This uses the radar template, the result of which can be seen in <a id="org4b1e812"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -5986,7 +5999,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-19 Tue 21:52</p>
+<p class="date">Created: 2020-05-20 Wed 01:12</p>
 </div>
 </body>
 </html>
