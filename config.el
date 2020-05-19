@@ -207,27 +207,6 @@
 (add-hook 'doom-load-theme-hook #'set-appropriate-splash)
 ;; Splash screen:1 ends here
 
-(defun +doom/update-all-pinned-package-form ()
-  "Call `doom/update-pinned-package-form' on every package! statement in the buffer"
-  (interactive)
-  (beginning-of-buffer)
-  (let ((progress 0) (package "") (total (how-many "package!")) (updated '()))
-    (while (search-forward "package!" nil t)
-      (setq progress (1+ progress))
-      (forward-char) ;; move cursor to package name "package! |name"
-      (setq package (current-word))
-      (message (format "Re-pinning package: %s/%s (%s)" progress total package))
-      (backward-char)
-      (evil-scroll-line-to-center (line-number-at-pos))
-      (redisplay)
-      (if (s-contains-p "Updated" (condition-case nil
-                                      (doom/update-pinned-package-form)
-                                    (user-error "")))
-          (add-to-list 'updated package))
-      (search-forward "package!" nil t)) ;; because of cursor-moving done
-    (message (format "%s packages updated (%s)" (length updated) (s-join ", " updated)))
-    updated))
-
 ;; [[file:~/.config/doom/config.org::*Abbrev%20mode][Abbrev mode:1]]
 (use-package abbrev
   :init
