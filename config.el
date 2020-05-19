@@ -2163,6 +2163,38 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
  ::-webkit-scrollbar-track { background:#9992; }
  ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
  ::-webkit-scrollbar-thumb:hover { background:#888; }
+
+ /* so the bounding box coveres the <a> */
+ h1,h2,h3,h4,h5,h6 {
+     padding-left: 30px;
+     margin-left: -30px;
+ }
+
+ h1 > a[aria-hidden='true'],
+ h2 > a[aria-hidden='true'],
+ h3 > a[aria-hidden='true'],
+ h4 > a[aria-hidden='true'],
+ h5 > a[aria-hidden='true'],
+ h6 > a[aria-hidden='true'] {
+     color: #6a737d;
+     float: left;
+     padding-right: 4px;
+     margin-left: -25px;
+     position: relative;
+     top: 7px;
+     line-height: 1;
+     font-size: 70%;
+     visibility: hidden;
+ }
+
+ h1:hover > a[aria-hidden='true'],
+ h2:hover > a[aria-hidden='true'],
+ h3:hover > a[aria-hidden='true'],
+ h4:hover > a[aria-hidden='true'],
+ h5:hover > a[aria-hidden='true'],
+ h6:hover > a[aria-hidden='true'] {
+     visibility: visible;
+ }
 </style>
 <!––tec/custom-head-end-->
 "
@@ -2189,6 +2221,20 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 	  (trans . "<span class='checkbox'></span>")))))
 (setq org-html-checkbox-type 'html-span))
 ;; Change checkbox type:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Header%20anchors][Header anchors:1]]
+(after! org
+  (defun tec/org-export-html-headline-anchor (text backend info)
+    (when (org-export-derived-backend-p backend 'html)
+      (replace-regexp-in-string
+       "<h\\([0-9]\\) id=\"\\([a-z0-9-]+\\)\">" ; this is quite restrictive, but due to `org-heading-contraction' I can do this
+       "<h\\1 id=\"\\2\">\
+ <a class=\"anchor\" aria-hidden=\"true\" href=\"#\\2\">🔗</a>"
+       text)))
+
+  (add-to-list 'org-export-filter-headline-functions
+               'tec/org-export-html-headline-anchor))
+;; Header anchors:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*LaTeX%20Rendering][LaTeX Rendering:1]]
 ;; (setq-default org-html-with-latex `dvisvgm)

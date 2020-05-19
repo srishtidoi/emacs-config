@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-19 Tue 01:49 -->
+<!-- 2020-05-19 Tue 20:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,7 +195,6 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
-
 
 
 
@@ -641,7 +640,8 @@
 <li><a href="#custom-css-js">5.2.3.3.1. Custom CSS/JS</a></li>
 <li><a href="#make-verbatim-different">5.2.3.3.2. Make verbatim different to code</a></li>
 <li><a href="#change-checkbox-type">5.2.3.3.3. Change checkbox type</a></li>
-<li><a href="#latex-rendering">5.2.3.3.4. LaTeX Rendering</a></li>
+<li><a href="#header-anchors">5.2.3.3.4. Header anchors</a></li>
+<li><a href="#latex-rendering">5.2.3.3.5. LaTeX Rendering</a></li>
 </ul>
 </li>
 <li><a href="#exporting-latex">5.2.3.4. Exporting to LaTeX</a>
@@ -2067,9 +2067,9 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> info-colors
   <span style="color: #C57BDB;">:commands</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">info-colors-fontify-node</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">Info-selection-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">info-colors-fontify-node</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">Info-selection-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">info-colors-fontify-node</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">Info-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">mixed-pitch-mode</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">Info-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">mixed-pitch-mode</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -3417,7 +3417,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orge4eaa05"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org9f44fa6"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -4008,7 +4008,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="org576abb7"></a></li>
+This uses the radar template, the result of which can be seen in <a id="orgb827181"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -4845,6 +4845,38 @@ match out theme (they don&rsquo;t by default), so I scraped some code from <code
 <span style="color: #7bc275;"> ::-webkit-scrollbar-track { background:#9992; }</span>
 <span style="color: #7bc275;"> ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }</span>
 <span style="color: #7bc275;"> ::-webkit-scrollbar-thumb:hover { background:#888; }</span>
+
+<span style="color: #7bc275;"> /* so the bounding box coveres the &lt;a&gt; */</span>
+<span style="color: #7bc275;"> h1,h2,h3,h4,h5,h6 {</span>
+<span style="color: #7bc275;">     padding-left: 30px;</span>
+<span style="color: #7bc275;">     margin-left: -30px;</span>
+<span style="color: #7bc275;"> }</span>
+
+<span style="color: #7bc275;"> h1 &gt; a[aria-hidden='true'],</span>
+<span style="color: #7bc275;"> h2 &gt; a[aria-hidden='true'],</span>
+<span style="color: #7bc275;"> h3 &gt; a[aria-hidden='true'],</span>
+<span style="color: #7bc275;"> h4 &gt; a[aria-hidden='true'],</span>
+<span style="color: #7bc275;"> h5 &gt; a[aria-hidden='true'],</span>
+<span style="color: #7bc275;"> h6 &gt; a[aria-hidden='true'] {</span>
+<span style="color: #7bc275;">     color: #6a737d;</span>
+<span style="color: #7bc275;">     float: left;</span>
+<span style="color: #7bc275;">     padding-right: 4px;</span>
+<span style="color: #7bc275;">     margin-left: -25px;</span>
+<span style="color: #7bc275;">     position: relative;</span>
+<span style="color: #7bc275;">     top: 7px;</span>
+<span style="color: #7bc275;">     line-height: 1;</span>
+<span style="color: #7bc275;">     font-size: 70%;</span>
+<span style="color: #7bc275;">     visibility: hidden;</span>
+<span style="color: #7bc275;"> }</span>
+
+<span style="color: #7bc275;"> h1:hover &gt; a[aria-hidden='true'],</span>
+<span style="color: #7bc275;"> h2:hover &gt; a[aria-hidden='true'],</span>
+<span style="color: #7bc275;"> h3:hover &gt; a[aria-hidden='true'],</span>
+<span style="color: #7bc275;"> h4:hover &gt; a[aria-hidden='true'],</span>
+<span style="color: #7bc275;"> h5:hover &gt; a[aria-hidden='true'],</span>
+<span style="color: #7bc275;"> h6:hover &gt; a[aria-hidden='true'] {</span>
+<span style="color: #7bc275;">     visibility: visible;</span>
+<span style="color: #7bc275;"> }</span>
 <span style="color: #7bc275;">&lt;/style&gt;</span>
 <span style="color: #7bc275;">&lt;!&#8211;&#8211;tec/custom-head-end--&gt;</span>
 <span style="color: #7bc275;">"</span>
@@ -4895,9 +4927,31 @@ We also want to use HTML checkboxes, however we want to get a bit fancier than d
 </ul>
 </div>
 </div>
-<div id="outline-container-latex-rendering" class="outline-6">
-<h6 id="latex-rendering"><span class="section-number-6">5.2.3.3.4</span> LaTeX Rendering</h6>
+<div id="outline-container-header-anchors" class="outline-6">
+<h6 id="header-anchors"><span class="section-number-6">5.2.3.3.4</span> Header anchors</h6>
 <div class="outline-text-6" id="text-5-2-3-3-4">
+<p>
+I want to add github-style links on hover for headings.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">tec/org-export-html-headline-anchor</span> <span style="color: #7bc275;">(</span>text backend info<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">html</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span>
+       <span style="color: #7bc275;">"&lt;h</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">(</span><span style="color: #7bc275;">[0-9]</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">)</span><span style="color: #7bc275;"> id=\"</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">(</span><span style="color: #7bc275;">[a-z0-9-]+</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">)</span><span style="color: #7bc275;">\"&gt;"</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">this is quite restrictive, but due to `</span><span style="color: #a991f1;">org-heading-contraction</span><span style="color: #62686E;">' I can do this</span>
+       <span style="color: #7bc275;">"&lt;h\\1 id=\"\\2\"&gt;\</span>
+<span style="color: #7bc275;"> &lt;a class=\"anchor\" aria-hidden=\"true\" href=\"#\\2\"&gt;&#128279;&lt;/a&gt;"</span>
+       text<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">org-export-filter-headline-functions</span>
+               <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">tec/org-export-html-headline-anchor</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-latex-rendering" class="outline-6">
+<h6 id="latex-rendering"><span class="section-number-6">5.2.3.3.5</span> LaTeX Rendering</h6>
+<div class="outline-text-6" id="text-5-2-3-3-5">
 <p>
 On the maths side of things, I consider <code>dvisvgm</code> to be a rather compelling
 option. However this isn&rsquo;t sized very well at the moment.
@@ -4941,6 +4995,25 @@ be unaffected lest&rsquo;s use <code>;</code> as a prefix to prevent the transfo
                <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">tec/org-export-latex-filter-acronym</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">org-export-filter-headline-functions</span>
                <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">tec/org-export-latex-filter-acronym</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">tec/org-export-latex-fancy-item-checkboxes</span> <span style="color: #7bc275;">(</span>text backend info<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">latex</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span>
+       <span style="color: #7bc275;">"\\\\item\\[{$\\\\</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">(</span><span style="color: #7bc275;">\\w+</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">)</span><span style="color: #7bc275;">$}\\]"</span>
+       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">(</span>fullmatch<span style="color: #7bc275;">)</span>
+         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"\\\\item["</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">pcase</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">substring</span> fullmatch <span style="color: #e69055; font-weight: bold;">9</span> <span style="color: #e69055; font-weight: bold;">-3</span><span style="color: #C57BDB;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">content of capture group</span>
+                               <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"square"</span>   <span style="color: #7bc275;">"\\\\ifdefined\\\\checkboxUnchecked\\\\checkboxUnchecked\\\\else$\\\\square$\\\\fi"</span>    <span style="color: #C57BDB;">)</span>
+                               <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"boxminus"</span> <span style="color: #7bc275;">"\\\\ifdefined\\\\checkboxTransitive\\\\checkboxTransitive\\\\else$\\\\boxminus$\\\\fi"</span><span style="color: #C57BDB;">)</span>
+                               <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">"boxtimes"</span> <span style="color: #7bc275;">"\\\\ifdefined\\\\checkboxChecked\\\\checkboxChecked\\\\else$\\\\boxtimes$\\\\fi"</span>      <span style="color: #C57BDB;">)</span>
+                               <span style="color: #C57BDB;">(</span>_ <span style="color: #7bc275;">(</span><span style="color: #a991f1;">substring</span> fullmatch <span style="color: #e69055; font-weight: bold;">9</span> <span style="color: #e69055; font-weight: bold;">-3</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #7bc275;">"]"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+       text<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">org-export-filter-item-functions</span>
+               <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">tec/org-export-latex-fancy-item-checkboxes</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -5887,7 +5960,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-19 Tue 01:49</p>
+<p class="date">Created: 2020-05-19 Tue 20:16</p>
 </div>
 </body>
 </html>
