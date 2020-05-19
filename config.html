@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-19 Tue 20:16 -->
+<!-- 2020-05-19 Tue 20:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,6 +195,7 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
+
 
 
 
@@ -3417,7 +3418,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org9f44fa6"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org5741ae0"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -4008,7 +4009,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="orgb827181"></a></li>
+This uses the radar template, the result of which can be seen in <a id="orgfb8800e"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -4845,6 +4846,18 @@ match out theme (they don&rsquo;t by default), so I scraped some code from <code
 <span style="color: #7bc275;"> ::-webkit-scrollbar-track { background:#9992; }</span>
 <span style="color: #7bc275;"> ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }</span>
 <span style="color: #7bc275;"> ::-webkit-scrollbar-thumb:hover { background:#888; }</span>
+
+<span style="color: #7bc275;"> /* sometimes this all-important space seems to go missing</span>
+<span style="color: #7bc275;"> /so let's protect against that. If it's exteranious it's</span>
+<span style="color: #7bc275;"> /just gobbled anyway. */</span>
+<span style="color: #7bc275;"> span.section-number-1:after,</span>
+<span style="color: #7bc275;"> span.section-number-2:after,</span>
+<span style="color: #7bc275;"> span.section-number-3:after,</span>
+<span style="color: #7bc275;"> span.section-number-4:after,</span>
+<span style="color: #7bc275;"> span.section-number-5:after,</span>
+<span style="color: #7bc275;"> span.section-number-6:after {</span>
+<span style="color: #7bc275;">     content: ' '</span>
+<span style="color: #7bc275;"> }</span>
 
 <span style="color: #7bc275;"> /* so the bounding box coveres the &lt;a&gt; */</span>
 <span style="color: #7bc275;"> h1,h2,h3,h4,h5,h6 {</span>
@@ -5960,7 +5973,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-19 Tue 20:16</p>
+<p class="date">Created: 2020-05-19 Tue 20:34</p>
 </div>
 </body>
 </html>

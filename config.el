@@ -2164,6 +2164,18 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
  ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
  ::-webkit-scrollbar-thumb:hover { background:#888; }
 
+ /* sometimes this all-important space seems to go missing
+ /so let's protect against that. If it's exteranious it's
+ /just gobbled anyway. */
+ span.section-number-1:after,
+ span.section-number-2:after,
+ span.section-number-3:after,
+ span.section-number-4:after,
+ span.section-number-5:after,
+ span.section-number-6:after {
+     content: ' '
+ }
+
  /* so the bounding box coveres the <a> */
  h1,h2,h3,h4,h5,h6 {
      padding-left: 30px;
