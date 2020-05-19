@@ -4951,22 +4951,31 @@ Now for a few more adjustments.
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> ox-latex
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">org-latex-classes</span>
                <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"fancy-article"</span>
-               <span style="color: #7bc275;">"\\documentclass{scrartcl}\n\</span>
+                 <span style="color: #7bc275;">"\\documentclass{scrartcl}\n\</span>
 <span style="color: #7bc275;">\\usepackage[T1]{fontenc}\n\</span>
 <span style="color: #7bc275;">\\usepackage[osf,largesc,helvratio=0.9]{newpxtext}\n\</span>
 <span style="color: #7bc275;">\\usepackage[scale=0.92]{sourcecodepro}\n\</span>
 <span style="color: #7bc275;">\\usepackage[varbb]{newpxmath}\n\</span>
+
 <span style="color: #7bc275;">\\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=2000]{microtype}\n\</span>
 <span style="color: #7bc275;">\\usepackage{xcolor}\n\</span>
 <span style="color: #7bc275;">\\usepackage{booktabs}</span>
+
 <span style="color: #7bc275;">\\usepackage{subcaption}</span>
 <span style="color: #7bc275;">\\usepackage[hypcap=true]{caption}</span>
 <span style="color: #7bc275;">\\setkomafont{caption}{\\sffamily\\small}</span>
 <span style="color: #7bc275;">\\setkomafont{captionlabel}{\\upshape\\bfseries}</span>
 <span style="color: #7bc275;">\\captionsetup{justification=raggedright,singlelinecheck=true}</span>
 <span style="color: #7bc275;">\\setcapindent{0pt}</span>
+
 <span style="color: #7bc275;">\\setlength{\\parskip}{\\baselineskip}\n\</span>
-<span style="color: #7bc275;">\\setlength{\\parindent}{0pt}"</span>
+<span style="color: #7bc275;">\\setlength{\\parindent}{0pt}\n\</span>
+
+<span style="color: #7bc275;">\\usepackage{pifont}</span>
+<span style="color: #7bc275;">\\newcommand{\\checkboxUnchecked}{$\\square$}</span>
+<span style="color: #7bc275;">\\newcommand{\\checkboxTransitive}{\\rlap{\\raisebox{0.0ex}{\\hspace{0.35ex}\\Large\\textbf -}}$\\square$}</span>
+<span style="color: #7bc275;">\\newcommand{\\checkboxChecked}{\\rlap{\\raisebox{0.2ex}{\\hspace{0.35ex}\\scriptsize \\ding{56}}}$\\square$}</span>
+<span style="color: #7bc275;">"</span>
                <span style="color: #51afef;">(</span><span style="color: #7bc275;">"\\section{%s}"</span> . <span style="color: #7bc275;">"\\section*{%s}"</span><span style="color: #51afef;">)</span>
                <span style="color: #51afef;">(</span><span style="color: #7bc275;">"\\subsection{%s}"</span> . <span style="color: #7bc275;">"\\subsection*{%s}"</span><span style="color: #51afef;">)</span>
                <span style="color: #51afef;">(</span><span style="color: #7bc275;">"\\subsubsection{%s}"</span> . <span style="color: #7bc275;">"\\subsubsection*{%s}"</span><span style="color: #51afef;">)</span>

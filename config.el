@@ -2221,25 +2221,52 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 ;; Exporting to LaTeX:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Exporting%20to%20LaTeX][Exporting to LaTeX:2]]
+(after! org
+  (defun tec/org-export-latex-fancy-item-checkboxes (text backend info)
+    (when (org-export-derived-backend-p backend 'latex)
+      (replace-regexp-in-string
+       "\\\\item\\[{$\\\\\\(\\w+\\)$}\\]"
+       (lambda (fullmatch)
+         (concat "\\\\item[" (pcase (substring fullmatch 9 -3) ; content of capture group
+                               ("square"   "\\\\ifdefined\\\\checkboxUnchecked\\\\checkboxUnchecked\\\\else$\\\\square$\\\\fi"    )
+                               ("boxminus" "\\\\ifdefined\\\\checkboxTransitive\\\\checkboxTransitive\\\\else$\\\\boxminus$\\\\fi")
+                               ("boxtimes" "\\\\ifdefined\\\\checkboxChecked\\\\checkboxChecked\\\\else$\\\\boxtimes$\\\\fi"      )
+                               (_ (substring fullmatch 9 -3))) "]"))
+       text)))
+
+  (add-to-list 'org-export-filter-item-functions
+               'tec/org-export-latex-fancy-item-checkboxes))
+;; Exporting to LaTeX:2 ends here
+
+;; [[file:~/.config/doom/config.org::*Exporting%20to%20LaTeX][Exporting to LaTeX:3]]
 (after! ox-latex
   (add-to-list 'org-latex-classes
                '("fancy-article"
-               "\\documentclass{scrartcl}\n\
+                 "\\documentclass{scrartcl}\n\
 \\usepackage[T1]{fontenc}\n\
 \\usepackage[osf,largesc,helvratio=0.9]{newpxtext}\n\
 \\usepackage[scale=0.92]{sourcecodepro}\n\
 \\usepackage[varbb]{newpxmath}\n\
+
 \\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=2000]{microtype}\n\
 \\usepackage{xcolor}\n\
 \\usepackage{booktabs}
+
 \\usepackage{subcaption}
 \\usepackage[hypcap=true]{caption}
 \\setkomafont{caption}{\\sffamily\\small}
 \\setkomafont{captionlabel}{\\upshape\\bfseries}
 \\captionsetup{justification=raggedright,singlelinecheck=true}
 \\setcapindent{0pt}
+
 \\setlength{\\parskip}{\\baselineskip}\n\
-\\setlength{\\parindent}{0pt}"
+\\setlength{\\parindent}{0pt}\n\
+
+\\usepackage{pifont}
+\\newcommand{\\checkboxUnchecked}{$\\square$}
+\\newcommand{\\checkboxTransitive}{\\rlap{\\raisebox{0.0ex}{\\hspace{0.35ex}\\Large\\textbf -}}$\\square$}
+\\newcommand{\\checkboxChecked}{\\rlap{\\raisebox{0.2ex}{\\hspace{0.35ex}\\scriptsize \\ding{56}}}$\\square$}
+"
                ("\\section{%s}" . "\\section*{%s}")
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
@@ -2321,7 +2348,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 \\urlstyle{same}\n")
   (setq org-latex-pdf-process
         '("latexmk -shell-escape -interaction=nonstopmode -f -pdf -output-directory=%o %f")))
-;; Exporting to LaTeX:2 ends here
+;; Exporting to LaTeX:3 ends here
 
 ;; [[file:~/.config/doom/config.org::*Chameleon%20---%20aka.%20match%20theme][Chameleon --- aka. match theme:1]]
 (after! ox
