@@ -2078,7 +2078,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
      border-top: none;
  }
 
- a {
+ a[aria-hidden!='true'] {
      text-decoration: none;
      background-image: linear-gradient(#d8dce9, #d8dce9);
      background-position: 0% 100%;
@@ -2089,7 +2089,8 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
  \#table-of-contents a {
      background-image: none;
  }
- a:hover, a:focus {
+ a:hover[aria-hidden!='true'],
+ a:focus[aria-hidden!='true'] {
      background-size: 100% 2px;
  }
  a[href^='#'] { font-variant-numeric: oldstyle-nums; }

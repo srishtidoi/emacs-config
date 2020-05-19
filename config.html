@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-19 Tue 20:38 -->
+<!-- 2020-05-19 Tue 21:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -295,7 +295,7 @@
      border-top: none;
  }
 
- a {
+ a[aria-hidden!='true'] {
      text-decoration: none;
      background-image: linear-gradient(#d8dce9, #d8dce9);
      background-position: 0% 100%;
@@ -306,7 +306,8 @@
  #table-of-contents a {
      background-image: none;
  }
- a:hover, a:focus {
+ a:hover[aria-hidden!='true'],
+ a:focus[aria-hidden!='true'] {
      background-size: 100% 2px;
  }
  a[href^='#'] { font-variant-numeric: oldstyle-nums; }
@@ -941,13 +942,13 @@ I have attempted to quantify aspects of my impressions of them below.
 </tr>
 
 <tr>
-<td class="org-left">Komodo Edit</td>
-<td class="org-right">2</td>
-<td class="org-right">1</td>
+<td class="org-left">VSCode</td>
 <td class="org-right">3</td>
-<td class="org-right">2</td>
-<td class="org-right">2</td>
-<td class="org-right">2</td>
+<td class="org-right">3</td>
+<td class="org-right">4</td>
+<td class="org-right">3.5</td>
+<td class="org-right">4</td>
+<td class="org-right">3</td>
 </tr>
 
 <tr>
@@ -961,16 +962,6 @@ I have attempted to quantify aspects of my impressions of them below.
 </tr>
 
 <tr>
-<td class="org-left">VSCode</td>
-<td class="org-right">3</td>
-<td class="org-right">3</td>
-<td class="org-right">4</td>
-<td class="org-right">3.5</td>
-<td class="org-right">4</td>
-<td class="org-right">3</td>
-</tr>
-
-<tr>
 <td class="org-left">Emacs</td>
 <td class="org-right">4</td>
 <td class="org-right">4</td>
@@ -978,6 +969,16 @@ I have attempted to quantify aspects of my impressions of them below.
 <td class="org-right">4</td>
 <td class="org-right">3.5</td>
 <td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-left">Komodo Edit</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">3</td>
+<td class="org-right">2</td>
+<td class="org-right">2</td>
+<td class="org-right">2</td>
 </tr>
 </tbody>
 </table>
@@ -3082,25 +3083,25 @@ functionality as in LaTeX. Let&rsquo;s try viewing possible output files with th
 <span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org-agenda
   <span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">org-super-agenda-mode</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-skip-scheduled-if-done</span> t
-      <span style="color: #DFDFDF;">org-agenda-skip-deadline-if-done</span> t
-      <span style="color: #DFDFDF;">org-agenda-include-deadlines</span> t
-      <span style="color: #DFDFDF;">org-agenda-block-separator</span> nil
-      <span style="color: #DFDFDF;">org-agenda-tags-column</span> <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
-      <span style="color: #DFDFDF;">org-agenda-compact-blocks</span> t<span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-block-separator nil
+      org-agenda-tags-column <span style="color: #e69055; font-weight: bold;">100</span> <span style="color: #62686E;">;; </span><span style="color: #62686E;">from testing this seems to be a good value</span>
+      org-agenda-compact-blocks t<span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-agenda-custom-commands</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-agenda-custom-commands
       <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"o"</span> <span style="color: #7bc275;">"Overview"</span>
-         <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>agenda <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-agenda-span</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">day</span><span style="color: #51afef;">)</span>
-                      <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-super-agenda-groups</span>
+         <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>agenda <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-agenda-span <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">day</span><span style="color: #51afef;">)</span>
+                      <span style="color: #51afef;">(</span>org-super-agenda-groups
                        <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Today"</span>
                                 <span style="color: #C57BDB;">:time-grid</span> t
                                 <span style="color: #C57BDB;">:date</span> today
                                 <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"TODAY"</span>
                                 <span style="color: #C57BDB;">:scheduled</span> today
                                 <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-          <span style="color: #C57BDB;">(</span>alltodo <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-agenda-overriding-header</span> <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
-                       <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-super-agenda-groups</span>
+          <span style="color: #C57BDB;">(</span>alltodo <span style="color: #7bc275;">""</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>org-agenda-overriding-header <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
+                       <span style="color: #51afef;">(</span>org-super-agenda-groups
                         <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Next to do"</span>
                                  <span style="color: #C57BDB;">:todo</span> <span style="color: #7bc275;">"NEXT"</span>
                                  <span style="color: #C57BDB;">:order</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #7bc275;">)</span>
@@ -3458,7 +3459,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgd67fa85"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org5da404f"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -4049,7 +4050,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="orge1d6cbf"></a></li>
+This uses the radar template, the result of which can be seen in <a id="orga2cad5e"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -4801,7 +4802,7 @@ match out theme (they don&rsquo;t by default), so I scraped some code from <code
 <span style="color: #7bc275;">     border-top: none;</span>
 <span style="color: #7bc275;"> }</span>
 
-<span style="color: #7bc275;"> a {</span>
+<span style="color: #7bc275;"> a[aria-hidden!='true'] {</span>
 <span style="color: #7bc275;">     text-decoration: none;</span>
 <span style="color: #7bc275;">     background-image: linear-gradient(#d8dce9, #d8dce9);</span>
 <span style="color: #7bc275;">     background-position: 0% 100%;</span>
@@ -4812,7 +4813,8 @@ match out theme (they don&rsquo;t by default), so I scraped some code from <code
 <span style="color: #7bc275;"> </span><span style="color: #FCCE7B;">\</span><span style="color: #7bc275;">#table-of-contents a {</span>
 <span style="color: #7bc275;">     background-image: none;</span>
 <span style="color: #7bc275;"> }</span>
-<span style="color: #7bc275;"> a:hover, a:focus {</span>
+<span style="color: #7bc275;"> a:hover[aria-hidden!='true'],</span>
+<span style="color: #7bc275;"> a:focus[aria-hidden!='true'] {</span>
 <span style="color: #7bc275;">     background-size: 100% 2px;</span>
 <span style="color: #7bc275;"> }</span>
 <span style="color: #7bc275;"> a[href^='#'] { font-variant-numeric: oldstyle-nums; }</span>
@@ -6013,7 +6015,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-19 Tue 20:38</p>
+<p class="date">Created: 2020-05-19 Tue 21:24</p>
 </div>
 </body>
 </html>
