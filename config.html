@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-19 Tue 20:34 -->
+<!-- 2020-05-19 Tue 20:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,10 +195,6 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
-
-
-
-
 <!––tec/custom-head-start-->
 <style type="text/css">
    :root {
@@ -384,6 +380,50 @@
  ::-webkit-scrollbar-track { background:#9992; }
  ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }
  ::-webkit-scrollbar-thumb:hover { background:#888; }
+
+ /* sometimes this all-important space seems to go missing
+ /so let's protect against that. If it's exteranious it's
+ /just gobbled anyway. */
+ span.section-number-1:after,
+ span.section-number-2:after,
+ span.section-number-3:after,
+ span.section-number-4:after,
+ span.section-number-5:after,
+ span.section-number-6:after {
+     content: ' '
+ }
+
+ /* so the bounding box coveres the <a> */
+ h1,h2,h3,h4,h5,h6 {
+     padding-left: 30px;
+     margin-left: -30px;
+ }
+
+ h1 > a[aria-hidden='true'],
+ h2 > a[aria-hidden='true'],
+ h3 > a[aria-hidden='true'],
+ h4 > a[aria-hidden='true'],
+ h5 > a[aria-hidden='true'],
+ h6 > a[aria-hidden='true'] {
+     color: #6a737d;
+     float: left;
+     padding-right: 4px;
+     margin-left: -25px;
+     position: relative;
+     top: 7px;
+     line-height: 1;
+     font-size: 70%;
+     visibility: hidden;
+ }
+
+ h1:hover > a[aria-hidden='true'],
+ h2:hover > a[aria-hidden='true'],
+ h3:hover > a[aria-hidden='true'],
+ h4:hover > a[aria-hidden='true'],
+ h5:hover > a[aria-hidden='true'],
+ h6:hover > a[aria-hidden='true'] {
+     visibility: visible;
+ }
 </style>
 <!––tec/custom-head-end-->
 <script type="text/javascript">
@@ -699,7 +739,7 @@ computer to do. &#x2014; Donald Knuth
 </blockquote>
 
 <div id="outline-container-intro" class="outline-2">
-<h2 id="intro"><span class="section-number-2">1</span> Intro</h2>
+<h2 id="intro"> <a class="anchor" aria-hidden="true" href="#intro">🔗</a><span class="section-number-2">1</span> Intro</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Customising an editor can be very rewarding &#x2026; until you have to leave it.
@@ -735,7 +775,7 @@ settled by the day. This is my config, and also a cautionary tale.
 </div>
 
 <div id="outline-container-notes-unwary-adventurer" class="outline-3">
-<h3 id="notes-unwary-adventurer"><span class="section-number-3">1.1</span> Notes for the unwary adventurer</h3>
+<h3 id="notes-unwary-adventurer"> <a class="anchor" aria-hidden="true" href="#notes-unwary-adventurer">🔗</a> <a class="anchor" aria-hidden="true" href="#notes-unwary-adventurer">🔗</a><span class="section-number-3">1.1</span> Notes for the unwary adventurer</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 If you are so bold as to wish to steal bits of my config (or if I upgrade and
@@ -764,7 +804,7 @@ so, no matter how much critisism you include I&rsquo;ll appreciate it :)
 </p>
 </div>
 <div id="outline-container-extra-requirements" class="outline-4">
-<h4 id="extra-requirements"><span class="section-number-4">1.1.1</span> Extra Requirements</h4>
+<h4 id="extra-requirements"> <a class="anchor" aria-hidden="true" href="#extra-requirements">🔗</a> <a class="anchor" aria-hidden="true" href="#extra-requirements">🔗</a> <a class="anchor" aria-hidden="true" href="#extra-requirements">🔗</a><span class="section-number-4">1.1.1</span> Extra Requirements</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 The lovely <code>doom doctor</code> is good at diagnosing most missing things, but here are a
@@ -806,11 +846,11 @@ using cargo.
 </div>
 </div>
 <div id="outline-container-current-issues" class="outline-3">
-<h3 id="current-issues"><span class="section-number-3">1.2</span> Current Issues</h3>
+<h3 id="current-issues"> <a class="anchor" aria-hidden="true" href="#current-issues">🔗</a> <a class="anchor" aria-hidden="true" href="#current-issues">🔗</a><span class="section-number-3">1.2</span> Current Issues</h3>
 <div class="outline-text-3" id="text-1-2">
 </div>
 <div id="outline-container-magit-push-daemon" class="outline-4">
-<h4 id="magit-push-daemon"><span class="section-number-4">1.2.1</span> Magit push in daemon</h4>
+<h4 id="magit-push-daemon"> <a class="anchor" aria-hidden="true" href="#magit-push-daemon">🔗</a> <a class="anchor" aria-hidden="true" href="#magit-push-daemon">🔗</a> <a class="anchor" aria-hidden="true" href="#magit-push-daemon">🔗</a><span class="section-number-4">1.2.1</span> Magit push in daemon</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 Quite often trying to push to a remote in the emacs daemon produces as error like this:
@@ -828,7 +868,7 @@ and the repository exists.
 </div>
 </div>
 <div id="outline-container-calctex-brings-up" class="outline-4">
-<h4 id="calctex-brings-up"><span class="section-number-4">1.2.2</span> CalcTeX brings up compilation buffer</h4>
+<h4 id="calctex-brings-up"> <a class="anchor" aria-hidden="true" href="#calctex-brings-up">🔗</a> <a class="anchor" aria-hidden="true" href="#calctex-brings-up">🔗</a> <a class="anchor" aria-hidden="true" href="#calctex-brings-up">🔗</a><span class="section-number-4">1.2.2</span> CalcTeX brings up compilation buffer</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <p>
 With my <a href="#calc">Calc</a> hook, the first call of <kbd>M-x calc</kbd> brings up a compilation buffer
@@ -838,7 +878,7 @@ from CalcTeX. I&rsquo;m guessing this is from the compilation of the preamble / 
 </div>
 </div>
 <div id="outline-container-editor-comparison" class="outline-3">
-<h3 id="editor-comparison"><span class="section-number-3">1.3</span> Editor comparison</h3>
+<h3 id="editor-comparison"> <a class="anchor" aria-hidden="true" href="#editor-comparison">🔗</a> <a class="anchor" aria-hidden="true" href="#editor-comparison">🔗</a><span class="section-number-3">1.3</span> Editor comparison</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 <img src='https://imgs.xkcd.com/comics/real_programmers.png' title="Real programmers set the universal constants at the start such that the universe evolves to contain the disk with the data they want." alt='Real Programmers'>
@@ -951,7 +991,7 @@ I have attempted to quantify aspects of my impressions of them below.
 </div>
 </div>
 <div id="outline-container-rudimentary-configuration" class="outline-2">
-<h2 id="rudimentary-configuration"><span class="section-number-2">2</span> Rudimentary configuration</h2>
+<h2 id="rudimentary-configuration"> <a class="anchor" aria-hidden="true" href="#rudimentary-configuration">🔗</a><span class="section-number-2">2</span> Rudimentary configuration</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Make this file run (slightly) faster with lexical binding (see <a href="https://nullprogram.com/blog/2016/12/22/">this blog post</a>
@@ -963,7 +1003,7 @@ for more info).
 </div>
 </div>
 <div id="outline-container-personal-information" class="outline-3">
-<h3 id="personal-information"><span class="section-number-3">2.1</span> Personal Information</h3>
+<h3 id="personal-information"> <a class="anchor" aria-hidden="true" href="#personal-information">🔗</a> <a class="anchor" aria-hidden="true" href="#personal-information">🔗</a><span class="section-number-3">2.1</span> Personal Information</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 It&rsquo;s useful to have some basic personal information
@@ -979,11 +1019,11 @@ Apparently this is used by <code>GPG</code>, and all sorts of other things.
 </div>
 </div>
 <div id="outline-container-better-defaults" class="outline-3">
-<h3 id="better-defaults"><span class="section-number-3">2.2</span> Better defaults</h3>
+<h3 id="better-defaults"> <a class="anchor" aria-hidden="true" href="#better-defaults">🔗</a> <a class="anchor" aria-hidden="true" href="#better-defaults">🔗</a><span class="section-number-3">2.2</span> Better defaults</h3>
 <div class="outline-text-3" id="text-2-2">
 </div>
 <div id="outline-container-simple-settings" class="outline-4">
-<h4 id="simple-settings"><span class="section-number-4">2.2.1</span> Simple settings</h4>
+<h4 id="simple-settings"> <a class="anchor" aria-hidden="true" href="#simple-settings">🔗</a> <a class="anchor" aria-hidden="true" href="#simple-settings">🔗</a> <a class="anchor" aria-hidden="true" href="#simple-settings">🔗</a><span class="section-number-4">2.2.1</span> Simple settings</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 Browsing the web and seeing <a href="https://github.com/angrybacon/dotemacs/blob/master/dotemacs.org#use-better-defaults">angrybacon/dotemacs</a> and comparing with the values
@@ -1011,7 +1051,7 @@ shown by <kbd>SPC h v</kbd> and selecting what I thought looks good, I&rsquo;ve 
 </div>
 </div>
 <div id="outline-container-fullscreen" class="outline-4">
-<h4 id="fullscreen"><span class="section-number-4">2.2.2</span> Fullscreen</h4>
+<h4 id="fullscreen"> <a class="anchor" aria-hidden="true" href="#fullscreen">🔗</a> <a class="anchor" aria-hidden="true" href="#fullscreen">🔗</a> <a class="anchor" aria-hidden="true" href="#fullscreen">🔗</a><span class="section-number-4">2.2.2</span> Fullscreen</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <p>
 I also like the idea of fullscreen-ing when opened by <code>emacs</code> or the <code>.desktop</code> file.
@@ -1025,7 +1065,7 @@ I also like the idea of fullscreen-ing when opened by <code>emacs</code> or the 
 </div>
 </div>
 <div id="outline-container-auto-customisations" class="outline-4">
-<h4 id="auto-customisations"><span class="section-number-4">2.2.3</span> Auto-customisations</h4>
+<h4 id="auto-customisations"> <a class="anchor" aria-hidden="true" href="#auto-customisations">🔗</a> <a class="anchor" aria-hidden="true" href="#auto-customisations">🔗</a> <a class="anchor" aria-hidden="true" href="#auto-customisations">🔗</a><span class="section-number-4">2.2.3</span> Auto-customisations</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 By default changes made via a customisation interface are added to <kbd>init.el</kbd>.
@@ -1041,7 +1081,7 @@ setting, and load it if it exists.
 </div>
 </div>
 <div id="outline-container-windows" class="outline-4">
-<h4 id="windows"><span class="section-number-4">2.2.4</span> Windows</h4>
+<h4 id="windows"> <a class="anchor" aria-hidden="true" href="#windows">🔗</a> <a class="anchor" aria-hidden="true" href="#windows">🔗</a> <a class="anchor" aria-hidden="true" href="#windows">🔗</a><span class="section-number-4">2.2.4</span> Windows</h4>
 <div class="outline-text-4" id="text-2-2-4">
 <p>
 I find it rather handy to be asked which buffer I want to see after splitting
@@ -1072,7 +1112,7 @@ Oh, and previews are nice
 </div>
 </div>
 <div id="outline-container-buffer-defaults" class="outline-4">
-<h4 id="buffer-defaults"><span class="section-number-4">2.2.5</span> Buffer defaults</h4>
+<h4 id="buffer-defaults"> <a class="anchor" aria-hidden="true" href="#buffer-defaults">🔗</a> <a class="anchor" aria-hidden="true" href="#buffer-defaults">🔗</a> <a class="anchor" aria-hidden="true" href="#buffer-defaults">🔗</a><span class="section-number-4">2.2.5</span> Buffer defaults</h4>
 <div class="outline-text-4" id="text-2-2-5">
 <p>
 I&rsquo;d much rather have my new buffers in <code>org-mode</code> than <code>fundamental-mode</code>, hence
@@ -1089,15 +1129,15 @@ just need to resort to <kbd>SPC b o</kbd> for now.
 </div>
 </div>
 <div id="outline-container-doom-configuration" class="outline-3">
-<h3 id="doom-configuration"><span class="section-number-3">2.3</span> Doom configuration</h3>
+<h3 id="doom-configuration"> <a class="anchor" aria-hidden="true" href="#doom-configuration">🔗</a> <a class="anchor" aria-hidden="true" href="#doom-configuration">🔗</a><span class="section-number-3">2.3</span> Doom configuration</h3>
 <div class="outline-text-3" id="text-2-3">
 </div>
 <div id="outline-container-visual-settings" class="outline-4">
-<h4 id="visual-settings"><span class="section-number-4">2.3.1</span> Visual Settings</h4>
+<h4 id="visual-settings"> <a class="anchor" aria-hidden="true" href="#visual-settings">🔗</a> <a class="anchor" aria-hidden="true" href="#visual-settings">🔗</a> <a class="anchor" aria-hidden="true" href="#visual-settings">🔗</a><span class="section-number-4">2.3.1</span> Visual Settings</h4>
 <div class="outline-text-4" id="text-2-3-1">
 </div>
 <div id="outline-container-font-face" class="outline-5">
-<h5 id="font-face"><span class="section-number-5">2.3.1.1</span> Font Face</h5>
+<h5 id="font-face"> <a class="anchor" aria-hidden="true" href="#font-face">🔗</a> <a class="anchor" aria-hidden="true" href="#font-face">🔗</a> <a class="anchor" aria-hidden="true" href="#font-face">🔗</a> <a class="anchor" aria-hidden="true" href="#font-face">🔗</a><span class="section-number-5">2.3.1.1</span> Font Face</h5>
 <div class="outline-text-5" id="text-2-3-1-1">
 <p>
 &rsquo;Fira Code&rsquo; is nice, and &rsquo;Overpass&rsquo; makes for a nice sans companion. We just need to
@@ -1113,7 +1153,7 @@ fiddle with the font sizes a tad so that they visually match.
 </div>
 </div>
 <div id="outline-container-theme" class="outline-5">
-<h5 id="theme"><span class="section-number-5">2.3.1.2</span> Theme</h5>
+<h5 id="theme"> <a class="anchor" aria-hidden="true" href="#theme">🔗</a> <a class="anchor" aria-hidden="true" href="#theme">🔗</a> <a class="anchor" aria-hidden="true" href="#theme">🔗</a> <a class="anchor" aria-hidden="true" href="#theme">🔗</a><span class="section-number-5">2.3.1.2</span> Theme</h5>
 <div class="outline-text-5" id="text-2-3-1-2">
 <p>
 <code>doom-one</code> is nice and all, but I find the <code>vibrant</code> variant nicer.
@@ -1134,7 +1174,7 @@ so I don&rsquo;t feel like something&rsquo;s gone <i>wrong</i> when editing file
 </div>
 </div>
 <div id="outline-container-miscellaneous" class="outline-5">
-<h5 id="miscellaneous"><span class="section-number-5">2.3.1.3</span> Miscellaneous</h5>
+<h5 id="miscellaneous"> <a class="anchor" aria-hidden="true" href="#miscellaneous">🔗</a> <a class="anchor" aria-hidden="true" href="#miscellaneous">🔗</a> <a class="anchor" aria-hidden="true" href="#miscellaneous">🔗</a> <a class="anchor" aria-hidden="true" href="#miscellaneous">🔗</a><span class="section-number-5">2.3.1.3</span> Miscellaneous</h5>
 <div class="outline-text-5" id="text-2-3-1-3">
 <p>
 Relative line numbers are fantastic for knowing how far away line numbers are,
@@ -1163,7 +1203,7 @@ There&rsquo;s a bug with the modeline in insert mode for org documents (<a href=
 </div>
 </div>
 <div id="outline-container-some-helper-macros" class="outline-4">
-<h4 id="some-helper-macros"><span class="section-number-4">2.3.2</span> Some helper macros</h4>
+<h4 id="some-helper-macros"> <a class="anchor" aria-hidden="true" href="#some-helper-macros">🔗</a> <a class="anchor" aria-hidden="true" href="#some-helper-macros">🔗</a> <a class="anchor" aria-hidden="true" href="#some-helper-macros">🔗</a><span class="section-number-4">2.3.2</span> Some helper macros</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 There are a few handy macros added by doom, namely
@@ -1182,15 +1222,15 @@ To find more,
 </div>
 </div>
 <div id="outline-container-other-things" class="outline-3">
-<h3 id="other-things"><span class="section-number-3">2.4</span> Other things</h3>
+<h3 id="other-things"> <a class="anchor" aria-hidden="true" href="#other-things">🔗</a> <a class="anchor" aria-hidden="true" href="#other-things">🔗</a><span class="section-number-3">2.4</span> Other things</h3>
 <div class="outline-text-3" id="text-2-4">
 </div>
 <div id="outline-container-editor-interaction" class="outline-4">
-<h4 id="editor-interaction"><span class="section-number-4">2.4.1</span> Editor interaction</h4>
+<h4 id="editor-interaction"> <a class="anchor" aria-hidden="true" href="#editor-interaction">🔗</a> <a class="anchor" aria-hidden="true" href="#editor-interaction">🔗</a> <a class="anchor" aria-hidden="true" href="#editor-interaction">🔗</a><span class="section-number-4">2.4.1</span> Editor interaction</h4>
 <div class="outline-text-4" id="text-2-4-1">
 </div>
 <div id="outline-container-mouse-buttons" class="outline-5">
-<h5 id="mouse-buttons"><span class="section-number-5">2.4.1.1</span> Mouse buttons</h5>
+<h5 id="mouse-buttons"> <a class="anchor" aria-hidden="true" href="#mouse-buttons">🔗</a> <a class="anchor" aria-hidden="true" href="#mouse-buttons">🔗</a> <a class="anchor" aria-hidden="true" href="#mouse-buttons">🔗</a> <a class="anchor" aria-hidden="true" href="#mouse-buttons">🔗</a><span class="section-number-5">2.4.1.1</span> Mouse buttons</h5>
 <div class="outline-text-5" id="text-2-4-1-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">map!</span> <span style="color: #C57BDB;">:n</span> <span style="color: #C57BDB;">[</span>mouse-8<span style="color: #C57BDB;">]</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">better-jumper-jump-backward</span>
@@ -1201,7 +1241,7 @@ To find more,
 </div>
 </div>
 <div id="outline-container-window-title" class="outline-4">
-<h4 id="window-title"><span class="section-number-4">2.4.2</span> Window title</h4>
+<h4 id="window-title"> <a class="anchor" aria-hidden="true" href="#window-title">🔗</a> <a class="anchor" aria-hidden="true" href="#window-title">🔗</a> <a class="anchor" aria-hidden="true" href="#window-title">🔗</a><span class="section-number-4">2.4.2</span> Window title</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <p>
 I&rsquo;d like to have just the buffer name, then if applicable the project folder
@@ -1222,7 +1262,7 @@ I&rsquo;d like to have just the buffer name, then if applicable the project fold
 </div>
 </div>
 <div id="outline-container-splash-screen" class="outline-4">
-<h4 id="splash-screen"><span class="section-number-4">2.4.3</span> Splash screen</h4>
+<h4 id="splash-screen"> <a class="anchor" aria-hidden="true" href="#splash-screen">🔗</a> <a class="anchor" aria-hidden="true" href="#splash-screen">🔗</a> <a class="anchor" aria-hidden="true" href="#splash-screen">🔗</a><span class="section-number-4">2.4.3</span> Splash screen</h4>
 <div class="outline-text-4" id="text-2-4-3">
 <p>
 Emacs can render an image as the splash screen, and <a href="https://github.com/MarioRicalde">@MarioRicalde</a> came up with a
@@ -1344,7 +1384,7 @@ quite a nice resizing effect.
 </div>
 </div>
 <div id="outline-container-systemd-daemon" class="outline-4">
-<h4 id="systemd-daemon"><span class="section-number-4">2.4.4</span> Systemd daemon</h4>
+<h4 id="systemd-daemon"> <a class="anchor" aria-hidden="true" href="#systemd-daemon">🔗</a> <a class="anchor" aria-hidden="true" href="#systemd-daemon">🔗</a> <a class="anchor" aria-hidden="true" href="#systemd-daemon">🔗</a><span class="section-number-4">2.4.4</span> Systemd daemon</h4>
 <div class="outline-text-4" id="text-2-4-4">
 <p>
 For running a systemd service for a Emacs server I have the following
@@ -1377,7 +1417,7 @@ which is then enabled by
 </div>
 </div>
 <div id="outline-container-package-loading" class="outline-2">
-<h2 id="package-loading"><span class="section-number-2">3</span> Package loading</h2>
+<h2 id="package-loading"> <a class="anchor" aria-hidden="true" href="#package-loading">🔗</a><span class="section-number-2">3</span> Package loading</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This file shouldn&rsquo;t be byte compiled.
@@ -1388,7 +1428,7 @@ This file shouldn&rsquo;t be byte compiled.
 </div>
 </div>
 <div id="outline-container-loading-instructions" class="outline-3">
-<h3 id="loading-instructions"><span class="section-number-3">3.1</span> Loading instructions</h3>
+<h3 id="loading-instructions"> <a class="anchor" aria-hidden="true" href="#loading-instructions">🔗</a> <a class="anchor" aria-hidden="true" href="#loading-instructions">🔗</a><span class="section-number-3">3.1</span> Loading instructions</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 This is where you install packages, by declaring them with the <code>package!</code>
@@ -1403,7 +1443,7 @@ Doom requires these, and disabling them may have terrible side effects.
 </div>
 
 <div id="outline-container-packages-melpa-elpa" class="outline-4">
-<h4 id="packages-melpa-elpa"><span class="section-number-4">3.1.1</span> Packages in MELPA/ELPA/emacsmirror</h4>
+<h4 id="packages-melpa-elpa"> <a class="anchor" aria-hidden="true" href="#packages-melpa-elpa">🔗</a> <a class="anchor" aria-hidden="true" href="#packages-melpa-elpa">🔗</a> <a class="anchor" aria-hidden="true" href="#packages-melpa-elpa">🔗</a><span class="section-number-4">3.1.1</span> Packages in MELPA/ELPA/emacsmirror</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 To install <code>some-package</code> from MELPA, ELPA or emacsmirror:
@@ -1416,7 +1456,7 @@ To install <code>some-package</code> from MELPA, ELPA or emacsmirror:
 </div>
 
 <div id="outline-container-packages-from-git" class="outline-4">
-<h4 id="packages-from-git"><span class="section-number-4">3.1.2</span> Packages from git repositories</h4>
+<h4 id="packages-from-git"> <a class="anchor" aria-hidden="true" href="#packages-from-git">🔗</a> <a class="anchor" aria-hidden="true" href="#packages-from-git">🔗</a> <a class="anchor" aria-hidden="true" href="#packages-from-git">🔗</a><span class="section-number-4">3.1.2</span> Packages from git repositories</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
 To install a package directly from a particular repo, you&rsquo;ll need to specify
@@ -1443,7 +1483,7 @@ file, or is located in a subdirectory of the repo, you&rsquo;ll need to specify
 </div>
 
 <div id="outline-container-disabling-built-packages" class="outline-4">
-<h4 id="disabling-built-packages"><span class="section-number-4">3.1.3</span> Disabling built-in packages</h4>
+<h4 id="disabling-built-packages"> <a class="anchor" aria-hidden="true" href="#disabling-built-packages">🔗</a> <a class="anchor" aria-hidden="true" href="#disabling-built-packages">🔗</a> <a class="anchor" aria-hidden="true" href="#disabling-built-packages">🔗</a><span class="section-number-4">3.1.3</span> Disabling built-in packages</h4>
 <div class="outline-text-4" id="text-3-1-3">
 <p>
 If you&rsquo;d like to disable a package included with Doom, for whatever reason,
@@ -1476,7 +1516,7 @@ our package manager can&rsquo;t deal with; see <a href="https://github.com/raxod
 </div>
 </div>
 <div id="outline-container-updating-all-pins" class="outline-4">
-<h4 id="updating-all-pins"><span class="section-number-4">3.1.4</span> Updating all pins in file</h4>
+<h4 id="updating-all-pins"> <a class="anchor" aria-hidden="true" href="#updating-all-pins">🔗</a> <a class="anchor" aria-hidden="true" href="#updating-all-pins">🔗</a> <a class="anchor" aria-hidden="true" href="#updating-all-pins">🔗</a><span class="section-number-4">3.1.4</span> Updating all pins in file</h4>
 <div class="outline-text-4" id="text-3-1-4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">+doom/update-all-pinned-package-form</span> <span style="color: #C57BDB;">()</span>
@@ -1505,11 +1545,11 @@ our package manager can&rsquo;t deal with; see <a href="https://github.com/raxod
 </div>
 </div>
 <div id="outline-container-general-packages" class="outline-3">
-<h3 id="general-packages"><span class="section-number-3">3.2</span> General packages</h3>
+<h3 id="general-packages"> <a class="anchor" aria-hidden="true" href="#general-packages">🔗</a> <a class="anchor" aria-hidden="true" href="#general-packages">🔗</a><span class="section-number-3">3.2</span> General packages</h3>
 <div class="outline-text-3" id="text-3-2">
 </div>
 <div id="outline-container-prettification" class="outline-4">
-<h4 id="prettification"><span class="section-number-4">3.2.1</span> Prettification</h4>
+<h4 id="prettification"> <a class="anchor" aria-hidden="true" href="#prettification">🔗</a> <a class="anchor" aria-hidden="true" href="#prettification">🔗</a> <a class="anchor" aria-hidden="true" href="#prettification">🔗</a><span class="section-number-4">3.2.1</span> Prettification</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 <code>prettify-mode</code> is nice and all, but adding substitutions is a little verbose.
@@ -1523,7 +1563,7 @@ This helps with that.
 </div>
 </div>
 <div id="outline-container-window-management" class="outline-4">
-<h4 id="window-management"><span class="section-number-4">3.2.2</span> Window management</h4>
+<h4 id="window-management"> <a class="anchor" aria-hidden="true" href="#window-management">🔗</a> <a class="anchor" aria-hidden="true" href="#window-management">🔗</a> <a class="anchor" aria-hidden="true" href="#window-management">🔗</a><span class="section-number-4">3.2.2</span> Window management</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> rotate <span style="color: #C57BDB;">:pin</span> <span style="color: #7bc275;">"091b5ac4fc"</span><span style="color: #51afef;">)</span>
@@ -1532,7 +1572,7 @@ This helps with that.
 </div>
 </div>
 <div id="outline-container-fun" class="outline-4">
-<h4 id="fun"><span class="section-number-4">3.2.3</span> Fun</h4>
+<h4 id="fun"> <a class="anchor" aria-hidden="true" href="#fun">🔗</a> <a class="anchor" aria-hidden="true" href="#fun">🔗</a> <a class="anchor" aria-hidden="true" href="#fun">🔗</a><span class="section-number-4">3.2.3</span> Fun</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <p>
 Sometimes one just wants a little fun.
@@ -1589,11 +1629,11 @@ about it?
 </div>
 </div>
 <div id="outline-container-improving-features" class="outline-4">
-<h4 id="improving-features"><span class="section-number-4">3.2.4</span> Improving features</h4>
+<h4 id="improving-features"> <a class="anchor" aria-hidden="true" href="#improving-features">🔗</a> <a class="anchor" aria-hidden="true" href="#improving-features">🔗</a> <a class="anchor" aria-hidden="true" href="#improving-features">🔗</a><span class="section-number-4">3.2.4</span> Improving features</h4>
 <div class="outline-text-4" id="text-3-2-4">
 </div>
 <div id="outline-container-flyspell-lazy" class="outline-5">
-<h5 id="flyspell-lazy"><span class="section-number-5">3.2.4.1</span> Flyspell-lazy</h5>
+<h5 id="flyspell-lazy"> <a class="anchor" aria-hidden="true" href="#flyspell-lazy">🔗</a> <a class="anchor" aria-hidden="true" href="#flyspell-lazy">🔗</a> <a class="anchor" aria-hidden="true" href="#flyspell-lazy">🔗</a> <a class="anchor" aria-hidden="true" href="#flyspell-lazy">🔗</a><span class="section-number-5">3.2.4.1</span> Flyspell-lazy</h5>
 <div class="outline-text-5" id="text-3-2-4-1">
 <p>
 To alleviate some <a href="#flyspell">issues with flyspell</a>
@@ -1605,7 +1645,7 @@ To alleviate some <a href="#flyspell">issues with flyspell</a>
 </div>
 </div>
 <div id="outline-container-calctex" class="outline-5">
-<h5 id="calctex"><span class="section-number-5">3.2.4.2</span> CalcTeX</h5>
+<h5 id="calctex"> <a class="anchor" aria-hidden="true" href="#calctex">🔗</a> <a class="anchor" aria-hidden="true" href="#calctex">🔗</a> <a class="anchor" aria-hidden="true" href="#calctex">🔗</a> <a class="anchor" aria-hidden="true" href="#calctex">🔗</a><span class="section-number-5">3.2.4.2</span> CalcTeX</h5>
 <div class="outline-text-5" id="text-3-2-4-2">
 <p>
 This is a nice extension to <code>calc</code>
@@ -1618,7 +1658,7 @@ This is a nice extension to <code>calc</code>
 </div>
 </div>
 <div id="outline-container-ess" class="outline-5">
-<h5 id="ess"><span class="section-number-5">3.2.4.3</span> ESS</h5>
+<h5 id="ess"> <a class="anchor" aria-hidden="true" href="#ess">🔗</a> <a class="anchor" aria-hidden="true" href="#ess">🔗</a> <a class="anchor" aria-hidden="true" href="#ess">🔗</a> <a class="anchor" aria-hidden="true" href="#ess">🔗</a><span class="section-number-5">3.2.4.3</span> ESS</h5>
 <div class="outline-text-5" id="text-3-2-4-3">
 <p>
 View data frames better with
@@ -1630,7 +1670,7 @@ View data frames better with
 </div>
 </div>
 <div id="outline-container-magit-delta" class="outline-5">
-<h5 id="magit-delta"><span class="section-number-5">3.2.4.4</span> Magit Delta</h5>
+<h5 id="magit-delta"> <a class="anchor" aria-hidden="true" href="#magit-delta">🔗</a> <a class="anchor" aria-hidden="true" href="#magit-delta">🔗</a> <a class="anchor" aria-hidden="true" href="#magit-delta">🔗</a> <a class="anchor" aria-hidden="true" href="#magit-delta">🔗</a><span class="section-number-5">3.2.4.4</span> Magit Delta</h5>
 <div class="outline-text-5" id="text-3-2-4-4">
 <p>
 <a href="https://github.com/dandavison/delta/">Delta</a> is a git diff syntax highlighter written in rust. The author also wrote a
@@ -1643,7 +1683,7 @@ package to hook this into the magit diff view. This requires the <code>delta</co
 </div>
 </div>
 <div id="outline-container-info-colours" class="outline-5">
-<h5 id="info-colours"><span class="section-number-5">3.2.4.5</span> Info colours</h5>
+<h5 id="info-colours"> <a class="anchor" aria-hidden="true" href="#info-colours">🔗</a> <a class="anchor" aria-hidden="true" href="#info-colours">🔗</a> <a class="anchor" aria-hidden="true" href="#info-colours">🔗</a> <a class="anchor" aria-hidden="true" href="#info-colours">🔗</a><span class="section-number-5">3.2.4.5</span> Info colours</h5>
 <div class="outline-text-5" id="text-3-2-4-5">
 <p>
 This makes manual pages nicer to look at :)
@@ -1658,11 +1698,11 @@ Variable pitch fontification + colouring
 </div>
 </div>
 <div id="outline-container-language-packages" class="outline-3">
-<h3 id="language-packages"><span class="section-number-3">3.3</span> Language packages</h3>
+<h3 id="language-packages"> <a class="anchor" aria-hidden="true" href="#language-packages">🔗</a> <a class="anchor" aria-hidden="true" href="#language-packages">🔗</a><span class="section-number-3">3.3</span> Language packages</h3>
 <div class="outline-text-3" id="text-3-3">
 </div>
 <div id="outline-container-latex" class="outline-4">
-<h4 id="latex"><span class="section-number-4">3.3.1</span> LaTeX</h4>
+<h4 id="latex"> <a class="anchor" aria-hidden="true" href="#latex">🔗</a> <a class="anchor" aria-hidden="true" href="#latex">🔗</a> <a class="anchor" aria-hidden="true" href="#latex">🔗</a><span class="section-number-4">3.3.1</span> LaTeX</h4>
 <div class="outline-text-4" id="text-3-3-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> evil-tex <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:host</span> github <span style="color: #C57BDB;">:repo</span> <span style="color: #7bc275;">"itai33/evil-tex"</span><span style="color: #C57BDB;">)</span>
@@ -1672,11 +1712,11 @@ Variable pitch fontification + colouring
 </div>
 </div>
 <div id="outline-container-org-mode" class="outline-4">
-<h4 id="org-mode"><span class="section-number-4">3.3.2</span> Org Mode</h4>
+<h4 id="org-mode"> <a class="anchor" aria-hidden="true" href="#org-mode">🔗</a> <a class="anchor" aria-hidden="true" href="#org-mode">🔗</a> <a class="anchor" aria-hidden="true" href="#org-mode">🔗</a><span class="section-number-4">3.3.2</span> Org Mode</h4>
 <div class="outline-text-4" id="text-3-3-2">
 </div>
 <div id="outline-container-improve-agenda-capture" class="outline-5">
-<h5 id="improve-agenda-capture"><span class="section-number-5">3.3.2.1</span> Improve agenda/capture</h5>
+<h5 id="improve-agenda-capture"> <a class="anchor" aria-hidden="true" href="#improve-agenda-capture">🔗</a> <a class="anchor" aria-hidden="true" href="#improve-agenda-capture">🔗</a> <a class="anchor" aria-hidden="true" href="#improve-agenda-capture">🔗</a> <a class="anchor" aria-hidden="true" href="#improve-agenda-capture">🔗</a><span class="section-number-5">3.3.2.1</span> Improve agenda/capture</h5>
 <div class="outline-text-5" id="text-3-3-2-1">
 <p>
 The agenda is nice, but a souped up version is nicer.
@@ -1699,7 +1739,7 @@ set up org-capture.
 </div>
 </div>
 <div id="outline-container-visuals" class="outline-5">
-<h5 id="visuals"><span class="section-number-5">3.3.2.2</span> Visuals</h5>
+<h5 id="visuals"> <a class="anchor" aria-hidden="true" href="#visuals">🔗</a> <a class="anchor" aria-hidden="true" href="#visuals">🔗</a> <a class="anchor" aria-hidden="true" href="#visuals">🔗</a> <a class="anchor" aria-hidden="true" href="#visuals">🔗</a><span class="section-number-5">3.3.2.2</span> Visuals</h5>
 <div class="outline-text-5" id="text-3-3-2-2">
 <p>
 Org tables aren&rsquo;t the prettiest thing to look at. This package is supposed to
@@ -1730,7 +1770,7 @@ For automatically toggling LaTeX fragment previews there&rsquo;s this nice packa
 </div>
 </div>
 <div id="outline-container-extra-functionality" class="outline-5">
-<h5 id="extra-functionality"><span class="section-number-5">3.3.2.3</span> Extra functionality</h5>
+<h5 id="extra-functionality"> <a class="anchor" aria-hidden="true" href="#extra-functionality">🔗</a> <a class="anchor" aria-hidden="true" href="#extra-functionality">🔗</a> <a class="anchor" aria-hidden="true" href="#extra-functionality">🔗</a> <a class="anchor" aria-hidden="true" href="#extra-functionality">🔗</a><span class="section-number-5">3.3.2.3</span> Extra functionality</h5>
 <div class="outline-text-5" id="text-3-3-2-3">
 <p>
 Because of the <i><a href="https://github.com/commonmark/commonmark-spec/wiki/markdown-flavors">lovely variety in markdown implementations</a></i> there isn&rsquo;t actually
@@ -1780,7 +1820,7 @@ I have my own <a href="org-plot.el">modified version</a> of <code>org-plot</code
 </div>
 </div>
 <div id="outline-container-systemd" class="outline-4">
-<h4 id="systemd"><span class="section-number-4">3.3.3</span> Systemd</h4>
+<h4 id="systemd"> <a class="anchor" aria-hidden="true" href="#systemd">🔗</a> <a class="anchor" aria-hidden="true" href="#systemd">🔗</a> <a class="anchor" aria-hidden="true" href="#systemd">🔗</a><span class="section-number-4">3.3.3</span> Systemd</h4>
 <div class="outline-text-4" id="text-3-3-3">
 <p>
 For editing systemd unit files
@@ -1794,11 +1834,11 @@ For editing systemd unit files
 </div>
 </div>
 <div id="outline-container-package-configuration" class="outline-2">
-<h2 id="package-configuration"><span class="section-number-2">4</span> Package configuration</h2>
+<h2 id="package-configuration"> <a class="anchor" aria-hidden="true" href="#package-configuration">🔗</a><span class="section-number-2">4</span> Package configuration</h2>
 <div class="outline-text-2" id="text-4">
 </div>
 <div id="outline-container-abbrev-mode" class="outline-3">
-<h3 id="abbrev-mode"><span class="section-number-3">4.1</span> Abbrev mode</h3>
+<h3 id="abbrev-mode"> <a class="anchor" aria-hidden="true" href="#abbrev-mode">🔗</a> <a class="anchor" aria-hidden="true" href="#abbrev-mode">🔗</a><span class="section-number-3">4.1</span> Abbrev mode</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 Thanks to <a href="https://emacs.stackexchange.com/questions/45462/use-a-single-abbrev-table-for-multiple-modes/45476#45476">use a single abbrev-table for multiple modes? - Emacs Stack Exchange</a> I
@@ -1824,7 +1864,7 @@ have the following.
 </div>
 </div>
 <div id="outline-container-calc" class="outline-3">
-<h3 id="calc"><span class="section-number-3">4.2</span> Calc</h3>
+<h3 id="calc"> <a class="anchor" aria-hidden="true" href="#calc">🔗</a> <a class="anchor" aria-hidden="true" href="#calc">🔗</a><span class="section-number-3">4.2</span> Calc</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 Radians are just better
@@ -1842,7 +1882,7 @@ Radians are just better
 </div>
 </div>
 <div id="outline-container-centaur-tabs" class="outline-3">
-<h3 id="centaur-tabs"><span class="section-number-3">4.3</span> Centaur Tabs</h3>
+<h3 id="centaur-tabs"> <a class="anchor" aria-hidden="true" href="#centaur-tabs">🔗</a> <a class="anchor" aria-hidden="true" href="#centaur-tabs">🔗</a><span class="section-number-3">4.3</span> Centaur Tabs</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 We want to make the tabs a nice, comfy size (<code>36</code>), with icons. The modifier
@@ -1871,7 +1911,7 @@ well somehow, so let&rsquo;s switch to &rsquo;P22 Underground Book&rsquo;; it lo
 </div>
 </div>
 <div id="outline-container-company" class="outline-3">
-<h3 id="company"><span class="section-number-3">4.4</span> Company</h3>
+<h3 id="company"> <a class="anchor" aria-hidden="true" href="#company">🔗</a> <a class="anchor" aria-hidden="true" href="#company">🔗</a><span class="section-number-3">4.4</span> Company</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 It&rsquo;s nice to have completions almost all the time, in my opinion. Key strokes
@@ -1896,7 +1936,7 @@ let&rsquo;s improve that memory.
 </div>
 </div>
 <div id="outline-container-plain-text" class="outline-4">
-<h4 id="plain-text"><span class="section-number-4">4.4.1</span> Plain Text</h4>
+<h4 id="plain-text"> <a class="anchor" aria-hidden="true" href="#plain-text">🔗</a> <a class="anchor" aria-hidden="true" href="#plain-text">🔗</a> <a class="anchor" aria-hidden="true" href="#plain-text">🔗</a><span class="section-number-4">4.4.1</span> Plain Text</h4>
 <div class="outline-text-4" id="text-4-4-1">
 <p>
 <code>ispell</code> is nice, let&rsquo;s have it in <code>text</code>, <code>markdown</code>, and <code>GFM</code>.
@@ -1916,7 +1956,7 @@ We then configure the dictionary we&rsquo;re using in <a href="#ispell">ispell</
 </div>
 </div>
 <div id="outline-container-company-ess" class="outline-4">
-<h4 id="company-ess"><span class="section-number-4">4.4.2</span> ESS</h4>
+<h4 id="company-ess"> <a class="anchor" aria-hidden="true" href="#company-ess">🔗</a> <a class="anchor" aria-hidden="true" href="#company-ess">🔗</a> <a class="anchor" aria-hidden="true" href="#company-ess">🔗</a><span class="section-number-4">4.4.2</span> ESS</h4>
 <div class="outline-text-4" id="text-4-4-2">
 <p>
 <code>company-dabbrev-code</code> is nice. Let&rsquo;s have it.
@@ -1929,7 +1969,7 @@ We then configure the dictionary we&rsquo;re using in <a href="#ispell">ispell</
 </div>
 </div>
 <div id="outline-container-elcord" class="outline-3">
-<h3 id="elcord"><span class="section-number-3">4.5</span> Elcord</h3>
+<h3 id="elcord"> <a class="anchor" aria-hidden="true" href="#elcord">🔗</a> <a class="anchor" aria-hidden="true" href="#elcord">🔗</a><span class="section-number-3">4.5</span> Elcord</h3>
 <div class="outline-text-3" id="text-4-5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> elcord-use-major-mode-as-main-icon t<span style="color: #51afef;">)</span>
@@ -1938,7 +1978,7 @@ We then configure the dictionary we&rsquo;re using in <a href="#ispell">ispell</
 </div>
 </div>
 <div id="outline-container-emacs-anywhere-configuration" class="outline-3">
-<h3 id="emacs-anywhere-configuration"><span class="section-number-3">4.6</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration</h3>
+<h3 id="emacs-anywhere-configuration"> <a class="anchor" aria-hidden="true" href="#emacs-anywhere-configuration">🔗</a> <a class="anchor" aria-hidden="true" href="#emacs-anywhere-configuration">🔗</a><span class="section-number-3">4.6</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration</h3>
 <div class="outline-text-3" id="text-4-6">
 <p>
 It&rsquo;s nice to recognise GitHub (so we can use <code>GFM</code>), and other apps which we know
@@ -2021,7 +2061,7 @@ for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
 </div>
 </div>
 <div id="outline-container-eros-eval" class="outline-3">
-<h3 id="eros-eval"><span class="section-number-3">4.7</span> Eros-eval</h3>
+<h3 id="eros-eval"> <a class="anchor" aria-hidden="true" href="#eros-eval">🔗</a> <a class="anchor" aria-hidden="true" href="#eros-eval">🔗</a><span class="section-number-3">4.7</span> Eros-eval</h3>
 <div class="outline-text-3" id="text-4-7">
 <p>
 This makes the result of evals with <kbd>gr</kbd> and <kbd>gR</kbd> just slightly prettier. Every bit
@@ -2034,7 +2074,7 @@ counts right?
 </div>
 </div>
 <div id="outline-container-evil" class="outline-3">
-<h3 id="evil"><span class="section-number-3">4.8</span> EVIL</h3>
+<h3 id="evil"> <a class="anchor" aria-hidden="true" href="#evil">🔗</a> <a class="anchor" aria-hidden="true" href="#evil">🔗</a><span class="section-number-3">4.8</span> EVIL</h3>
 <div class="outline-text-3" id="text-4-8">
 <p>
 I don&rsquo;t use <code>evil-escape-mode</code>, so I may as well turn it off, I&rsquo;ve heard it
@@ -2048,7 +2088,7 @@ contributes a typing delay. I&rsquo;m not sure it&rsquo;s much, but it is an ext
 </div>
 </div>
 <div id="outline-container-flyspell" class="outline-3">
-<h3 id="flyspell"><span class="section-number-3">4.9</span> Flyspell</h3>
+<h3 id="flyspell"> <a class="anchor" aria-hidden="true" href="#flyspell">🔗</a> <a class="anchor" aria-hidden="true" href="#flyspell">🔗</a><span class="section-number-3">4.9</span> Flyspell</h3>
 <div class="outline-text-3" id="text-4-9">
 <p>
 At one point, typing became noticeably laggy, Profiling revealed
@@ -2062,7 +2102,7 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 </div>
 </div>
 <div id="outline-container-info-colors" class="outline-3">
-<h3 id="info-colors"><span class="section-number-3">4.10</span> Info colors</h3>
+<h3 id="info-colors"> <a class="anchor" aria-hidden="true" href="#info-colors">🔗</a> <a class="anchor" aria-hidden="true" href="#info-colors">🔗</a><span class="section-number-3">4.10</span> Info colors</h3>
 <div class="outline-text-3" id="text-4-10">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> info-colors
@@ -2076,7 +2116,7 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 </div>
 </div>
 <div id="outline-container-ispell" class="outline-3">
-<h3 id="ispell"><span class="section-number-3">4.11</span> Ispell</h3>
+<h3 id="ispell"> <a class="anchor" aria-hidden="true" href="#ispell">🔗</a> <a class="anchor" aria-hidden="true" href="#ispell">🔗</a><span class="section-number-3">4.11</span> Ispell</h3>
 <div class="outline-text-3" id="text-4-11">
 <p>
 Let&rsquo;s get a nice big dictionary from <a href="http://app.aspell.net/create">SCOWL Custom List/Dictionary Creator</a> with
@@ -2111,7 +2151,7 @@ nearby (also means that if I change the &rsquo;main&rsquo; dictionary I keep my 
 </div>
 </div>
 <div id="outline-container-magit" class="outline-3">
-<h3 id="magit"><span class="section-number-3">4.12</span> Magit</h3>
+<h3 id="magit"> <a class="anchor" aria-hidden="true" href="#magit">🔗</a> <a class="anchor" aria-hidden="true" href="#magit">🔗</a><span class="section-number-3">4.12</span> Magit</h3>
 <div class="outline-text-3" id="text-4-12">
 <p>
 Magit is pretty nice by default. The diffs don&rsquo;t get any
@@ -2130,7 +2170,7 @@ into later.
 </div>
 </div>
 <div id="outline-container-org-chef" class="outline-3">
-<h3 id="org-chef"><span class="section-number-3">4.13</span> Org Chef</h3>
+<h3 id="org-chef"> <a class="anchor" aria-hidden="true" href="#org-chef">🔗</a> <a class="anchor" aria-hidden="true" href="#org-chef">🔗</a><span class="section-number-3">4.13</span> Org Chef</h3>
 <div class="outline-text-3" id="text-4-13">
 <p>
 Loading after org seems a bit premature. Let&rsquo;s just load it when we try to use
@@ -2144,7 +2184,7 @@ it, either by command or in a capture template.
 </div>
 </div>
 <div id="outline-container-projectile" class="outline-3">
-<h3 id="projectile"><span class="section-number-3">4.14</span> Projectile</h3>
+<h3 id="projectile"> <a class="anchor" aria-hidden="true" href="#projectile">🔗</a> <a class="anchor" aria-hidden="true" href="#projectile">🔗</a><span class="section-number-3">4.14</span> Projectile</h3>
 <div class="outline-text-3" id="text-4-14">
 <p>
 Looking at documentation via <kbd>SPC h f</kbd> and <kbd>SPC h v</kbd> and looking at the source can
@@ -2160,7 +2200,7 @@ add package src directories to projectile. This isn&rsquo;t desirable in my opin
 </div>
 </div>
 <div id="outline-container-smart-parentheses" class="outline-3">
-<h3 id="smart-parentheses"><span class="section-number-3">4.15</span> Smart Parentheses</h3>
+<h3 id="smart-parentheses"> <a class="anchor" aria-hidden="true" href="#smart-parentheses">🔗</a> <a class="anchor" aria-hidden="true" href="#smart-parentheses">🔗</a><span class="section-number-3">4.15</span> Smart Parentheses</h3>
 <div class="outline-text-3" id="text-4-15">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">sp-local-pair</span>
@@ -2172,7 +2212,7 @@ add package src directories to projectile. This isn&rsquo;t desirable in my opin
 </div>
 </div>
 <div id="outline-container-spray" class="outline-3">
-<h3 id="spray"><span class="section-number-3">4.16</span> Spray</h3>
+<h3 id="spray"> <a class="anchor" aria-hidden="true" href="#spray">🔗</a> <a class="anchor" aria-hidden="true" href="#spray">🔗</a><span class="section-number-3">4.16</span> Spray</h3>
 <div class="outline-text-3" id="text-4-16">
 <p>
 Let&rsquo;s make this suit me slightly better.
@@ -2185,7 +2225,7 @@ Let&rsquo;s make this suit me slightly better.
 </div>
 </div>
 <div id="outline-container-theme-magic" class="outline-3">
-<h3 id="theme-magic"><span class="section-number-3">4.17</span> Theme magic</h3>
+<h3 id="theme-magic"> <a class="anchor" aria-hidden="true" href="#theme-magic">🔗</a> <a class="anchor" aria-hidden="true" href="#theme-magic">🔗</a><span class="section-number-3">4.17</span> Theme magic</h3>
 <div class="outline-text-3" id="text-4-17">
 <p>
 Let&rsquo;s automatically update terminals on theme change
@@ -2197,7 +2237,7 @@ Let&rsquo;s automatically update terminals on theme change
 </div>
 </div>
 <div id="outline-container-tramp" class="outline-3">
-<h3 id="tramp"><span class="section-number-3">4.18</span> Tramp</h3>
+<h3 id="tramp"> <a class="anchor" aria-hidden="true" href="#tramp">🔗</a> <a class="anchor" aria-hidden="true" href="#tramp">🔗</a><span class="section-number-3">4.18</span> Tramp</h3>
 <div class="outline-text-3" id="text-4-18">
 <p>
 Let&rsquo;s try to make tramp handle prompts better
@@ -2210,14 +2250,14 @@ Let&rsquo;s try to make tramp handle prompts better
 </div>
 </div>
 <div id="outline-container-troubleshooting" class="outline-5">
-<h5 id="troubleshooting"><span class="section-number-5">4.18.0.1</span> Troubleshooting</h5>
+<h5 id="troubleshooting"> <a class="anchor" aria-hidden="true" href="#troubleshooting">🔗</a> <a class="anchor" aria-hidden="true" href="#troubleshooting">🔗</a> <a class="anchor" aria-hidden="true" href="#troubleshooting">🔗</a><span class="section-number-5">4.18.0.1</span> Troubleshooting</h5>
 <div class="outline-text-5" id="text-4-18-0-1">
 <p>
 In case the remote shell is misbehaving, here are some things to try
 </p>
 </div>
 <div id="outline-container-zsh" class="outline-6">
-<h6 id="zsh"><span class="section-number-6">4.18.0.1.1</span> Zsh</h6>
+<h6 id="zsh"> <a class="anchor" aria-hidden="true" href="#zsh">🔗</a> <a class="anchor" aria-hidden="true" href="#zsh">🔗</a> <a class="anchor" aria-hidden="true" href="#zsh">🔗</a> <a class="anchor" aria-hidden="true" href="#zsh">🔗</a><span class="section-number-6">4.18.0.1.1</span> Zsh</h6>
 <div class="outline-text-6" id="text-4-18-0-1-1">
 <p>
 There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more considerately.
@@ -2236,7 +2276,7 @@ There are some escape code you don&rsquo;t want, let&rsquo;s make it behave more
 </div>
 </div>
 <div id="outline-container-treemacs" class="outline-3">
-<h3 id="treemacs"><span class="section-number-3">4.19</span> Treemacs</h3>
+<h3 id="treemacs"> <a class="anchor" aria-hidden="true" href="#treemacs">🔗</a> <a class="anchor" aria-hidden="true" href="#treemacs">🔗</a><span class="section-number-3">4.19</span> Treemacs</h3>
 <div class="outline-text-3" id="text-4-19">
 <p>
 Quite often there are superfluous files I&rsquo;m not that interested in. There&rsquo;s no
@@ -2300,7 +2340,7 @@ Now, we just identify the files in question.
 </div>
 </div>
 <div id="outline-container-vterm" class="outline-3">
-<h3 id="vterm"><span class="section-number-3">4.20</span> VTerm</h3>
+<h3 id="vterm"> <a class="anchor" aria-hidden="true" href="#vterm">🔗</a> <a class="anchor" aria-hidden="true" href="#vterm">🔗</a><span class="section-number-3">4.20</span> VTerm</h3>
 <div class="outline-text-3" id="text-4-20">
 <p>
 On my system, I want to use the <code>vterm</code> lib in <kbd>/usr/bin/libvterm.so</kbd>. This is not
@@ -2328,7 +2368,7 @@ do this yet.
 </div>
 </div>
 <div id="outline-container-which-key" class="outline-3">
-<h3 id="which-key"><span class="section-number-3">4.21</span> Which-key</h3>
+<h3 id="which-key"> <a class="anchor" aria-hidden="true" href="#which-key">🔗</a> <a class="anchor" aria-hidden="true" href="#which-key">🔗</a><span class="section-number-3">4.21</span> Which-key</h3>
 <div class="outline-text-3" id="text-4-21">
 <p>
 Let&rsquo;s make this popup a bit faster
@@ -2353,7 +2393,7 @@ I also think that having <kbd>evil-</kbd> appear in so many popups is a bit too 
 </div>
 </div>
 <div id="outline-container-xkcd" class="outline-3">
-<h3 id="xkcd"><span class="section-number-3">4.22</span> xkcd</h3>
+<h3 id="xkcd"> <a class="anchor" aria-hidden="true" href="#xkcd">🔗</a> <a class="anchor" aria-hidden="true" href="#xkcd">🔗</a><span class="section-number-3">4.22</span> xkcd</h3>
 <div class="outline-text-3" id="text-4-22">
 <p>
 We wan&rsquo;t to set this up so it loads nicely in <a href="#extra-links">Extra links</a>.
@@ -2641,7 +2681,7 @@ Let&rsquo;s also extend the functionality a whole bunch.
 </div>
 </div>
 <div id="outline-container-yasnippet" class="outline-3">
-<h3 id="yasnippet"><span class="section-number-3">4.23</span> YASnippet</h3>
+<h3 id="yasnippet"> <a class="anchor" aria-hidden="true" href="#yasnippet">🔗</a> <a class="anchor" aria-hidden="true" href="#yasnippet">🔗</a><span class="section-number-3">4.23</span> YASnippet</h3>
 <div class="outline-text-3" id="text-4-23">
 <p>
 Nested snippets are good, enable that.
@@ -2654,11 +2694,11 @@ Nested snippets are good, enable that.
 </div>
 </div>
 <div id="outline-container-language-configuration" class="outline-2">
-<h2 id="language-configuration"><span class="section-number-2">5</span> Language configuration</h2>
+<h2 id="language-configuration"> <a class="anchor" aria-hidden="true" href="#language-configuration">🔗</a><span class="section-number-2">5</span> Language configuration</h2>
 <div class="outline-text-2" id="text-5">
 </div>
 <div id="outline-container-file-templates" class="outline-4">
-<h4 id="file-templates"><span class="section-number-4">5.0.1</span> File Templates</h4>
+<h4 id="file-templates"> <a class="anchor" aria-hidden="true" href="#file-templates">🔗</a> <a class="anchor" aria-hidden="true" href="#file-templates">🔗</a><span class="section-number-4">5.0.1</span> File Templates</h4>
 <div class="outline-text-4" id="text-5-0-1">
 <p>
 For some file types, we overwrite defaults in the <a href="./snippets">snippets</a> directory, others
@@ -2671,7 +2711,7 @@ need to have a template assigned.
 </div>
 </div>
 <div id="outline-container-plaintext" class="outline-3">
-<h3 id="plaintext"><span class="section-number-3">5.1</span> Plaintext</h3>
+<h3 id="plaintext"> <a class="anchor" aria-hidden="true" href="#plaintext">🔗</a> <a class="anchor" aria-hidden="true" href="#plaintext">🔗</a><span class="section-number-3">5.1</span> Plaintext</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 It&rsquo;s nice to see ansi colour codes displayed
@@ -2687,7 +2727,7 @@ It&rsquo;s nice to see ansi colour codes displayed
 </div>
 </div>
 <div id="outline-container-org" class="outline-3">
-<h3 id="org"><span class="section-number-3">5.2</span> Org Mode</h3>
+<h3 id="org"> <a class="anchor" aria-hidden="true" href="#org">🔗</a> <a class="anchor" aria-hidden="true" href="#org">🔗</a><span class="section-number-3">5.2</span> Org Mode</h3>
 <div class="outline-text-3" id="text-org">
 <p>
 I really like org mode, I&rsquo;ve given some thought to why, and below is the result.
@@ -2791,7 +2831,7 @@ I really like org mode, I&rsquo;ve given some thought to why, and below is the r
 </div>
 
 <div id="outline-container-system-config" class="outline-4">
-<h4 id="system-config"><span class="section-number-4">5.2.1</span> System config</h4>
+<h4 id="system-config"> <a class="anchor" aria-hidden="true" href="#system-config">🔗</a> <a class="anchor" aria-hidden="true" href="#system-config">🔗</a> <a class="anchor" aria-hidden="true" href="#system-config">🔗</a><span class="section-number-4">5.2.1</span> System config</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 Org mode isn&rsquo;t recognised as it&rsquo;s own mime type by default, but that can easily
@@ -2828,14 +2868,14 @@ Then set Emacs as the default editor
 </div>
 </div>
 <div id="outline-container-behaviour" class="outline-4">
-<h4 id="behaviour"><span class="section-number-4">5.2.2</span> Behaviour</h4>
+<h4 id="behaviour"> <a class="anchor" aria-hidden="true" href="#behaviour">🔗</a> <a class="anchor" aria-hidden="true" href="#behaviour">🔗</a> <a class="anchor" aria-hidden="true" href="#behaviour">🔗</a><span class="section-number-4">5.2.2</span> Behaviour</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 <img src='https://imgs.xkcd.com/comics/automation.png' title="'Automating' comes from the roots 'auto-' meaning 'self-', and 'mating', meaning 'screwing'." alt='Automation'>
 </p>
 </div>
 <div id="outline-container-tweaking-defaults" class="outline-5">
-<h5 id="tweaking-defaults"><span class="section-number-5">5.2.2.1</span> Tweaking defaults</h5>
+<h5 id="tweaking-defaults"> <a class="anchor" aria-hidden="true" href="#tweaking-defaults">🔗</a> <a class="anchor" aria-hidden="true" href="#tweaking-defaults">🔗</a> <a class="anchor" aria-hidden="true" href="#tweaking-defaults">🔗</a> <a class="anchor" aria-hidden="true" href="#tweaking-defaults">🔗</a><span class="section-number-5">5.2.2.1</span> Tweaking defaults</h5>
 <div class="outline-text-5" id="text-5-2-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-directory</span> <span style="color: #7bc275;">"~/.org"</span>                      <span style="color: #62686E;">; </span><span style="color: #62686E;">let's put files here</span>
@@ -2874,11 +2914,11 @@ specific modes as desired.
 </div>
 </div>
 <div id="outline-container-behaviour-extra-functionality" class="outline-5">
-<h5 id="behaviour-extra-functionality"><span class="section-number-5">5.2.2.2</span> Extra functionality</h5>
+<h5 id="behaviour-extra-functionality"> <a class="anchor" aria-hidden="true" href="#behaviour-extra-functionality">🔗</a> <a class="anchor" aria-hidden="true" href="#behaviour-extra-functionality">🔗</a> <a class="anchor" aria-hidden="true" href="#behaviour-extra-functionality">🔗</a> <a class="anchor" aria-hidden="true" href="#behaviour-extra-functionality">🔗</a><span class="section-number-5">5.2.2.2</span> Extra functionality</h5>
 <div class="outline-text-5" id="text-5-2-2-2">
 </div>
 <div id="outline-container-org-buffer-creation" class="outline-6">
-<h6 id="org-buffer-creation"><span class="section-number-6">5.2.2.2.1</span> Org buffer creation</h6>
+<h6 id="org-buffer-creation"> <a class="anchor" aria-hidden="true" href="#org-buffer-creation">🔗</a> <a class="anchor" aria-hidden="true" href="#org-buffer-creation">🔗</a> <a class="anchor" aria-hidden="true" href="#org-buffer-creation">🔗</a> <a class="anchor" aria-hidden="true" href="#org-buffer-creation">🔗</a> <a class="anchor" aria-hidden="true" href="#org-buffer-creation">🔗</a><span class="section-number-6">5.2.2.2.1</span> Org buffer creation</h6>
 <div class="outline-text-6" id="text-5-2-2-2-1">
 <p>
 Let&rsquo;s also make creating an org buffer just that little bit easier.
@@ -2903,7 +2943,7 @@ Let&rsquo;s also make creating an org buffer just that little bit easier.
 </div>
 </div>
 <div id="outline-container-list-bullet-sequence" class="outline-6">
-<h6 id="list-bullet-sequence"><span class="section-number-6">5.2.2.2.2</span> List bullet sequence</h6>
+<h6 id="list-bullet-sequence"> <a class="anchor" aria-hidden="true" href="#list-bullet-sequence">🔗</a> <a class="anchor" aria-hidden="true" href="#list-bullet-sequence">🔗</a> <a class="anchor" aria-hidden="true" href="#list-bullet-sequence">🔗</a> <a class="anchor" aria-hidden="true" href="#list-bullet-sequence">🔗</a> <a class="anchor" aria-hidden="true" href="#list-bullet-sequence">🔗</a><span class="section-number-6">5.2.2.2.2</span> List bullet sequence</h6>
 <div class="outline-text-6" id="text-5-2-2-2-2">
 <p>
 I think it makes sense to have list bullets change with depth
@@ -2915,7 +2955,7 @@ I think it makes sense to have list bullets change with depth
 </div>
 </div>
 <div id="outline-container-citation" class="outline-6">
-<h6 id="citation"><span class="section-number-6">5.2.2.2.3</span> Citation</h6>
+<h6 id="citation"> <a class="anchor" aria-hidden="true" href="#citation">🔗</a> <a class="anchor" aria-hidden="true" href="#citation">🔗</a> <a class="anchor" aria-hidden="true" href="#citation">🔗</a> <a class="anchor" aria-hidden="true" href="#citation">🔗</a> <a class="anchor" aria-hidden="true" href="#citation">🔗</a><span class="section-number-6">5.2.2.2.3</span> Citation</h6>
 <div class="outline-text-6" id="text-5-2-2-2-3">
 <p>
 Occasionally I want to cite something.
@@ -2930,7 +2970,7 @@ Occasionally I want to cite something.
 </div>
 </div>
 <div id="outline-container-cdlatex" class="outline-6">
-<h6 id="cdlatex"><span class="section-number-6">5.2.2.2.4</span> cdlatex</h6>
+<h6 id="cdlatex"> <a class="anchor" aria-hidden="true" href="#cdlatex">🔗</a> <a class="anchor" aria-hidden="true" href="#cdlatex">🔗</a> <a class="anchor" aria-hidden="true" href="#cdlatex">🔗</a> <a class="anchor" aria-hidden="true" href="#cdlatex">🔗</a> <a class="anchor" aria-hidden="true" href="#cdlatex">🔗</a><span class="section-number-6">5.2.2.2.4</span> cdlatex</h6>
 <div class="outline-text-6" id="text-5-2-2-2-4">
 <p>
 It&rsquo;s also nice to be able to use <code>cdlatex</code>.
@@ -2946,7 +2986,7 @@ Likewise <a href="https://archive.casouri.cat/note/2020/insert-math-symbol-in-em
 </div>
 </div>
 <div id="outline-container-spellcheck" class="outline-6">
-<h6 id="spellcheck"><span class="section-number-6">5.2.2.2.5</span> Spellcheck</h6>
+<h6 id="spellcheck"> <a class="anchor" aria-hidden="true" href="#spellcheck">🔗</a> <a class="anchor" aria-hidden="true" href="#spellcheck">🔗</a> <a class="anchor" aria-hidden="true" href="#spellcheck">🔗</a> <a class="anchor" aria-hidden="true" href="#spellcheck">🔗</a> <a class="anchor" aria-hidden="true" href="#spellcheck">🔗</a><span class="section-number-6">5.2.2.2.5</span> Spellcheck</h6>
 <div class="outline-text-6" id="text-5-2-2-2-5">
 <p>
 My spelling is atrocious, so let&rsquo;s get flycheck going.
@@ -2958,7 +2998,7 @@ My spelling is atrocious, so let&rsquo;s get flycheck going.
 </div>
 </div>
 <div id="outline-container-lsp-support-src" class="outline-6">
-<h6 id="lsp-support-src"><span class="section-number-6">5.2.2.2.6</span> LSP support in <code>src</code> blocks</h6>
+<h6 id="lsp-support-src"> <a class="anchor" aria-hidden="true" href="#lsp-support-src">🔗</a> <a class="anchor" aria-hidden="true" href="#lsp-support-src">🔗</a> <a class="anchor" aria-hidden="true" href="#lsp-support-src">🔗</a> <a class="anchor" aria-hidden="true" href="#lsp-support-src">🔗</a> <a class="anchor" aria-hidden="true" href="#lsp-support-src">🔗</a><span class="section-number-6">5.2.2.2.6</span> LSP support in <code>src</code> blocks</h6>
 <div class="outline-text-6" id="text-5-2-2-2-6">
 <p>
 Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blocks.
@@ -2997,7 +3037,7 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
 </div>
 </div>
 <div id="outline-container-view-exported-file" class="outline-6">
-<h6 id="view-exported-file"><span class="section-number-6">5.2.2.2.7</span> View exported file</h6>
+<h6 id="view-exported-file"> <a class="anchor" aria-hidden="true" href="#view-exported-file">🔗</a> <a class="anchor" aria-hidden="true" href="#view-exported-file">🔗</a> <a class="anchor" aria-hidden="true" href="#view-exported-file">🔗</a> <a class="anchor" aria-hidden="true" href="#view-exported-file">🔗</a> <a class="anchor" aria-hidden="true" href="#view-exported-file">🔗</a><span class="section-number-6">5.2.2.2.7</span> View exported file</h6>
 <div class="outline-text-6" id="text-5-2-2-2-7">
 <p>
 <kbd>'localeader v</kbd> has no pre-existing binding, so I may as well use it with the same
@@ -3034,7 +3074,7 @@ functionality as in LaTeX. Let&rsquo;s try viewing possible output files with th
 </div>
 </div>
 <div id="outline-container-super-agenda" class="outline-5">
-<h5 id="super-agenda"><span class="section-number-5">5.2.2.3</span> Super agenda</h5>
+<h5 id="super-agenda"> <a class="anchor" aria-hidden="true" href="#super-agenda">🔗</a> <a class="anchor" aria-hidden="true" href="#super-agenda">🔗</a> <a class="anchor" aria-hidden="true" href="#super-agenda">🔗</a> <a class="anchor" aria-hidden="true" href="#super-agenda">🔗</a><span class="section-number-5">5.2.2.3</span> Super agenda</h5>
 <div class="outline-text-5" id="text-5-2-2-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> org-super-agenda
@@ -3113,7 +3153,7 @@ functionality as in LaTeX. Let&rsquo;s try viewing possible output files with th
 </div>
 </div>
 <div id="outline-container-capture" class="outline-5">
-<h5 id="capture"><span class="section-number-5">5.2.2.4</span> Capture</h5>
+<h5 id="capture"> <a class="anchor" aria-hidden="true" href="#capture">🔗</a> <a class="anchor" aria-hidden="true" href="#capture">🔗</a> <a class="anchor" aria-hidden="true" href="#capture">🔗</a> <a class="anchor" aria-hidden="true" href="#capture">🔗</a><span class="section-number-5">5.2.2.4</span> Capture</h5>
 <div class="outline-text-5" id="text-5-2-2-4">
 <p>
 Let&rsquo;s setup some org-capture templates
@@ -3418,7 +3458,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org5741ae0"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="orgd67fa85"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -3533,7 +3573,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -3543,11 +3583,11 @@ no modeline.
 </div>
 </div>
 <div id="outline-container-roam" class="outline-5">
-<h5 id="roam"><span class="section-number-5">5.2.2.5</span> Roam</h5>
+<h5 id="roam"> <a class="anchor" aria-hidden="true" href="#roam">🔗</a> <a class="anchor" aria-hidden="true" href="#roam">🔗</a> <a class="anchor" aria-hidden="true" href="#roam">🔗</a> <a class="anchor" aria-hidden="true" href="#roam">🔗</a><span class="section-number-5">5.2.2.5</span> Roam</h5>
 <div class="outline-text-5" id="text-5-2-2-5">
 </div>
 <div id="outline-container-basic-settings" class="outline-6">
-<h6 id="basic-settings"><span class="section-number-6">5.2.2.5.1</span> Basic settings</h6>
+<h6 id="basic-settings"> <a class="anchor" aria-hidden="true" href="#basic-settings">🔗</a> <a class="anchor" aria-hidden="true" href="#basic-settings">🔗</a> <a class="anchor" aria-hidden="true" href="#basic-settings">🔗</a> <a class="anchor" aria-hidden="true" href="#basic-settings">🔗</a> <a class="anchor" aria-hidden="true" href="#basic-settings">🔗</a><span class="section-number-6">5.2.2.5.1</span> Basic settings</h6>
 <div class="outline-text-6" id="text-5-2-2-5-1">
 <p>
 I&rsquo;ll just set this to be within <kbd>Organisation</kbd> folder for now, in the future it
@@ -3560,7 +3600,7 @@ could be worth seeing if I could hook this up to a <a href="https://nextcloud.co
 </div>
 </div>
 <div id="outline-container-registering-roam-protocol" class="outline-6">
-<h6 id="registering-roam-protocol"><span class="section-number-6">5.2.2.5.2</span> Registering roam protocol</h6>
+<h6 id="registering-roam-protocol"> <a class="anchor" aria-hidden="true" href="#registering-roam-protocol">🔗</a> <a class="anchor" aria-hidden="true" href="#registering-roam-protocol">🔗</a> <a class="anchor" aria-hidden="true" href="#registering-roam-protocol">🔗</a> <a class="anchor" aria-hidden="true" href="#registering-roam-protocol">🔗</a> <a class="anchor" aria-hidden="true" href="#registering-roam-protocol">🔗</a><span class="section-number-6">5.2.2.5.2</span> Registering roam protocol</h6>
 <div class="outline-text-6" id="text-5-2-2-5-2">
 <p>
 The recommended method of registering a protocal is by registering a desktop
@@ -3586,7 +3626,7 @@ To associate <code>org-protocol://</code> links with the desktop file,
 </div>
 </div>
 <div id="outline-container-graph-behaviour" class="outline-6">
-<h6 id="graph-behaviour"><span class="section-number-6">5.2.2.5.3</span> Graph Behaviour</h6>
+<h6 id="graph-behaviour"> <a class="anchor" aria-hidden="true" href="#graph-behaviour">🔗</a> <a class="anchor" aria-hidden="true" href="#graph-behaviour">🔗</a> <a class="anchor" aria-hidden="true" href="#graph-behaviour">🔗</a> <a class="anchor" aria-hidden="true" href="#graph-behaviour">🔗</a> <a class="anchor" aria-hidden="true" href="#graph-behaviour">🔗</a><span class="section-number-6">5.2.2.5.3</span> Graph Behaviour</h6>
 <div class="outline-text-6" id="text-5-2-2-5-3">
 <p>
 By default, clicking on an <code>org-protocol://</code> link messes with the <kbd>svg</kbd> view. To fix
@@ -3677,7 +3717,7 @@ Hence, we need to do a bit of overriding.
 </div>
 </div>
 <div id="outline-container-modeline-file-name" class="outline-6">
-<h6 id="modeline-file-name"><span class="section-number-6">5.2.2.5.4</span> Modeline file name</h6>
+<h6 id="modeline-file-name"> <a class="anchor" aria-hidden="true" href="#modeline-file-name">🔗</a> <a class="anchor" aria-hidden="true" href="#modeline-file-name">🔗</a> <a class="anchor" aria-hidden="true" href="#modeline-file-name">🔗</a> <a class="anchor" aria-hidden="true" href="#modeline-file-name">🔗</a> <a class="anchor" aria-hidden="true" href="#modeline-file-name">🔗</a><span class="section-number-6">5.2.2.5.4</span> Modeline file name</h6>
 <div class="outline-text-6" id="text-5-2-2-5-4">
 <p>
 All those numbers! It&rsquo;s messy. Let&rsquo;s adjust this in a similar way that I have in
@@ -3700,7 +3740,7 @@ the<a href="#window-title">Window title</a>.
 </div>
 </div>
 <div id="outline-container-nicer-generated-heading" class="outline-5">
-<h5 id="nicer-generated-heading"><span class="section-number-5">5.2.2.6</span> Nicer generated heading IDs</h5>
+<h5 id="nicer-generated-heading"> <a class="anchor" aria-hidden="true" href="#nicer-generated-heading">🔗</a> <a class="anchor" aria-hidden="true" href="#nicer-generated-heading">🔗</a> <a class="anchor" aria-hidden="true" href="#nicer-generated-heading">🔗</a> <a class="anchor" aria-hidden="true" href="#nicer-generated-heading">🔗</a><span class="section-number-5">5.2.2.6</span> Nicer generated heading IDs</h5>
 <div class="outline-text-5" id="text-5-2-2-6">
 <p>
 Thanks to alphapapa&rsquo;s <a href="https://github.com/alphapapa/unpackaged.el#export-to-html-with-useful-anchors">unpackaged.el</a>.
@@ -3862,7 +3902,7 @@ Now here&rsquo;s alphapapa&rsquo;s subtley tweaked mode.
 </div>
 </div>
 <div id="outline-container-nicer-org-return" class="outline-5">
-<h5 id="nicer-org-return"><span class="section-number-5">5.2.2.7</span> Nicer <code>org-return</code></h5>
+<h5 id="nicer-org-return"> <a class="anchor" aria-hidden="true" href="#nicer-org-return">🔗</a> <a class="anchor" aria-hidden="true" href="#nicer-org-return">🔗</a> <a class="anchor" aria-hidden="true" href="#nicer-org-return">🔗</a> <a class="anchor" aria-hidden="true" href="#nicer-org-return">🔗</a><span class="section-number-5">5.2.2.7</span> Nicer <code>org-return</code></h5>
 <div class="outline-text-5" id="text-5-2-2-7">
 <p>
 Once again, from <a href="https://github.com/alphapapa/unpackaged.el#org-return-dwim">unpackaged.el</a>
@@ -3971,7 +4011,7 @@ Once again, from <a href="https://github.com/alphapapa/unpackaged.el#org-return-
 </div>
 </div>
 <div id="outline-container-org-plot" class="outline-5">
-<h5 id="org-plot"><span class="section-number-5">5.2.2.8</span> Org Plot</h5>
+<h5 id="org-plot"> <a class="anchor" aria-hidden="true" href="#org-plot">🔗</a> <a class="anchor" aria-hidden="true" href="#org-plot">🔗</a> <a class="anchor" aria-hidden="true" href="#org-plot">🔗</a> <a class="anchor" aria-hidden="true" href="#org-plot">🔗</a><span class="section-number-5">5.2.2.8</span> Org Plot</h5>
 <div class="outline-text-5" id="text-5-2-2-8">
 <p>
 There are two main bits of extra functionality I wan to add
@@ -4009,7 +4049,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="orgfb8800e"></a></li>
+This uses the radar template, the result of which can be seen in <a id="orge1d6cbf"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -4022,11 +4062,11 @@ case no ticks are shown.</li>
 </div>
 </div>
 <div id="outline-container-extra-links" class="outline-5">
-<h5 id="extra-links"><span class="section-number-5">5.2.2.9</span> Extra links</h5>
+<h5 id="extra-links"> <a class="anchor" aria-hidden="true" href="#extra-links">🔗</a> <a class="anchor" aria-hidden="true" href="#extra-links">🔗</a> <a class="anchor" aria-hidden="true" href="#extra-links">🔗</a> <a class="anchor" aria-hidden="true" href="#extra-links">🔗</a><span class="section-number-5">5.2.2.9</span> Extra links</h5>
 <div class="outline-text-5" id="text-5-2-2-9">
 </div>
 <div id="outline-container-extra-links-xkcd" class="outline-6">
-<h6 id="extra-links-xkcd"><span class="section-number-6">5.2.2.9.1</span> xkcd</h6>
+<h6 id="extra-links-xkcd"> <a class="anchor" aria-hidden="true" href="#extra-links-xkcd">🔗</a> <a class="anchor" aria-hidden="true" href="#extra-links-xkcd">🔗</a> <a class="anchor" aria-hidden="true" href="#extra-links-xkcd">🔗</a> <a class="anchor" aria-hidden="true" href="#extra-links-xkcd">🔗</a> <a class="anchor" aria-hidden="true" href="#extra-links-xkcd">🔗</a><span class="section-number-6">5.2.2.9.1</span> xkcd</h6>
 <div class="outline-text-6" id="text-5-2-2-9-1">
 <p>
 Because xkcd is cool, let&rsquo;s make it as easy and fun as possible to insert them.
@@ -4082,7 +4122,7 @@ Saving seconds adds up after all! (but only so much)
 </div>
 </div>
 <div id="outline-container-youtube" class="outline-6">
-<h6 id="youtube"><span class="section-number-6">5.2.2.9.2</span> YouTube</h6>
+<h6 id="youtube"> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a><span class="section-number-6">5.2.2.9.2</span> YouTube</h6>
 <div class="outline-text-6" id="text-5-2-2-9-2">
 <p>
 The <code>[[yt:...]]</code> links preview nicely, but don&rsquo;t export nicely. Thankfully, we can
@@ -4109,7 +4149,7 @@ fix that.
 </div>
 
 <div id="outline-container-org-mode-visuals" class="outline-4">
-<h4 id="org-mode-visuals"><span class="section-number-4">5.2.3</span> Visuals</h4>
+<h4 id="org-mode-visuals"> <a class="anchor" aria-hidden="true" href="#org-mode-visuals">🔗</a> <a class="anchor" aria-hidden="true" href="#org-mode-visuals">🔗</a> <a class="anchor" aria-hidden="true" href="#org-mode-visuals">🔗</a><span class="section-number-4">5.2.3</span> Visuals</h4>
 <div class="outline-text-4" id="text-5-2-3">
 <p>
 Here I try to do two things: improve the styling of the various documents, via
@@ -4122,11 +4162,11 @@ font changes etc, and also propagate colours from the current theme.
 </div>
 
 <div id="outline-container-editor" class="outline-5">
-<h5 id="editor"><span class="section-number-5">5.2.3.1</span> In editor</h5>
+<h5 id="editor"> <a class="anchor" aria-hidden="true" href="#editor">🔗</a> <a class="anchor" aria-hidden="true" href="#editor">🔗</a> <a class="anchor" aria-hidden="true" href="#editor">🔗</a> <a class="anchor" aria-hidden="true" href="#editor">🔗</a><span class="section-number-5">5.2.3.1</span> In editor</h5>
 <div class="outline-text-5" id="text-5-2-3-1">
 </div>
 <div id="outline-container-font-display" class="outline-6">
-<h6 id="font-display"><span class="section-number-6">5.2.3.1.1</span> Font Display</h6>
+<h6 id="font-display"> <a class="anchor" aria-hidden="true" href="#font-display">🔗</a> <a class="anchor" aria-hidden="true" href="#font-display">🔗</a> <a class="anchor" aria-hidden="true" href="#font-display">🔗</a> <a class="anchor" aria-hidden="true" href="#font-display">🔗</a> <a class="anchor" aria-hidden="true" href="#font-display">🔗</a><span class="section-number-6">5.2.3.1.1</span> Font Display</h6>
 <div class="outline-text-6" id="text-5-2-3-1-1">
 <p>
 Mixed pitch is great. As is <code>+org-pretty-mode</code>, let&rsquo;s use them.
@@ -4161,7 +4201,7 @@ Let&rsquo;s make headings a bit bigger
 </div>
 </div>
 <div id="outline-container-symbols" class="outline-6">
-<h6 id="symbols"><span class="section-number-6">5.2.3.1.2</span> Symbols</h6>
+<h6 id="symbols"> <a class="anchor" aria-hidden="true" href="#symbols">🔗</a> <a class="anchor" aria-hidden="true" href="#symbols">🔗</a> <a class="anchor" aria-hidden="true" href="#symbols">🔗</a> <a class="anchor" aria-hidden="true" href="#symbols">🔗</a> <a class="anchor" aria-hidden="true" href="#symbols">🔗</a><span class="section-number-6">5.2.3.1.2</span> Symbols</h6>
 <div class="outline-text-6" id="text-5-2-3-1-2">
 <p>
 It&rsquo;s also nice to change the character used for collapsed items (by default <code>…</code>),
@@ -4275,7 +4315,7 @@ We also like <code>org-fragtog</code>, and that wants a hook.
 </div>
 </div>
 <div id="outline-container-latex-fragments" class="outline-6">
-<h6 id="latex-fragments"><span class="section-number-6">5.2.3.1.3</span> LaTeX Fragments</h6>
+<h6 id="latex-fragments"> <a class="anchor" aria-hidden="true" href="#latex-fragments">🔗</a> <a class="anchor" aria-hidden="true" href="#latex-fragments">🔗</a> <a class="anchor" aria-hidden="true" href="#latex-fragments">🔗</a> <a class="anchor" aria-hidden="true" href="#latex-fragments">🔗</a> <a class="anchor" aria-hidden="true" href="#latex-fragments">🔗</a><span class="section-number-6">5.2.3.1.3</span> LaTeX Fragments</h6>
 <div class="outline-text-6" id="text-5-2-3-1-3">
 <p>
 First off, we want those fragments to look good.
@@ -4460,7 +4500,7 @@ NB: This doesn&rsquo;t work at the moment.
 </div>
 </div>
 <div id="outline-container-stolen-from-scimax" class="outline-6">
-<h6 id="stolen-from-scimax"><span class="section-number-6">5.2.3.1.4</span> Stolen from <a href="https://github.com/jkitchin/scimax">scimax</a> (semi-working right now)</h6>
+<h6 id="stolen-from-scimax"> <a class="anchor" aria-hidden="true" href="#stolen-from-scimax">🔗</a> <a class="anchor" aria-hidden="true" href="#stolen-from-scimax">🔗</a> <a class="anchor" aria-hidden="true" href="#stolen-from-scimax">🔗</a> <a class="anchor" aria-hidden="true" href="#stolen-from-scimax">🔗</a> <a class="anchor" aria-hidden="true" href="#stolen-from-scimax">🔗</a><span class="section-number-6">5.2.3.1.4</span> Stolen from <a href="https://github.com/jkitchin/scimax">scimax</a> (semi-working right now)</h6>
 <div class="outline-text-6" id="text-5-2-3-1-4">
 <p>
 I want fragment justification
@@ -4587,7 +4627,7 @@ There&rsquo;s also this lovely equation numbering stuff I&rsquo;ll nick
 </div>
 </div>
 <div id="outline-container-exporting-general" class="outline-5">
-<h5 id="exporting-general"><span class="section-number-5">5.2.3.2</span> Exporting (general)</h5>
+<h5 id="exporting-general"> <a class="anchor" aria-hidden="true" href="#exporting-general">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-general">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-general">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-general">🔗</a><span class="section-number-5">5.2.3.2</span> Exporting (general)</h5>
 <div class="outline-text-5" id="text-5-2-3-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-export-headline-levels</span> <span style="color: #e69055; font-weight: bold;">5</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">I like nesting</span>
@@ -4609,11 +4649,11 @@ the final documents.
 </div>
 </div>
 <div id="outline-container-exporting-html" class="outline-5">
-<h5 id="exporting-html"><span class="section-number-5">5.2.3.3</span> Exporting to HTML</h5>
+<h5 id="exporting-html"> <a class="anchor" aria-hidden="true" href="#exporting-html">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-html">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-html">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-html">🔗</a><span class="section-number-5">5.2.3.3</span> Exporting to HTML</h5>
 <div class="outline-text-5" id="text-5-2-3-3">
 </div>
 <div id="outline-container-custom-css-js" class="outline-6">
-<h6 id="custom-css-js"><span class="section-number-6">5.2.3.3.1</span> Custom CSS/JS</h6>
+<h6 id="custom-css-js"> <a class="anchor" aria-hidden="true" href="#custom-css-js">🔗</a> <a class="anchor" aria-hidden="true" href="#custom-css-js">🔗</a> <a class="anchor" aria-hidden="true" href="#custom-css-js">🔗</a> <a class="anchor" aria-hidden="true" href="#custom-css-js">🔗</a> <a class="anchor" aria-hidden="true" href="#custom-css-js">🔗</a><span class="section-number-6">5.2.3.3.1</span> Custom CSS/JS</h6>
 <div class="outline-text-6" id="text-5-2-3-3-1">
 <p>
 There is a fantastic exporter config (<a href="https://github.com/fniessen/org-html-themes">fniessen/org-html-themes</a>) which we can
@@ -4901,7 +4941,7 @@ match out theme (they don&rsquo;t by default), so I scraped some code from <code
 </div>
 </div>
 <div id="outline-container-make-verbatim-different" class="outline-6">
-<h6 id="make-verbatim-different"><span class="section-number-6">5.2.3.3.2</span> Make verbatim different to code</h6>
+<h6 id="make-verbatim-different"> <a class="anchor" aria-hidden="true" href="#make-verbatim-different">🔗</a> <a class="anchor" aria-hidden="true" href="#make-verbatim-different">🔗</a> <a class="anchor" aria-hidden="true" href="#make-verbatim-different">🔗</a> <a class="anchor" aria-hidden="true" href="#make-verbatim-different">🔗</a> <a class="anchor" aria-hidden="true" href="#make-verbatim-different">🔗</a><span class="section-number-6">5.2.3.3.2</span> Make verbatim different to code</h6>
 <div class="outline-text-6" id="text-5-2-3-3-2">
 <p>
 Since we have <kbd>verbatim</kbd> and <code>code</code>, let&rsquo;s use <kbd>verbatim</kbd> for key strokes.
@@ -4919,7 +4959,7 @@ Since we have <kbd>verbatim</kbd> and <code>code</code>, let&rsquo;s use <kbd>ve
 </div>
 </div>
 <div id="outline-container-change-checkbox-type" class="outline-6">
-<h6 id="change-checkbox-type"><span class="section-number-6">5.2.3.3.3</span> Change checkbox type</h6>
+<h6 id="change-checkbox-type"> <a class="anchor" aria-hidden="true" href="#change-checkbox-type">🔗</a> <a class="anchor" aria-hidden="true" href="#change-checkbox-type">🔗</a> <a class="anchor" aria-hidden="true" href="#change-checkbox-type">🔗</a> <a class="anchor" aria-hidden="true" href="#change-checkbox-type">🔗</a> <a class="anchor" aria-hidden="true" href="#change-checkbox-type">🔗</a><span class="section-number-6">5.2.3.3.3</span> Change checkbox type</h6>
 <div class="outline-text-6" id="text-5-2-3-3-3">
 <p>
 We also want to use HTML checkboxes, however we want to get a bit fancier than default
@@ -4941,7 +4981,7 @@ We also want to use HTML checkboxes, however we want to get a bit fancier than d
 </div>
 </div>
 <div id="outline-container-header-anchors" class="outline-6">
-<h6 id="header-anchors"><span class="section-number-6">5.2.3.3.4</span> Header anchors</h6>
+<h6 id="header-anchors"> <a class="anchor" aria-hidden="true" href="#header-anchors">🔗</a> <a class="anchor" aria-hidden="true" href="#header-anchors">🔗</a> <a class="anchor" aria-hidden="true" href="#header-anchors">🔗</a> <a class="anchor" aria-hidden="true" href="#header-anchors">🔗</a> <a class="anchor" aria-hidden="true" href="#header-anchors">🔗</a><span class="section-number-6">5.2.3.3.4</span> Header anchors</h6>
 <div class="outline-text-6" id="text-5-2-3-3-4">
 <p>
 I want to add github-style links on hover for headings.
@@ -4963,7 +5003,7 @@ I want to add github-style links on hover for headings.
 </div>
 </div>
 <div id="outline-container-latex-rendering" class="outline-6">
-<h6 id="latex-rendering"><span class="section-number-6">5.2.3.3.5</span> LaTeX Rendering</h6>
+<h6 id="latex-rendering"> <a class="anchor" aria-hidden="true" href="#latex-rendering">🔗</a> <a class="anchor" aria-hidden="true" href="#latex-rendering">🔗</a> <a class="anchor" aria-hidden="true" href="#latex-rendering">🔗</a> <a class="anchor" aria-hidden="true" href="#latex-rendering">🔗</a> <a class="anchor" aria-hidden="true" href="#latex-rendering">🔗</a><span class="section-number-6">5.2.3.3.5</span> LaTeX Rendering</h6>
 <div class="outline-text-6" id="text-5-2-3-3-5">
 <p>
 On the maths side of things, I consider <code>dvisvgm</code> to be a rather compelling
@@ -4977,7 +5017,7 @@ option. However this isn&rsquo;t sized very well at the moment.
 </div>
 </div>
 <div id="outline-container-exporting-latex" class="outline-5">
-<h5 id="exporting-latex"><span class="section-number-5">5.2.3.4</span> Exporting to LaTeX</h5>
+<h5 id="exporting-latex"> <a class="anchor" aria-hidden="true" href="#exporting-latex">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-latex">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-latex">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-latex">🔗</a><span class="section-number-5">5.2.3.4</span> Exporting to LaTeX</h5>
 <div class="outline-text-5" id="text-5-2-3-4">
 <p>
 I like automatically using spaced small caps for acronyms. For strings I want to
@@ -5147,7 +5187,7 @@ Now for a few more adjustments.
 </div>
 </div>
 <div id="outline-container-chameleon-aka-match" class="outline-6">
-<h6 id="chameleon-aka-match"><span class="section-number-6">5.2.3.4.1</span> Chameleon &#x2014; aka. match theme</h6>
+<h6 id="chameleon-aka-match"> <a class="anchor" aria-hidden="true" href="#chameleon-aka-match">🔗</a> <a class="anchor" aria-hidden="true" href="#chameleon-aka-match">🔗</a> <a class="anchor" aria-hidden="true" href="#chameleon-aka-match">🔗</a> <a class="anchor" aria-hidden="true" href="#chameleon-aka-match">🔗</a> <a class="anchor" aria-hidden="true" href="#chameleon-aka-match">🔗</a><span class="section-number-6">5.2.3.4.1</span> Chameleon &#x2014; aka. match theme</h6>
 <div class="outline-text-6" id="text-5-2-3-4-1">
 <p>
 Once the idea of having the look of the LaTeX document produced match the
@@ -5294,7 +5334,7 @@ current Emacs theme, I was enraptured. The result is the pseudo-class <code>cham
 </div>
 </div>
 <div id="outline-container-exporting-latex-make" class="outline-6">
-<h6 id="exporting-latex-make"><span class="section-number-6">5.2.3.4.2</span> Make verbatim different to code</h6>
+<h6 id="exporting-latex-make"> <a class="anchor" aria-hidden="true" href="#exporting-latex-make">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-latex-make">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-latex-make">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-latex-make">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-latex-make">🔗</a><span class="section-number-6">5.2.3.4.2</span> Make verbatim different to code</h6>
 <div class="outline-text-6" id="text-5-2-3-4-2">
 <p>
 Since have just gone to so much effort above let&rsquo;s make the most of it by making
@@ -5313,7 +5353,7 @@ Since have just gone to so much effort above let&rsquo;s make the most of it by 
 </div>
 </div>
 <div id="outline-container-exporting-beamer" class="outline-5">
-<h5 id="exporting-beamer"><span class="section-number-5">5.2.3.5</span> Exporting to Beamer</h5>
+<h5 id="exporting-beamer"> <a class="anchor" aria-hidden="true" href="#exporting-beamer">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-beamer">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-beamer">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-beamer">🔗</a><span class="section-number-5">5.2.3.5</span> Exporting to Beamer</h5>
 <div class="outline-text-5" id="text-5-2-3-5">
 <p>
 It&rsquo;s nice to use a different theme
@@ -5341,7 +5381,7 @@ frame from <code>1</code> to <code>2</code>.
 </div>
 </div>
 <div id="outline-container-exporting-gfm" class="outline-5">
-<h5 id="exporting-gfm"><span class="section-number-5">5.2.3.6</span> Exporting to GFM</h5>
+<h5 id="exporting-gfm"> <a class="anchor" aria-hidden="true" href="#exporting-gfm">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-gfm">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-gfm">🔗</a> <a class="anchor" aria-hidden="true" href="#exporting-gfm">🔗</a><span class="section-number-5">5.2.3.6</span> Exporting to GFM</h5>
 <div class="outline-text-5" id="text-5-2-3-6">
 <p>
 We just need to load <code>ox-gfm</code> for org-mode documents
@@ -5355,7 +5395,7 @@ We just need to load <code>ox-gfm</code> for org-mode documents
 </div>
 </div>
 <div id="outline-container-babel" class="outline-4">
-<h4 id="babel"><span class="section-number-4">5.2.4</span> Babel</h4>
+<h4 id="babel"> <a class="anchor" aria-hidden="true" href="#babel">🔗</a> <a class="anchor" aria-hidden="true" href="#babel">🔗</a> <a class="anchor" aria-hidden="true" href="#babel">🔗</a><span class="section-number-4">5.2.4</span> Babel</h4>
 <div class="outline-text-4" id="text-5-2-4">
 <p>
 Doom lazy-loads babel languages, with is lovely.
@@ -5384,7 +5424,7 @@ We also like auto-completion here
 </div>
 </div>
 <div id="outline-container-org-mode-ess" class="outline-4">
-<h4 id="org-mode-ess"><span class="section-number-4">5.2.5</span> ESS</h4>
+<h4 id="org-mode-ess"> <a class="anchor" aria-hidden="true" href="#org-mode-ess">🔗</a> <a class="anchor" aria-hidden="true" href="#org-mode-ess">🔗</a> <a class="anchor" aria-hidden="true" href="#org-mode-ess">🔗</a><span class="section-number-4">5.2.5</span> ESS</h4>
 <div class="outline-text-4" id="text-5-2-5">
 <p>
 We don&rsquo;t want <code>R</code> evaluation to hang the editor, hence
@@ -5415,14 +5455,14 @@ Syntax highlighting is nice, so let&rsquo;s turn all of that on
 </div>
 </div>
 <div id="outline-container-language-configuration-latex" class="outline-3">
-<h3 id="language-configuration-latex"><span class="section-number-3">5.3</span> LaTeX</h3>
+<h3 id="language-configuration-latex"> <a class="anchor" aria-hidden="true" href="#language-configuration-latex">🔗</a> <a class="anchor" aria-hidden="true" href="#language-configuration-latex">🔗</a><span class="section-number-3">5.3</span> LaTeX</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 <img src='https://imgs.xkcd.com/comics/file_extensions.png' title="I have never been lied to by data in a .txt file which has been hand-aligned." alt='File Extensions'>
 </p>
 </div>
 <div id="outline-container-be-implemented-ideas" class="outline-4">
-<h4 id="be-implemented-ideas"><span class="section-number-4">5.3.1</span> To-be-implemented ideas</h4>
+<h4 id="be-implemented-ideas"> <a class="anchor" aria-hidden="true" href="#be-implemented-ideas">🔗</a> <a class="anchor" aria-hidden="true" href="#be-implemented-ideas">🔗</a> <a class="anchor" aria-hidden="true" href="#be-implemented-ideas">🔗</a><span class="section-number-4">5.3.1</span> To-be-implemented ideas</h4>
 <div class="outline-text-4" id="text-5-3-1">
 <ul class="org-ul">
 <li>Paste image from clipboard
@@ -5452,7 +5492,7 @@ filename as variable maybe?)</li>
 </div>
 </div>
 <div id="outline-container-compilation" class="outline-4">
-<h4 id="compilation"><span class="section-number-4">5.3.2</span> Compilation</h4>
+<h4 id="compilation"> <a class="anchor" aria-hidden="true" href="#compilation">🔗</a> <a class="anchor" aria-hidden="true" href="#compilation">🔗</a> <a class="anchor" aria-hidden="true" href="#compilation">🔗</a><span class="section-number-4">5.3.2</span> Compilation</h4>
 <div class="outline-text-4" id="text-5-3-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">TeX-save-query</span> nil
@@ -5465,11 +5505,11 @@ filename as variable maybe?)</li>
 </div>
 </div>
 <div id="outline-container-snippet-helpers" class="outline-4">
-<h4 id="snippet-helpers"><span class="section-number-4">5.3.3</span> Snippet helpers</h4>
+<h4 id="snippet-helpers"> <a class="anchor" aria-hidden="true" href="#snippet-helpers">🔗</a> <a class="anchor" aria-hidden="true" href="#snippet-helpers">🔗</a> <a class="anchor" aria-hidden="true" href="#snippet-helpers">🔗</a><span class="section-number-4">5.3.3</span> Snippet helpers</h4>
 <div class="outline-text-4" id="text-5-3-3">
 </div>
 <div id="outline-container-template" class="outline-5">
-<h5 id="template"><span class="section-number-5">5.3.3.1</span> Template</h5>
+<h5 id="template"> <a class="anchor" aria-hidden="true" href="#template">🔗</a> <a class="anchor" aria-hidden="true" href="#template">🔗</a> <a class="anchor" aria-hidden="true" href="#template">🔗</a> <a class="anchor" aria-hidden="true" href="#template">🔗</a><span class="section-number-5">5.3.3.1</span> Template</h5>
 <div class="outline-text-5" id="text-5-3-3-1">
 <p>
 For use in the new-file template, let&rsquo;s set out a nice preamble we may want to use.
@@ -5514,7 +5554,7 @@ Then let&rsquo;s bind the content to a function, and define some nice helpers.
 </div>
 </div>
 <div id="outline-container-deliminators" class="outline-5">
-<h5 id="deliminators"><span class="section-number-5">5.3.3.2</span> Deliminators</h5>
+<h5 id="deliminators"> <a class="anchor" aria-hidden="true" href="#deliminators">🔗</a> <a class="anchor" aria-hidden="true" href="#deliminators">🔗</a> <a class="anchor" aria-hidden="true" href="#deliminators">🔗</a> <a class="anchor" aria-hidden="true" href="#deliminators">🔗</a><span class="section-number-5">5.3.3.2</span> Deliminators</h5>
 <div class="outline-text-5" id="text-5-3-3-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> tex
@@ -5580,7 +5620,7 @@ Then let&rsquo;s bind the content to a function, and define some nice helpers.
 </div>
 </div>
 <div id="outline-container-editor-visuals" class="outline-4">
-<h4 id="editor-visuals"><span class="section-number-4">5.3.4</span> Editor visuals</h4>
+<h4 id="editor-visuals"> <a class="anchor" aria-hidden="true" href="#editor-visuals">🔗</a> <a class="anchor" aria-hidden="true" href="#editor-visuals">🔗</a> <a class="anchor" aria-hidden="true" href="#editor-visuals">🔗</a><span class="section-number-4">5.3.4</span> Editor visuals</h4>
 <div class="outline-text-4" id="text-5-3-4">
 <p>
 Once again, <i>all hail mixed pitch mode!</i>
@@ -5738,7 +5778,7 @@ And enable shell escape for the preview
 </div>
 </div>
 <div id="outline-container-latex-cdlatex" class="outline-4">
-<h4 id="latex-cdlatex"><span class="section-number-4">5.3.5</span> CDLaTeX</h4>
+<h4 id="latex-cdlatex"> <a class="anchor" aria-hidden="true" href="#latex-cdlatex">🔗</a> <a class="anchor" aria-hidden="true" href="#latex-cdlatex">🔗</a> <a class="anchor" aria-hidden="true" href="#latex-cdlatex">🔗</a><span class="section-number-4">5.3.5</span> CDLaTeX</h4>
 <div class="outline-text-4" id="text-5-3-5">
 <p>
 The symbols and modifies are very nice by default, but could do with a bit of
@@ -5803,7 +5843,7 @@ provide this:
 </div>
 </div>
 <div id="outline-container-synctex" class="outline-4">
-<h4 id="synctex"><span class="section-number-4">5.3.6</span> SyncTeX</h4>
+<h4 id="synctex"> <a class="anchor" aria-hidden="true" href="#synctex">🔗</a> <a class="anchor" aria-hidden="true" href="#synctex">🔗</a> <a class="anchor" aria-hidden="true" href="#synctex">🔗</a><span class="section-number-4">5.3.6</span> SyncTeX</h4>
 <div class="outline-text-4" id="text-5-3-6">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> tex
@@ -5814,7 +5854,7 @@ provide this:
 </div>
 </div>
 <div id="outline-container-evilification" class="outline-4">
-<h4 id="evilification"><span class="section-number-4">5.3.7</span> Evilification</h4>
+<h4 id="evilification"> <a class="anchor" aria-hidden="true" href="#evilification">🔗</a> <a class="anchor" aria-hidden="true" href="#evilification">🔗</a> <a class="anchor" aria-hidden="true" href="#evilification">🔗</a><span class="section-number-4">5.3.7</span> Evilification</h4>
 <div class="outline-text-4" id="text-5-3-7">
 <p>
 Let&rsquo;s face it. Being evil is fun, let&rsquo;s take it as far as we can.
@@ -5828,7 +5868,7 @@ Let&rsquo;s face it. Being evil is fun, let&rsquo;s take it as far as we can.
 </div>
 </div>
 <div id="outline-container-python" class="outline-3">
-<h3 id="python"><span class="section-number-3">5.4</span> Python</h3>
+<h3 id="python"> <a class="anchor" aria-hidden="true" href="#python">🔗</a> <a class="anchor" aria-hidden="true" href="#python">🔗</a><span class="section-number-3">5.4</span> Python</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 Since I&rsquo;m using <kbd>mypyls</kbd>, as suggested in <a href="file:///home/tec/.emacs.d/modules/lang/python/README.html#MissingReference">:lang python LSP support</a> I&rsquo;ll tweak the
@@ -5842,11 +5882,11 @@ priority of <kbd>mypyls</kbd>
 </div>
 </div>
 <div id="outline-container-r" class="outline-3">
-<h3 id="r"><span class="section-number-3">5.5</span> R</h3>
+<h3 id="r"> <a class="anchor" aria-hidden="true" href="#r">🔗</a> <a class="anchor" aria-hidden="true" href="#r">🔗</a><span class="section-number-3">5.5</span> R</h3>
 <div class="outline-text-3" id="text-5-5">
 </div>
 <div id="outline-container-r-editor-visuals" class="outline-4">
-<h4 id="r-editor-visuals"><span class="section-number-4">5.5.1</span> Editor Visuals</h4>
+<h4 id="r-editor-visuals"> <a class="anchor" aria-hidden="true" href="#r-editor-visuals">🔗</a> <a class="anchor" aria-hidden="true" href="#r-editor-visuals">🔗</a> <a class="anchor" aria-hidden="true" href="#r-editor-visuals">🔗</a><span class="section-number-4">5.5.1</span> Editor Visuals</h4>
 <div class="outline-text-4" id="text-5-5-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> ess-r-mode
@@ -5878,7 +5918,7 @@ priority of <kbd>mypyls</kbd>
 </div>
 </div>
 <div id="outline-container-hledger" class="outline-3">
-<h3 id="hledger"><span class="section-number-3">5.6</span> hledger</h3>
+<h3 id="hledger"> <a class="anchor" aria-hidden="true" href="#hledger">🔗</a> <a class="anchor" aria-hidden="true" href="#hledger">🔗</a><span class="section-number-3">5.6</span> hledger</h3>
 <div class="outline-text-3" id="text-5-6">
 <p>
 <code>ledger-mode</code> is great and all, but <code>hledger</code> seems to be more actively maintained.
@@ -5901,7 +5941,7 @@ and produced by John Wiegley &#x2014; author of <code>ledger</code> and current 
 </div>
 </div>
 <div id="outline-container-markdown" class="outline-3">
-<h3 id="markdown"><span class="section-number-3">5.7</span> Markdown</h3>
+<h3 id="markdown"> <a class="anchor" aria-hidden="true" href="#markdown">🔗</a> <a class="anchor" aria-hidden="true" href="#markdown">🔗</a><span class="section-number-3">5.7</span> Markdown</h3>
 <div class="outline-text-3" id="text-5-7">
 <p>
 Let&rsquo;s use mixed pitch, because it&rsquo;s great
@@ -5944,7 +5984,7 @@ sixth greyed out. Since the sixth level is so small, I&rsquo;ll turn up the bold
 </div>
 </div>
 <div id="outline-container-beancount" class="outline-3">
-<h3 id="beancount"><span class="section-number-3">5.8</span> Beancount</h3>
+<h3 id="beancount"> <a class="anchor" aria-hidden="true" href="#beancount">🔗</a> <a class="anchor" aria-hidden="true" href="#beancount">🔗</a><span class="section-number-3">5.8</span> Beancount</h3>
 <div class="outline-text-3" id="text-5-8">
 <p>
 The <a href="https://bitbucket.org/blais/beancount/src/tip/editors/emacs/beancount.el">beancount package</a> online has been put into <code>./lisp</code>, we just need to load and
@@ -5973,7 +6013,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-19 Tue 20:34</p>
+<p class="date">Created: 2020-05-19 Tue 20:38</p>
 </div>
 </body>
 </html>
