@@ -1,9 +1,14 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
 ;; [[file:~/.config/doom/config.org::*Personal%20Information][Personal Information:1]]
-(setq user-full-name "tecosaur"
-      user-mail-address "tecosaur@gmail.com")
+(setq user-full-name "TEC"
+      user-mail-address "tec@tecosaur.com")
 ;; Personal Information:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Personal%20Information][Personal Information:2]]
+(setq auth-sources '("~/.authinfo.gpg")
+      auth-source-cache-expiry nil) ; default is 7200 (2h)
+;; Personal Information:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Simple%20settings][Simple settings:1]]
 (setq-default
