@@ -385,6 +385,188 @@
 ;;   (magit-delta-mode +1))
 ;; Magit:1 ends here
 
+;; [[file:~/.config/doom/config.org::*Rebuild%20mail%20index%20while%20using%20mu4e][Rebuild mail index while using mu4e:1]]
+(after! mu4e
+  (defvar mu4e-reindex-request-file "/tmp/mu_reindex_now"
+    "Location of the reindex request, signaled by existance")
+  (defvar mu4e-reindex-request-min-seperation 2.0
+    "Don't refresh again until this many second have elapsed.
+Prevents a series of redisplays from being called (when set to an appropriate value)")
+
+  (defvar mu4e-reindex-request--file-watcher nil)
+  (defvar mu4e-reindex-request--file-just-deleted nil)
+  (defvar mu4e-reindex-request--last-time 0)
+
+  (defun mu4e-reindex-request--add-watcher ()
+    (setq mu4e-reindex-request--file-just-deleted nil)
+    (setq mu4e-reindex-request--file-watcher
+          (file-notify-add-watch mu4e-reindex-request-file
+                                 '(change)
+                                 #'mu4e-file-reindex-request)))
+
+  (defadvice! mu4e-stop-watching-for-reindex-request ()
+    :after #'mu4e~proc-kill
+    (if mu4e-reindex-request--file-watcher
+        (file-notify-rm-watch mu4e-reindex-request--file-watcher)))
+
+  (defadvice! mu4e-watch-for-reindex-request ()
+    :after #'mu4e~proc-start
+    (mu4e-stop-watching-for-reindex-request)
+    (when (file-exists-p mu4e-reindex-request-file)
+      (delete-file mu4e-reindex-request-file))
+    (mu4e-reindex-request--add-watcher))
+
+    (defun mu4e-file-reindex-request (event)
+      "Act based on the existance of `mu4e-reindex-request-file'"
+      (if mu4e-reindex-request--file-just-deleted
+          (mu4e-reindex-request--add-watcher)
+        (when (equal (nth 1 event) 'created)
+          (delete-file mu4e-reindex-request-file)
+          (setq mu4e-reindex-request--file-just-deleted t)
+          (mu4e-reindex-maybe t))))
+
+    (defun mu4e-reindex-maybe (&optional new-request)
+      "Run `mu4e~proc-index' if it's been more than `mu4e-reindex-request-min-seperation' seconds since the last request,"
+      (let ((time-since-last-request (- (float-time) mu4e-reindex-request--last-time)))
+        (when new-request
+          (setq mu4e-reindex-request--last-time (float-time)))
+        (if (> time-since-last-request mu4e-reindex-request-min-seperation)
+            (mu4e~proc-index nil t)
+          (when new-request
+            (run-at-time (* 1.1 mu4e-reindex-request-min-seperation) nil
+                         #'mu4e-reindex-maybe))))))
+;; Rebuild mail index while using mu4e:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Mu4e][Mu4e:1]]
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+;; Mu4e:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:1]]
+(after! mu4e
+  (defun my-string-width (str)
+    "Return the width in pixels of a string in the current
+window's default font. If the font is mono-spaced, this
+will also be the width of all other printable characters."
+    (let ((window (selected-window))
+          (remapping face-remapping-alist))
+      (with-temp-buffer
+        (make-local-variable 'face-remapping-alist)
+        (setq face-remapping-alist remapping)
+        (set-window-buffer window (current-buffer))
+        (insert str)
+        (car (window-text-pixel-size)))))
+
+
+  (cl-defun mu4e~normalised-icon (name &key set colour height v-adjust)
+    "Convert :icon declaration to icon"
+    (let* ((icon-set (intern (concat "all-the-icons-" (or set "faicon"))))
+           (v-adjust (or v-adjust 0.02))
+           (height (or height 0.8))
+           (icon (if colour
+                     (apply icon-set `(,name :face ,(intern (concat "all-the-icons-" colour)) :height ,height :v-adjust ,v-adjust))
+                   (apply icon-set `(,name  :height ,height :v-adjust ,v-adjust))))
+           (icon-width (my-string-width icon))
+           (space-width (my-string-width " "))
+           (space-factor (- 2 (/ (float icon-width) space-width))))
+      (concat (propertize " " 'display `(space . (:width ,space-factor))) icon)
+      ))
+
+  (setq mu4e-use-fancy-chars t
+        mu4e~mark-fringe "   "
+        mu4e~mark-fringe-len 3
+        mu4e~mark-fringe-format "%-3s"
+        mu4e-headers-draft-mark      (cons "D" (mu4e~normalised-icon "pencil"))
+        mu4e-headers-flagged-mark    (cons "F" (mu4e~normalised-icon "flag"))
+        mu4e-headers-new-mark        (cons "N" (mu4e~normalised-icon "sync" :set "material" :height 0.8 :v-adjust -0.10))
+        mu4e-headers-passed-mark     (cons "P" (mu4e~normalised-icon "arrow-right"))
+        mu4e-headers-replied-mark    (cons "R" (mu4e~normalised-icon "arrow-right"))
+        mu4e-headers-seen-mark       (cons "S" "") ;(mu4e~normalised-icon "eye" :height 0.6 :v-adjust 0.07 :colour "dsilver"))
+        mu4e-headers-trashed-mark    (cons "T" (mu4e~normalised-icon "trash"))
+        mu4e-headers-attach-mark     (cons "a" (mu4e~normalised-icon "file-text-o" :colour "silver"))
+        mu4e-headers-encrypted-mark  (cons "x" (mu4e~normalised-icon "lock"))
+        mu4e-headers-signed-mark     (cons "s" (mu4e~normalised-icon "certificate" :height 0.7 :colour "dpurple"))
+        mu4e-headers-unread-mark     (cons "u" (mu4e~normalised-icon "eye-slash" :v-adjust 0.05))))
+;; Viewing Mail:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:2]]
+(after! mu4e
+  (setq mu4e-headers-fields
+        '((:account . 16)
+          (:human-date . 8)
+          (:flags . 6)
+          (:from . 25)
+          (:subject)))
+  (plist-put (cdr (assoc :flags mu4e-header-info)) :shortname " Flags") ; default=Flgs
+)
+;; Viewing Mail:2 ends here
+
+;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:3]]
+(defadvice! mu4e~main-action-prettier-str (str &optional func-or-shortcut)
+  "Highlight the first occurrence of [.] in STR.
+If FUNC-OR-SHORTCUT is non-nil and if it is a function, call it
+when STR is clicked (using RET or mouse-2); if FUNC-OR-SHORTCUT is
+a string, execute the corresponding keyboard action when it is
+clicked."
+  :override #'mu4e~main-action-str
+  (let ((newstr
+         (replace-regexp-in-string
+          "\\[\\(..?\\)\\]"
+          (lambda(m)
+            (format "%s"
+                    (propertize (match-string 1 m) 'face '(mode-line-emphasis bold))))
+          (replace-regexp-in-string "\t\\*" "\t⚫" str)))
+        (map (make-sparse-keymap))
+        (func (if (functionp func-or-shortcut)
+                  func-or-shortcut
+                (if (stringp func-or-shortcut)
+                    (lambda()(interactive)
+                      (execute-kbd-macro func-or-shortcut))))))
+    (define-key map [mouse-2] func)
+    (define-key map (kbd "RET") func)
+    (put-text-property 0 (length newstr) 'keymap map newstr)
+    (put-text-property (string-match "[A-Za-z].+$" newstr)
+                       (- (length newstr) 1) 'mouse-face 'highlight newstr)
+    newstr))
+
+(setq evil-collection-mu4e-end-region-misc "quit")
+;; Viewing Mail:3 ends here
+
+;; [[file:~/.config/doom/config.org::*Sending%20Mail][Sending Mail:1]]
+(after! mu4e
+  (setq sendmail-program "/usr/local/bin/msmtp"
+        send-mail-function 'smtpmail-send-it
+        message-sendmail-f-is-evil t
+        message-sendmail-extra-arguments '("--read-envelope-from"); , "--read-recipients")
+        message-send-mail-function 'message-send-mail-with-sendmail))
+;; Sending Mail:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Sending%20Mail][Sending Mail:2]]
+(defun mu4e-compose-from-mailto (mailto-string)
+  (require 'mu4e)
+  (unless mu4e~server-props (mu4e t) (sleep-for 0.1))
+  (let* ((mailto (rfc2368-parse-mailto-url mailto-string))
+         (to (cdr (assoc "To" mailto)))
+         (subject (or (cdr (assoc "Subject" mailto)) ""))
+         (body (cdr (assoc "Body" mailto)))
+         (org-msg-greeting-fmt (if (assoc "Body" mailto)
+                                   (replace-regexp-in-string "%" "%%"
+                                                             (cdr (assoc "Body" mailto)))
+                                 org-msg-greeting-fmt))
+         (headers (-filter (lambda (spec) (not (-contains-p '("To" "Subject" "Body") (car spec)))) mailto)))
+    (mu4e~compose-mail to subject headers)))
+;; Sending Mail:2 ends here
+
+;; [[file:~/.config/doom/config.org::*Org%20Msg][Org Msg:1]]
+(use-package! org-msg
+  :after mu4e
+  :config
+  (setq org-msg-options "html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil email:nil \\n:t tex:dvipng"
+        org-msg-startup "hidestars indent inlineimages"
+        org-msg-greeting-fmt "\nHi %s,\n\n"
+        org-msg-greeting-name-limit 3
+        org-msg-text-plain-alternative t))
+;; Org Msg:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*Org%20Chef][Org Chef:1]]
 (use-package! org-chef
   :commands (org-chef-insert-recipe org-chef-get-recipe-from-url))
@@ -2241,8 +2423,74 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 ;; Header anchors:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*LaTeX%20Rendering][LaTeX Rendering:1]]
-;; (setq-default org-html-with-latex `dvisvgm)
+(after! org
+(defadvice! org-html-latex-fragment-scaled (latex-fragment _contents info)
+  "Transcode a LATEX-FRAGMENT object from Org to HTML.
+CONTENTS is nil.  INFO is a plist holding contextual information."
+  :override #'org-html-latex-fragment
+  (let ((latex-frag (org-element-property :value latex-fragment))
+        (processing-type (plist-get info :with-latex))
+        (attrs '(:class "latex-fragment")))
+    (when (eq processing-type 'dvipng)
+      (plist-put attrs :style (format "transform: scale(%.3f)" (/ 1.0 preview-scale))))
+    (cond
+     ((memq processing-type '(t mathjax))
+      (org-html-format-latex latex-frag 'mathjax info))
+     ((memq processing-type '(t html))
+      (org-html-format-latex latex-frag 'html info))
+     ((assq processing-type org-preview-latex-process-alist)
+      (let ((formula-link
+             (org-html-format-latex latex-frag processing-type info)))
+        (when (and formula-link (string-match "file:\\([^]]*\\)" formula-link))
+          (let ((source (org-export-file-uri (match-string 1 formula-link))))
+            (org-html--format-image source attrs info)))))
+     (t latex-frag))))
+
+(defadvice! org-html-latex-environment-scaled (latex-environment _contents info)
+  "Transcode a LATEX-ENVIRONMENT element from Org to HTML.
+CONTENTS is nil.  INFO is a plist holding contextual information."
+  :override #'org-html-latex-environment
+  (let ((processing-type (plist-get info :with-latex))
+        (latex-frag (org-remove-indentation
+                     (org-element-property :value latex-environment)))
+        (attributes (org-export-read-attribute :attr_html latex-environment))
+        (label (and (org-element-property :name latex-environment)
+                    (org-export-get-reference latex-environment info)))
+        (caption (and (org-html--latex-environment-numbered-p latex-environment)
+                      (number-to-string
+                       (org-export-get-ordinal
+                        latex-environment info nil
+                        (lambda (l _)
+                          (and (org-html--math-environment-p l)
+                               (org-html--latex-environment-numbered-p l))))))))
+    (plist-put attributes :class "latex-environment")
+    (when (eq processing-type 'dvipng)
+      (plist-put attributes :style (format "transform: scale(%.3f)" (/ 1.0 preview-scale))))
+    (cond
+     ((memq processing-type '(t mathjax))
+      (org-html-format-latex
+       (if (org-string-nw-p label)
+	   (replace-regexp-in-string "\\`.*"
+				     (format "\\&\n\\\\label{%s}" label)
+				     latex-frag)
+	 latex-frag)
+       'mathjax info))
+     ((assq processing-type org-preview-latex-process-alist)
+      (let ((formula-link
+             (org-html-format-latex
+              (org-html--unlabel-latex-environment latex-frag)
+              processing-type info)))
+        (when (and formula-link (string-match "file:\\([^]]*\\)" formula-link))
+          (let ((source (org-export-file-uri (match-string 1 formula-link))))
+	    (org-html--wrap-latex-environment
+	     (org-html--format-image source attributes info)
+	     info caption label)))))
+     (t (org-html--wrap-latex-environment latex-frag info caption label))))))
 ;; LaTeX Rendering:1 ends here
+
+;; [[file:~/.config/doom/config.org::*LaTeX%20Rendering][LaTeX Rendering:2]]
+;; (setq-default org-html-with-latex `dvisvgm)
+;; LaTeX Rendering:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Exporting%20to%20LaTeX][Exporting to LaTeX:1]]
 ;; TODO make this /only/ apply to text (i.e. not URL)

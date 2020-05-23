@@ -54,6 +54,10 @@
 (package! info-colors :pin "47ee73cc19b1049eef32c9f3e264ea7ef2aaf8a5")
 ;; Info colours:1 ends here
 
+;; [[file:~/.config/doom/config.org::*Email][Email:1]]
+(package! org-msg)
+;; Email:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*LaTeX][LaTeX:1]]
 (package! evil-tex :recipe (:host github :repo "itai33/evil-tex")
                             :pin "14da2c4c1dc7468c74fdf80f446c723b94f8aad5")
