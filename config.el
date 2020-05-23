@@ -488,13 +488,33 @@ will also be the width of all other printable characters."
 ;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:2]]
 (after! mu4e
   (setq mu4e-headers-fields
-        '((:account . 16)
+        '((:account . 12)
           (:human-date . 8)
           (:flags . 6)
           (:from . 25)
+          (:recipnum . 2)
           (:subject)))
   (plist-put (cdr (assoc :flags mu4e-header-info)) :shortname " Flags") ; default=Flgs
-)
+  (setq mu4e-header-info-custom
+        '((:account .
+           (:name "Account" :shortname "Account" :help "Which account this email belongs to" :function
+            (lambda (msg)
+              (let ((maildir
+                     (mu4e-message-field msg :maildir)))
+                (replace-regexp-in-string "^gmail" (propertize "g" 'face 'bold-italic)
+                                          (format "%s"
+                                                  (substring maildir 1
+                                                             (string-match-p "/" maildir 1))))))))
+          (:recipnum .
+           (:name "Number of recipients"
+            :shortname " ⭷"
+            :help "Number of recipients for this message"
+            :function
+            (lambda (msg)
+              (propertize (format "%2d"
+                                  (+ (length (mu4e-message-field msg :to))
+                                     (length (mu4e-message-field msg :cc))))
+                          'face 'mu4e-footer-face)))))))
 ;; Viewing Mail:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:3]]
@@ -535,7 +555,7 @@ clicked."
     newstr))
 
 (setq evil-collection-mu4e-end-region-misc "quit")
-;; Viewing Mail:3 ends here
+;; Viewing Mail:4 ends here
 
 ;; [[file:~/.config/doom/config.org::*Sending%20Mail][Sending Mail:1]]
 (after! mu4e
