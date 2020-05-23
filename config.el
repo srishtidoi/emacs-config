@@ -501,6 +501,15 @@ will also be the width of all other printable characters."
 ;; Viewing Mail:2 ends here
 
 ;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:3]]
+(map! :map mu4e-headers-mode-map
+    :after mu4e
+    :v "*" #'mu4e-headers-mark-for-something
+    :v "!" #'mu4e-headers-mark-for-read
+    :v "?" #'mu4e-headers-mark-for-unread
+    :v "u" #'mu4e-headers-mark-for-unmark)
+;; Viewing Mail:3 ends here
+
+;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:4]]
 (defadvice! mu4e~main-action-prettier-str (str &optional func-or-shortcut)
   "Highlight the first occurrence of [.] in STR.
 If FUNC-OR-SHORTCUT is non-nil and if it is a function, call it

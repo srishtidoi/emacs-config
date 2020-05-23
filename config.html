@@ -3085,6 +3085,21 @@ specification.
 </div>
 
 <p>
+Due to evil, none of the marking commands work when making a visual selection in
+the headers view of mu4e. Without overriding any evil commands we may actually
+want to use in and evil selection, this can be easily fixed.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">map!</span> <span style="color: #C57BDB;">:map</span> mu4e-headers-mode-map
+    <span style="color: #C57BDB;">:after</span> mu4e
+    <span style="color: #C57BDB;">:v</span> <span style="color: #7bc275;">"*"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-headers-mark-for-something</span>
+    <span style="color: #C57BDB;">:v</span> <span style="color: #7bc275;">"!"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-headers-mark-for-read</span>
+    <span style="color: #C57BDB;">:v</span> <span style="color: #7bc275;">"?"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-headers-mark-for-unread</span>
+    <span style="color: #C57BDB;">:v</span> <span style="color: #7bc275;">"u"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-headers-mark-for-unmark</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
 The main mu4e window is &#x2026; alright. I&rsquo;m not afraid of unicode though, so I&rsquo;ll
 define a fancier version. Look, it&rsquo;s the asterisks. We can do better than
 asterisks. The keybindings can also be made nicer, why have <code>[x]</code> when we can just
