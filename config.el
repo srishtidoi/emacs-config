@@ -567,6 +567,20 @@ clicked."
 ;; Sending Mail:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Sending%20Mail][Sending Mail:2]]
+(after! mu4e
+  (defun my-mu4e-set-account ()
+    "Set the account for composing a message."
+    (when (and mu4e-compose-parent-message
+               (let ((mail (cdr (car (mu4e-message-field mu4e-compose-parent-message :to)))))
+                 (if (member mail (plist-get mu4e~server-props :personal-addresses))
+                     (setq user-mail-address mail)
+                   nil))
+      (ivy-read "Account: " (plist-get mu4e~server-props :personal-addresses) :action (lambda (candidate) (setq user-mail-address candidate))))))
+
+  (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account))
+;; Sending Mail:2 ends here
+
+;; [[file:~/.config/doom/config.org::*Sending%20Mail][Sending Mail:5]]
 (defun mu4e-compose-from-mailto (mailto-string)
   (require 'mu4e)
   (unless mu4e~server-props (mu4e t) (sleep-for 0.1))
@@ -580,7 +594,7 @@ clicked."
                                  org-msg-greeting-fmt))
          (headers (-filter (lambda (spec) (not (-contains-p '("To" "Subject" "Body") (car spec)))) mailto)))
     (mu4e~compose-mail to subject headers)))
-;; Sending Mail:2 ends here
+;; Sending Mail:5 ends here
 
 ;; [[file:~/.config/doom/config.org::*Org%20Msg][Org Msg:1]]
 (use-package! org-msg

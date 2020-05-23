@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-23 Sat 12:15 -->
+<!-- 2020-05-23 Sat 19:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -195,8 +195,6 @@
   /*]]>*/-->
 </style>
 <link rel='shortcut icon' type='image/png' href='https://www.gnu.org/software/emacs/favicon.png'>
-
-
 <!––tec/custom-head-start-->
 <style type="text/css">
    :root {
@@ -2830,7 +2828,7 @@ building it from source then. I needed to install these packages
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-shell" id="orgf7a6b11"><span style="color: #FCCE7B;">cd</span> ~/.local/lib/
+<pre class="src src-shell" id="orge5eb044"><span style="color: #FCCE7B;">cd</span> ~/.local/lib/
 <span style="color: #FCCE7B;">git</span> clone https://github.com/djcb/mu.git
 <span style="color: #FCCE7B;">cd</span> ./mu
 ./autogen.sh
@@ -3149,6 +3147,26 @@ Let&rsquo;s send emails too.
 </div>
 
 <p>
+It&rsquo;s also nice to avoid accidently sending emails with the wrong account.
+If we can send from the address in the <code>To</code> field, let&rsquo;s do that. Opening an <code>ivy</code>
+prompt otherwise also seems sensible.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> mu4e
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">my-mu4e-set-account</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Set the account for composing a message."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">and</span> mu4e-compose-parent-message
+               <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mail</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">car</span> <span style="color: #51afef;">(</span>mu4e-message-field mu4e-compose-parent-message <span style="color: #C57BDB;">:to</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                 <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">member</span> mail <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> mu4e~server-props <span style="color: #C57BDB;">:personal-addresses</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                     <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">user-mail-address</span> mail<span style="color: #51afef;">)</span>
+                   nil<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+      <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">ivy-read</span> <span style="color: #7bc275;">"Account: "</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">plist-get</span> mu4e~server-props <span style="color: #C57BDB;">:personal-addresses</span><span style="color: #7bc275;">)</span> <span style="color: #C57BDB;">:action</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>candidate<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">user-mail-address</span> candidate<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">mu4e-compose-pre-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">my-mu4e-set-account</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
 We can register Emacs as a potential email client with the following desktop
 file, thanks to Etienne Deparis&rsquo;s <a href="https://etienne.depar.is/emacs.d/mu4e.html">Mu4e customization</a>.
 </p>
@@ -3181,17 +3199,17 @@ We also want to define <code>mu4e-compose-from-mailto</code>.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-compose-from-mailto</span> <span style="color: #C57BDB;">(</span>mailto-string<span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">require</span> <span style="color: #C57BDB;">'</span><span style="color: #a991f1;">mu4e</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">unless</span> <span style="color: #DFDFDF;">mu4e~server-props</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">mu4e</span> t<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">sleep-for</span> <span style="color: #e69055; font-weight: bold;">0.1</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">unless</span> mu4e~server-props <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">mu4e</span> t<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">sleep-for</span> <span style="color: #e69055; font-weight: bold;">0.1</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let*</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>mailto <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">rfc2368-parse-mailto-url</span> mailto-string<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
          <span style="color: #51afef;">(</span>to <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"To"</span> mailto<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
          <span style="color: #51afef;">(</span>subject <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"Subject"</span> mailto<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">""</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
          <span style="color: #51afef;">(</span>body <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"Body"</span> mailto<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-         <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-msg-greeting-fmt</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"Body"</span> mailto<span style="color: #7bc275;">)</span>
+         <span style="color: #51afef;">(</span>org-msg-greeting-fmt <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"Body"</span> mailto<span style="color: #7bc275;">)</span>
                                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"%"</span> <span style="color: #7bc275;">"%%"</span>
                                                              <span style="color: #51afef;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"Body"</span> mailto<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                                 <span style="color: #DFDFDF;">org-msg-greeting-fmt</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                                 org-msg-greeting-fmt<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
          <span style="color: #51afef;">(</span>headers <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">-filter</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>spec<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">not</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">-contains-p</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"To"</span> <span style="color: #7bc275;">"Subject"</span> <span style="color: #7bc275;">"Body"</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">car</span> spec<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> mailto<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">mu4e~compose-mail</span> to subject headers<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+    <span style="color: #7bc275;">(</span>mu4e~compose-mail to subject headers<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 <p>
@@ -3207,11 +3225,11 @@ This may not quite function as intended for now due to <a href="https://github.c
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> org-msg
   <span style="color: #C57BDB;">:after</span> mu4e
   <span style="color: #C57BDB;">:config</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-msg-options</span> <span style="color: #7bc275;">"html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil email:nil \\n:t tex:dvipng"</span>
-        <span style="color: #DFDFDF;">org-msg-startup</span> <span style="color: #7bc275;">"hidestars indent inlineimages"</span>
-        <span style="color: #DFDFDF;">org-msg-greeting-fmt</span> <span style="color: #7bc275;">"\nHi %s,\n\n"</span>
-        <span style="color: #DFDFDF;">org-msg-greeting-name-limit</span> <span style="color: #e69055; font-weight: bold;">3</span>
-        <span style="color: #DFDFDF;">org-msg-text-plain-alternative</span> t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> org-msg-options <span style="color: #7bc275;">"html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil email:nil \\n:t tex:dvipng"</span>
+        org-msg-startup <span style="color: #7bc275;">"hidestars indent inlineimages"</span>
+        org-msg-greeting-fmt <span style="color: #7bc275;">"\nHi %s,\n\n"</span>
+        org-msg-greeting-name-limit <span style="color: #e69055; font-weight: bold;">3</span>
+        org-msg-text-plain-alternative t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -4519,7 +4537,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org79acd74"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="orgefc95a7"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -4634,7 +4652,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -5110,7 +5128,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="org2f2bc20"></a></li>
+This uses the radar template, the result of which can be seen in <a id="org0cffdaf"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -7148,7 +7166,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-23 Sat 12:15</p>
+<p class="date">Created: 2020-05-23 Sat 19:01</p>
 </div>
 </body>
 </html>
