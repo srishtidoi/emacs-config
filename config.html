@@ -2984,33 +2984,6 @@ As I installed mu4e from source, I need to add the <kbd>/usr/local/</kbd> loadpa
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">load-path</span> <span style="color: #7bc275;">"/usr/local/share/emacs/site-lisp/mu4e"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
-
-<p>
-We can register Emacs as a potential email client with the following desktop
-file, thanks to Etienne Deparis&rsquo;s <a href="https://etienne.depar.is/emacs.d/mu4e.html">Mu4e customization</a>.
-</p>
-<div class="org-src-container">
-<pre class="src src-conf">[<span style="color: #FCCE7B;">Desktop Entry</span>]
-<span style="color: #DFDFDF;">Name</span>=Compose message in Emacs
-<span style="color: #DFDFDF;">GenericName</span>=Compose a new message with Mu4e in Emacs
-<span style="color: #DFDFDF;">Comment</span>=Open mu4e compose window
-<span style="color: #DFDFDF;">MimeType</span>=x-scheme-handler/mailto;
-<span style="color: #DFDFDF;">Exec</span>=emacsclient -create-frame --alternate-editor=<span style="color: #7bc275;">""</span> --no-wait --eval <span style="color: #7bc275;">'(mu4e-compose-from-mailto \"%u\")'</span>
-<span style="color: #DFDFDF;">Icon</span>=emacs
-<span style="color: #DFDFDF;">Type</span>=Application
-<span style="color: #DFDFDF;">Terminal</span>=false
-<span style="color: #DFDFDF;">Categories</span>=Network;Email;
-<span style="color: #DFDFDF;">StartupWMClass</span>=Emacs
-</pre>
-</div>
-
-<p>
-To register this, just call
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">update-desktop-database ~/.local/share/applications
-</pre>
-</div>
 </div>
 
 <div id="outline-container-viewing-mail" class="outline-5">
@@ -3154,6 +3127,33 @@ Let&rsquo;s send emails too.
         <span style="color: #DFDFDF;">message-sendmail-f-is-evil</span> t
         <span style="color: #DFDFDF;">message-sendmail-extra-arguments</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"--read-envelope-from"</span><span style="color: #7bc275;">)</span><span style="color: #62686E;">; </span><span style="color: #62686E;">, "--read-recipients")</span>
         <span style="color: #DFDFDF;">message-send-mail-function</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">message-send-mail-with-sendmail</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+We can register Emacs as a potential email client with the following desktop
+file, thanks to Etienne Deparis&rsquo;s <a href="https://etienne.depar.is/emacs.d/mu4e.html">Mu4e customization</a>.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf">[<span style="color: #FCCE7B;">Desktop Entry</span>]
+<span style="color: #DFDFDF;">Name</span>=Compose message in Emacs
+<span style="color: #DFDFDF;">GenericName</span>=Compose a new message with Mu4e in Emacs
+<span style="color: #DFDFDF;">Comment</span>=Open mu4e compose window
+<span style="color: #DFDFDF;">MimeType</span>=x-scheme-handler/mailto;
+<span style="color: #DFDFDF;">Exec</span>=emacsclient -create-frame --alternate-editor=<span style="color: #7bc275;">""</span> --no-wait --eval <span style="color: #7bc275;">'(mu4e-compose-from-mailto \"%u\")'</span>
+<span style="color: #DFDFDF;">Icon</span>=emacs
+<span style="color: #DFDFDF;">Type</span>=Application
+<span style="color: #DFDFDF;">Terminal</span>=false
+<span style="color: #DFDFDF;">Categories</span>=Network;Email;
+<span style="color: #DFDFDF;">StartupWMClass</span>=Emacs
+</pre>
+</div>
+
+<p>
+To register this, just call
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">update-desktop-database ~/.local/share/applications
 </pre>
 </div>
 
