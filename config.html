@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-24 Sun 11:37 -->
+<!-- 2020-05-24 Sun 11:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -294,7 +294,7 @@
      border-top: none;
  }
 
- a[aria-hidden!='true'] {
+ a:not([aria-hidden='true']) {
      text-decoration: none;
      background-image: linear-gradient(#d8dce9, #d8dce9);
      background-position: 0% 100%;
@@ -305,8 +305,8 @@
  #table-of-contents a {
      background-image: none;
  }
- a:hover[aria-hidden!='true'],
- a:focus[aria-hidden!='true'] {
+ a:hover:not([aria-hidden='true']),
+ a:focus:not([aria-hidden='true']) {
      background-size: 100% 2px;
  }
  a[href^='#'] { font-variant-numeric: oldstyle-nums; }
@@ -2310,42 +2310,42 @@ Let&rsquo;s start off by handling the elisp side of things
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">mu4e-reindex-request--last-time</span> <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #C57BDB;">)</span>
 
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-reindex-request--add-watcher</span> <span style="color: #7bc275;">()</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-reindex-request--file-just-deleted</span> nil<span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-reindex-request--file-watcher</span>
-          <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">file-notify-add-watch</span> <span style="color: #DFDFDF;">mu4e-reindex-request-file</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> mu4e-reindex-request--file-just-deleted nil<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> mu4e-reindex-request--file-watcher
+          <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">file-notify-add-watch</span> mu4e-reindex-request-file
                                  <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>change<span style="color: #C57BDB;">)</span>
                                  <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-file-reindex-request</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> mu4e-stop-watching-for-reindex-request <span style="color: #7bc275;">()</span>
     <span style="color: #C57BDB;">:after</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e~proc-kill</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #DFDFDF;">mu4e-reindex-request--file-watcher</span>
-        <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">file-notify-rm-watch</span> <span style="color: #DFDFDF;">mu4e-reindex-request--file-watcher</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> mu4e-reindex-request--file-watcher
+        <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">file-notify-rm-watch</span> mu4e-reindex-request--file-watcher<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> mu4e-watch-for-reindex-request <span style="color: #7bc275;">()</span>
     <span style="color: #C57BDB;">:after</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e~proc-start</span>
-    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">mu4e-stop-watching-for-reindex-request</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">file-exists-p</span> <span style="color: #DFDFDF;">mu4e-reindex-request-file</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #a991f1;">delete-file</span> <span style="color: #DFDFDF;">mu4e-reindex-request-file</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">mu4e-reindex-request--add-watcher</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+    <span style="color: #7bc275;">(</span>mu4e-stop-watching-for-reindex-request<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">file-exists-p</span> mu4e-reindex-request-file<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">delete-file</span> mu4e-reindex-request-file<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span>mu4e-reindex-request--add-watcher<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
     <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-file-reindex-request</span> <span style="color: #7bc275;">(</span>event<span style="color: #7bc275;">)</span>
       <span style="color: #7e7e87;">"Act based on the existance of `</span><span style="color: #a991f1;">mu4e-reindex-request-file</span><span style="color: #7e7e87;">'"</span>
-      <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #DFDFDF;">mu4e-reindex-request--file-just-deleted</span>
-          <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e-reindex-request--add-watcher</span><span style="color: #51afef;">)</span>
+      <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> mu4e-reindex-request--file-just-deleted
+          <span style="color: #51afef;">(</span>mu4e-reindex-request--add-watcher<span style="color: #51afef;">)</span>
         <span style="color: #51afef;">(</span><span style="color: #51afef;">when</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">equal</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">1</span> event<span style="color: #7bc275;">)</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">created</span><span style="color: #C57BDB;">)</span>
-          <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">delete-file</span> <span style="color: #DFDFDF;">mu4e-reindex-request-file</span><span style="color: #C57BDB;">)</span>
-          <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-reindex-request--file-just-deleted</span> t<span style="color: #C57BDB;">)</span>
-          <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-reindex-maybe</span> t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">delete-file</span> mu4e-reindex-request-file<span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> mu4e-reindex-request--file-just-deleted t<span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span>mu4e-reindex-maybe t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
     <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-reindex-maybe</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> new-request<span style="color: #7bc275;">)</span>
       <span style="color: #7e7e87;">"Run `</span><span style="color: #a991f1;">mu4e~proc-index</span><span style="color: #7e7e87;">' if it's been more than `</span><span style="color: #a991f1;">mu4e-reindex-request-min-seperation</span><span style="color: #7e7e87;">' seconds since the last request,"</span>
-      <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>time-since-last-request <span style="color: #7bc275;">(</span><span style="color: #a991f1;">-</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">float-time</span><span style="color: #51afef;">)</span> <span style="color: #DFDFDF;">mu4e-reindex-request--last-time</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>time-since-last-request <span style="color: #7bc275;">(</span><span style="color: #a991f1;">-</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">float-time</span><span style="color: #51afef;">)</span> mu4e-reindex-request--last-time<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
         <span style="color: #51afef;">(</span><span style="color: #51afef;">when</span> new-request
-          <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-reindex-request--last-time</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">float-time</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-        <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">&gt;</span> time-since-last-request <span style="color: #DFDFDF;">mu4e-reindex-request-min-seperation</span><span style="color: #C57BDB;">)</span>
-            <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e~proc-index</span> nil t<span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> mu4e-reindex-request--last-time <span style="color: #7bc275;">(</span><span style="color: #a991f1;">float-time</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+        <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">&gt;</span> time-since-last-request mu4e-reindex-request-min-seperation<span style="color: #C57BDB;">)</span>
+            <span style="color: #C57BDB;">(</span>mu4e~proc-index nil t<span style="color: #C57BDB;">)</span>
           <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when</span> new-request
-            <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">run-at-time</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">*</span> <span style="color: #e69055; font-weight: bold;">1.1</span> <span style="color: #DFDFDF;">mu4e-reindex-request-min-seperation</span><span style="color: #51afef;">)</span> nil
+            <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">run-at-time</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">*</span> <span style="color: #e69055; font-weight: bold;">1.1</span> mu4e-reindex-request-min-seperation<span style="color: #51afef;">)</span> nil
                          <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-reindex-maybe</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
@@ -2840,7 +2840,7 @@ building it from source then. I needed to install these packages
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-shell" id="org95d3999"><span style="color: #FCCE7B;">cd</span> ~/.local/lib/
+<pre class="src src-shell" id="org04b0872"><span style="color: #FCCE7B;">cd</span> ~/.local/lib/
 <span style="color: #FCCE7B;">git</span> clone https://github.com/djcb/mu.git
 <span style="color: #FCCE7B;">cd</span> ./mu
 ./autogen.sh
@@ -3015,24 +3015,24 @@ fancy chars, and make sure they get the correct width.
            <span style="color: #C57BDB;">(</span>icon <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> colour
                      <span style="color: #51afef;">(</span><span style="color: #a991f1;">apply</span> icon-set <span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">(</span>,name <span style="color: #C57BDB;">:face</span> ,<span style="color: #7bc275;">(</span><span style="color: #a991f1;">intern</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"all-the-icons-"</span> colour<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> <span style="color: #C57BDB;">:height</span> ,height <span style="color: #C57BDB;">:v-adjust</span> ,v-adjust<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
                    <span style="color: #51afef;">(</span><span style="color: #a991f1;">apply</span> icon-set <span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">(</span>,name  <span style="color: #C57BDB;">:height</span> ,height <span style="color: #C57BDB;">:v-adjust</span> ,v-adjust<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span>icon-width <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">my-string-width</span> icon<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-           <span style="color: #C57BDB;">(</span>space-width <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">my-string-width</span> <span style="color: #7bc275;">" "</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>icon-width <span style="color: #7bc275;">(</span>my-string-width icon<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>space-width <span style="color: #7bc275;">(</span>my-string-width <span style="color: #7bc275;">" "</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
            <span style="color: #C57BDB;">(</span>space-factor <span style="color: #7bc275;">(</span><span style="color: #a991f1;">-</span> <span style="color: #e69055; font-weight: bold;">2</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">/</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">float</span> icon-width<span style="color: #C57BDB;">)</span> space-width<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
       <span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #7bc275;">" "</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">display</span> <span style="color: #C57BDB;">`</span><span style="color: #7bc275;">(</span>space . <span style="color: #51afef;">(</span><span style="color: #C57BDB;">:width</span> ,space-factor<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span> icon<span style="color: #51afef;">)</span>
       <span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-use-fancy-chars</span> t
-        <span style="color: #DFDFDF;">mu4e-headers-draft-mark</span>      <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"D"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e~normalised-icon</span> <span style="color: #7bc275;">"pencil"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #DFDFDF;">mu4e-headers-flagged-mark</span>    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"F"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e~normalised-icon</span> <span style="color: #7bc275;">"flag"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #DFDFDF;">mu4e-headers-new-mark</span>        <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"N"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e~normalised-icon</span> <span style="color: #7bc275;">"sync"</span> <span style="color: #C57BDB;">:set</span> <span style="color: #7bc275;">"material"</span> <span style="color: #C57BDB;">:height</span> <span style="color: #e69055; font-weight: bold;">0.8</span> <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">-0.10</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #DFDFDF;">mu4e-headers-passed-mark</span>     <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"P"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e~normalised-icon</span> <span style="color: #7bc275;">"arrow-right"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #DFDFDF;">mu4e-headers-replied-mark</span>    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"R"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e~normalised-icon</span> <span style="color: #7bc275;">"arrow-right"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #DFDFDF;">mu4e-headers-seen-mark</span>       <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"S"</span> <span style="color: #7bc275;">""</span><span style="color: #7bc275;">)</span> <span style="color: #62686E;">;</span><span style="color: #62686E;">(mu4e~normalised-icon "eye" :height 0.6 :v-adjust 0.07 :colour "dsilver"))</span>
-        <span style="color: #DFDFDF;">mu4e-headers-trashed-mark</span>    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"T"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e~normalised-icon</span> <span style="color: #7bc275;">"trash"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #DFDFDF;">mu4e-headers-attach-mark</span>     <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"a"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e~normalised-icon</span> <span style="color: #7bc275;">"file-text-o"</span> <span style="color: #C57BDB;">:colour</span> <span style="color: #7bc275;">"silver"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #DFDFDF;">mu4e-headers-encrypted-mark</span>  <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"x"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e~normalised-icon</span> <span style="color: #7bc275;">"lock"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #DFDFDF;">mu4e-headers-signed-mark</span>     <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"s"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e~normalised-icon</span> <span style="color: #7bc275;">"certificate"</span> <span style="color: #C57BDB;">:height</span> <span style="color: #e69055; font-weight: bold;">0.7</span> <span style="color: #C57BDB;">:colour</span> <span style="color: #7bc275;">"dpurple"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-        <span style="color: #DFDFDF;">mu4e-headers-unread-mark</span>     <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"u"</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e~normalised-icon</span> <span style="color: #7bc275;">"eye-slash"</span> <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.05</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> mu4e-use-fancy-chars t
+        mu4e-headers-draft-mark      <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"D"</span> <span style="color: #51afef;">(</span>mu4e~normalised-icon <span style="color: #7bc275;">"pencil"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        mu4e-headers-flagged-mark    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"F"</span> <span style="color: #51afef;">(</span>mu4e~normalised-icon <span style="color: #7bc275;">"flag"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        mu4e-headers-new-mark        <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"N"</span> <span style="color: #51afef;">(</span>mu4e~normalised-icon <span style="color: #7bc275;">"sync"</span> <span style="color: #C57BDB;">:set</span> <span style="color: #7bc275;">"material"</span> <span style="color: #C57BDB;">:height</span> <span style="color: #e69055; font-weight: bold;">0.8</span> <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">-0.10</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        mu4e-headers-passed-mark     <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"P"</span> <span style="color: #51afef;">(</span>mu4e~normalised-icon <span style="color: #7bc275;">"arrow-right"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        mu4e-headers-replied-mark    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"R"</span> <span style="color: #51afef;">(</span>mu4e~normalised-icon <span style="color: #7bc275;">"arrow-right"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        mu4e-headers-seen-mark       <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"S"</span> <span style="color: #7bc275;">""</span><span style="color: #7bc275;">)</span> <span style="color: #62686E;">;</span><span style="color: #62686E;">(mu4e~normalised-icon "eye" :height 0.6 :v-adjust 0.07 :colour "dsilver"))</span>
+        mu4e-headers-trashed-mark    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"T"</span> <span style="color: #51afef;">(</span>mu4e~normalised-icon <span style="color: #7bc275;">"trash"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        mu4e-headers-attach-mark     <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"a"</span> <span style="color: #51afef;">(</span>mu4e~normalised-icon <span style="color: #7bc275;">"file-text-o"</span> <span style="color: #C57BDB;">:colour</span> <span style="color: #7bc275;">"silver"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        mu4e-headers-encrypted-mark  <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"x"</span> <span style="color: #51afef;">(</span>mu4e~normalised-icon <span style="color: #7bc275;">"lock"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        mu4e-headers-signed-mark     <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"s"</span> <span style="color: #51afef;">(</span>mu4e~normalised-icon <span style="color: #7bc275;">"certificate"</span> <span style="color: #C57BDB;">:height</span> <span style="color: #e69055; font-weight: bold;">0.7</span> <span style="color: #C57BDB;">:colour</span> <span style="color: #7bc275;">"dpurple"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        mu4e-headers-unread-mark     <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> <span style="color: #7bc275;">"u"</span> <span style="color: #51afef;">(</span>mu4e~normalised-icon <span style="color: #7bc275;">"eye-slash"</span> <span style="color: #C57BDB;">:v-adjust</span> <span style="color: #e69055; font-weight: bold;">0.05</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -3042,20 +3042,20 @@ few more visual tweaks, we&rsquo;ll tweak the headers a bit.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> mu4e
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-headers-fields</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> mu4e-headers-fields
         <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #C57BDB;">:account</span> . <span style="color: #e69055; font-weight: bold;">12</span><span style="color: #51afef;">)</span>
           <span style="color: #51afef;">(</span><span style="color: #C57BDB;">:human-date</span> . <span style="color: #e69055; font-weight: bold;">8</span><span style="color: #51afef;">)</span>
           <span style="color: #51afef;">(</span><span style="color: #C57BDB;">:flags</span> . <span style="color: #e69055; font-weight: bold;">6</span><span style="color: #51afef;">)</span>
           <span style="color: #51afef;">(</span><span style="color: #C57BDB;">:from</span> . <span style="color: #e69055; font-weight: bold;">25</span><span style="color: #51afef;">)</span>
           <span style="color: #51afef;">(</span><span style="color: #C57BDB;">:recipnum</span> . <span style="color: #e69055; font-weight: bold;">2</span><span style="color: #51afef;">)</span>
           <span style="color: #51afef;">(</span><span style="color: #C57BDB;">:subject</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-put</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">:flags</span> <span style="color: #DFDFDF;">mu4e-header-info</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> <span style="color: #C57BDB;">:shortname</span> <span style="color: #7bc275;">" Flags"</span><span style="color: #C57BDB;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">default=Flgs</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-header-info-custom</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-put</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #C57BDB;">:flags</span> mu4e-header-info<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> <span style="color: #C57BDB;">:shortname</span> <span style="color: #7bc275;">" Flags"</span><span style="color: #C57BDB;">)</span> <span style="color: #62686E;">; </span><span style="color: #62686E;">default=Flgs</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> mu4e-header-info-custom
         <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #C57BDB;">:account</span> .
            <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:name</span> <span style="color: #7bc275;">"Account"</span> <span style="color: #C57BDB;">:shortname</span> <span style="color: #7bc275;">"Account"</span> <span style="color: #C57BDB;">:help</span> <span style="color: #7bc275;">"Which account this email belongs to"</span> <span style="color: #C57BDB;">:function</span>
             <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>msg<span style="color: #51afef;">)</span>
               <span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>maildir
-                     <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e-message-field</span> msg <span style="color: #C57BDB;">:maildir</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                     <span style="color: #51afef;">(</span>mu4e-message-field msg <span style="color: #C57BDB;">:maildir</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
                 <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"^gmail"</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #7bc275;">"g"</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">bold-italic</span><span style="color: #7bc275;">)</span>
                                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s"</span>
                                                   <span style="color: #51afef;">(</span><span style="color: #a991f1;">substring</span> maildir <span style="color: #e69055; font-weight: bold;">1</span>
@@ -3067,8 +3067,8 @@ few more visual tweaks, we&rsquo;ll tweak the headers a bit.
             <span style="color: #C57BDB;">:function</span>
             <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>msg<span style="color: #51afef;">)</span>
               <span style="color: #51afef;">(</span><span style="color: #a991f1;">propertize</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%2d"</span>
-                                  <span style="color: #7bc275;">(</span><span style="color: #a991f1;">+</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">length</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-message-field</span> msg <span style="color: #C57BDB;">:to</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-                                     <span style="color: #51afef;">(</span><span style="color: #a991f1;">length</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-message-field</span> msg <span style="color: #C57BDB;">:cc</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                                  <span style="color: #7bc275;">(</span><span style="color: #a991f1;">+</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">length</span> <span style="color: #C57BDB;">(</span>mu4e-message-field msg <span style="color: #C57BDB;">:to</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                                     <span style="color: #51afef;">(</span><span style="color: #a991f1;">length</span> <span style="color: #C57BDB;">(</span>mu4e-message-field msg <span style="color: #C57BDB;">:cc</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
                           <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">mu4e-footer-face</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
@@ -3079,7 +3079,7 @@ the headers view of mu4e. Without overriding any evil commands we may actually
 want to use in and evil selection, this can be easily fixed.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">map!</span> <span style="color: #C57BDB;">:map</span> <span style="color: #DFDFDF;">mu4e-headers-mode-map</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">map!</span> <span style="color: #C57BDB;">:map</span> mu4e-headers-mode-map
     <span style="color: #C57BDB;">:after</span> mu4e
     <span style="color: #C57BDB;">:v</span> <span style="color: #7bc275;">"*"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-headers-mark-for-something</span>
     <span style="color: #C57BDB;">:v</span> <span style="color: #7bc275;">"!"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-headers-mark-for-read</span>
@@ -3124,7 +3124,7 @@ We don&rsquo;t put this in an <code>(after! ...)</code> block as <kbd>evil-colle
                        <span style="color: #51afef;">(</span><span style="color: #a991f1;">-</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">length</span> newstr<span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">mouse-face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">highlight</span> newstr<span style="color: #7bc275;">)</span>
     newstr<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">evil-collection-mu4e-end-region-misc</span> <span style="color: #7bc275;">"quit"</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> evil-collection-mu4e-end-region-misc <span style="color: #7bc275;">"quit"</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -3138,7 +3138,7 @@ Let&rsquo;s send emails too.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> mu4e
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">sendmail-program</span> <span style="color: #7bc275;">"/usr/local/bin/msmtp"</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> sendmail-program <span style="color: #7bc275;">"/usr/local/bin/msmtp"</span>
         <span style="color: #DFDFDF;">send-mail-function</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">smtpmail-send-it</span>
         <span style="color: #DFDFDF;">message-sendmail-f-is-evil</span> t
         <span style="color: #DFDFDF;">message-sendmail-extra-arguments</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"--read-envelope-from"</span><span style="color: #7bc275;">)</span><span style="color: #62686E;">; </span><span style="color: #62686E;">, "--read-recipients")</span>
@@ -3155,14 +3155,14 @@ prompt otherwise also seems sensible.
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> mu4e
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">my-mu4e-set-account</span> <span style="color: #7bc275;">()</span>
     <span style="color: #7e7e87;">"Set the account for composing a message."</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">unless</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">and</span> <span style="color: #DFDFDF;">mu4e-compose-parent-message</span>
-               <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mail</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">car</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e-message-field</span> <span style="color: #DFDFDF;">mu4e-compose-parent-message</span> <span style="color: #C57BDB;">:to</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                 <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">member</span> mail <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> <span style="color: #DFDFDF;">mu4e~server-props</span> <span style="color: #C57BDB;">:personal-addresses</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">unless</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">and</span> mu4e-compose-parent-message
+               <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mail</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">car</span> <span style="color: #51afef;">(</span>mu4e-message-field mu4e-compose-parent-message <span style="color: #C57BDB;">:to</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                 <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">member</span> mail <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> mu4e~server-props <span style="color: #C57BDB;">:personal-addresses</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
                      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">user-mail-address</span> mail<span style="color: #51afef;">)</span>
                    nil<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">ivy-read</span> <span style="color: #7bc275;">"Account: "</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> <span style="color: #DFDFDF;">mu4e~server-props</span> <span style="color: #C57BDB;">:personal-addresses</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">:action</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">(</span>candidate<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">user-mail-address</span> candidate<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">ivy-read</span> <span style="color: #7bc275;">"Account: "</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> mu4e~server-props <span style="color: #C57BDB;">:personal-addresses</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">:action</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">(</span>candidate<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">user-mail-address</span> candidate<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
-  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mu4e-compose-pre-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">my-mu4e-set-account</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">mu4e-compose-pre-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">my-mu4e-set-account</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -3199,17 +3199,17 @@ We also want to define <code>mu4e-compose-from-mailto</code>.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-compose-from-mailto</span> <span style="color: #C57BDB;">(</span>mailto-string<span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">require</span> <span style="color: #C57BDB;">'</span><span style="color: #a991f1;">mu4e</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">unless</span> <span style="color: #DFDFDF;">mu4e~server-props</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">mu4e</span> t<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">sleep-for</span> <span style="color: #e69055; font-weight: bold;">0.1</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">unless</span> mu4e~server-props <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">mu4e</span> t<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">sleep-for</span> <span style="color: #e69055; font-weight: bold;">0.1</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let*</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>mailto <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">rfc2368-parse-mailto-url</span> mailto-string<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
          <span style="color: #51afef;">(</span>to <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"To"</span> mailto<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
          <span style="color: #51afef;">(</span>subject <span style="color: #C57BDB;">(</span><span style="color: #51afef;">or</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"Subject"</span> mailto<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">""</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
          <span style="color: #51afef;">(</span>body <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"Body"</span> mailto<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-         <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-msg-greeting-fmt</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"Body"</span> mailto<span style="color: #7bc275;">)</span>
+         <span style="color: #51afef;">(</span>org-msg-greeting-fmt <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"Body"</span> mailto<span style="color: #7bc275;">)</span>
                                    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"%"</span> <span style="color: #7bc275;">"%%"</span>
                                                              <span style="color: #51afef;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"Body"</span> mailto<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                                 <span style="color: #DFDFDF;">org-msg-greeting-fmt</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                                 org-msg-greeting-fmt<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
          <span style="color: #51afef;">(</span>headers <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">-filter</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #51afef;">(</span>spec<span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">not</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">-contains-p</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"To"</span> <span style="color: #7bc275;">"Subject"</span> <span style="color: #7bc275;">"Body"</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">car</span> spec<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> mailto<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">mu4e~compose-mail</span> to subject headers<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+    <span style="color: #7bc275;">(</span>mu4e~compose-mail to subject headers<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 <p>
@@ -3230,7 +3230,7 @@ For this we can use <kbd>mu4e-alert</kbd>.
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-alert-set-default-style</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">libnotify</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-alert-enable-mode-line-display</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-alert-enable-notifications</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-alert-icon</span> <span style="color: #7bc275;">"/usr/share/icons/Papirus/64x64/apps/evolution.svg"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> mu4e-alert-icon <span style="color: #7bc275;">"/usr/share/icons/Papirus/64x64/apps/evolution.svg"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -3247,12 +3247,12 @@ For this we can use <kbd>mu4e-alert</kbd>.
 <span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> org-msg
   <span style="color: #C57BDB;">:after</span> mu4e
   <span style="color: #C57BDB;">:config</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-msg-options</span> <span style="color: #7bc275;">"html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil email:nil \\n:t tex:dvipng"</span>
-        <span style="color: #DFDFDF;">org-msg-startup</span> <span style="color: #7bc275;">"hidestars indent inlineimages"</span>
-        <span style="color: #DFDFDF;">org-msg-greeting-fmt</span> <span style="color: #7bc275;">"\nHi %s,\n\n"</span>
-        <span style="color: #DFDFDF;">org-msg-greeting-name-limit</span> <span style="color: #e69055; font-weight: bold;">3</span>
-        <span style="color: #DFDFDF;">org-msg-text-plain-alternative</span> t<span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">map!</span> <span style="color: #C57BDB;">:map</span> <span style="color: #DFDFDF;">org-msg-edit-mode-map</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> org-msg-options <span style="color: #7bc275;">"html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil email:nil \\n:t tex:dvipng"</span>
+        org-msg-startup <span style="color: #7bc275;">"hidestars indent inlineimages"</span>
+        org-msg-greeting-fmt <span style="color: #7bc275;">"\nHi %s,\n\n"</span>
+        org-msg-greeting-name-limit <span style="color: #e69055; font-weight: bold;">3</span>
+        org-msg-text-plain-alternative t<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">map!</span> <span style="color: #C57BDB;">:map</span> org-msg-edit-mode-map
         <span style="color: #C57BDB;">:n</span> <span style="color: #7bc275;">"G"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-msg-goto-body</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> org-msg--now-exporting <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;rest</span> _<span style="color: #7bc275;">)</span>
     <span style="color: #C57BDB;">:before</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-msg-org-to-xml</span>
@@ -3260,7 +3260,7 @@ For this we can use <kbd>mu4e-alert</kbd>.
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> org-msg--not-exporting <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;rest</span> _<span style="color: #7bc275;">)</span>
     <span style="color: #C57BDB;">:after</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-msg-org-to-xml</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-msg-currently-exporting</span> nil<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-msg-enforce-css</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> org-msg-enforce-css
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>font-family <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>font-family . <span style="color: #7bc275;">"-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell,\</span>
 <span style="color: #7bc275;">          \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
                <span style="color: #C57BDB;">(</span>monospace-font <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>font-family . <span style="color: #7bc275;">"SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
@@ -3367,7 +3367,7 @@ For this we can use <kbd>mu4e-alert</kbd>.
             <span style="color: #C57BDB;">(</span>b nil <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>font-weight . <span style="color: #7bc275;">"500"</span><span style="color: #51afef;">)</span> <span style="color: #51afef;">(</span>color . ,theme-color<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
             <span style="color: #C57BDB;">(</span>div nil <span style="color: #7bc275;">(</span>,@font <span style="color: #51afef;">(</span>line-height . <span style="color: #7bc275;">"12pt"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   
-  <span style="color: #C57BDB;">(</span><span style="color: #DFDFDF;">org-msg-mode</span> t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">(</span>org-msg-mode t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -3375,7 +3375,7 @@ For this we can use <kbd>mu4e-alert</kbd>.
 To make this look a little nicer, we will overwrite the default style.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org0099dfa"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-msg-enforce-css</span>
+<pre class="src src-emacs-lisp" id="org83d9f1b"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-msg-enforce-css
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let*</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>font-family <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>font-family . <span style="color: #7bc275;">"-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell,\</span>
 <span style="color: #7bc275;">        \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
              <span style="color: #51afef;">(</span>monospace-font <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>font-family . <span style="color: #7bc275;">"SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -4337,7 +4337,7 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">cl-defmacro</span> <span style="color: #5cEfFF;">lsp-org-babel-enable</span> <span style="color: #C57BDB;">(</span>lang<span style="color: #C57BDB;">)</span>
     <span style="color: #7e7e87;">"Support LANG in org source code block."</span>
-    <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> centaur-lsp <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">lsp-mode</span><span style="color: #C57BDB;">)</span>
+    <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> centaur-lsp <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">lsp-mode</span><span style="color: #C57BDB;">)</span>
     <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">cl-check-type</span> lang stringp<span style="color: #C57BDB;">)</span>
     <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let*</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>edit-pre <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">intern</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"org-babel-edit-prep:%s"</span> lang<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
            <span style="color: #51afef;">(</span>intern-pre <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">intern</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"lsp--%s"</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">symbol-name</span> edit-pre<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
@@ -4789,7 +4789,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org1e3a5c2"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="orgf74a356"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -4904,7 +4904,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -5380,7 +5380,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="orgf9d28aa"></a></li>
+This uses the radar template, the result of which can be seen in <a id="org0df3d0a"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -6134,7 +6134,7 @@ match out theme (they don&rsquo;t by default), so I scraped some code from <code
 <span style="color: #7bc275;">     border-top: none;</span>
 <span style="color: #7bc275;"> }</span>
 
-<span style="color: #7bc275;"> a[aria-hidden!='true'] {</span>
+<span style="color: #7bc275;"> a:not([aria-hidden='true']) {</span>
 <span style="color: #7bc275;">     text-decoration: none;</span>
 <span style="color: #7bc275;">     background-image: linear-gradient(#d8dce9, #d8dce9);</span>
 <span style="color: #7bc275;">     background-position: 0% 100%;</span>
@@ -6145,8 +6145,8 @@ match out theme (they don&rsquo;t by default), so I scraped some code from <code
 <span style="color: #7bc275;"> </span><span style="color: #FCCE7B;">\</span><span style="color: #7bc275;">#table-of-contents a {</span>
 <span style="color: #7bc275;">     background-image: none;</span>
 <span style="color: #7bc275;"> }</span>
-<span style="color: #7bc275;"> a:hover[aria-hidden!='true'],</span>
-<span style="color: #7bc275;"> a:focus[aria-hidden!='true'] {</span>
+<span style="color: #7bc275;"> a:hover:not([aria-hidden='true']),</span>
+<span style="color: #7bc275;"> a:focus:not([aria-hidden='true']) {</span>
 <span style="color: #7bc275;">     background-size: 100% 2px;</span>
 <span style="color: #7bc275;"> }</span>
 <span style="color: #7bc275;"> a[href^='#'] { font-variant-numeric: oldstyle-nums; }</span>
@@ -7424,7 +7424,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-24 Sun 11:37</p>
+<p class="date">Created: 2020-05-24 Sun 11:42</p>
 </div>
 </body>
 </html>
