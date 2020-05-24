@@ -285,12 +285,26 @@
 ;; [[file:~/.config/doom/config.org::*%5B%5Bhttps://github.com/zachcurry/emacs-anywhere%5D%5BEmacs%20Anywhere%5D%5D%20configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1]]
 (defun markdown-window-p (window-title)
   "Judges from WINDOW-TITLE whether the current window likes markdown"
-  (string-match-p (rx (or "Stack Exchange" "Stack Overflow"
+  (if (string-match-p (rx (or "Stack Exchange" "Stack Overflow"
                           "Pull Request" "Issue" "Discord"))
-                  window-title))
+                  window-title) t nil))
 ;; [[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*%5B%5Bhttps://github.com/zachcurry/emacs-anywhere%5D%5BEmacs%20Anywhere%5D%5D%20configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2]]
+(defvar emacs-anywhere--active-markdown nil
+  "Whether the buffer started off as markdown.
+Affects behaviour of `emacs-anywhere--finalise-content'")
+
+(defun emacs-anywhere--finalise-content (&optional _frame)
+  (when emacs-anywhere--active-markdown
+    (fundamental-mode)
+    (goto-char (point-min))
+    (insert "#+OPTIONS: toc:nil\n")
+    (rename-buffer "*EA Pre Export*")
+    (org-export-to-buffer 'gfm ea--buffer-name)
+    (kill-buffer "*EA Pre Export*"))
+  (gui-select-text (buffer-string)))
+
 (define-minor-mode emacs-anywhere-mode
   "To tweak the current buffer for some emacs-anywhere considerations"
   :init-value nil
@@ -334,16 +348,24 @@
                            45 nil nil "…")))
   (message "window-title: %s" window-title)
 
-  ;; set major mode
-  (cond
-   ((markdown-window-p window-title) (gfm-mode))
-   (t (org-mode)) ; default major mode
-   )
-
   (when-let ((selection (gui-get-selection 'PRIMARY)))
-    (insert selection)
-    ;; I'll be honest with myself, I /need/ spellcheck
-    (flyspell-buffer))
+    (insert selection))
+
+  (setq emacs-anywhere--active-markdown (markdown-window-p window-title))
+
+  ;; convert buffer to org mode if markdown
+  (when emacs-anywhere--active-markdown
+    (shell-command-on-region (point-min) (point-max)
+                             "pandoc -f markdown -t org" nil t)
+    (deactivate-mark) (goto-char (point-max)))
+
+  ;; set major mode
+  (org-mode)
+
+  (advice-add 'ea--delete-frame-handler :before #'emacs-anywhere--finalise-content)
+
+  ;; I'll be honest with myself, I /need/ spellcheck
+  (flyspell-buffer)
 
   (evil-insert-state) ; start in insert
   (emacs-anywhere-mode 1))
