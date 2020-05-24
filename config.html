@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-24 Sun 10:18 -->
+<!-- 2020-05-24 Sun 11:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -613,6 +613,7 @@
 <ul>
 <li><a href="#viewing-mail">4.13.4.1. Viewing Mail</a></li>
 <li><a href="#sending-mail">4.13.4.2. Sending Mail</a></li>
+<li><a href="#getting-notified">4.13.4.3. Getting notified</a></li>
 </ul>
 </li>
 <li><a href="#org-msg">4.13.5. Org Msg</a></li>
@@ -1720,8 +1721,21 @@ Variable pitch fontification + colouring
 <div id="outline-container-email" class="outline-4">
 <h4 id="email"> <a class="anchor" aria-hidden="true" href="#email">🔗</a> <a class="anchor" aria-hidden="true" href="#email">🔗</a> <a class="anchor" aria-hidden="true" href="#email">🔗</a><span class="section-number-4">3.2.5</span> Email</h4>
 <div class="outline-text-4" id="text-3-2-5">
+<p>
+It&rsquo;s nice to send out fancy HTML emails. The <kbd>org-msg</kbd> package allows to write
+emails in org mode, and send as an HTML multipart email. We can setup some CSS
+to be inlined, render LaTeX fragments, and all those goodies!
+</p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-msg<span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+To actually get notifications, we can use <kbd>mu4e-alert</kbd>.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> mu4e-alert<span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -1840,7 +1854,7 @@ inserts an org-ified version at point. Isn&rsquo;t that just great.
 </div>
 
 <p>
-I have my own <a href="org-plot.el">modified version</a> of <code>org-plot</code>, so let&rsquo;s use that
+I have my own <a href="lisp/org-plot.el">modified version</a> of <code>org-plot</code>, so let&rsquo;s use that
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">package!</span> org-plot <span style="color: #C57BDB;">:recipe</span> <span style="color: #C57BDB;">(</span><span style="color: #C57BDB;">:local-repo</span> <span style="color: #7bc275;">"lisp"</span> <span style="color: #C57BDB;">:no-byte-compile</span> t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -2826,7 +2840,7 @@ building it from source then. I needed to install these packages
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-shell" id="org9b7d95a"><span style="color: #FCCE7B;">cd</span> ~/.local/lib/
+<pre class="src src-shell" id="org95d3999"><span style="color: #FCCE7B;">cd</span> ~/.local/lib/
 <span style="color: #FCCE7B;">git</span> clone https://github.com/djcb/mu.git
 <span style="color: #FCCE7B;">cd</span> ./mu
 ./autogen.sh
@@ -3203,6 +3217,24 @@ This may not quite function as intended for now due to <a href="https://github.c
 </p>
 </div>
 </div>
+<div id="outline-container-getting-notified" class="outline-5">
+<h5 id="getting-notified"> <a class="anchor" aria-hidden="true" href="#getting-notified">🔗</a> <a class="anchor" aria-hidden="true" href="#getting-notified">🔗</a> <a class="anchor" aria-hidden="true" href="#getting-notified">🔗</a> <a class="anchor" aria-hidden="true" href="#getting-notified">🔗</a><span class="section-number-5">4.13.4.3</span> Getting notified</h5>
+<div class="outline-text-5" id="text-4-13-4-3">
+<p>
+For this we can use <kbd>mu4e-alert</kbd>.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> mu4e-alert
+  <span style="color: #C57BDB;">:after</span> mu4e
+  <span style="color: #C57BDB;">:config</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-alert-set-default-style</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">libnotify</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-alert-enable-mode-line-display</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-alert-enable-notifications</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-alert-icon</span> <span style="color: #7bc275;">"/usr/share/icons/Papirus/64x64/apps/evolution.svg"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 <div id="outline-container-org-msg" class="outline-4">
 <h4 id="org-msg"> <a class="anchor" aria-hidden="true" href="#org-msg">🔗</a> <a class="anchor" aria-hidden="true" href="#org-msg">🔗</a> <a class="anchor" aria-hidden="true" href="#org-msg">🔗</a><span class="section-number-4">4.13.5</span> Org Msg</h4>
@@ -3343,7 +3375,7 @@ This may not quite function as intended for now due to <a href="https://github.c
 To make this look a little nicer, we will overwrite the default style.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgdb56ca7"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-msg-enforce-css</span>
+<pre class="src src-emacs-lisp" id="org0099dfa"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-msg-enforce-css</span>
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let*</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>font-family <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>font-family . <span style="color: #7bc275;">"-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell,\</span>
 <span style="color: #7bc275;">        \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
              <span style="color: #51afef;">(</span>monospace-font <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>font-family . <span style="color: #7bc275;">"SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -3578,15 +3610,15 @@ good reason for them to take up space. Let&rsquo;s add a mechanism to ignore the
     <span style="color: #7e7e87;">"RegExps to be tested to ignore files, generated from `</span><span style="color: #a991f1;">treeemacs-file-ignore-globs</span><span style="color: #7e7e87;">'"</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">treemacs-file-ignore-generate-regexps</span> <span style="color: #7bc275;">()</span>
     <span style="color: #7e7e87;">"Generate `</span><span style="color: #a991f1;">treemacs-file-ignore-regexps</span><span style="color: #7e7e87;">' from `</span><span style="color: #a991f1;">treemacs-file-ignore-globs</span><span style="color: #7e7e87;">'"</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">treemacs-file-ignore-regexps</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">dired-glob-regexp</span> <span style="color: #DFDFDF;">treemacs-file-ignore-globs</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">equal</span> <span style="color: #DFDFDF;">treemacs-file-ignore-globs</span> <span style="color: #C57BDB;">'</span><span style="color: #51afef;">()</span><span style="color: #7bc275;">)</span> nil <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">treemacs-file-ignore-generate-regexps</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> treemacs-file-ignore-regexps <span style="color: #51afef;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">dired-glob-regexp</span> treemacs-file-ignore-globs<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">equal</span> treemacs-file-ignore-globs <span style="color: #C57BDB;">'</span><span style="color: #51afef;">()</span><span style="color: #7bc275;">)</span> nil <span style="color: #7bc275;">(</span>treemacs-file-ignore-generate-regexps<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">treemacs-ignore-filter</span> <span style="color: #7bc275;">(</span>file full-path<span style="color: #7bc275;">)</span>
     <span style="color: #7e7e87;">"Ignore files specified by `</span><span style="color: #a991f1;">treemacs-file-ignore-extensions</span><span style="color: #7e7e87;">', and `</span><span style="color: #a991f1;">treemacs-file-ignore-regexps</span><span style="color: #7e7e87;">'"</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">member</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">file-name-extension</span> file<span style="color: #C57BDB;">)</span> <span style="color: #DFDFDF;">treemacs-file-ignore-extensions</span><span style="color: #51afef;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">member</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">file-name-extension</span> file<span style="color: #C57BDB;">)</span> treemacs-file-ignore-extensions<span style="color: #51afef;">)</span>
         <span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>ignore-file nil<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-          <span style="color: #C57BDB;">(</span><span style="color: #51afef;">dolist</span> <span style="color: #7bc275;">(</span>regexp <span style="color: #DFDFDF;">treemacs-file-ignore-regexps</span> ignore-file<span style="color: #7bc275;">)</span>
+          <span style="color: #C57BDB;">(</span><span style="color: #51afef;">dolist</span> <span style="color: #7bc275;">(</span>regexp treemacs-file-ignore-regexps ignore-file<span style="color: #7bc275;">)</span>
             <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> ignore-file <span style="color: #51afef;">(</span><span style="color: #51afef;">or</span> ignore-file <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">string-match-p</span> regexp full-path<span style="color: #7bc275;">)</span> t nil<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">treemacs-ignored-file-predicates</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">treemacs-ignore-filter</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">treemacs-ignored-file-predicates</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">treemacs-ignore-filter</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 
@@ -3594,7 +3626,7 @@ good reason for them to take up space. Let&rsquo;s add a mechanism to ignore the
 Now, we just identify the files in question.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">treemacs-file-ignore-extensions</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #62686E;">;; </span><span style="color: #62686E;">LaTeX</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> treemacs-file-ignore-extensions <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #62686E;">;; </span><span style="color: #62686E;">LaTeX</span>
                                         <span style="color: #7bc275;">"aux"</span>
                                         <span style="color: #7bc275;">"ptc"</span>
                                         <span style="color: #7bc275;">"fdb_latexmk"</span>
@@ -3615,7 +3647,7 @@ Now, we just identify the files in question.
                                         <span style="color: #62686E;">;; </span><span style="color: #62686E;">LaTeX - pdfx</span>
                                         <span style="color: #7bc275;">"pdfa.xmpi"</span>
                                         <span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">treemacs-file-ignore-globs</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #62686E;">;; </span><span style="color: #62686E;">LaTeX</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> treemacs-file-ignore-globs <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span><span style="color: #62686E;">;; </span><span style="color: #62686E;">LaTeX</span>
                                    <span style="color: #7bc275;">"*/_minted-*"</span>
                                    <span style="color: #62686E;">;; </span><span style="color: #62686E;">AucTeX</span>
                                    <span style="color: #7bc275;">"*/.auctex-auto"</span>
@@ -4305,7 +4337,7 @@ Now, by default, LSPs don&rsquo;t really function at all in <code>src</code> blo
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">cl-defmacro</span> <span style="color: #5cEfFF;">lsp-org-babel-enable</span> <span style="color: #C57BDB;">(</span>lang<span style="color: #C57BDB;">)</span>
     <span style="color: #7e7e87;">"Support LANG in org source code block."</span>
-    <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> centaur-lsp <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">lsp-mode</span><span style="color: #C57BDB;">)</span>
+    <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> centaur-lsp <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">lsp-mode</span><span style="color: #C57BDB;">)</span>
     <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">cl-check-type</span> lang stringp<span style="color: #C57BDB;">)</span>
     <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let*</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>edit-pre <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">intern</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"org-babel-edit-prep:%s"</span> lang<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
            <span style="color: #51afef;">(</span>intern-pre <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">intern</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"lsp--%s"</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">symbol-name</span> edit-pre<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
@@ -4757,7 +4789,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orge0b3e74"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org1e3a5c2"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -5348,7 +5380,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="org9694bc9"></a></li>
+This uses the radar template, the result of which can be seen in <a id="orgf9d28aa"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -7392,7 +7424,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-24 Sun 10:18</p>
+<p class="date">Created: 2020-05-24 Sun 11:37</p>
 </div>
 </body>
 </html>

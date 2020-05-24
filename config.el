@@ -596,6 +596,16 @@ clicked."
     (mu4e~compose-mail to subject headers)))
 ;; Sending Mail:5 ends here
 
+;; [[file:~/.config/doom/config.org::*Getting%20notified][Getting notified:1]]
+(use-package! mu4e-alert
+  :after mu4e
+  :config
+  (mu4e-alert-set-default-style 'libnotify)
+  (mu4e-alert-enable-mode-line-display)
+  (mu4e-alert-enable-notifications)
+  (setq mu4e-alert-icon "/usr/share/icons/Papirus/64x64/apps/evolution.svg"))
+;; Getting notified:1 ends here
+
 ;; [[file:~/.config/doom/config.org::*Org%20Msg][Org Msg:1]]
 (defvar org-msg-currently-exporting nil
   "Helper variable to indicate whether org-msg is currently exporting the org buffer to HTML.
@@ -2413,7 +2423,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
      border-top: none;
  }
 
- a[aria-hidden!='true'] {
+ a:not([aria-hidden='true']) {
      text-decoration: none;
      background-image: linear-gradient(#d8dce9, #d8dce9);
      background-position: 0% 100%;
@@ -2424,8 +2434,8 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
  \#table-of-contents a {
      background-image: none;
  }
- a:hover[aria-hidden!='true'],
- a:focus[aria-hidden!='true'] {
+ a:hover:not([aria-hidden='true']),
+ a:focus:not([aria-hidden='true']) {
      background-size: 100% 2px;
  }
  a[href^='#'] { font-variant-numeric: oldstyle-nums; }
