@@ -600,10 +600,33 @@ clicked."
 (use-package! mu4e-alert
   :after mu4e
   :config
-  (mu4e-alert-set-default-style 'libnotify)
+  (setq mu4e-alert-icon "/usr/share/icons/Papirus/64x64/apps/evolution.svg")
+  (defun mu4e-alert-iconised-modeline-formatter (mail-count)
+    "Formatter used to get the string to be displayed in the mode-line, using all-the-icons.
+  MAIL-COUNT is the count of mails for which the string is to displayed"
+    (when (not (zerop mail-count))
+      (concat " "
+              (propertize
+               (concat
+                (all-the-icons-material "mail_outline")
+                (if (zerop mail-count)
+                    ""
+                  (format " %d" mail-count)))
+               'help-echo (concat (if (= mail-count 1)
+                                      "You have an unread email"
+                                    (format "You have %s unread emails" mail-count))
+                                  "\nClick here to view "
+                                  (if (= mail-count 1) "it" "them"))
+               'mouse-face 'mode-line-highlight
+               'keymap '(mode-line keymap
+                                   (mouse-1 . mu4e-alert-view-unread-mails)
+                                   (mouse-2 . mu4e-alert-view-unread-mails)
+                                   (mouse-3 . mu4e-alert-view-unread-mails))))))
+  (setq mu4e-alert-modeline-formatter #'mu4e-alert-iconised-modeline-formatter)
   (mu4e-alert-enable-mode-line-display)
-  (mu4e-alert-enable-notifications)
-  (setq mu4e-alert-icon "/usr/share/icons/Papirus/64x64/apps/evolution.svg"))
+  (setq mu4e-alert-email-notification-types '(subject))
+  (mu4e-alert-set-default-style 'libnotify)
+  (mu4e-alert-enable-notifications))
 ;; Getting notified:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Org%20Msg][Org Msg:1]]
