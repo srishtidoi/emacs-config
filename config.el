@@ -557,6 +557,12 @@ clicked."
 (setq evil-collection-mu4e-end-region-misc "quit")
 ;; Viewing Mail:4 ends here
 
+;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:5]]
+(map! :map mu4e-main-mode-map
+      :after mu4e
+      :nive "h" #'+workspace/other)
+;; Viewing Mail:5 ends here
+
 ;; [[file:~/.config/doom/config.org::*Sending%20Mail][Sending Mail:1]]
 (after! mu4e
   (setq sendmail-program "/usr/local/bin/msmtp"
