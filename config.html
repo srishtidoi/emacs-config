@@ -3311,39 +3311,115 @@ bit more visually appealing.
                                    <span style="color: #51afef;">(</span>mouse-1 . mu4e-alert-view-unread-mails<span style="color: #51afef;">)</span>
                                    <span style="color: #51afef;">(</span>mouse-2 . mu4e-alert-view-unread-mails<span style="color: #51afef;">)</span>
                                    <span style="color: #51afef;">(</span>mouse-3 . mu4e-alert-view-unread-mails<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> mu4e-alert-modeline-formatter <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-alert-iconised-modeline-formatter</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-alert-enable-mode-line-display</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> mu4e-alert-email-notification-types <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>subject<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-alert-set-default-style</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">libnotify</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-alert-enable-notifications</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-alert-modeline-formatter</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-alert-iconised-modeline-formatter</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
+</div>
+</div>
+<div id="outline-container-process-control" class="outline-5">
+<h5 id="process-control"> <a class="anchor" aria-hidden="true" href="#process-control">🔗</a> <a class="anchor" aria-hidden="true" href="#process-control">🔗</a> <a class="anchor" aria-hidden="true" href="#process-control">🔗</a> <a class="anchor" aria-hidden="true" href="#process-control">🔗</a><span class="section-number-5">4.13.4.4</span> Process control</h5>
+<div class="outline-text-5" id="text-4-13-4-4">
 <p>
+Here&rsquo;s what I want
+</p>
+<ul class="org-ul">
+<li>An instance of Mu4e to be active all the time, for notifications</li>
+<li>No crufty timers on loops et. al</li>
+</ul>
+<p>
+I think a file watch etc. setup similar to that in <a href="#rebuild-mail-index">Rebuild mail index while
+using mu4e</a> is probably the cleanest way to operate. We can put the current PID
+in the file and check for existance too.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgcb0ed9d"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> mu4e-alert-icon <span style="color: #7bc275;">"/usr/share/icons/Papirus/64x64/apps/evolution.svg"</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-alert-iconised-modeline-formatter</span> <span style="color: #C57BDB;">(</span>mail-count<span style="color: #C57BDB;">)</span>
-  <span style="color: #7e7e87;">"Formatter used to get the string to be displayed in the mode-line, using all-the-icons.</span>
-<span style="color: #7e7e87;">MAIL-COUNT is the count of mails for which the string is to displayed"</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">not</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">zerop</span> mail-count<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">" "</span>
-            <span style="color: #51afef;">(</span><span style="color: #a991f1;">propertize</span>
-             <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span>
-              <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">all-the-icons-material</span> <span style="color: #7bc275;">"mail_outline"</span><span style="color: #7bc275;">)</span>
-              <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">zerop</span> mail-count<span style="color: #51afef;">)</span>
-                  <span style="color: #7bc275;">""</span>
-                <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">" %d"</span> mail-count<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-             <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">help-echo</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">=</span> mail-count <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #51afef;">)</span>
-                                    <span style="color: #7bc275;">"You have an unread email"</span>
-                                  <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"You have %s unread emails"</span> mail-count<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                                <span style="color: #7bc275;">"\nClick here to view "</span>
-                                <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">=</span> mail-count <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #51afef;">)</span> <span style="color: #7bc275;">"it"</span> <span style="color: #7bc275;">"them"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-             <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">mouse-face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">mode-line-highlight</span>
-             <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">keymap</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>mode-line keymap
-                                 <span style="color: #7bc275;">(</span>mouse-1 . mu4e-alert-view-unread-mails<span style="color: #7bc275;">)</span>
-                                 <span style="color: #7bc275;">(</span>mouse-2 . mu4e-alert-view-unread-mails<span style="color: #7bc275;">)</span>
-                                 <span style="color: #7bc275;">(</span>mouse-3 . mu4e-alert-view-unread-mails<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> mu4e-alert-modeline-formatter <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-alert-iconised-modeline-formatter</span><span style="color: #51afef;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> mu4e
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">mu4e-lock-file</span> <span style="color: #7bc275;">"/tmp/mu4e_lock"</span>
+    <span style="color: #7e7e87;">"Location of the lock file which stores the PID of the process currenty running mu4e"</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">mu4e-lock-request-file</span> <span style="color: #7bc275;">"/tmp/mu4e_lock_request"</span>
+    <span style="color: #7e7e87;">"Location of the lock file for which creating indicated that another process wants the lock to be released"</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">mu4e-lock-greedy</span> nil
+    <span style="color: #7e7e87;">"Whether to 'grab' the `</span><span style="color: #a991f1;">mu4e-lock-file</span><span style="color: #7e7e87;">' if nobody else has it, i.e. start Mu4e"</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">mu4e-lock-relaxed</span> nil
+    <span style="color: #7e7e87;">"Whether if someone else wants the lock (signaled via `</span><span style="color: #a991f1;">mu4e-lock-request-file</span><span style="color: #7e7e87;">'), we should stop Mu4e and let go of it"</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-lock-pid-info</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Get info on the PID refered to in `</span><span style="color: #a991f1;">mu4e-lock-file</span><span style="color: #7e7e87;">' in the form (pid . process-attributes)</span>
+<span style="color: #7e7e87;"> If the file or process do not exist, the lock file is deleted an nil returned."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">file-exists-p</span> <span style="color: #DFDFDF;">mu4e-lock-file</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">let*</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>pid <span style="color: #51afef;">(</span><span style="color: #a991f1;">string-to-number</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">f-read-text</span> <span style="color: #DFDFDF;">mu4e-lock-file</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">utf-8</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span>process <span style="color: #51afef;">(</span><span style="color: #a991f1;">process-attributes</span> pid<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span><span style="color: #51afef;">if</span> process <span style="color: #7bc275;">(</span><span style="color: #a991f1;">cons</span> pid process<span style="color: #7bc275;">)</span>
+            <span style="color: #7bc275;">(</span><span style="color: #a991f1;">delete-file</span> <span style="color: #DFDFDF;">mu4e-lock-file</span><span style="color: #7bc275;">)</span> nil<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-lock-avalible</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> strict<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"If the `</span><span style="color: #a991f1;">mu4e-lock-file</span><span style="color: #7e7e87;">' is avalible (unset or owned by this emacs) return t.</span>
+<span style="color: #7e7e87;">If STRICT only accept an unset lock file."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">not</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">when-let*</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>lock-info <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e-lock-pid-info</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                <span style="color: #7bc275;">(</span>pid <span style="color: #51afef;">(</span><span style="color: #a991f1;">car</span> lock-info<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> strict <span style="color: #51afef;">(</span><span style="color: #a991f1;">/=</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">emacs-pid</span><span style="color: #C57BDB;">)</span> pid<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> mu4e-lock-file-delete-maybe <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Check `</span><span style="color: #a991f1;">mu4e-lock-file</span><span style="color: #7e7e87;">', and delete it if this process is responsible for it."</span>
+    <span style="color: #C57BDB;">:after</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-quit</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e-lock-avalible</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">delete-file</span> <span style="color: #DFDFDF;">mu4e-lock-file</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">file-notify-rm-watch</span> <span style="color: #DFDFDF;">mu4e-lock--request-watcher</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">kill-emacs-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-lock-file-delete-maybe</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> mu4e-lock-start <span style="color: #7bc275;">(</span>orig-fun <span style="color: #FCCE7B;">&amp;optional</span> callback<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Check `</span><span style="color: #a991f1;">mu4e-lock-file</span><span style="color: #7e7e87;">', and if another process is responsible for it, abort starting.</span>
+<span style="color: #7e7e87;">Else, write to this process' PID to the lock file"</span>
+    <span style="color: #C57BDB;">:around</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e~start</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">unless</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e-lock-avalible</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">shell-command</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"touch %s"</span> <span style="color: #DFDFDF;">mu4e-lock-request-file</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">message</span> <span style="color: #7bc275;">"Lock file exists, requesting that it be given up"</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">sleep-for</span> <span style="color: #e69055; font-weight: bold;">0.1</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">delete-file</span> <span style="color: #DFDFDF;">mu4e-lock-request-file</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">not</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e-lock-avalible</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+        <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">user-error</span> <span style="color: #7bc275;">"Unfortunately another Emacs is already doing stuff with Mu4e, and you can only have one at a time"</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">f-write-text</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">number-to-string</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">emacs-pid</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">utf-8</span> <span style="color: #DFDFDF;">mu4e-lock-file</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">delete-file</span> <span style="color: #DFDFDF;">mu4e-lock-request-file</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">funcall</span> orig-fun callback<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-lock--request-watcher</span>
+            <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">file-notify-add-watch</span> <span style="color: #DFDFDF;">mu4e-lock-request-file</span>
+                                   <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>change<span style="color: #7bc275;">)</span>
+                                   <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-lock-request</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">mu4e-lock--file-watcher</span> nil<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">mu4e-lock--file-just-deleted</span> nil<span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">mu4e-lock--request-watcher</span> nil<span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-lock-add-watcher</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-lock--file-just-deleted</span> nil<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">file-notify-rm-watch</span> <span style="color: #DFDFDF;">mu4e-lock--file-watcher</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-lock--file-watcher</span>
+          <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">file-notify-add-watch</span> <span style="color: #DFDFDF;">mu4e-lock-file</span>
+                                 <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>change<span style="color: #C57BDB;">)</span>
+                                 <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-lock-file-updated</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-lock-request</span> <span style="color: #7bc275;">(</span>event<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Handle another process requesting the Mu4e lock."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">equal</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">1</span> event<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">created</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">when</span> <span style="color: #DFDFDF;">mu4e-lock-relaxed</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">mu4e~stop</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">file-notify-rm-watch</span> <span style="color: #DFDFDF;">mu4e-lock--file-watcher</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">message</span> <span style="color: #7bc275;">"Someone else wants to use Mu4e, releasing lock"</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">delete-file</span> <span style="color: #DFDFDF;">mu4e-lock-file</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">run-at-time</span> <span style="color: #e69055; font-weight: bold;">0.2</span> nil <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-lock-add-watcher</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">delete-file</span> <span style="color: #DFDFDF;">mu4e-lock-request-file</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-lock-file-updated</span> <span style="color: #7bc275;">(</span>event<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #DFDFDF;">mu4e-lock--file-just-deleted</span>
+        <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e-lock-add-watcher</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">when</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">equal</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">1</span> event<span style="color: #7bc275;">)</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">deleted</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-lock--file-just-deleted</span> t<span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">and</span> <span style="color: #DFDFDF;">mu4e-lock-greedy</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e-lock-avalible</span> t<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+          <span style="color: #7bc275;">(</span><span style="color: #a991f1;">message</span> <span style="color: #7bc275;">"Noticed Mu4e lock was avalible, grabbed it"</span><span style="color: #7bc275;">)</span>
+          <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">run-at-time</span> <span style="color: #e69055; font-weight: bold;">0.2</span> nil <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e~start</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+
 </pre>
 </div>
 </div>
