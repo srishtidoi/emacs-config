@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-25 Mon 23:30 -->
+<!-- 2020-05-26 Tue 01:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -3338,7 +3338,49 @@ bit more visually appealing.
                                    <span style="color: #51afef;">(</span>mouse-1 . mu4e-alert-view-unread-mails<span style="color: #51afef;">)</span>
                                    <span style="color: #51afef;">(</span>mouse-2 . mu4e-alert-view-unread-mails<span style="color: #51afef;">)</span>
                                    <span style="color: #51afef;">(</span>mouse-3 . mu4e-alert-view-unread-mails<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-alert-modeline-formatter</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-alert-iconised-modeline-formatter</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-alert-modeline-formatter</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-alert-iconised-modeline-formatter</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-alert-email-notification-types</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span>subjects<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-alert-grouped-mail-notification-formatter-with-bell</span> <span style="color: #7bc275;">(</span>mail-group all-mails<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Default function to format MAIL-GROUP for notification.</span>
+<span style="color: #7e7e87;">ALL-MAILS are the all the unread emails"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">shell-command</span> <span style="color: #7bc275;">"paplay /usr/share/sounds/freedesktop/stereo/message.oga"</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">&gt;</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">length</span> mail-group<span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #51afef;">)</span>
+         <span style="color: #51afef;">(</span><span style="color: #51afef;">let*</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>mail-count <span style="color: #51afef;">(</span><span style="color: #a991f1;">length</span> mail-group<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                <span style="color: #7bc275;">(</span>total-mails <span style="color: #51afef;">(</span><span style="color: #a991f1;">length</span> all-mails<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                <span style="color: #7bc275;">(</span>first-mail <span style="color: #51afef;">(</span><span style="color: #a991f1;">car</span> mail-group<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                <span style="color: #7bc275;">(</span>title-prefix <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"You have %d unread emails"</span>
+                                      mail-count<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                <span style="color: #7bc275;">(</span>field-value <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e-alert--get-group</span> first-mail<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                <span style="color: #7bc275;">(</span>title-suffix <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">pcase</span> <span style="color: #DFDFDF;">mu4e-alert-group-by</span>
+                                        <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">:from</span> <span style="color: #7bc275;">"from %s:"</span><span style="color: #7bc275;">)</span>
+                                        <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">:to</span> <span style="color: #7bc275;">"to %s:"</span><span style="color: #7bc275;">)</span>
+                                        <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">:maildir</span> <span style="color: #7bc275;">"in %s:"</span><span style="color: #7bc275;">)</span>
+                                        <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">:priority</span> <span style="color: #7bc275;">"with %s priority:"</span><span style="color: #7bc275;">)</span>
+                                        <span style="color: #7bc275;">(</span><span style="color: #C57BDB;">`</span><span style="color: #C57BDB;">:flags</span> <span style="color: #7bc275;">"with %s flags:"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                                      field-value<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                <span style="color: #7bc275;">(</span>title <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s %s"</span> title-prefix title-suffix<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">list</span> <span style="color: #C57BDB;">:title</span> title
+                 <span style="color: #C57BDB;">:body</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">s-join</span> <span style="color: #7bc275;">"\n"</span>
+                               <span style="color: #51afef;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">mail</span><span style="color: #7bc275;">)</span>
+                                         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s&lt;b&gt;%s&lt;/b&gt; &#8226; %s"</span>
+                                                 <span style="color: #51afef;">(</span><span style="color: #51afef;">cond</span>
+                                                  <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #a991f1;">plist-get</span> mail <span style="color: #C57BDB;">:in-reply-to</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">"&#11177; "</span><span style="color: #C57BDB;">)</span>
+                                                  <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">string-match-p</span> <span style="color: #7bc275;">"\\`Fwd:"</span>
+                                                                   <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-get</span> mail <span style="color: #C57BDB;">:subject</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">" &#11183; "</span><span style="color: #C57BDB;">)</span>
+                                                  <span style="color: #C57BDB;">(</span>t <span style="color: #7bc275;">"&#8192;&#8192;"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                                                 <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">truncate-string-to-width</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">caar</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">plist-get</span> mail <span style="color: #C57BDB;">:from</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                                                                           <span style="color: #e69055; font-weight: bold;">20</span> nil nil t<span style="color: #51afef;">)</span>
+                                                 <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">truncate-string-to-width</span>
+                                                  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"\\`Re: </span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">|</span><span style="color: #7bc275;">\\`Fwd: "</span> <span style="color: #7bc275;">""</span>
+                                                                            <span style="color: #7bc275;">(</span><span style="color: #a991f1;">plist-get</span> mail <span style="color: #C57BDB;">:subject</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                                                  <span style="color: #e69055; font-weight: bold;">40</span> nil nil t<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                                       mail-group<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">let*</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>new-mail <span style="color: #51afef;">(</span><span style="color: #a991f1;">car</span> mail-group<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span>subject <span style="color: #51afef;">(</span><span style="color: #a991f1;">plist-get</span> new-mail <span style="color: #C57BDB;">:subject</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span>sender <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">caar</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> new-mail <span style="color: #C57BDB;">:from</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">list</span> <span style="color: #C57BDB;">:title</span> sender <span style="color: #C57BDB;">:body</span> subject<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-alert-grouped-mail-notification-formatter</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-alert-grouped-mail-notification-formatter-with-bell</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -7640,7 +7682,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-25 Mon 23:30</p>
+<p class="date">Created: 2020-05-26 Tue 01:15</p>
 </div>
 </body>
 </html>
