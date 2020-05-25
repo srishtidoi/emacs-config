@@ -1108,7 +1108,8 @@ shown by <kbd>SPC h v</kbd> and selecting what I thought looks good, I&rsquo;ve 
 <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">undo-limit</span> <span style="color: #e69055; font-weight: bold;">80000000</span>                         <span style="color: #62686E;">; </span><span style="color: #62686E;">Raise undo-limit to 80Mb</span>
       <span style="color: #DFDFDF;">evil-want-fine-undo</span> t                       <span style="color: #62686E;">; </span><span style="color: #62686E;">By default while in insert all changes are one big blob. Be more granular</span>
       <span style="color: #DFDFDF;">auto-save-default</span> t                         <span style="color: #62686E;">; </span><span style="color: #62686E;">Nobody likes to loose work, I certainly don't</span>
-      <span style="color: #DFDFDF;">inhibit-compacting-font-caches</span> t<span style="color: #51afef;">)</span>           <span style="color: #62686E;">; </span><span style="color: #62686E;">When there are lots of glyphs, keep them in memory</span>
+      <span style="color: #DFDFDF;">inhibit-compacting-font-caches</span> t            <span style="color: #62686E;">; </span><span style="color: #62686E;">When there are lots of glyphs, keep them in memory</span>
+      <span style="color: #DFDFDF;">truncate-string-ellipsis</span> <span style="color: #7bc275;">"&#8230;"</span><span style="color: #51afef;">)</span>               <span style="color: #62686E;">; </span><span style="color: #62686E;">Unicode ellispis are nicer than "...", and also save /precious/ space</span>
 
 <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">delete-selection-mode</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #51afef;">)</span>                         <span style="color: #62686E;">; </span><span style="color: #62686E;">Replace selection when inserting text</span>
 <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">display-time-mode</span> <span style="color: #e69055; font-weight: bold;">1</span><span style="color: #51afef;">)</span>                             <span style="color: #62686E;">; </span><span style="color: #62686E;">Enable time in the mode-line</span>
@@ -3133,12 +3134,6 @@ few more visual tweaks, we&rsquo;ll tweak the headers a bit.
                           <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">face</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">mu4e-footer-face</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
-
-<p>
-Mu4e&rsquo;s implementation of string truncation uses three full stops <code>...</code> instead of
-ellipses <code>…</code>. This wastes two charachters, which we can easily address with a bit of advice.
-Unfortunately, I have yet to work out how to do this (see <a href="https://github.com/djcb/mu/issues/1707">djcb/mu#1707</a>).
-</p>
 
 <p>
 Due to evil, none of the marking commands work when making a visual selection in
