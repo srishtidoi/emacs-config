@@ -212,6 +212,21 @@
 (add-hook 'doom-load-theme-hook #'set-appropriate-splash)
 ;; Splash screen:1 ends here
 
+;; [[file:~/.config/doom/config.org::*Systemd%20daemon][Systemd daemon:3]]
+(defun greedily-do-daemon-setup ()
+  (when (daemonp)
+    (require 'org)
+    (require 'mu4e)
+    (setq mu4e-confirm-quit t)
+    (setq mu4e-lock-greedy t)
+    (setq mu4e-lock-relaxed t)
+    (mu4e-lock-add-watcher)
+    (when (mu4e-lock-avalible t)
+      (mu4e~start))))
+
+(add-hook 'emacs-startup-hook #'greedily-do-daemon-setup)
+;; Systemd daemon:3 ends here
+
 ;; [[file:~/.config/doom/config.org::*Abbrev%20mode][Abbrev mode:1]]
 (use-package abbrev
   :init
