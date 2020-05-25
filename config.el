@@ -480,6 +480,10 @@ Prevents a series of redisplays from being called (when set to an appropriate va
 ;; Mu4e:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:1]]
+(setq mu4e-view-use-gnus t)
+;; Viewing Mail:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:2]]
 (after! mu4e
   (defun my-string-width (str)
     "Return the width in pixels of a string in the current
@@ -521,9 +525,9 @@ will also be the width of all other printable characters."
         mu4e-headers-encrypted-mark  (cons "x" (mu4e~normalised-icon "lock"))
         mu4e-headers-signed-mark     (cons "s" (mu4e~normalised-icon "certificate" :height 0.7 :colour "dpurple"))
         mu4e-headers-unread-mark     (cons "u" (mu4e~normalised-icon "eye-slash" :v-adjust 0.05))))
-;; Viewing Mail:1 ends here
+;; Viewing Mail:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:2]]
+;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:3]]
 (after! mu4e
   (setq mu4e-headers-fields
         '((:account . 12)
@@ -553,18 +557,18 @@ will also be the width of all other printable characters."
                                   (+ (length (mu4e-message-field msg :to))
                                      (length (mu4e-message-field msg :cc))))
                           'face 'mu4e-footer-face)))))))
-;; Viewing Mail:2 ends here
+;; Viewing Mail:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:3]]
+;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:4]]
 (map! :map mu4e-headers-mode-map
     :after mu4e
     :v "*" #'mu4e-headers-mark-for-something
     :v "!" #'mu4e-headers-mark-for-read
     :v "?" #'mu4e-headers-mark-for-unread
     :v "u" #'mu4e-headers-mark-for-unmark)
-;; Viewing Mail:3 ends here
+;; Viewing Mail:4 ends here
 
-;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:4]]
+;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:5]]
 (defadvice! mu4e~main-action-prettier-str (str &optional func-or-shortcut)
   "Highlight the first occurrence of [.] in STR.
 If FUNC-OR-SHORTCUT is non-nil and if it is a function, call it
@@ -593,13 +597,13 @@ clicked."
     newstr))
 
 (setq evil-collection-mu4e-end-region-misc "quit")
-;; Viewing Mail:4 ends here
+;; Viewing Mail:5 ends here
 
-;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:5]]
+;; [[file:~/.config/doom/config.org::*Viewing%20Mail][Viewing Mail:6]]
 (map! :map mu4e-main-mode-map
       :after mu4e
       :nive "h" #'+workspace/other)
-;; Viewing Mail:5 ends here
+;; Viewing Mail:6 ends here
 
 ;; [[file:~/.config/doom/config.org::*Sending%20Mail][Sending Mail:1]]
 (after! mu4e

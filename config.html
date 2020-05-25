@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-25 Mon 16:53 -->
+<!-- 2020-05-25 Mon 23:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -2917,7 +2917,7 @@ To check how my version compares to the latest published:
 
 <div class="org-src-container">
 <pre class="src src-shell"><span style="color: #FCCE7B;">curl</span> --silent <span style="color: #7bc275;">"https://api.github.com/repos/djcb/mu/releases/latest"</span> | <span style="color: #FCCE7B;">grep</span> <span style="color: #7bc275;">'"tag_name":'</span> | sed -E <span style="color: #7bc275;">'s/.*"([^"]+)".*/\1/'</span>
-mu --version | head -n <span style="color: #e69055; font-weight: bold;">1</span> | sed <span style="color: #7bc275;">'s/.* version//'</span>
+mu --version | head -n <span style="color: #e69055; font-weight: bold;">1</span> | sed <span style="color: #7bc275;">'s/.* version //'</span>
 </pre>
 </div>
 </div>
@@ -3049,6 +3049,16 @@ As I installed mu4e from source, I need to add the <kbd>/usr/local/</kbd> loadpa
 <div id="outline-container-viewing-mail" class="outline-5">
 <h5 id="viewing-mail"> <a class="anchor" aria-hidden="true" href="#viewing-mail">🔗</a> <a class="anchor" aria-hidden="true" href="#viewing-mail">🔗</a> <a class="anchor" aria-hidden="true" href="#viewing-mail">🔗</a> <a class="anchor" aria-hidden="true" href="#viewing-mail">🔗</a><span class="section-number-5">4.13.4.1</span> Viewing Mail</h5>
 <div class="outline-text-5" id="text-4-13-4-1">
+<p>
+There seem to be some advantages with using Gnus&rsquo; article view (such as inline
+images), and judging from <a href="https://github.com/djcb/mu/pull/1442#issuecomment-591695814">djcb/mu!1442 (comment)</a> this seems to be the &rsquo;way of
+the future&rsquo; for mu4e.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">mu4e-view-use-gnus</span> t<span style="color: #51afef;">)</span>
+</pre>
+</div>
+
 <p>
 There are some all-the-icons font related issues, so we need to redefine the
 fancy chars, and make sure they get the correct width.
@@ -7630,7 +7640,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-25 Mon 16:53</p>
+<p class="date">Created: 2020-05-25 Mon 23:30</p>
 </div>
 </body>
 </html>

@@ -17,7 +17,7 @@ make
 sudo make install
 
 curl --silent "https://api.github.com/repos/djcb/mu/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'
-mu --version | head -n 1 | sed 's/.* version//'
+mu --version | head -n 1 | sed 's/.* version //'
 
 cd ~/.local/lib/
 git clone https://github.com/marlam/msmtp-mirror.git ./msmtp
