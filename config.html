@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-26 Tue 01:15 -->
+<!-- 2020-05-26 Tue 12:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -3240,10 +3240,13 @@ prompt otherwise also seems sensible.
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">my-mu4e-set-account</span> <span style="color: #7bc275;">()</span>
     <span style="color: #7e7e87;">"Set the account for composing a message."</span>
     <span style="color: #7bc275;">(</span><span style="color: #51afef;">unless</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">and</span> <span style="color: #DFDFDF;">mu4e-compose-parent-message</span>
-               <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mail</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">car</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e-message-field</span> <span style="color: #DFDFDF;">mu4e-compose-parent-message</span> <span style="color: #C57BDB;">:to</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                 <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">member</span> mail <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> <span style="color: #DFDFDF;">mu4e~server-props</span> <span style="color: #C57BDB;">:personal-addresses</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-                     <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">user-mail-address</span> mail<span style="color: #51afef;">)</span>
-                   nil<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                 <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>to <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">car</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e-message-field</span> <span style="color: #DFDFDF;">mu4e-compose-parent-message</span> <span style="color: #C57BDB;">:to</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                       <span style="color: #51afef;">(</span>from <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">cdr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">car</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">mu4e-message-field</span> <span style="color: #DFDFDF;">mu4e-compose-parent-message</span> <span style="color: #C57BDB;">:from</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                 <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">member</span> to <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> <span style="color: #DFDFDF;">mu4e~server-props</span> <span style="color: #C57BDB;">:personal-addresses</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                     <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">user-mail-address</span> to<span style="color: #51afef;">)</span>
+                   <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">member</span> from <span style="color: #7bc275;">(</span><span style="color: #a991f1;">plist-get</span> <span style="color: #DFDFDF;">mu4e~server-props</span> <span style="color: #C57BDB;">:personal-addresses</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">user-mail-address</span> from<span style="color: #C57BDB;">)</span>
+                       nil<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
       <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">ivy-read</span> <span style="color: #7bc275;">"Account: "</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">plist-get</span> <span style="color: #DFDFDF;">mu4e~server-props</span> <span style="color: #C57BDB;">:personal-addresses</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">:action</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">(</span>candidate<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">user-mail-address</span> candidate<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mu4e-compose-pre-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">my-mu4e-set-account</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -7682,7 +7685,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-05-26 Tue 01:15</p>
+<p class="date">Created: 2020-05-26 Tue 12:41</p>
 </div>
 </body>
 </html>
