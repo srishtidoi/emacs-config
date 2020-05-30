@@ -1846,7 +1846,7 @@ SQL can be either the emacsql vector representation, or a string."
 ;; Capture:3 ends here
 
 ;; [[file:~/.config/doom/config.org::*Basic%20settings][Basic settings:1]]
-(setq org-roam-directory "~/Desktop/TEC/Organisation/Roam")
+(setq org-roam-directory "~/Desktop/TEC/Organisation/Roam/")
 ;; Basic settings:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Graph%20Behaviour][Graph Behaviour:2]]
