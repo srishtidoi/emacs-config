@@ -5,7 +5,7 @@
   :recipe (:host github :repo "Ilazki/prettify-utils.el") :pin "8b783d316c23bffdf2b9e6f52635482c4812ee43")
 ;; Prettification:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Window%20management][Window management:1]]
+;; [[file:~/.config/doom/config.org::*Window management][Window management:1]]
 (package! rotate :pin "091b5ac4fc310773253efb317e3dbe8e46959ba6")
 ;; Window management:1 ends here
 
@@ -46,11 +46,11 @@
 (package! ess-view :pin "d4e5a340b7bcc58c434867b97923094bd0680283")
 ;; ESS:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Magit%20Delta][Magit Delta:1]]
+;; [[file:~/.config/doom/config.org::*Magit Delta][Magit Delta:1]]
 ;; (package! magit-delta :recipe (:host github :repo "dandavison/magit-delta") :pin "0c7d8b2359")
 ;; Magit Delta:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Info%20colours][Info colours:1]]
+;; [[file:~/.config/doom/config.org::*Info colours][Info colours:1]]
 (package! info-colors :pin "47ee73cc19b1049eef32c9f3e264ea7ef2aaf8a5")
 ;; Info colours:1 ends here
 
@@ -67,11 +67,11 @@
                             :pin "14da2c4c1dc7468c74fdf80f446c723b94f8aad5")
 ;; LaTeX:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Improve%20agenda/capture][Improve agenda/capture:1]]
+;; [[file:~/.config/doom/config.org::*Improve agenda/capture][Improve agenda/capture:1]]
 (package! org-super-agenda :pin "dd0d104c269fab9ebe5af7009bc1dd2a3a8f3c12")
 ;; Improve agenda/capture:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Improve%20agenda/capture][Improve agenda/capture:2]]
+;; [[file:~/.config/doom/config.org::*Improve agenda/capture][Improve agenda/capture:2]]
 (package! doct
   :recipe (:host github :repo "progfolio/doct")
   :pin "1bcec209e12200c9b93b0d95f61b964b5de4439c")
@@ -90,23 +90,23 @@
 (package! org-pretty-tags :pin "40fd72f3e701e31813f383fb429d30bb88cee769")
 ;; Visuals:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:1]]
+;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:1]]
 (package! ox-gfm :pin "99f93011b069e02b37c9660b8fcb45dab086a07f")
 ;; Extra functionality:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:2]]
+;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:2]]
 (package! org-ref :pin "4ce80644377f2369efb475bd58a57cf6950d8c41")
 ;; Extra functionality:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:3]]
+;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:3]]
 (package! org-graph-view :recipe (:host github :repo "alphapapa/org-graph-view") :pin "13314338d70d2c19511efccc491bed3ca0758170")
 ;; Extra functionality:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:4]]
+;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:4]]
 (package! org-chef :pin "1dd73fd3db0e9382fa34d3b48c8ec608e65f3bdc")
 ;; Extra functionality:4 ends here
 
-;; [[file:~/.config/doom/config.org::*Extra%20functionality][Extra functionality:5]]
+;; [[file:~/.config/doom/config.org::*Extra functionality][Extra functionality:5]]
 (package! org-plot :recipe (:local-repo "lisp" :no-byte-compile t))
 ;; Extra functionality:5 ends here
 
