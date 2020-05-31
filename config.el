@@ -57,6 +57,11 @@
 (setq +ivy-buffer-preview t)
 ;; Windows:3 ends here
 
+;; [[file:~/.config/doom/config.org::*Windows][Windows:4]]
+(map! :map evil-window-map
+      "SPC" #'rotate-layout)
+;; Windows:4 ends here
+
 ;; [[file:~/.config/doom/config.org::*Buffer defaults][Buffer defaults:1]]
 ;; (setq-default major-mode 'org-mode)
 ;; Buffer defaults:1 ends here

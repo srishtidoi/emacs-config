@@ -1179,6 +1179,17 @@ Oh, and previews are nice
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+ivy-buffer-preview</span> t<span style="color: #51afef;">)</span>
 </pre>
 </div>
+
+<p>
+Window rotation is nice, and can be found under <kbd>SPC w r</kbd> and <kbd>SPC w R</kbd>.
+<i>Layout</i> rotation is also nice though. Let&rsquo;s stash this under <kbd>SPC w SPC</kbd>, inspired
+by Tmux&rsquo;s use of <kbd>C-b SPC</kbd> to rotate windows.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">map!</span> <span style="color: #C57BDB;">:map</span> <span style="color: #DFDFDF;">evil-window-map</span>
+      <span style="color: #7bc275;">"SPC"</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">rotate-layout</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
 </div>
 </div>
 <div id="outline-container-buffer-defaults" class="outline-4">
