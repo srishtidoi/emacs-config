@@ -68,14 +68,24 @@
       doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 ;; Font Face:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Theme][Theme:1]]
+;; [[file:~/.config/doom/config.org::*Theme and modeline][Theme and modeline:1]]
 (setq doom-theme 'doom-vibrant)
-;; Theme:1 ends here
+;; Theme and modeline:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Theme][Theme:2]]
+;; [[file:~/.config/doom/config.org::*Theme and modeline][Theme and modeline:2]]
 (custom-set-faces!
   '(doom-modeline-buffer-modified :foreground "orange"))
-;; Theme:2 ends here
+;; Theme and modeline:2 ends here
+
+;; [[file:~/.config/doom/config.org::*Theme and modeline][Theme and modeline:3]]
+(defun doom-modeline-conditional-buffer-encoding ()
+  "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
+  (setq-local doom-modeline-buffer-encoding
+              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
+                          (eq buffer-file-coding-system 'utf-8)))))
+
+(add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
+;; Theme and modeline:3 ends here
 
 ;; [[file:~/.config/doom/config.org::*Miscellaneous][Miscellaneous:1]]
 (setq display-line-numbers-type 'relative)

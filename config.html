@@ -514,7 +514,7 @@
 <li><a href="#visual-settings">2.3.1. Visual Settings</a>
 <ul>
 <li><a href="#font-face">2.3.1.1. Font Face</a></li>
-<li><a href="#theme">2.3.1.2. Theme</a></li>
+<li><a href="#theme-modeline">2.3.1.2. Theme and modeline</a></li>
 <li><a href="#miscellaneous">2.3.1.3. Miscellaneous</a></li>
 </ul>
 </li>
@@ -1222,8 +1222,8 @@ fiddle with the font sizes a tad so that they visually match.
 </div>
 </div>
 </div>
-<div id="outline-container-theme" class="outline-5">
-<h5 id="theme"> <a class="anchor" aria-hidden="true" href="#theme">🔗</a> <a class="anchor" aria-hidden="true" href="#theme">🔗</a> <a class="anchor" aria-hidden="true" href="#theme">🔗</a> <a class="anchor" aria-hidden="true" href="#theme">🔗</a><span class="section-number-5">2.3.1.2</span> Theme</h5>
+<div id="outline-container-theme-modeline" class="outline-5">
+<h5 id="theme-modeline"> <a class="anchor" aria-hidden="true" href="#theme-modeline">🔗</a> <a class="anchor" aria-hidden="true" href="#theme-modeline">🔗</a> <a class="anchor" aria-hidden="true" href="#theme-modeline">🔗</a> <a class="anchor" aria-hidden="true" href="#theme-modeline">🔗</a><span class="section-number-5">2.3.1.2</span> Theme and modeline</h5>
 <div class="outline-text-5" id="text-2-3-1-2">
 <p>
 <code>doom-one</code> is nice and all, but I find the <code>vibrant</code> variant nicer.
@@ -1239,6 +1239,20 @@ so I don&rsquo;t feel like something&rsquo;s gone <i>wrong</i> when editing file
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">custom-set-faces!</span>
   <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>doom-modeline-buffer-modified <span style="color: #C57BDB;">:foreground</span> <span style="color: #7bc275;">"orange"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+<p>
+While we&rsquo;re modifying the modeline, <kbd>LF UTF-8</kbd> is the default file encoding, and
+thus not worth noting in the modeline. So, let&rsquo;s conditionally hide it.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">doom-modeline-conditional-buffer-encoding</span> <span style="color: #C57BDB;">()</span>
+  <span style="color: #7e7e87;">"We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq-local</span> <span style="color: #DFDFDF;">doom-modeline-buffer-encoding</span>
+              <span style="color: #7bc275;">(</span><span style="color: #51afef;">unless</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">or</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">eq</span> <span style="color: #DFDFDF;">buffer-file-coding-system</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">utf-8-unix</span><span style="color: #C57BDB;">)</span>
+                          <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">eq</span> <span style="color: #DFDFDF;">buffer-file-coding-system</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">utf-8</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">after-change-major-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">doom-modeline-conditional-buffer-encoding</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -6251,7 +6265,7 @@ the final documents.
 <p>
 There is a fantastic exporter config (<a href="https://github.com/fniessen/org-html-themes">fniessen/org-html-themes</a>) which we can
 setup to be used with all our org files. Since most of the syntax highlighting
-colours from our <a href="#theme">2.3.1.2</a> gets used, we benefit from customising the code block style.
+colours from our <a href="#theme-modeline">Theme</a> gets used, we benefit from customising the code block style.
 </p>
 <p>
 We also want to make the background and foreground colours of the <code>&lt;pre&gt;</code> blocks
