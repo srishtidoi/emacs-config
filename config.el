@@ -433,6 +433,14 @@ Affects behaviour of `emacs-anywhere--finalise-content'")
 (setq ispell-personal-dictionary (expand-file-name ".hunspell_personal" doom-private-dir))
 ;; Ispell:2 ends here
 
+;; [[file:~/.config/doom/config.org::*Ivy][Ivy:1]]
+(setq ivy-read-action-function #'ivy-hydra-read-action)
+;; Ivy:1 ends here
+
+;; [[file:~/.config/doom/config.org::*Ivy][Ivy:2]]
+(setq ivy-sort-max-size 50000)
+;; Ivy:2 ends here
+
 ;; [[file:~/.config/doom/config.org::*Magit][Magit:1]]
 ;; (after! magit
 ;;   (magit-delta-mode +1))
