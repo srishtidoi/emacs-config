@@ -990,7 +990,7 @@ Usefull for affecting some of my HTML export config.")
 ;; [[file:~/.config/doom/config.org::*Tramp][Tramp:1]]
 (after! tramp
   (setenv "SHELL" "/bin/bash")
-  (setq tramp-shell-prompt-pattern "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")) ;; defult + 
+  (setq tramp-shell-prompt-pattern "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")) ;; default + 
 ;; Tramp:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Treemacs][Treemacs:1]]
