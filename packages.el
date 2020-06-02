@@ -39,7 +39,7 @@
 
 ;; [[file:~/.config/doom/config.org::*CalcTeX][CalcTeX:1]]
 (package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
-                                 :files ("*.el")) :pin "542b628eb4a5d1e74476e0ce29ce7db8f5d9ab4f")
+                                 :files ("*.el")) :pin "08273d4216ac6cfa6030dfc0ea4bdeed0429e653")
 ;; CalcTeX:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*ESS][ESS:1]]
@@ -64,7 +64,7 @@
 
 ;; [[file:~/.config/doom/config.org::*LaTeX][LaTeX:1]]
 (package! evil-tex :recipe (:host github :repo "itai33/evil-tex")
-                            :pin "14da2c4c1dc7468c74fdf80f446c723b94f8aad5")
+                            :pin "9365aa33a0e73d8015cd93f039d2ba91dbe52cad")
 ;; LaTeX:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Improve agenda/capture][Improve agenda/capture:1]]
