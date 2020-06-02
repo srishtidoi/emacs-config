@@ -33,6 +33,10 @@
 (package! elcord :pin "94b0afb9bac32fa72354517347646166d6bec986")
 ;; Fun:6 ends here
 
+;; [[file:~/.config/doom/config.org::*Fun][Fun:7]]
+(package! keycast :pin "a912c4db1b88390f76b14e3b47ded314fdc8f48c")
+;; Fun:7 ends here
+
 ;; [[file:~/.config/doom/config.org::*Flyspell-lazy][Flyspell-lazy:1]]
 (package! flyspell-lazy :pin "3ebf68cc9eb10c972a2de8d7861cbabbbce69570")
 ;; Flyspell-lazy:1 ends here
