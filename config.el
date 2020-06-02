@@ -644,6 +644,14 @@ clicked."
       :nive "h" #'+workspace/other)
 ;; Viewing Mail:6 ends here
 
+;; [[file:~/.config/doom/config.org::*Viewing Mail][Viewing Mail:7]]
+(defadvice! delete-current-worspace-if-empty ()
+  "Close the current workspace if it is empty."
+  :before #'=mu4e
+  (unless (+workspace-buffer-list)
+    (+workspace-delete (+workspace-current-name))))
+;; Viewing Mail:7 ends here
+
 ;; [[file:~/.config/doom/config.org::*Sending Mail][Sending Mail:1]]
 (after! mu4e
   (setq sendmail-program "/usr/local/bin/msmtp"
