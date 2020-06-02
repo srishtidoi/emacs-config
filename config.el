@@ -3271,6 +3271,10 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
   (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t)))
 ;; Compilation:1 ends here
 
+;; [[file:~/.config/doom/config.org::*Compilation][Compilation:2]]
+(setq +latex-viewers '(pdf-tools evince zathura okular skim sumatrapdf))
+;; Compilation:2 ends here
+
 ;; [[file:~/.config/doom/config.org::*Template][Template:2]]
 (setq tec/yas-latex-template-preamble "
 \\usepackage[pdfa,unicode=true,hidelinks]{hyperref}

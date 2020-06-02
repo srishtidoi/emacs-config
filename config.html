@@ -7224,6 +7224,16 @@ filename as variable maybe?)</li>
   <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-to-list</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">TeX-command-list</span> <span style="color: #C57BDB;">'</span><span style="color: #7bc275;">(</span><span style="color: #7bc275;">"XeLaTeX"</span> <span style="color: #7bc275;">"%`xelatex%(mode)%' %t"</span> TeX-run-TeX nil t<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
+
+<p>
+For viewing the PDF, I rather like the pdf-tools viewer. While auctex is trying
+to be nice in recognising that I have some PDF viewing apps installed, I&rsquo;d
+rather not have it default to using them, so let&rsquo;s re-order the preferences.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+latex-viewers</span> <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>pdf-tools evince zathura okular skim sumatrapdf<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
 </div>
 </div>
 <div id="outline-container-snippet-helpers" class="outline-4">
