@@ -3313,7 +3313,7 @@ file, thanks to Etienne Deparis&rsquo;s <a href="https://etienne.depar.is/emacs.
 <span style="color: #DFDFDF;">GenericName</span>=Compose a new message with Mu4e in Emacs
 <span style="color: #DFDFDF;">Comment</span>=Open mu4e compose window
 <span style="color: #DFDFDF;">MimeType</span>=x-scheme-handler/mailto;
-<span style="color: #DFDFDF;">Exec</span>=emacsclient -create-frame --alternate-editor=<span style="color: #7bc275;">""</span> --no-wait --eval <span style="color: #7bc275;">'(progn (mu4e-compose-from-mailto "%u") (x-focus-frame nil))'</span>
+<span style="color: #DFDFDF;">Exec</span>=emacsclient -create-frame --alternate-editor=<span style="color: #7bc275;">""</span> --no-wait --eval <span style="color: #7bc275;">'(progn (x-focus-frame nil) (mu4e-compose-from-mailto "%u"))'</span>
 <span style="color: #DFDFDF;">Icon</span>=emacs
 <span style="color: #DFDFDF;">Type</span>=Application
 <span style="color: #DFDFDF;">Terminal</span>=false
