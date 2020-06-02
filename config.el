@@ -544,11 +544,29 @@ will also be the width of all other printable characters."
 
 ;; [[file:~/.config/doom/config.org::*Viewing Mail][Viewing Mail:3]]
 (after! mu4e
+
+  (defun mu4e-header-colourise (str)
+    (let* ((str-sum (apply #'+ (mapcar (lambda (c) (% c 3)) str)))
+           (colour (nth (% str-sum (length mu4e-header-colourised-faces))
+                        mu4e-header-colourised-faces)))
+      (put-text-property 0 (length str) 'face colour str)
+      str))
+
+  (defvar mu4e-header-colourised-faces
+    '(all-the-icons-lblue
+      all-the-icons-purple
+      all-the-icons-blue-alt
+      all-the-icons-green
+      all-the-icons-maroon
+      all-the-icons-yellow
+      all-the-icons-orange))
+
   (setq mu4e-headers-fields
         '((:account . 12)
           (:human-date . 8)
           (:flags . 6)
           (:from . 25)
+          (:folder . 10)
           (:recipnum . 2)
           (:subject)))
   (plist-put (cdr (assoc :flags mu4e-header-info)) :shortname " Flags") ; default=Flgs
@@ -558,10 +576,16 @@ will also be the width of all other printable characters."
             (lambda (msg)
               (let ((maildir
                      (mu4e-message-field msg :maildir)))
-                (replace-regexp-in-string "^gmail" (propertize "g" 'face 'bold-italic)
-                                          (format "%s"
-                                                  (substring maildir 1
-                                                             (string-match-p "/" maildir 1))))))))
+                (mu4e-header-colourise (replace-regexp-in-string "^gmail" (propertize "g" 'face 'bold-italic)
+                                                                 (format "%s"
+                                                                         (substring maildir 1
+                                                                                    (string-match-p "/" maildir 1)))))))))
+          (:folder .
+           (:name "Folder" :shortname "Folder" :help "Lowest level folder" :function
+            (lambda (msg)
+              (let ((maildir
+                     (mu4e-message-field msg :maildir)))
+                (mu4e-header-colourise (replace-regexp-in-string "\\`.*/" "" maildir))))))
           (:recipnum .
            (:name "Number of recipients"
             :shortname " ⭷"
