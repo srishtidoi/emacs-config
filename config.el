@@ -75,6 +75,7 @@
 
 ;; [[file:~/.config/doom/config.org::*Theme and modeline][Theme and modeline:1]]
 (setq doom-theme 'doom-vibrant)
+(delq! t custom-theme-load-path)
 ;; Theme and modeline:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*Theme and modeline][Theme and modeline:2]]

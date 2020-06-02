@@ -1238,10 +1238,12 @@ fiddle with the font sizes a tad so that they visually match.
 <h5 id="theme-modeline"> <a class="anchor" aria-hidden="true" href="#theme-modeline">🔗</a> <a class="anchor" aria-hidden="true" href="#theme-modeline">🔗</a> <a class="anchor" aria-hidden="true" href="#theme-modeline">🔗</a> <a class="anchor" aria-hidden="true" href="#theme-modeline">🔗</a><span class="section-number-5">2.3.1.2</span> Theme and modeline</h5>
 <div class="outline-text-5" id="text-2-3-1-2">
 <p>
-<code>doom-one</code> is nice and all, but I find the <code>vibrant</code> variant nicer.
+<code>doom-one</code> is nice and all, but I find the <code>vibrant</code> variant nicer. Oh, and with the
+nice selection doom provides there&rsquo;s no reason for me to want the defaults.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">doom-theme</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">doom-vibrant</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">delq!</span> t <span style="color: #DFDFDF;">custom-theme-load-path</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 <p>
