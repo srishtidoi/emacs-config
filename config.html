@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-02 Tue 13:05 -->
+<!-- 2020-06-03 Wed 13:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -4167,10 +4167,10 @@ Let&rsquo;s also extend the functionality a whole bunch.
                    <span style="color: #51afef;">(</span><span style="color: #a991f1;">puthash</span> num <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-db-read</span> num<span style="color: #C57BDB;">)</span> <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
       <span style="color: #51afef;">(</span><span style="color: #51afef;">unless</span> res
         <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">+xkcd-db-write</span>
-         <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>url <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"http://xkcd.com/%d/info.0.json"</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+         <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>url <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"https://xkcd.com/%d/info.0.json"</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
                 <span style="color: #C57BDB;">(</span>json-assoc
-                 <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> num <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #51afef;">)</span>
-                     <span style="color: #51afef;">(</span><span style="color: #a991f1;">assoc</span> num <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #51afef;">)</span>
+                 <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">gethash</span> num <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #51afef;">)</span>
+                     <span style="color: #51afef;">(</span><span style="color: #a991f1;">gethash</span> num <span style="color: #DFDFDF;">+xkcd-stored-info</span><span style="color: #51afef;">)</span>
                    <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">json-read-from-string</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">xkcd-get-json</span> url num<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
            json-assoc<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
         <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> res <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">+xkcd-db-read</span> num<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -7833,7 +7833,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-06-02 Tue 13:05</p>
+<p class="date">Created: 2020-06-03 Wed 13:15</p>
 </div>
 </body>
 </html>
