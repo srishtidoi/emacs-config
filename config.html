@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-06 Sat 12:56 -->
+<!-- 2020-06-07 Sun 00:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -688,7 +688,8 @@
 <li><a href="#extra-links">5.2.2.9. Extra links</a>
 <ul>
 <li><a href="#extra-links-xkcd">5.2.2.9.1. xkcd</a></li>
-<li><a href="#youtube">5.2.2.9.2. YouTube</a></li>
+<li><a href="#music">5.2.2.9.2. Music</a></li>
+<li><a href="#youtube">5.2.2.9.3. YouTube</a></li>
 </ul>
 </li>
 </ul>
@@ -5844,9 +5845,168 @@ Saving seconds adds up after all! (but only so much)
 </div>
 </div>
 </div>
-<div id="outline-container-youtube" class="outline-6">
-<h6 id="youtube"> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a><span class="section-number-6">5.2.2.9.2</span> YouTube</h6>
+<div id="outline-container-music" class="outline-6">
+<h6 id="music"> <a class="anchor" aria-hidden="true" href="#music">🔗</a> <a class="anchor" aria-hidden="true" href="#music">🔗</a> <a class="anchor" aria-hidden="true" href="#music">🔗</a> <a class="anchor" aria-hidden="true" href="#music">🔗</a> <a class="anchor" aria-hidden="true" href="#music">🔗</a><span class="section-number-6">5.2.2.9.2</span> Music</h6>
 <div class="outline-text-6" id="text-5-2-2-9-2">
+<p>
+First, we set up all the necessarily &rsquo;utility&rsquo; functions.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-music-player</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">mpris</span>
+    <span style="color: #7e7e87;">"Music player type. Curretly only supports mpris."</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-music-mpris-player</span> <span style="color: #7bc275;">"Lollypop"</span>
+    <span style="color: #7e7e87;">"Name of the mpris player, used in the form org.gnome.MPRIS."</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-music-track-search-method</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">beets</span>
+    <span style="color: #7e7e87;">"Method to find the track file from the link."</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-music-beets-db</span> <span style="color: #7bc275;">"~/Music/library.db"</span>
+    <span style="color: #7e7e87;">"Location of the beets DB, when using beets as the `</span><span style="color: #a991f1;">org-music-track-search-method</span><span style="color: #7e7e87;">'"</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-music-get-link</span> <span style="color: #7bc275;">(</span>full <span style="color: #FCCE7B;">&amp;optional</span> include-time<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Generate link string for currently playing track, optionally including a time-stamp"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>track-metadata
+            <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">dbus-get-property</span> <span style="color: #C57BDB;">:session</span> <span style="color: #7bc275;">"org.gnome.Lollypop"</span> <span style="color: #7bc275;">"/org/mpris/MediaPlayer2"</span>
+                               <span style="color: #7bc275;">"org.mpris.MediaPlayer2.Player"</span> <span style="color: #7bc275;">"Metadata"</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>artist <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">caar</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">cadr</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"xesam:artist"</span> track-metadata<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>album <span style="color: #7bc275;">(</span><span style="color: #a991f1;">car</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">cadr</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"xesam:album"</span> track-metadata<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>track <span style="color: #7bc275;">(</span><span style="color: #a991f1;">car</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">cadr</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"xesam:title"</span> track-metadata<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>seconds <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> include-time
+                      <span style="color: #51afef;">(</span><span style="color: #a991f1;">/</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">dbus-get-property</span> <span style="color: #C57BDB;">:session</span> <span style="color: #7bc275;">"org.gnome.Lollypop"</span> <span style="color: #7bc275;">"/org/mpris/MediaPlayer2"</span>
+                                            <span style="color: #7bc275;">"org.mpris.MediaPlayer2.Player"</span> <span style="color: #7bc275;">"Position"</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">1000000</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> full
+          <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"[[music:%s][%s by %s]]"</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-music-format-link</span> artist album track seconds<span style="color: #7bc275;">)</span> track artist<span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-music-format-link</span> artist album track seconds<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-music-format-link</span> <span style="color: #7bc275;">(</span>artist album track <span style="color: #FCCE7B;">&amp;optional</span> seconds<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>artist <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">":"</span> <span style="color: #7bc275;">"\\:"</span> artist<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span>album <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">":"</span> <span style="color: #7bc275;">"\\:"</span> album<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span>track <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">":"</span> <span style="color: #7bc275;">"\\:"</span> track<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> seconds
+          <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s:%s::%s"</span> artist track <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-music-seconds-to-time</span> seconds<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s:%s"</span> artist track<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-music-parse-link</span> <span style="color: #7bc275;">(</span>link<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>link-dc <span style="color: #7bc275;">(</span><span style="color: #51afef;">-&gt;&gt;</span> link
+                         <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">(</span><span style="color: #7bc275;">[</span><span style="color: #C57BDB; font-weight: bold;">^</span><span style="color: #7bc275;">\\\\]</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">)</span><span style="color: #7bc275;">\\\\:"</span> <span style="color: #7bc275;">"\\1#COLON#"</span><span style="color: #51afef;">)</span>
+                         <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"\\`music:"</span> <span style="color: #7bc275;">""</span><span style="color: #51afef;">)</span>
+                         <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">(</span><span style="color: #7bc275;">::[a-z0-9]*[0-9]</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">)</span><span style="color: #7bc275;">\\'"</span> <span style="color: #7bc275;">"\\1s"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>link-components <span style="color: #7bc275;">(</span><span style="color: #a991f1;">mapcar</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #C57BDB;">(</span>lc<span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"#COLON#"</span> <span style="color: #7bc275;">":"</span> lc<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                                    <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">s-split</span> <span style="color: #7bc275;">":"</span> link-dc<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>artist <span style="color: #7bc275;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">0</span> link-components<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>track <span style="color: #7bc275;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">1</span> link-components<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>seconds <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">and</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">&gt;</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">length</span> link-components<span style="color: #7bc275;">)</span> <span style="color: #e69055; font-weight: bold;">3</span><span style="color: #C57BDB;">)</span>
+                               <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">equal</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">2</span> link-components<span style="color: #7bc275;">)</span> <span style="color: #7bc275;">""</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">org-music-time-to-seconds</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">3</span> link-components<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">list</span> artist track seconds<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-music-seconds-to-time</span> <span style="color: #7bc275;">(</span>seconds<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Convert a number of seconds to a nice human duration, e.g. 5m21s.</span>
+<span style="color: #7e7e87;">This action is reversed by `</span><span style="color: #a991f1;">org-music-time-to-seconds</span><span style="color: #7e7e87;">'."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">&lt;</span> seconds <span style="color: #e69055; font-weight: bold;">60</span><span style="color: #51afef;">)</span>
+        <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%ss"</span> seconds<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">&lt;</span> seconds <span style="color: #e69055; font-weight: bold;">3600</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%sm%ss"</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">/</span> seconds <span style="color: #e69055; font-weight: bold;">60</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #DFDFDF;">%</span> seconds <span style="color: #e69055; font-weight: bold;">60</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%sh%sm%ss"</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">/</span> seconds <span style="color: #e69055; font-weight: bold;">3600</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">/</span> <span style="color: #51afef;">(</span><span style="color: #DFDFDF;">%</span> seconds <span style="color: #e69055; font-weight: bold;">3600</span><span style="color: #51afef;">)</span> <span style="color: #e69055; font-weight: bold;">60</span><span style="color: #7bc275;">)</span> <span style="color: #7bc275;">(</span><span style="color: #DFDFDF;">%</span> seconds <span style="color: #e69055; font-weight: bold;">60</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-music-time-to-seconds</span> <span style="color: #7bc275;">(</span>time-str<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Get the number of seconds in a string produced by `</span><span style="color: #a991f1;">org-music-seconds-to-time</span><span style="color: #7e7e87;">'."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>time-components <span style="color: #7bc275;">(</span><span style="color: #a991f1;">reverse</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">s-split</span> <span style="color: #7bc275;">"[a-z]"</span> time-str<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>seconds <span style="color: #7bc275;">(</span><span style="color: #a991f1;">string-to-number</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">1</span> time-components<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>minutes <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">&gt;</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">length</span> time-components<span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">2</span><span style="color: #51afef;">)</span>
+                      <span style="color: #51afef;">(</span><span style="color: #a991f1;">string-to-number</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">2</span> time-components<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>hours <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">&gt;</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">length</span> time-components<span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">3</span><span style="color: #51afef;">)</span>
+                    <span style="color: #51afef;">(</span><span style="color: #a991f1;">string-to-number</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">3</span> time-components<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">+</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">*</span> <span style="color: #e69055; font-weight: bold;">3600</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> hours <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">*</span> <span style="color: #e69055; font-weight: bold;">60</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">or</span> minutes <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span> seconds<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-music-play-track</span> <span style="color: #7bc275;">(</span>artist title <span style="color: #FCCE7B;">&amp;optional</span> seconds<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Play the track specified by ARTIST and TITLE, optionally skipping to SECONDS in."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">case</span> org-music-player
+      <span style="color: #51afef;">(</span><span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">mpris</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-music-mpris-play</span>
+               <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-music-find-track-file</span> artist title<span style="color: #7bc275;">)</span>
+               seconds<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span>t <span style="color: #C57BDB;">(</span><span style="color: #51afef;">user-error!</span> <span style="color: #7bc275;">"The specified music player: %s is not supported"</span> org-music-player<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-music-mpris-play</span> <span style="color: #7bc275;">(</span>file <span style="color: #FCCE7B;">&amp;optional</span> seconds<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>player <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> <span style="color: #7bc275;">"org.gnome."</span> org-music-mpris-player<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">dbus-call-method</span> <span style="color: #C57BDB;">:session</span> player
+                        <span style="color: #7bc275;">"/org/mpris/MediaPlayer2"</span> <span style="color: #7bc275;">"org.mpris.MediaPlayer2.Player"</span>
+                        <span style="color: #7bc275;">"OpenUri"</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">" "</span> <span style="color: #7bc275;">"%20"</span> <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">rng-file-name-uri</span> file<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">when</span> seconds
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>track-id <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">caadr</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">assoc</span> <span style="color: #7bc275;">"mpris:trackid"</span>
+                                      <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">dbus-get-property</span> <span style="color: #C57BDB;">:session</span>
+                                                         player
+                                                         <span style="color: #7bc275;">"/org/mpris/MediaPlayer2"</span>
+                                                         <span style="color: #7bc275;">"org.mpris.MediaPlayer2.Player"</span>
+                                                         <span style="color: #7bc275;">"Metadata"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+          <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">dbus-call-method</span> <span style="color: #C57BDB;">:session</span> player
+                            <span style="color: #7bc275;">"/org/mpris/MediaPlayer2"</span> <span style="color: #7bc275;">"org.mpris.MediaPlayer2.Player"</span>
+                            <span style="color: #7bc275;">"SetPosition"</span>
+                            <span style="color: #C57BDB;">:object-path</span> track-id
+                            <span style="color: #C57BDB;">:int64</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">round</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">*</span> seconds <span style="color: #e69055; font-weight: bold;">1000000</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-music-find-track-file</span> <span style="color: #7bc275;">(</span>artist title<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">case</span> org-music-track-search-method
+      <span style="color: #51afef;">(</span><span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">beets</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-music-beets-find-file</span> artist title<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span>t <span style="color: #C57BDB;">(</span><span style="color: #51afef;">user-error!</span> <span style="color: #7bc275;">"The specified music search method: %s is not supported"</span> org-music-track-search-method<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-music-beets-find-file</span> <span style="color: #7bc275;">(</span>artist title<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Find the file correspanding to a given artist and title."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>artist-escaped <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"\""</span> <span style="color: #7bc275;">"\\\""</span> artist<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>title-escaped <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">replace-regexp-in-string</span> <span style="color: #7bc275;">"\""</span> <span style="color: #7bc275;">"\\\""</span> title<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>file
+            <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">shell-command-to-string</span>
+             <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span>
+              <span style="color: #7bc275;">"sqlite3 '%s' \"SELECT path FROM items WHERE artist IS '%s' AND title IS '%s' COLLATE NOCASE\""</span>
+              <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">expand-file-name</span> org-music-beets-db<span style="color: #C57BDB;">)</span> artist-escaped title-escaped<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">if</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">&gt;</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">length</span> file<span style="color: #7bc275;">)</span> <span style="color: #e69055; font-weight: bold;">0</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">substring</span> file <span style="color: #e69055; font-weight: bold;">0</span> <span style="color: #e69055; font-weight: bold;">-1</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #51afef;">user-error!</span> <span style="color: #7bc275;">"Could not find '%s' by '%s' in your beets database"</span> title artist<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
+Then we integrate this nicely with org-mode
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">org-link-set-parameters</span> <span style="color: #7bc275;">"music"</span>
+                           <span style="color: #C57BDB;">:follow</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-music-open-fn</span>
+                           <span style="color: #C57BDB;">:export</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-music-export</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-music-open-fn</span> <span style="color: #7bc275;">(</span>link<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">apply</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-music-play-track</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">org-music-parse-link</span> link<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-music-insert-current-track</span> <span style="color: #7bc275;">(</span><span style="color: #FCCE7B;">&amp;optional</span> include-time<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Insert link to currest track, including a timestamp when the universal argument is supplied."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span> <span style="color: #7bc275;">"P"</span><span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">pp</span> include-time<span style="color: #7bc275;">)</span>
+    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">insert</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">org-music-get-link</span> t include-time<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-music-export</span> <span style="color: #7bc275;">(</span>path desc backend _com<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Convert xkcd to html/LaTeX form"</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let*</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>track-info <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-music-parse-link</span> path<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>artist <span style="color: #7bc275;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">0</span> track-info<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>track <span style="color: #7bc275;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">1</span> track-info<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>seconds <span style="color: #7bc275;">(</span><span style="color: #a991f1;">nth</span> <span style="color: #e69055; font-weight: bold;">2</span> track-info<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+           <span style="color: #C57BDB;">(</span>description <span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">cond</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">html</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> seconds
+                 <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s seconds into &lt;span style=\"font-style: italic\"&gt;%s&lt;/span&gt; by %s"</span> seconds track artist<span style="color: #51afef;">)</span>
+               <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s by %s"</span> track artist<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+            <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">org-export-derived-backend-p</span> backend <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">latex</span><span style="color: #7bc275;">)</span>
+             <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> seconds
+                 <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s seconds into \\emph{%s} by %s"</span> seconds track artist<span style="color: #51afef;">)</span>
+               <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"\\emph{%s} by %s"</span> track artist<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+            <span style="color: #C57BDB;">(</span>t <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> seconds
+                   <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s seconds into %s by %s"</span> seconds track artist<span style="color: #51afef;">)</span>
+                 <span style="color: #51afef;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"%s by %s"</span> track artist<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-youtube" class="outline-6">
+<h6 id="youtube"> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a> <a class="anchor" aria-hidden="true" href="#youtube">🔗</a><span class="section-number-6">5.2.2.9.3</span> YouTube</h6>
+<div class="outline-text-6" id="text-5-2-2-9-3">
 <p>
 The <code>[[yt:...]]</code> links preview nicely, but don&rsquo;t export nicely. Thankfully, we can
 fix that.
@@ -7837,7 +7997,7 @@ enable it for <code>.beancount</code> files.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-06-06 Sat 12:56</p>
+<p class="date">Created: 2020-06-07 Sun 00:17</p>
 </div>
 </body>
 </html>
