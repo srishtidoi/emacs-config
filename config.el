@@ -2209,8 +2209,12 @@ appropriate.  In tables, insert a new row or end the table."
                (org-return t))))
        (t
         ;; All other cases: call `org-return-indent'.
-        (org-return t)))))
-  (advice-add #'org-return-indent :override #'unpackaged/org-return-dwim))
+        (org-return t))))))
+
+(map!
+ :after evil-org
+ :map evil-org-mode-map
+ :i [return] #'unpackaged/org-return-dwim)
 ;; Nicer ~org-return~:1 ends here
 
 ;; [[file:~/.config/doom/config.org::*xkcd][xkcd:1]]
