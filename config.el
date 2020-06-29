@@ -3962,3 +3962,8 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
         :n "TAB" #'beancount-align-to-previous-number
         :i "TAB" #'beancount-tab-dwim))
 ;; Beancount:1 ends here
+
+;; [[file:config.org::*Authinfo][Authinfo:2]]
+(use-package! authinfo-mode
+  :mode ("authinfo\\.gpg\\'" . authinfo-mode))
+;; Authinfo:2 ends here
