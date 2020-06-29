@@ -1,16 +1,16 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-;; [[file:~/.config/doom/config.org::*Personal Information][Personal Information:1]]
+;; [[file:config.org::*Personal Information][Personal Information:1]]
 (setq user-full-name "TEC"
       user-mail-address "tec@tecosaur.com")
 ;; Personal Information:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Personal Information][Personal Information:2]]
+;; [[file:config.org::*Personal Information][Personal Information:2]]
 (setq auth-sources '("~/.authinfo.gpg")
       auth-source-cache-expiry nil) ; default is 7200 (2h)
 ;; Personal Information:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Simple settings][Simple settings:1]]
+;; [[file:config.org::*Simple settings][Simple settings:1]]
 (setq-default
  delete-by-moving-to-trash t                      ; Delete files to trash
  tab-width 4                                      ; Set width for tabs
@@ -32,60 +32,60 @@
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 ;; Simple settings:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Fullscreen][Fullscreen:1]]
+;; [[file:config.org::*Fullscreen][Fullscreen:1]]
 (if (eq initial-window-system 'x)                 ; if started by emacs command or desktop file
     (toggle-frame-maximized)
   (toggle-frame-fullscreen))
 ;; Fullscreen:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Auto-customisations][Auto-customisations:1]]
+;; [[file:config.org::*Auto-customisations][Auto-customisations:1]]
 (setq-default custom-file (expand-file-name ".custom.el" doom-private-dir))
 (when (file-exists-p custom-file)
   (load custom-file))
 ;; Auto-customisations:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Windows][Windows:1]]
+;; [[file:config.org::*Windows][Windows:1]]
 (setq evil-vsplit-window-right t
       evil-split-window-below t)
 ;; Windows:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Windows][Windows:2]]
+;; [[file:config.org::*Windows][Windows:2]]
 (defadvice! prompt-for-buffer (&rest _)
   :after '(evil-window-split evil-window-vsplit)
   (+ivy/switch-buffer))
 ;; Windows:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Windows][Windows:3]]
+;; [[file:config.org::*Windows][Windows:3]]
 (setq +ivy-buffer-preview t)
 ;; Windows:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Windows][Windows:4]]
+;; [[file:config.org::*Windows][Windows:4]]
 (map! :map evil-window-map
       "SPC" #'rotate-layout)
 ;; Windows:4 ends here
 
-;; [[file:~/.config/doom/config.org::*Buffer defaults][Buffer defaults:1]]
+;; [[file:config.org::*Buffer defaults][Buffer defaults:1]]
 ;; (setq-default major-mode 'org-mode)
 ;; Buffer defaults:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Font Face][Font Face:1]]
+;; [[file:config.org::*Font Face][Font Face:1]]
 (setq doom-font (font-spec :family "JetBrains Mono" :size 24)
       doom-big-font (font-spec :family "JetBrains Mono" :size 36)
       doom-variable-pitch-font (font-spec :family "Overpass" :size 24)
       doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 ;; Font Face:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Theme and modeline][Theme and modeline:1]]
+;; [[file:config.org::*Theme and modeline][Theme and modeline:1]]
 (setq doom-theme 'doom-vibrant)
 (delq! t custom-theme-load-path)
 ;; Theme and modeline:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Theme and modeline][Theme and modeline:2]]
+;; [[file:config.org::*Theme and modeline][Theme and modeline:2]]
 (custom-set-faces!
   '(doom-modeline-buffer-modified :foreground "orange"))
 ;; Theme and modeline:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Theme and modeline][Theme and modeline:3]]
+;; [[file:config.org::*Theme and modeline][Theme and modeline:3]]
 (defun doom-modeline-conditional-buffer-encoding ()
   "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
   (setq-local doom-modeline-buffer-encoding
@@ -95,25 +95,25 @@
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
 ;; Theme and modeline:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Miscellaneous][Miscellaneous:1]]
+;; [[file:config.org::*Miscellaneous][Miscellaneous:1]]
 (setq display-line-numbers-type 'relative)
 ;; Miscellaneous:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Miscellaneous][Miscellaneous:2]]
+;; [[file:config.org::*Miscellaneous][Miscellaneous:2]]
 (setq doom-fallback-buffer-name "► Doom"
       +doom-dashboard-name "► Doom")
 ;; Miscellaneous:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Miscellaneous][Miscellaneous:3]]
+;; [[file:config.org::*Miscellaneous][Miscellaneous:3]]
 (custom-set-faces! '(doom-modeline-evil-insert-state :weight bold :foreground "#339CDB"))
 ;; Miscellaneous:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Mouse buttons][Mouse buttons:1]]
+;; [[file:config.org::*Mouse buttons][Mouse buttons:1]]
 (map! :n [mouse-8] #'better-jumper-jump-backward
       :n [mouse-9] #'better-jumper-jump-forward)
 ;; Mouse buttons:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Window title][Window title:1]]
+;; [[file:config.org::*Window title][Window title:1]]
 (setq frame-title-format
     '(""
       (:eval
@@ -126,7 +126,7 @@
            (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
 ;; Window title:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Splash screen][Splash screen:1]]
+;; [[file:config.org::*Splash screen][Splash screen:1]]
 (defvar fancy-splash-image-template
   (expand-file-name "misc/splash-images/blackhole-lines-template.svg" doom-private-dir)
   "Default template svg used for the splash image, with substitutions from ")
@@ -231,7 +231,7 @@
 (add-hook 'doom-load-theme-hook #'set-appropriate-splash)
 ;; Splash screen:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Systemd daemon][Systemd daemon:3]]
+;; [[file:config.org::*Systemd daemon][Systemd daemon:4]]
 (defun greedily-do-daemon-setup ()
   (when (daemonp)
     (require 'org)
@@ -244,9 +244,9 @@
       (mu4e~start))))
 
 (add-hook 'emacs-startup-hook #'greedily-do-daemon-setup)
-;; Systemd daemon:3 ends here
+;; Systemd daemon:4 ends here
 
-;; [[file:~/.config/doom/config.org::*Fun][Fun:8]]
+;; [[file:config.org::*Fun][Fun:8]]
 (use-package! keycast
   :commands keycast-mode
   :config
@@ -267,7 +267,35 @@
                   :weight bold)))
 ;; Fun:8 ends here
 
-;; [[file:~/.config/doom/config.org::*Abbrev mode][Abbrev mode:1]]
+;; [[file:config.org::*LaTeX][LaTeX:3]]
+(use-package! auto-latex-snippets
+  :hook (LaTeX-mode . auto-latex-snippets-mode)
+  :config
+  (defun als-tex-fold-maybe ()
+    (unless (equal "/" als-transient-snippet-key)
+      (+latex-fold-last-macro-a)))
+  (add-hook 'als-post-snippet-expand-hook #'als-tex-fold-maybe))
+;; LaTeX:3 ends here
+
+;; [[file:config.org::*Extra functionality][Extra functionality:7]]
+(use-package org-roam-server
+  :after org-roam
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 8078
+        org-roam-server-export-inline-images t
+        org-roam-server-authenticate nil
+        org-roam-server-label-truncate t
+        org-roam-server-label-truncate-length 60
+        org-roam-server-label-wrap-length 20)
+  (defun org-roam-server-open ()
+    "Ensure the server is active, then open the roam graph."
+    (interactive)
+    (org-roam-server-mode 1)
+    (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))))
+;; Extra functionality:7 ends here
+
+;; [[file:config.org::*Abbrev mode][Abbrev mode:1]]
 (use-package abbrev
   :init
   (setq-default abbrev-mode t)
@@ -284,7 +312,7 @@
   (setq save-abbrevs 'silently))
 ;; Abbrev mode:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Calc][Calc:1]]
+;; [[file:config.org::*Calc][Calc:1]]
 (setq calc-angle-mode 'rad  ;; radians are rad
       calc-algebraic-mode t ;; allows '2*x instead of 'x<RET>2*
       calc-symbolic-mode t) ;; keeps stuff like √2 irrational for as long as possible
@@ -294,7 +322,7 @@
 (add-hook 'calc-mode-hook #'calctex-mode)
 ;; Calc:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Centaur Tabs][Centaur Tabs:1]]
+;; [[file:config.org::*Centaur Tabs][Centaur Tabs:1]]
 (after! centaur-tabs
   (centaur-tabs-mode -1)
   (setq centaur-tabs-height 36
@@ -307,7 +335,7 @@
 ;; (setq x-underline-at-descent-line t)
 ;; Centaur Tabs:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Company][Company:1]]
+;; [[file:config.org::*Company][Company:1]]
 (after! company
   (setq company-idle-delay 0.5
         company-minimum-prefix-length 2)
@@ -315,12 +343,12 @@
 (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
 ;; Company:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Company][Company:2]]
+;; [[file:config.org::*Company][Company:2]]
 (setq-default history-length 1000)
 (setq-default prescient-history-length 1000)
 ;; Company:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Plain Text][Plain Text:1]]
+;; [[file:config.org::*Plain Text][Plain Text:1]]
 (set-company-backend! '(text-mode
                         markdown-mode
                         gfm-mode)
@@ -329,15 +357,15 @@
               company-yasnippet))
 ;; Plain Text:1 ends here
 
-;; [[file:~/.config/doom/config.org::*ESS][ESS:1]]
+;; [[file:config.org::*ESS][ESS:1]]
 (set-company-backend! 'ess-r-mode '(company-R-args company-R-objects company-dabbrev-code :separate))
 ;; ESS:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Elcord][Elcord:1]]
+;; [[file:config.org::*Elcord][Elcord:1]]
 (setq elcord-use-major-mode-as-main-icon t)
 ;; Elcord:1 ends here
 
-;; [[file:~/.config/doom/config.org::*\[\[https://github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1]]
+;; [[file:config.org::*\[\[https:/github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1]]
 (defun markdown-window-p (window-title)
   "Judges from WINDOW-TITLE whether the current window likes markdown"
   (if (string-match-p (rx (or "Stack Exchange" "Stack Overflow"
@@ -345,7 +373,7 @@
                   window-title) t nil))
 ;; [[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1 ends here
 
-;; [[file:~/.config/doom/config.org::*\[\[https://github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2]]
+;; [[file:config.org::*\[\[https:/github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2]]
 (defvar emacs-anywhere--active-markdown nil
   "Whether the buffer started off as markdown.
 Affects behaviour of `emacs-anywhere--finalise-content'")
@@ -428,19 +456,19 @@ Affects behaviour of `emacs-anywhere--finalise-content'")
 (add-hook 'ea-popup-hook 'ea-popup-handler)
 ;; [[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Eros-eval][Eros-eval:1]]
+;; [[file:config.org::*Eros-eval][Eros-eval:1]]
 (setq eros-eval-result-prefix "⟹ ")
 ;; Eros-eval:1 ends here
 
-;; [[file:~/.config/doom/config.org::*EVIL][EVIL:1]]
+;; [[file:config.org::*EVIL][EVIL:1]]
 (after! evil (evil-escape-mode nil))
 ;; EVIL:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Flyspell][Flyspell:1]]
+;; [[file:config.org::*Flyspell][Flyspell:1]]
 (after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
 ;; Flyspell:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Info colors][Info colors:1]]
+;; [[file:config.org::*Info colors][Info colors:1]]
 (use-package! info-colors
   :commands (info-colors-fontify-node))
 
@@ -449,28 +477,28 @@ Affects behaviour of `emacs-anywhere--finalise-content'")
 (add-hook 'Info-mode-hook #'mixed-pitch-mode)
 ;; Info colors:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Ispell][Ispell:1]]
-(setq ispell-dictionary "en_GBs_au_SCOWL_80_0_k_hr")
-;; Ispell:1 ends here
+;; [[file:config.org::*Configuration][Configuration:1]]
+(setq ispell-dictionary "en-custom")
+;; Configuration:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Ispell][Ispell:2]]
-(setq ispell-personal-dictionary (expand-file-name ".hunspell_personal" doom-private-dir))
-;; Ispell:2 ends here
+;; [[file:config.org::*Configuration][Configuration:2]]
+(setq ispell-personal-dictionary (expand-file-name ".ispell_personal" doom-private-dir))
+;; Configuration:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Ivy][Ivy:1]]
+;; [[file:config.org::*Ivy][Ivy:1]]
 (setq ivy-read-action-function #'ivy-hydra-read-action)
 ;; Ivy:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Ivy][Ivy:2]]
+;; [[file:config.org::*Ivy][Ivy:2]]
 (setq ivy-sort-max-size 50000)
 ;; Ivy:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Magit][Magit:1]]
+;; [[file:config.org::*Magit][Magit:1]]
 ;; (after! magit
 ;;   (magit-delta-mode +1))
 ;; Magit:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Rebuild mail index while using mu4e][Rebuild mail index while using mu4e:1]]
+;; [[file:config.org::*Rebuild mail index while using mu4e][Rebuild mail index while using mu4e:1]]
 (after! mu4e
   (defvar mu4e-reindex-request-file "/tmp/mu_reindex_now"
     "Location of the reindex request, signaled by existance")
@@ -522,15 +550,11 @@ Prevents a series of redisplays from being called (when set to an appropriate va
                          #'mu4e-reindex-maybe))))))
 ;; Rebuild mail index while using mu4e:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Mu4e][Mu4e:1]]
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-;; Mu4e:1 ends here
-
-;; [[file:~/.config/doom/config.org::*Viewing Mail][Viewing Mail:1]]
+;; [[file:config.org::*Viewing Mail][Viewing Mail:1]]
 (setq mu4e-view-use-gnus t)
 ;; Viewing Mail:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Viewing Mail][Viewing Mail:2]]
+;; [[file:config.org::*Viewing Mail][Viewing Mail:2]]
 (after! mu4e
   (defun my-string-width (str)
     "Return the width in pixels of a string in the current
@@ -574,7 +598,7 @@ will also be the width of all other printable characters."
         mu4e-headers-unread-mark     (cons "u" (mu4e~normalised-icon "eye-slash" :v-adjust 0.05))))
 ;; Viewing Mail:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Viewing Mail][Viewing Mail:3]]
+;; [[file:config.org::*Viewing Mail][Viewing Mail:3]]
 (after! mu4e
 
   (defun mu4e-header-colourise (str)
@@ -630,7 +654,7 @@ will also be the width of all other printable characters."
                           'face 'mu4e-footer-face)))))))
 ;; Viewing Mail:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Viewing Mail][Viewing Mail:4]]
+;; [[file:config.org::*Viewing Mail][Viewing Mail:4]]
 (map! :map mu4e-headers-mode-map
     :after mu4e
     :v "*" #'mu4e-headers-mark-for-something
@@ -639,7 +663,7 @@ will also be the width of all other printable characters."
     :v "u" #'mu4e-headers-mark-for-unmark)
 ;; Viewing Mail:4 ends here
 
-;; [[file:~/.config/doom/config.org::*Viewing Mail][Viewing Mail:5]]
+;; [[file:config.org::*Viewing Mail][Viewing Mail:5]]
 (defadvice! mu4e~main-action-prettier-str (str &optional func-or-shortcut)
   "Highlight the first occurrence of [.] in STR.
 If FUNC-OR-SHORTCUT is non-nil and if it is a function, call it
@@ -670,13 +694,13 @@ clicked."
 (setq evil-collection-mu4e-end-region-misc "quit")
 ;; Viewing Mail:5 ends here
 
-;; [[file:~/.config/doom/config.org::*Viewing Mail][Viewing Mail:6]]
+;; [[file:config.org::*Viewing Mail][Viewing Mail:6]]
 (map! :map mu4e-main-mode-map
       :after mu4e
       :nive "h" #'+workspace/other)
 ;; Viewing Mail:6 ends here
 
-;; [[file:~/.config/doom/config.org::*Viewing Mail][Viewing Mail:7]]
+;; [[file:config.org::*Viewing Mail][Viewing Mail:7]]
 (defadvice! delete-current-worspace-if-empty ()
   "Close the current workspace if it is empty."
   :before #'=mu4e
@@ -684,7 +708,7 @@ clicked."
     (+workspace-delete (+workspace-current-name))))
 ;; Viewing Mail:7 ends here
 
-;; [[file:~/.config/doom/config.org::*Sending Mail][Sending Mail:1]]
+;; [[file:config.org::*Sending Mail][Sending Mail:1]]
 (after! mu4e
   (setq sendmail-program "/usr/local/bin/msmtp"
         send-mail-function 'smtpmail-send-it
@@ -693,7 +717,7 @@ clicked."
         message-send-mail-function 'message-send-mail-with-sendmail))
 ;; Sending Mail:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Sending Mail][Sending Mail:2]]
+;; [[file:config.org::*Sending Mail][Sending Mail:2]]
 (after! mu4e
   (defun my-mu4e-set-account ()
     "Set the account for composing a message."
@@ -710,7 +734,7 @@ clicked."
   (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account))
 ;; Sending Mail:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Sending Mail][Sending Mail:5]]
+;; [[file:config.org::*Sending Mail][Sending Mail:5]]
 (defun mu4e-compose-from-mailto (mailto-string)
   (require 'mu4e)
   (unless mu4e~server-props (mu4e t) (sleep-for 0.1))
@@ -726,7 +750,7 @@ clicked."
     (mu4e~compose-mail to subject headers)))
 ;; Sending Mail:5 ends here
 
-;; [[file:~/.config/doom/config.org::*Getting notified][Getting notified:1]]
+;; [[file:config.org::*Getting notified][Getting notified:1]]
 (use-package! mu4e-alert
   :after mu4e
   :config
@@ -802,7 +826,7 @@ ALL-MAILS are the all the unread emails"
   (setq mu4e-alert-grouped-mail-notification-formatter #'mu4e-alert-grouped-mail-notification-formatter-with-bell))
 ;; Getting notified:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Process control][Process control:1]]
+;; [[file:config.org::*Process control][Process control:1]]
 (after! mu4e
   (defvar mu4e-lock-file "/tmp/mu4e_lock"
     "Location of the lock file which stores the PID of the process currenty running mu4e")
@@ -892,7 +916,7 @@ Else, write to this process' PID to the lock file"
         ))))
 ;; Process control:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Org Msg][Org Msg:1]]
+;; [[file:config.org::*Org Msg][Org Msg:1]]
 (defvar org-msg-currently-exporting nil
   "Helper variable to indicate whether org-msg is currently exporting the org buffer to HTML.
 Usefull for affecting some of my HTML export config.")
@@ -1023,41 +1047,41 @@ Usefull for affecting some of my HTML export config.")
   (org-msg-mode t))
 ;; Org Msg:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Org Chef][Org Chef:1]]
+;; [[file:config.org::*Org Chef][Org Chef:1]]
 (use-package! org-chef
   :commands (org-chef-insert-recipe org-chef-get-recipe-from-url))
 ;; Org Chef:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Projectile][Projectile:1]]
+;; [[file:config.org::*Projectile][Projectile:1]]
 (setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
 (defun projectile-ignored-project-function (filepath)
   "Return t if FILEPATH is within any of `projectile-ignored-projects'"
   (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
 ;; Projectile:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Smart Parentheses][Smart Parentheses:1]]
+;; [[file:config.org::*Smart Parentheses][Smart Parentheses:1]]
 (sp-local-pair
      '(org-mode)
      "<<" ">>"
      :actions '(insert))
 ;; Smart Parentheses:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Spray][Spray:1]]
+;; [[file:config.org::*Spray][Spray:1]]
 (setq spray-wpm 500
       spray-height 700)
 ;; Spray:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Theme magic][Theme magic:1]]
+;; [[file:config.org::*Theme magic][Theme magic:1]]
 (add-hook 'doom-load-theme-hook 'theme-magic-from-emacs)
 ;; Theme magic:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Tramp][Tramp:1]]
+;; [[file:config.org::*Tramp][Tramp:1]]
 (after! tramp
   (setenv "SHELL" "/bin/bash")
   (setq tramp-shell-prompt-pattern "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")) ;; default + 
 ;; Tramp:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Treemacs][Treemacs:1]]
+;; [[file:config.org::*Treemacs][Treemacs:1]]
 (after! treemacs
   (defvar treemacs-file-ignore-extensions '()
     "File extension which `treemacs-ignore-filter' will ensure are ignored")
@@ -1078,7 +1102,7 @@ Usefull for affecting some of my HTML export config.")
   (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-filter))
 ;; Treemacs:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Treemacs][Treemacs:2]]
+;; [[file:config.org::*Treemacs][Treemacs:2]]
 (setq treemacs-file-ignore-extensions '(;; LaTeX
                                         "aux"
                                         "ptc"
@@ -1108,15 +1132,15 @@ Usefull for affecting some of my HTML export config.")
                                    "*/_region_.tex"))
 ;; Treemacs:2 ends here
 
-;; [[file:~/.config/doom/config.org::*VTerm][VTerm:1]]
+;; [[file:config.org::*VTerm][VTerm:1]]
 (setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=yes")
 ;; VTerm:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Which-key][Which-key:1]]
+;; [[file:config.org::*Which-key][Which-key:1]]
 (setq which-key-idle-delay 0.5) ;; I need the help, I really do
 ;; Which-key:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Which-key][Which-key:2]]
+;; [[file:config.org::*Which-key][Which-key:2]]
 (setq which-key-allow-multiple-replacements t)
 (after! which-key
   (pushnew!
@@ -1126,7 +1150,7 @@ Usefull for affecting some of my HTML export config.")
    ))
 ;; Which-key:2 ends here
 
-;; [[file:~/.config/doom/config.org::*xkcd][xkcd:1]]
+;; [[file:config.org::*xkcd][xkcd:1]]
 (use-package! xkcd
   :commands (xkcd-get-json xkcd-download xkcd-get
              ;; now for funcs from my extension of this pkg
@@ -1152,7 +1176,7 @@ Usefull for affecting some of my HTML export config.")
             "y"       #'+xkcd-copy))
 ;; xkcd:1 ends here
 
-;; [[file:~/.config/doom/config.org::*xkcd][xkcd:2]]
+;; [[file:config.org::*xkcd][xkcd:2]]
 (after! xkcd
   (require 'emacsql-sqlite)
 
@@ -1402,15 +1426,15 @@ SQL can be either the emacsql vector representation, or a string."
                            )))))
 ;; xkcd:2 ends here
 
-;; [[file:~/.config/doom/config.org::*YASnippet][YASnippet:1]]
+;; [[file:config.org::*YASnippet][YASnippet:1]]
 (setq yas-triggers-in-field t)
 ;; YASnippet:1 ends here
 
-;; [[file:~/.config/doom/config.org::*File Templates][File Templates:1]]
+;; [[file:config.org::*File Templates][File Templates:1]]
 (set-file-template! "\\.tex$" :trigger "__" :mode 'latex-mode)
 ;; File Templates:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Plaintext][Plaintext:1]]
+;; [[file:config.org::*Plaintext][Plaintext:1]]
 (after! text-mode
   (add-hook! 'text-mode-hook
     ;; Apply ANSI color codes
@@ -1418,7 +1442,7 @@ SQL can be either the emacsql vector representation, or a string."
       (ansi-color-apply-on-region (point-min) (point-max)))))
 ;; Plaintext:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Tweaking defaults][Tweaking defaults:1]]
+;; [[file:config.org::*Tweaking defaults][Tweaking defaults:1]]
 (setq org-directory "~/.org"                      ; let's put files here
       org-use-property-inheritance t              ; it's convenient to have properties inherited
       org-log-done 'time                          ; having the time a item is done sounds convininet
@@ -1427,7 +1451,7 @@ SQL can be either the emacsql vector representation, or a string."
       org-catch-invisible-edits 'smart)           ; try not to accidently do weird stuff in invisible regions
 ;; Tweaking defaults:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Tweaking defaults][Tweaking defaults:2]]
+;; [[file:config.org::*Tweaking defaults][Tweaking defaults:2]]
 (setq org-babel-default-header-args '((:session . "none")
                                       (:results . "replace")
                                       (:exports . "code")
@@ -1438,12 +1462,21 @@ SQL can be either the emacsql vector representation, or a string."
                                       (:comments . "link")))
 ;; Tweaking defaults:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Tweaking defaults][Tweaking defaults:3]]
+;; [[file:config.org::*Tweaking defaults][Tweaking defaults:3]]
 (remove-hook 'text-mode-hook #'visual-line-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
 ;; Tweaking defaults:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Org buffer creation][Org buffer creation:1]]
+;; [[file:config.org::*Tweaking defaults][Tweaking defaults:4]]
+(map! :map evil-org-mode-map
+      :after evil-org
+      :n "g <up>" #'org-backward-heading-same-level
+      :n "g <down>" #'org-forward-heading-same-level
+      :n "g <left>" #'org-up-element
+      :n "g <right>" #'org-down-element)
+;; Tweaking defaults:4 ends here
+
+;; [[file:config.org::*Org buffer creation][Org buffer creation:1]]
 (evil-define-command evil-buffer-org-new (count file)
   "Creates a new ORG buffer replacing the current window, optionally
    editing a certain FILE"
@@ -1460,33 +1493,33 @@ SQL can be either the emacsql vector representation, or a string."
     :desc "New empty ORG buffer" "o" #'evil-buffer-org-new))
 ;; Org buffer creation:1 ends here
 
-;; [[file:~/.config/doom/config.org::*List bullet sequence][List bullet sequence:1]]
+;; [[file:config.org::*List bullet sequence][List bullet sequence:1]]
 (setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+")))
 ;; List bullet sequence:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Citation][Citation:1]]
+;; [[file:config.org::*Citation][Citation:1]]
 (use-package! org-ref
    :after org
    :config
     (setq org-ref-completion-library 'org-ref-ivy-cite))
 ;; Citation:1 ends here
 
-;; [[file:~/.config/doom/config.org::*cdlatex][cdlatex:1]]
+;; [[file:config.org::*cdlatex][cdlatex:1]]
 (after! org (add-hook 'org-mode-hook 'turn-on-org-cdlatex))
 ;; cdlatex:1 ends here
 
-;; [[file:~/.config/doom/config.org::*cdlatex][cdlatex:2]]
+;; [[file:config.org::*cdlatex][cdlatex:2]]
 (after! org
   (defadvice! org-edit-latex-emv-after-insert ()
     :after #'org-cdlatex-environment-indent
     (org-edit-latex-environment)))
 ;; cdlatex:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Spellcheck][Spellcheck:1]]
+;; [[file:config.org::*Spellcheck][Spellcheck:1]]
 (after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
 ;; Spellcheck:1 ends here
 
-;; [[file:~/.config/doom/config.org::*LSP support in ~src~ blocks][LSP support in ~src~ blocks:1]]
+;; [[file:config.org::*LSP support in ~src~ blocks][LSP support in ~src~ blocks:1]]
 (cl-defmacro lsp-org-babel-enable (lang)
     "Support LANG in org source code block."
     (setq centaur-lsp 'lsp-mode)
@@ -1517,7 +1550,7 @@ SQL can be either the emacsql vector representation, or a string."
     (eval `(lsp-org-babel-enable ,lang)))
 ;; LSP support in ~src~ blocks:1 ends here
 
-;; [[file:~/.config/doom/config.org::*View exported file][View exported file:1]]
+;; [[file:config.org::*View exported file][View exported file:1]]
 (after! org
   (map! :map org-mode-map
         :localleader
@@ -1544,7 +1577,7 @@ SQL can be either the emacsql vector representation, or a string."
   "Search for output files with these extensions, in order, viewing the first that matches")
 ;; View exported file:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Super agenda][Super agenda:1]]
+;; [[file:config.org::*Super agenda][Super agenda:1]]
 (use-package! org-super-agenda
   :commands (org-super-agenda-mode))
 (after! org-agenda
@@ -1618,7 +1651,7 @@ SQL can be either the emacsql vector representation, or a string."
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
 ;; Super agenda:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Capture][Capture:1]]
+;; [[file:config.org::*Capture][Capture:1]]
 (use-package! doct
   :commands (doct))
 
@@ -1914,7 +1947,7 @@ SQL can be either the emacsql vector representation, or a string."
                    ))))))
 ;; Capture:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Capture][Capture:3]]
+;; [[file:config.org::*Capture][Capture:3]]
 (setf (alist-get 'height +org-capture-frame-parameters) 15)
       ;; (alist-get 'name +org-capture-frame-parameters) "❖ Capture") ;; ATM hardcoded in other places, so changing breaks stuff
 (setq +org-capture-fn
@@ -1924,36 +1957,53 @@ SQL can be either the emacsql vector representation, or a string."
         (org-capture)))
 ;; Capture:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Basic settings][Basic settings:1]]
+;; [[file:config.org::*Basic settings][Basic settings:1]]
 (setq org-roam-directory "~/Desktop/TEC/Organisation/Roam/")
 ;; Basic settings:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Graph Behaviour][Graph Behaviour:2]]
+;; [[file:config.org::*Graph Behaviour][Graph Behaviour:2]]
 (after! org-roam
-  (setq +org-roam-graph--html-template (replace-regexp-in-string "%\\([^s]\\)" "%%\\1" (f-read-text (concat doom-private-dir "misc/org-roam-template.html"))))
+  (setq org-roam-graph-node-extra-config '(("shape"      . "underline")
+                                           ("style"      . "rounded,filled")
+                                           ("fillcolor"  . "#EEEEEE")
+                                           ("color"      . "#C9C9C9")
+                                           ("fontcolor"  . "#111111")
+                                           ("fontname"   . "Overpass")))
 
-  (defadvice! +org-roam-graph--build-html (&optional node-query)
+  (setq +org-roam-graph--html-template
+        (replace-regexp-in-string "%\\([^s]\\)" "%%\\1"
+                                  (f-read-text (concat doom-private-dir "misc/org-roam-template.html"))))
+
+  (defadvice! +org-roam-graph--build-html (&optional node-query callback)
     "Generate a graph showing the relations between nodes in NODE-QUERY. HTML style."
     :override #'org-roam-graph--build
-    (unless org-roam-graph-executable
-      (user-error "Can't find %s executable.  Please check if it is in your path"
+    (unless (stringp org-roam-graph-executable)
+      (user-error "`org-roam-graph-executable' is not a string"))
+    (unless (executable-find org-roam-graph-executable)
+      (user-error (concat "Cannot find executable %s to generate the graph.  "
+                          "Please adjust `org-roam-graph-executable'")
                   org-roam-graph-executable))
     (let* ((node-query (or node-query
-                           `[:select [file titles]
-                                     :from titles
-                                     ,@(org-roam-graph--expand-matcher 'file t)]))
+                           `[:select [file titles] :from titles
+                             ,@(org-roam-graph--expand-matcher 'file t)]))
            (graph      (org-roam-graph--dot node-query))
            (temp-dot   (make-temp-file "graph." nil ".dot" graph))
            (temp-graph (make-temp-file "graph." nil ".svg"))
            (temp-html  (make-temp-file "graph." nil ".html")))
-      (call-process org-roam-graph-executable nil 0 nil
-                    temp-dot "-Tsvg" "-o" temp-graph)
-      (sleep-for 0.1)
-      (write-region (format +org-roam-graph--html-template (f-read-text temp-graph)) nil temp-html)
-      temp-html)))
+      (org-roam-message "building graph")
+      (make-process
+       :name "*org-roam-graph--build-process*"
+       :buffer "*org-roam-graph--build-process*"
+       :command `(,org-roam-graph-executable ,temp-dot "-Tsvg" "-o" ,temp-graph)
+       :sentinel (progn
+                   (lambda (process _event)
+                     (when (= 0 (process-exit-status process))
+                       (write-region (format +org-roam-graph--html-template (f-read-text temp-graph)) nil temp-html)
+                       (when callback
+                         (funcall callback temp-html)))))))))
 ;; Graph Behaviour:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Modeline file name][Modeline file name:1]]
+;; [[file:config.org::*Modeline file name][Modeline file name:1]]
 (defadvice! doom-modeline--reformat-roam (orig-fun)
   :around #'doom-modeline-buffer-file-name
   (message "Reformat?")
@@ -1966,7 +2016,7 @@ SQL can be either the emacsql vector representation, or a string."
     (funcall orig-fun)))
 ;; Modeline file name:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Nicer generated heading IDs][Nicer generated heading IDs:1]]
+;; [[file:config.org::*Nicer generated heading IDs][Nicer generated heading IDs:1]]
 (defvar org-heading-contraction-max-words 3
   "Maximum number of words in a heading")
 (defvar org-heading-contraction-max-length 35
@@ -2022,7 +2072,7 @@ truncated to fit within the limit"
     (string-join heading-words "-")))
 ;; Nicer generated heading IDs:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Nicer generated heading IDs][Nicer generated heading IDs:2]]
+;; [[file:config.org::*Nicer generated heading IDs][Nicer generated heading IDs:2]]
 (define-minor-mode unpackaged/org-export-html-with-useful-ids-mode
   "Attempt to export Org as HTML with useful link IDs.
 Instead of random IDs like \"#orga1b2c3\", use heading titles,
@@ -2114,7 +2164,7 @@ made unique when necessary."
 (add-hook 'org-load-hook #'unpackaged/org-export-html-with-useful-ids-mode)
 ;; Nicer generated heading IDs:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Nicer ~org-return~][Nicer ~org-return~:1]]
+;; [[file:config.org::*Nicer ~org-return~][Nicer ~org-return~:1]]
 (after! org
   (defun unpackaged/org-element-descendant-of (type element)
     "Return non-nil if ELEMENT is a descendant of TYPE.
@@ -2219,7 +2269,7 @@ appropriate.  In tables, insert a new row or end the table."
  :i [return] #'unpackaged/org-return-dwim)
 ;; Nicer ~org-return~:1 ends here
 
-;; [[file:~/.config/doom/config.org::*xkcd][xkcd:1]]
+;; [[file:config.org::*xkcd][xkcd:1]]
 (after! org
   (org-link-set-parameters "xkcd"
                            :image-data-fun #'+org-xkcd-image-fn
@@ -2261,7 +2311,7 @@ appropriate.  In tables, insert a new row or end the table."
     (format "xkcd:%d" (+xkcd-select))))
 ;; xkcd:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Music][Music:1]]
+;; [[file:config.org::*Music][Music:1]]
 (after! org
   (defvar org-music-player 'mpris
     "Music player type. Curretly only supports mpris.")
@@ -2349,6 +2399,9 @@ This action is reversed by `org-music-time-to-seconds'."
         ('mpris (org-music-mpris-play file start-time end-time))
         (t (user-error! "The specified music player: %s is not supported" org-music-player)))
       (user-error! "Could not find the track '%s' by '%s'" title artist)))
+
+  (add-transient-hook! #'org-music-play-track
+    (require 'dbus))
 
   (defun org-music-mpris-play (file &optional start-time end-time)
     (let ((uri (url-encode-url (rng-file-name-uri file))))
@@ -2448,14 +2501,15 @@ This action is reversed by `org-music-time-to-seconds'."
       (car tracks))))
 ;; Music:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Music][Music:2]]
+;; [[file:config.org::*Music][Music:2]]
 (after! org
   (org-link-set-parameters "music"
                            :follow #'org-music-open-fn
                            :export #'org-music-export-text)
 
   (org-link-set-parameters "Music" ;; like music, but visually fancier
-                           :image-data-fun #'org-music-image-fn
+                           ;; FIXME this should work as far as I can tell
+                           ;; :image-data-fun #'org-music-image-fn
                            :follow #'org-music-open-fn
                            :export #'org-music-fancy-export)
 
@@ -2496,13 +2550,16 @@ This action is reversed by `org-music-time-to-seconds'."
                     (-contains-p '("png" "jpg" "jpeg") (file-name-extension file)))
                   (directory-files (file-name-directory track-file) t "cover"))))
 
-  (defun org-music-image-fn (protocol link description)
-    (let ((track-data (org-music-parse-link link)))
-      (+org-image-file-data-fn protocol
-                               (org-music-cover-image
-                                (org-music-find-track-file
-                                 (nth 0 track-data) (nth 1 track-data)))
-                               description)))
+  (defun org-music-image-fn (_protocol link _description)
+    (when-let* ((track-data (org-music-parse-link link))
+                (cover-file (org-music-cover-image
+                             (org-music-find-track-file
+                              (nth 0 track-data) (nth 1 track-data)))))
+      (with-temp-buffer
+        (set-buffer-multibyte nil)
+        (setq buffer-file-coding-system 'binary)
+        (insert-file-contents-literally cover-file)
+        (buffer-substring-no-properties (point-min) (point-max)))))
 
   (defun org-music-fancy-export (path desc backend _com)
     (let* ((track-data (org-music-parse-link path))
@@ -2527,7 +2584,7 @@ This action is reversed by `org-music-time-to-seconds'."
   )
 ;; Music:2 ends here
 
-;; [[file:~/.config/doom/config.org::*YouTube][YouTube:1]]
+;; [[file:config.org::*YouTube][YouTube:1]]
 (after! org
   (org-link-set-parameters "yt" :export #'+org-export-yt)
   (defun +org-export-yt (path desc backend _com)
@@ -2542,15 +2599,15 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
           (t (format "https://youtu.be/%s" path)))))
 ;; YouTube:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Font Display][Font Display:1]]
+;; [[file:config.org::*Font Display][Font Display:1]]
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 ;; Font Display:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Font Display][Font Display:2]]
+;; [[file:config.org::*Font Display][Font Display:2]]
 (setq global-org-pretty-table-mode t)
 ;; Font Display:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Font Display][Font Display:3]]
+;; [[file:config.org::*Font Display][Font Display:3]]
 (custom-set-faces!
   '(outline-1 :weight extra-bold :height 1.25)
   '(outline-2 :weight bold :height 1.15)
@@ -2562,7 +2619,13 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
   '(outline-9 :weight semi-bold))
 ;; Font Display:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Symbols][Symbols:1]]
+;; [[file:config.org::*Font Display][Font Display:4]]
+(after! org
+  (custom-set-faces!
+    '(org-document-title :height 1.2)))
+;; Font Display:4 ends here
+
+;; [[file:config.org::*Symbols][Symbols:1]]
 ;; (after! org
 ;;   (use-package org-pretty-tags
 ;;   :config
@@ -2599,7 +2662,7 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
           (?E . 'all-the-icons-blue))))
 ;; Symbols:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Symbols][Symbols:2]]
+;; [[file:config.org::*Symbols][Symbols:2]]
 (after! org
   (appendq! +pretty-code-symbols
             `(:checkbox      "☐"
@@ -2612,10 +2675,12 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
               :end           "∎"
               :options       "⌥"
               :title         "𝙏"
+              :subtitle      "𝙩"
               :author        "𝘼"
               :date          "𝘿"
               :latex_header  "⇥"
               :latex_class   "🄲"
+              :beamer_header "↠"
               :begin_quote   "❮"
               :end_quote     "❯"
               :begin_export  "⯮"
@@ -2638,10 +2703,12 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
     :end           ":END:"
     :options       "#+OPTIONS:"
     :title         "#+TITLE:"
+    :subtitle      "#+SUBTITLE:"
     :author        "#+AUTHOR:"
     :date          "#+DATE:"
     :latex_class   "#+LATEX_CLASS:"
     :latex_header  "#+LATEX_HEADER:"
+    :beamer_header "#+BEAMER_HEADER:"
     :begin_quote   "#+BEGIN_QUOTE"
     :end_quote     "#+END_QUOTE"
     :begin_export  "#+BEGIN_EXPORT"
@@ -2655,16 +2722,16 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
 (plist-put +pretty-code-symbols :name "⁍") ; or › could be good?
 ;; Symbols:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Symbols][Symbols:3]]
+;; [[file:config.org::*Symbols][Symbols:3]]
 (add-hook 'org-mode-hook 'org-fragtog-mode)
 ;; Symbols:3 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Fragments][LaTeX Fragments:1]]
+;; [[file:config.org::*LaTeX Fragments][LaTeX Fragments:1]]
 (after! org
   (setq org-highlight-latex-and-related '(native script entities)))
 ;; LaTeX Fragments:1 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Fragments][LaTeX Fragments:2]]
+;; [[file:config.org::*LaTeX Fragments][LaTeX Fragments:2]]
 (setq org-format-latex-header "\\documentclass{article}
 \\usepackage[usenames]{color}
 
@@ -2694,7 +2761,7 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
 \\usepackage{arevmath}")
 ;; LaTeX Fragments:2 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Fragments][LaTeX Fragments:3]]
+;; [[file:config.org::*LaTeX Fragments][LaTeX Fragments:3]]
 (after! org
 ;; make background of fragments transparent
 ;; (let ((dvipng--plist (alist-get 'dvipng org-preview-latex-process-alist)))
@@ -2710,12 +2777,12 @@ allowfullscreen>%s</iframe>" path (or "" desc)))
 )
 ;; LaTeX Fragments:3 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Fragments][LaTeX Fragments:4]]
+;; [[file:config.org::*LaTeX Fragments][LaTeX Fragments:4]]
 (after! org
   (add-to-list 'org-latex-regexps '("\\ce" "^\\\\ce{\\(?:[^\000{}]\\|{[^\000}]+?}\\)}" 0 nil)))
 ;; LaTeX Fragments:4 ends here
 
-;; [[file:~/.config/doom/config.org::*Stolen from \[\[https://github.com/jkitchin/scimax\]\[scimax\]\] (semi-working right now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):1]]
+;; [[file:config.org::*Stolen from \[\[https:/github.com/jkitchin/scimax\]\[scimax\]\] (semi-working right now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):1]]
 (after! org
   (defun scimax-org-latex-fragment-justify (justification)
     "Justify the latex fragment at point with JUSTIFICATION.
@@ -2768,7 +2835,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
       (message "Latex fragment justification disabled"))))
 ;; Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):1 ends here
 
-;; [[file:~/.config/doom/config.org::*Stolen from \[\[https://github.com/jkitchin/scimax\]\[scimax\]\] (semi-working right now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):2]]
+;; [[file:config.org::*Stolen from \[\[https:/github.com/jkitchin/scimax\]\[scimax\]\] (semi-working right now)][Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):2]]
 ;; Numbered equations all have (1) as the number for fragments with vanilla
 ;; org-mode. This code injects the correct numbers into the previews so they
 ;; look good.
@@ -2830,17 +2897,17 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
   (put 'scimax-org-renumber-environment 'enabled t))
 ;; Stolen from [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now):2 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting (general)][Exporting (general):1]]
+;; [[file:config.org::*Exporting (general)][Exporting (general):1]]
 (after! org (setq org-export-headline-levels 5)) ; I like nesting
 ;; Exporting (general):1 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting (general)][Exporting (general):2]]
+;; [[file:config.org::*Exporting (general)][Exporting (general):2]]
 (after! org
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines)))
 ;; Exporting (general):2 ends here
 
-;; [[file:~/.config/doom/config.org::*Custom CSS/JS][Custom CSS/JS:2]]
+;; [[file:config.org::*Custom CSS/JS][Custom CSS/JS:2]]
 (after! org
 (defun my-org-inline-css-hook (exporter)
   "Insert custom inline css to automatically set the
@@ -2907,7 +2974,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
               (doom-color 'violet)
               (doom-color 'cyan)
               (doom-color 'dark-cyan))
-      (if org-msg-currently-exporting ""
+      (if (bound-and-true-p org-msg-currently-exporting) ""
       "
 <link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
 <link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
@@ -3133,7 +3200,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 (add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook))
 ;; Custom CSS/JS:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Make verbatim different to code][Make verbatim different to code:1]]
+;; [[file:config.org::*Make verbatim different to code][Make verbatim different to code:1]]
 (setq org-html-text-markup-alist
       '((bold . "<b>%s</b>")
         (code . "<code>%s</code>")
@@ -3143,7 +3210,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
         (verbatim . "<kbd>%s</kbd>")))
 ;; Make verbatim different to code:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Change checkbox type][Change checkbox type:1]]
+;; [[file:config.org::*Change checkbox type][Change checkbox type:1]]
 (after! org
 (appendq! org-html-checkbox-types '((html-span .
 	  ((on . "<span class='checkbox'></span>")
@@ -3152,7 +3219,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 (setq org-html-checkbox-type 'html-span))
 ;; Change checkbox type:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Header anchors][Header anchors:1]]
+;; [[file:config.org::*Header anchors][Header anchors:1]]
 (after! org
   (defun tec/org-export-html-headline-anchor (text backend info)
     (when (org-export-derived-backend-p backend 'html)
@@ -3167,7 +3234,7 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
                'tec/org-export-html-headline-anchor))
 ;; Header anchors:1 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Rendering][LaTeX Rendering:1]]
+;; [[file:config.org::*LaTeX Rendering][LaTeX Rendering:1]]
 (after! org
 (defadvice! org-html-latex-fragment-scaled (latex-fragment _contents info)
   "Transcode a LATEX-FRAGMENT object from Org to HTML.
@@ -3233,11 +3300,11 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
      (t (org-html--wrap-latex-environment latex-frag info caption label))))))
 ;; LaTeX Rendering:1 ends here
 
-;; [[file:~/.config/doom/config.org::*LaTeX Rendering][LaTeX Rendering:2]]
+;; [[file:config.org::*LaTeX Rendering][LaTeX Rendering:2]]
 ;; (setq-default org-html-with-latex `dvisvgm)
 ;; LaTeX Rendering:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to LaTeX][Exporting to LaTeX:1]]
+;; [[file:config.org::*Exporting to LaTeX][Exporting to LaTeX:1]]
 ;; TODO make this /only/ apply to text (i.e. not URL)
 (after! org
   (defun tec/org-export-latex-filter-acronym (text backend info)
@@ -3263,7 +3330,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
                'tec/org-export-latex-filter-acronym))
 ;; Exporting to LaTeX:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to LaTeX][Exporting to LaTeX:2]]
+;; [[file:config.org::*Exporting to LaTeX][Exporting to LaTeX:2]]
 (after! org
   (defun tec/org-export-latex-fancy-item-checkboxes (text backend info)
     (when (org-export-derived-backend-p backend 'latex)
@@ -3281,7 +3348,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
                'tec/org-export-latex-fancy-item-checkboxes))
 ;; Exporting to LaTeX:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to LaTeX][Exporting to LaTeX:3]]
+;; [[file:config.org::*Exporting to LaTeX][Exporting to LaTeX:3]]
 (after! ox-latex
   (add-to-list 'org-latex-classes
                '("fancy-article"
@@ -3309,6 +3376,16 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
 \\newcommand{\\checkboxUnchecked}{$\\square$}
 \\newcommand{\\checkboxTransitive}{\\rlap{\\raisebox{0.0ex}{\\hspace{0.35ex}\\Large\\textbf -}}$\\square$}
 \\newcommand{\\checkboxChecked}{\\rlap{\\raisebox{0.2ex}{\\hspace{0.35ex}\\scriptsize \\ding{56}}}$\\square$}
+
+\\newenvironment{warning}
+    {\\begin{center}
+    \\begin{tabular}{rp{0.9\\textwidth}}
+    \\ding{82} & \\textbf{Warning} \\\\ &
+    }
+    {
+    \\end{tabular}
+    \\end{center}
+    }
 "
                ("\\section{%s}" . "\\section*{%s}")
                ("\\subsection{%s}" . "\\subsection*{%s}")
@@ -3350,25 +3427,62 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
   (setq org-latex-default-class "fancy-article")
 
-  (add-to-list 'org-latex-packages-alist '("" "minted"))
+  (defadvice! org-latex-header-smart-minted (orig-fn tpl def-pkg pkg snippets-p &optional extra)
+    "Include minted config if src blocks are detected."
+    :around #'org-splice-latex-header
+    (let ((header (funcall orig-fn tpl def-pkg pkg snippets-p extra))
+          (src-p (when (save-excursion
+                         (goto-char (point-min))
+                         (search-forward-regexp "#\\+BEGIN_SRC\\|#\\+begin_src" nil t))
+                   t)))
+      (concat header
+              (when src-p "
+  \\usepackage{minted}
+  \\usepackage[many]{tcolorbox}
+  \\setminted{
+    frame=none,
+    % framesep=2mm,
+    baselinestretch=1.2,
+    fontsize=\\footnotesize,
+    highlightcolor=white!95!black!80!blue,
+    linenos,
+    breakanywhere=true,
+    breakautoindent=true,
+    breaklines=true,
+    tabsize=4,
+    xleftmargin=3.5em,
+    autogobble=true,
+    obeytabs=true,
+    python3=true,
+    % texcomments=true,
+    framesep=2mm,
+    breakbefore=\\\\\.+,
+    breakafter=\\,
+    style=autumn,
+    breaksymbol=\\color{page!60!text}\\tiny\\ensuremath{\\hookrightarrow},
+    breakanywheresymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{page!60!text}\\rfloor}},
+    breakbeforesymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{page!60!text}\\rfloor}},
+    breakaftersymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{page!60!text}\\rfloor}},
+  }
+  
+  \\BeforeBeginEnvironment{minted}{
+    \\begin{tcolorbox}[
+      enhanced,
+      overlay={\\fill[white!90!black] (frame.south west) rectangle ([xshift=2.8em]frame.north west);},
+      colback=white!95!black,
+      colframe=white!95!black, % make frame colour same as background
+      breakable,% Allow white breaks
+      arc=0pt,outer arc=0pt,sharp corners, % sharp corners
+      boxsep=0pt,left=0pt,right=0pt,top=0pt,bottom=0pt % no margin/paddding
+    ]
+  }
+  \\AfterEndEnvironment{minted}{\\end{tcolorbox}}
+  \\renewcommand\\theFancyVerbLine{\\color{black!60!white}\\arabic{FancyVerbLine}} % minted line numbering"))))
+
   (setq org-latex-listings 'minted
         org-latex-minted-options
-        '(("frame" "lines")
-          ("fontsize" "\\scriptsize")
-          ("linenos" "")
-          ("breakanywhere" "true")
-          ("breakautoindent" "true")
-          ("breaklines" "true")
-          ("autogobble" "true")
-          ("obeytabs" "true")
-          ("python3" "true")
-          ("breakbefore" "\\\\\\.+")
-          ("breakafter" "\\,")
-          ("style" "autumn")
-          ("breaksymbol" "\\tiny\\ensuremath{\\hookrightarrow}")
-          ("breakanywheresymbolpre" "\\,\\footnotesize\\ensuremath{{}_{\\rfloor}}")
-          ("breakbeforesymbolpre" "\\,\\footnotesize\\ensuremath{{}_{\\rfloor}}")
-          ("breakaftersymbolpre" "\\,\\footnotesize\\ensuremath{{}_{\\rfloor}}")))
+        '())
+
   (setq org-latex-tables-booktabs t)
 
   (setq org-latex-hyperref-template "
@@ -3393,7 +3507,61 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
         '("latexmk -shell-escape -interaction=nonstopmode -f -pdf -output-directory=%o %f")))
 ;; Exporting to LaTeX:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Chameleon --- aka. match theme][Chameleon --- aka. match theme:1]]
+;; [[file:config.org::org-latex-smart-minted][org-latex-smart-minted]]
+(defadvice! org-latex-header-smart-minted (orig-fn tpl def-pkg pkg snippets-p &optional extra)
+  "Include minted config if src blocks are detected."
+  :around #'org-splice-latex-header
+  (let ((header (funcall orig-fn tpl def-pkg pkg snippets-p extra))
+        (src-p (when (save-excursion
+                       (goto-char (point-min))
+                       (search-forward-regexp "#\\+BEGIN_SRC\\|#\\+begin_src" nil t))
+                 t)))
+    (concat header
+            (when src-p "
+\\usepackage{minted}
+\\usepackage[many]{tcolorbox}
+\\setminted{
+  frame=none,
+  % framesep=2mm,
+  baselinestretch=1.2,
+  fontsize=\\footnotesize,
+  highlightcolor=white!95!black!80!blue,
+  linenos,
+  breakanywhere=true,
+  breakautoindent=true,
+  breaklines=true,
+  tabsize=4,
+  xleftmargin=3.5em,
+  autogobble=true,
+  obeytabs=true,
+  python3=true,
+  % texcomments=true,
+  framesep=2mm,
+  breakbefore=\\\\\.+,
+  breakafter=\\,
+  style=autumn,
+  breaksymbol=\\color{page!60!text}\\tiny\\ensuremath{\\hookrightarrow},
+  breakanywheresymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{page!60!text}\\rfloor}},
+  breakbeforesymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{page!60!text}\\rfloor}},
+  breakaftersymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{page!60!text}\\rfloor}},
+}
+
+\\BeforeBeginEnvironment{minted}{
+  \\begin{tcolorbox}[
+    enhanced,
+    overlay={\\fill[white!90!black] (frame.south west) rectangle ([xshift=2.8em]frame.north west);},
+    colback=white!95!black,
+    colframe=white!95!black, % make frame colour same as background
+    breakable,% Allow white breaks
+    arc=0pt,outer arc=0pt,sharp corners, % sharp corners
+    boxsep=0pt,left=0pt,right=0pt,top=0pt,bottom=0pt % no margin/paddding
+  ]
+}
+\\AfterEndEnvironment{minted}{\\end{tcolorbox}}
+\\renewcommand\\theFancyVerbLine{\\color{black!60!white}\\arabic{FancyVerbLine}} % minted line numbering"))))
+;; org-latex-smart-minted ends here
+
+;; [[file:config.org::*Chameleon --- aka. match theme][Chameleon --- aka. match theme:1]]
 (after! ox
   (defvar ox-chameleon-base-class "fancy-article"
     "The base class that chameleon builds on")
@@ -3531,7 +3699,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
   )
 ;; Chameleon --- aka. match theme:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Make verbatim different to code][Make verbatim different to code:1]]
+;; [[file:config.org::*Make verbatim different to code][Make verbatim different to code:1]]
 (setq org-latex-text-markup-alist '((bold . "\\textbf{%s}")
            (code . protectedtexttt)
            (italic . "\\emph{%s}")
@@ -3540,28 +3708,28 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
            (verbatim . verb)))
 ;; Make verbatim different to code:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to Beamer][Exporting to Beamer:1]]
+;; [[file:config.org::*Exporting to Beamer][Exporting to Beamer:1]]
 (setq org-beamer-theme "[progressbar=foot]metropolis")
 ;; Exporting to Beamer:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to Beamer][Exporting to Beamer:2]]
+;; [[file:config.org::*Exporting to Beamer][Exporting to Beamer:2]]
 
 ;; Exporting to Beamer:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to Beamer][Exporting to Beamer:3]]
+;; [[file:config.org::*Exporting to Beamer][Exporting to Beamer:3]]
 (setq org-beamer-frame-level 2)
 ;; Exporting to Beamer:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Exporting to GFM][Exporting to GFM:1]]
+;; [[file:config.org::*Exporting to GFM][Exporting to GFM:1]]
 (eval-after-load "org"
   '(require 'ox-gfm nil t))
 ;; Exporting to GFM:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Babel][Babel:1]]
+;; [[file:config.org::*Babel][Babel:1]]
 (setq org-babel-python-command "python3")
 ;; Babel:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Babel][Babel:2]]
+;; [[file:config.org::*Babel][Babel:2]]
 (defun tec-org-python ()
   (if (eq major-mode 'python-mode)
    (progn (anaconda-mode t)
@@ -3570,11 +3738,11 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
 (add-hook 'org-src-mode-hook 'tec-org-python)
 ;; Babel:2 ends here
 
-;; [[file:~/.config/doom/config.org::*ESS][ESS:1]]
+;; [[file:config.org::*ESS][ESS:1]]
 (setq ess-eval-visibly 'nowait)
 ;; ESS:1 ends here
 
-;; [[file:~/.config/doom/config.org::*ESS][ESS:2]]
+;; [[file:config.org::*ESS][ESS:2]]
 (setq ess-R-font-lock-keywords '((ess-R-fl-keyword:keywords . t)
  (ess-R-fl-keyword:constants . t)
  (ess-R-fl-keyword:modifiers . t)
@@ -3589,7 +3757,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
  (ess-R-fl-keyword:F&T . t)))
 ;; ESS:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Compilation][Compilation:1]]
+;; [[file:config.org::*Compilation][Compilation:1]]
 (setq TeX-save-query nil
       TeX-show-compilation t
       TeX-command-extra-options "-shell-escape")
@@ -3597,11 +3765,11 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
   (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t)))
 ;; Compilation:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Compilation][Compilation:2]]
+;; [[file:config.org::*Compilation][Compilation:2]]
 (setq +latex-viewers '(pdf-tools evince zathura okular skim sumatrapdf))
 ;; Compilation:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Template][Template:2]]
+;; [[file:config.org::*Template][Template:2]]
 (setq tec/yas-latex-template-preamble "
 \\usepackage[pdfa,unicode=true,hidelinks]{hyperref}
 
@@ -3637,7 +3805,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
              (eq (read-char-choice "Include default preamble? [Type y/n]" '(?y ?n)) ?y)))
 ;; Template:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Deliminators][Deliminators:1]]
+;; [[file:config.org::*Deliminators][Deliminators:1]]
 (after! tex
   (defvar tec/tex-last-delim-char nil
     "Last open delim expanded in a tex document")
@@ -3678,7 +3846,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
         (?9  ")")
         (?\[ "]")
         (?\{ "\\}")
-        (?<  ")")
+        (?<  ">")
         (?\) ")")
         (?0  ")")
         (?\] "]")
@@ -3697,11 +3865,11 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
     (yas-expand-snippet (yas-lookup-snippet "_deliminators" 'latex-mode) (point) (+ (point) (if (tec/tex-next-char-smart-close-delim open-char) 2 1)))))
 ;; Deliminators:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:1]]
+;; [[file:config.org::*Editor visuals][Editor visuals:1]]
 (add-hook 'LaTeX-mode-hook #'mixed-pitch-mode)
 ;; Editor visuals:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:2]]
+;; [[file:config.org::*Editor visuals][Editor visuals:2]]
 (after! latex
   (setcar (assoc "⋆" LaTeX-fold-math-spec-list) "★")) ;; make \star bigger
 
@@ -3793,7 +3961,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
  (if (string-match-p "^\\\\?\\w+$" teststring) t nil))
 ;; Editor visuals:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:3]]
+;; [[file:config.org::*Editor visuals][Editor visuals:3]]
 (after! tex
   (map!
    :map LaTeX-mode-map
@@ -3805,7 +3973,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
   (setq TeX-electric-math '("\\(" . "")))
 ;; Editor visuals:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:4]]
+;; [[file:config.org::*Editor visuals][Editor visuals:4]]
 ;; Making \( \) less visible
 (defface unimportant-latex-face
   '((t
@@ -3824,14 +3992,14 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
  'end)
 ;; Editor visuals:4 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor visuals][Editor visuals:5]]
+;; [[file:config.org::*Editor visuals][Editor visuals:5]]
 (setq preview-LaTeX-command '("%`%l \"\\nonstopmode\\nofiles\
 \\PassOptionsToPackage{" ("," . preview-required-option-list) "}{preview}\
 \\AtBeginDocument{\\ifx\\ifPreview\\undefined"
 preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
 ;; Editor visuals:5 ends here
 
-;; [[file:~/.config/doom/config.org::*CDLaTeX][CDLaTeX:1]]
+;; [[file:config.org::*CDLaTeX][CDLaTeX:1]]
 (after! cdlatex
   (setq ;; cdlatex-math-symbol-prefix ?\; ;; doesn't work at the moment :(
    cdlatex-math-symbol-alist
@@ -3857,46 +4025,28 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
      (?a    "\\abs"           nil          t    nil  nil))))
 ;; CDLaTeX:1 ends here
 
-;; [[file:~/.config/doom/config.org::*CDLaTeX][CDLaTeX:2]]
-(defun prvt/auto-number-subscript ()
-  (interactive)
-  (if (and (or (and (>= (char-before) ?a) (<= (char-before) ?z))
-               (and (>= (char-before) ?A) (<= (char-before) ?Z)))
-           (cl-digit-char-p (string-to-char (this-command-keys)))
-           (texmathp))
-      (insert "_" (this-command-keys))
-    (insert (this-command-keys))))
-
-(map!
- :after tex :map LaTeX-mode-map
- :i "1" #'prvt/auto-number-subscript
- :i "2" #'prvt/auto-number-subscript
- :i "3" #'prvt/auto-number-subscript
- :i "4" #'prvt/auto-number-subscript
- :i "5" #'prvt/auto-number-subscript
- :i "6" #'prvt/auto-number-subscript
- :i "7" #'prvt/auto-number-subscript
- :i "8" #'prvt/auto-number-subscript
- :i "9" #'prvt/auto-number-subscript)
-;; CDLaTeX:2 ends here
-
-;; [[file:~/.config/doom/config.org::*SyncTeX][SyncTeX:1]]
+;; [[file:config.org::*SyncTeX][SyncTeX:1]]
 (after! tex
   (add-to-list 'TeX-view-program-list '("Evince" "evince %o"))
   (add-to-list 'TeX-view-program-selection '(output-pdf "Evince")))
 ;; SyncTeX:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Evilification][Evilification:1]]
+;; [[file:config.org::*Evilification][Evilification:1]]
 (use-package! evil-tex
   :hook (LaTeX-mode . evil-tex-mode))
 ;; Evilification:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Python][Python:1]]
+;; [[file:config.org::*Fixes][Fixes:1]]
+(when EMACS28+
+  (add-hook 'latex-mode-hook #'TeX-latex-mode))
+;; Fixes:1 ends here
+
+;; [[file:config.org::*Python][Python:1]]
 (after! lsp-python-ms
   (set-lsp-priority! 'mspyls 1))
 ;; Python:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Editor Visuals][Editor Visuals:1]]
+;; [[file:config.org::*Editor Visuals][Editor Visuals:1]]
 (after! ess-r-mode
   (appendq! +pretty-code-symbols
             '(:assign "⟵"
@@ -3922,21 +4072,21 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
     :multiply "%*%"))
 ;; Editor Visuals:1 ends here
 
-;; [[file:~/.config/doom/config.org::*hledger][hledger:1]]
+;; [[file:config.org::*hledger][hledger:1]]
 (setq ledger-mode-should-check-version nil
       ledger-report-links-in-register nil
       ledger-binary-path "hledger")
 ;; hledger:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Markdown][Markdown:1]]
+;; [[file:config.org::*Markdown][Markdown:1]]
 (add-hook! (gfm-mode markdown-mode) #'mixed-pitch-mode)
 ;; Markdown:1 ends here
 
-;; [[file:~/.config/doom/config.org::*Markdown][Markdown:2]]
+;; [[file:config.org::*Markdown][Markdown:2]]
 (add-hook! (gfm-mode markdown-mode) #'visual-line-mode #'turn-off-auto-fill)
 ;; Markdown:2 ends here
 
-;; [[file:~/.config/doom/config.org::*Markdown][Markdown:3]]
+;; [[file:config.org::*Markdown][Markdown:3]]
 (custom-set-faces!
   '(markdown-header-face-1 :height 1.25 :weight extra-bold :inherit markdown-header-face)
   '(markdown-header-face-2 :height 1.15 :weight bold       :inherit markdown-header-face)
@@ -3946,7 +4096,7 @@ preview-default-preamble "\\fi}\"%' \"\\detokenize{\" %t \"}\""))
   '(markdown-header-face-6 :height 0.75 :weight extra-bold :inherit markdown-header-face))
 ;; Markdown:3 ends here
 
-;; [[file:~/.config/doom/config.org::*Beancount][Beancount:1]]
+;; [[file:config.org::*Beancount][Beancount:1]]
 (use-package! beancount
   :load-path "~/.config/doom/lisp"
   :mode ("\\.beancount\\'" . beancount-mode)
