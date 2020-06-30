@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-30 Tue 03:57 -->
+<!-- 2020-06-30 Tue 13:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -223,7 +223,7 @@
       --theme-cyan: #5cEfFF;
       --theme-dark-cyan: #6A8FBF;
    }
-</style>
+</style><!-- [[file:../config.org::*Custom CSS/JS][Custom CSS/JS:1]] -->
 <link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/>
 <link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/>
 
@@ -231,9 +231,8 @@
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
 <script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'></script>
 <script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'></script>
-
-<style>
- pre.src {
+<!-- Custom CSS/JS:1 ends here -->
+<style> pre.src {
      background-color: var(--theme-bg);
      color: var(--theme-fg);
      scrollbar-color:#bbb6#9992;
@@ -302,7 +301,7 @@
      background-size: 0% 2px;
      transition: background-size .3s;
  }
- #table-of-contents a {
+ \#table-of-contents a {
      background-image: none;
  }
  a:hover:not([aria-hidden='true']),
@@ -368,13 +367,13 @@
      line-height: 1.25;
  }
 
- #content img {
+ \#content img {
      border-radius: 3px;
  }
 
- #table-of-contents { overflow-y: auto; }
+ \#table-of-contents { overflow-y: auto; }
  blockquote p { margin: 8px 0px 16px 0px; }
- #postamble .date { color: var(--theme-green); }
+ \#postamble .date { color: var(--theme-green); }
 
  ::-webkit-scrollbar { width: 10px; height: 8px; }
  ::-webkit-scrollbar-track { background:#9992; }
@@ -440,8 +439,7 @@
      margin-left: 2rem;
      min-width: 25%;
  }
-</style>
-<!––tec/custom-head-end-->
+</style><!––tec/custom-head-end-->
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
@@ -2377,9 +2375,9 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">use-package!</span> info-colors
   <span style="color: #C57BDB;">:commands</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">info-colors-fontify-node</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">Info-selection-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">info-colors-fontify-node</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">Info-selection-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">info-colors-fontify-node</span><span style="color: #51afef;">)</span>
 
-<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">Info-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">mixed-pitch-mode</span><span style="color: #51afef;">)</span>
+<span style="color: #51afef;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">Info-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #DFDFDF;">mixed-pitch-mode</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -3128,7 +3126,7 @@ building it from source then. I needed to install these packages
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-shell" id="org5d3c998"><span style="color: #FCCE7B;">cd</span> ~/.local/lib/
+<pre class="src src-shell" id="org5d655c1"><span style="color: #FCCE7B;">cd</span> ~/.local/lib/
 <span style="color: #FCCE7B;">git</span> clone https://github.com/djcb/mu.git
 <span style="color: #FCCE7B;">cd</span> ./mu
 ./autogen.sh
@@ -3902,7 +3900,7 @@ in the file and check for existance too.
 To make this look a little nicer, we will overwrite the default style.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org283992b"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-msg-enforce-css
+<pre class="src src-emacs-lisp" id="orgbb83499"><span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> org-msg-enforce-css
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let*</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>font-family <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>font-family . <span style="color: #7bc275;">"-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell,\</span>
 <span style="color: #7bc275;">        \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
              <span style="color: #51afef;">(</span>monospace-font <span style="color: #C57BDB;">'</span><span style="color: #C57BDB;">(</span>font-family . <span style="color: #7bc275;">"SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -5330,7 +5328,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org5abde2c"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="org096dfa5"><span style="color: #51afef;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">org-capture-select-template-prettier</span> <span style="color: #C57BDB;">(</span><span style="color: #FCCE7B;">&amp;optional</span> keys<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Select a capture template, in a prettier way than default</span>
 <span style="color: #7e7e87;">Lisp programs can force the template by setting KEYS to a string."</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span><span style="color: #DFDFDF;">org-capture-templates</span>
@@ -5445,7 +5443,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">setf</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">alist-get</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">height</span> <span style="color: #DFDFDF;">+org-capture-frame-parameters</span><span style="color: #C57BDB;">)</span> <span style="color: #e69055; font-weight: bold;">15</span><span style="color: #51afef;">)</span>
       <span style="color: #62686E;">;; </span><span style="color: #62686E;">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">+org-capture-fn</span>
+<span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span> +org-capture-fn
       <span style="color: #C57BDB;">(</span><span style="color: #51afef;">lambda</span> <span style="color: #7bc275;">()</span>
         <span style="color: #7bc275;">(</span><span style="color: #51afef;">interactive</span><span style="color: #7bc275;">)</span>
         <span style="color: #7bc275;">(</span><span style="color: #a991f1;">set-window-parameter</span> nil <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">mode-line-format</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">none</span><span style="color: #7bc275;">)</span>
@@ -5947,7 +5945,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="orga121a1e"></a></li>
+This uses the radar template, the result of which can be seen in <a id="orgfe436d6"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -6857,24 +6855,249 @@ There is a fantastic exporter config (<a href="https://github.com/fniessen/org-h
 setup to be used with all our org files. Since most of the syntax highlighting
 colours from our <a href="#theme-modeline">Theme</a> gets used, we benefit from customising the code block style.
 </p>
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="color: #5cEfFF;">link</span> <span style="color: #DFDFDF;">rel</span>=<span style="color: #7bc275;">'stylesheet'</span> <span style="color: #DFDFDF;">type</span>=<span style="color: #7bc275;">'text/css'</span> <span style="color: #DFDFDF;">href</span>=<span style="color: #7bc275;">'https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'</span>/&gt;
+&lt;<span style="color: #5cEfFF;">link</span> <span style="color: #DFDFDF;">rel</span>=<span style="color: #7bc275;">'stylesheet'</span> <span style="color: #DFDFDF;">type</span>=<span style="color: #7bc275;">'text/css'</span> <span style="color: #DFDFDF;">href</span>=<span style="color: #7bc275;">'https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'</span>/&gt;
+
+&lt;<span style="color: #5cEfFF;">script</span> <span style="color: #DFDFDF;">src</span>=<span style="color: #7bc275;">'https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'</span>&gt;&lt;/<span style="color: #5cEfFF;">script</span>&gt;
+&lt;<span style="color: #5cEfFF;">script</span> <span style="color: #DFDFDF;">src</span>=<span style="color: #7bc275;">'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'</span>&gt;&lt;/<span style="color: #5cEfFF;">script</span>&gt;
+&lt;<span style="color: #5cEfFF;">script</span> <span style="color: #DFDFDF;">type</span>=<span style="color: #7bc275;">'text/javascript'</span> <span style="color: #DFDFDF;">src</span>=<span style="color: #7bc275;">'https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'</span>&gt;&lt;/<span style="color: #5cEfFF;">script</span>&gt;
+&lt;<span style="color: #5cEfFF;">script</span> <span style="color: #DFDFDF;">type</span>=<span style="color: #7bc275;">'text/javascript'</span> <span style="color: #DFDFDF;">src</span>=<span style="color: #7bc275;">'https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'</span>&gt;&lt;/<span style="color: #5cEfFF;">script</span>&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #51afef;">pre.src </span>{
+    <span style="color: #7bc275;">background-color</span>: var(<span style="color: #DFDFDF;">--theme-bg</span>);
+    <span style="color: #7bc275;">color</span>: var(<span style="color: #DFDFDF;">--theme-fg</span>);
+    <span style="color: #7bc275;">scrollbar-color</span>:<span style="color: #ffffff; background-color: #bbb;">#bbb6</span><span style="color: #ffffff; background-color: #999;">#9992</span>;
+    <span style="color: #7bc275;">scrollbar-width</span>: thin;
+    <span style="color: #7bc275;">margin</span>: <span style="color: #e69055; font-weight: bold;">0</span>;
+    <span style="color: #7bc275;">border</span>: none;
+}
+<span style="color: #51afef;">div.org-src-container </span>{
+    <span style="color: #7bc275;">border-radius</span>: 12px;
+    <span style="color: #7bc275;">overflow</span>: hidden;
+    <span style="color: #7bc275;">margin-bottom</span>: 24px;
+    <span style="color: #7bc275;">margin-top</span>: 1px;
+    <span style="color: #7bc275;">border</span>: 1px solid<span style="color: #000000; background-color: #e1e4e5;">#e1e4e5</span>;
+}
+<span style="color: #51afef;">pre.src::before </span>{
+    <span style="color: #7bc275;">background-color</span>:<span style="color: #ffffff; background-color: #666;">#6666</span>;
+    <span style="color: #7bc275;">top</span>: 8px;
+    <span style="color: #7bc275;">border</span>: none;
+    <span style="color: #7bc275;">border-radius</span>: 5px;
+    <span style="color: #7bc275;">line-height</span>: <span style="color: #e69055; font-weight: bold;">1</span>;
+    <span style="color: #7bc275;">border</span>: 2px solid var(<span style="color: #DFDFDF;">--theme-bg</span>);
+    <span style="color: #7bc275;">opacity</span>: <span style="color: #e69055; font-weight: bold;">0</span>;
+    <span style="color: #7bc275;">transition</span>: opacity 200ms;
+}
+<span style="color: #51afef;">pre.src:hover::before </span>{ <span style="color: #7bc275;">opacity</span>: <span style="color: #e69055; font-weight: bold;">1</span>; }
+<span style="color: #51afef;">pre.src:active::before </span>{ <span style="color: #7bc275;">opacity</span>: <span style="color: #e69055; font-weight: bold;">0</span>; }
+
+<span style="color: #51afef;">pre.example </span>{
+    <span style="color: #7bc275;">border-radius</span>: 12px;
+    <span style="color: #7bc275;">background</span>: var(<span style="color: #DFDFDF;">--theme-bg-alt</span>);
+    <span style="color: #7bc275;">color</span>: var(<span style="color: #DFDFDF;">--theme-fg</span>);
+}
+
+<span style="color: #51afef;">code </span>{
+    <span style="color: #7bc275;">border-radius</span>: 5px;
+    <span style="color: #7bc275;">background</span>:<span style="color: #000000; background-color: #e8e8e8;">#e8e8e8</span>;
+    <span style="color: #7bc275;">font-size</span>: <span style="color: #e69055; font-weight: bold;">80</span>%;
+}
+
+<span style="color: #51afef;">kbd </span>{
+    <span style="color: #7bc275;">display</span>: inline-block;
+    <span style="color: #7bc275;">padding</span>: 3px 5px;
+    <span style="color: #7bc275;">font</span>: <span style="color: #e69055; font-weight: bold;">80</span>% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+    <span style="color: #7bc275;">line-height</span>: normal;
+    <span style="color: #7bc275;">line-height</span>: 10px;
+    <span style="color: #7bc275;">color</span>:<span style="color: #ffffff; background-color: #444d56;">#444d56</span>;
+    <span style="color: #7bc275;">vertical-align</span>: middle;
+    <span style="color: #7bc275;">background-color</span>:<span style="color: #000000; background-color: #fafbfc;">#fafbfc</span>;
+    <span style="color: #7bc275;">border</span>: 1px solid<span style="color: #000000; background-color: #d1d5da;">#d1d5da</span>;
+    <span style="color: #7bc275;">border-radius</span>: 3px;
+    <span style="color: #7bc275;">box-shadow</span>: inset <span style="color: #e69055; font-weight: bold;">0</span> -1px 0<span style="color: #000000; background-color: #d1d5da;">#d1d5da</span>;
+}
+
+<span style="color: #51afef;">table </span>{
+    <span style="color: #7bc275;">max-width</span>: <span style="color: #e69055; font-weight: bold;">100</span>%;
+    <span style="color: #7bc275;">overflow-x</span>: auto;
+    <span style="color: #7bc275;">display</span>: block;
+    <span style="color: #7bc275;">border-top</span>: none;
+}
+
+<span style="color: #51afef;">a:not([aria-hidden=</span><span style="color: #7bc275;">'true'</span><span style="color: #51afef;">]) </span>{
+    <span style="color: #7bc275;">text-decoration</span>: none;
+    <span style="color: #7bc275;">background-image</span>: linear-gradient(<span style="color: #000000; background-color: #d8dce9;">#d8dce9</span>, <span style="color: #000000; background-color: #d8dce9;">#d8dce9</span>);
+    <span style="color: #7bc275;">background-position</span>: <span style="color: #e69055; font-weight: bold;">0</span>% <span style="color: #e69055; font-weight: bold;">100</span>%;
+    <span style="color: #7bc275;">background-repeat</span>: no-repeat;
+    <span style="color: #7bc275;">background-size</span>: <span style="color: #e69055; font-weight: bold;">0</span>% 2px;
+    <span style="color: #7bc275;">transition</span>: background-size .3s;
+}
+<span style="color: #51afef;">\#table-of-contents a </span>{
+    <span style="color: #7bc275;">background-image</span>: none;
+}
+<span style="color: #7bc275;">a</span>:hover:not([aria-hidden=<span style="color: #7bc275;">'true'</span>]),
+<span style="color: #51afef;">a:focus:not([aria-hidden=</span><span style="color: #7bc275;">'true'</span><span style="color: #51afef;">]) </span>{
+    <span style="color: #7bc275;">background-size</span>: <span style="color: #e69055; font-weight: bold;">100</span>% 2px;
+}
+<span style="color: #51afef;">a[href^=</span><span style="color: #7bc275;">'#'</span><span style="color: #51afef;">] </span>{ <span style="color: #7bc275;">font-variant-numeric</span>: oldstyle-nums; }
+<span style="color: #51afef;">a[href^=</span><span style="color: #7bc275;">'#'</span><span style="color: #51afef;">]:visited </span>{ <span style="color: #7bc275;">color</span>:<span style="color: #ffffff; background-color: #3091d1;">#3091d1</span>; }
+
+<span style="color: #51afef;">li .checkbox </span>{
+    <span style="color: #7bc275;">display</span>: inline-block;
+    <span style="color: #7bc275;">width</span>: 0.9em;
+    <span style="color: #7bc275;">height</span>: 0.9em;
+    <span style="color: #7bc275;">border-radius</span>: 3px;
+    <span style="color: #7bc275;">margin</span>: 3px;
+    <span style="color: #7bc275;">top</span>: 4px;
+    <span style="color: #7bc275;">position</span>: relative;
+}
+<span style="color: #51afef;">li.on &gt; .checkbox </span>{ <span style="color: #7bc275;">background</span>: var(<span style="color: #DFDFDF;">--theme-</span><span style="color: #ffffff; background-color: #008000;">green</span>); <span style="color: #7bc275;">box-shadow</span>: <span style="color: #e69055; font-weight: bold;">0</span> <span style="color: #e69055; font-weight: bold;">0</span> 2px var(<span style="color: #DFDFDF;">--theme-</span><span style="color: #ffffff; background-color: #008000;">green</span>); }
+<span style="color: #51afef;">li.trans &gt; .checkbox </span>{ <span style="color: #7bc275;">background</span>: var(<span style="color: #DFDFDF;">--theme-</span><span style="color: #000000; background-color: #FFA500;">orange</span>); <span style="color: #7bc275;">box-shadow</span>: <span style="color: #e69055; font-weight: bold;">0</span> <span style="color: #e69055; font-weight: bold;">0</span> 2px var(<span style="color: #DFDFDF;">--theme-</span><span style="color: #000000; background-color: #FFA500;">orange</span>); }
+<span style="color: #51afef;">li.off &gt; .checkbox </span>{ <span style="color: #7bc275;">background</span>: var(<span style="color: #DFDFDF;">--theme-</span><span style="color: #ffffff; background-color: #FF0000;">red</span>); <span style="color: #7bc275;">box-shadow</span>: <span style="color: #e69055; font-weight: bold;">0</span> <span style="color: #e69055; font-weight: bold;">0</span> 2px var(<span style="color: #DFDFDF;">--theme-</span><span style="color: #ffffff; background-color: #FF0000;">red</span>); }
+<span style="color: #51afef;">li.on &gt; .checkbox::after </span>{
+    <span style="color: #7bc275;">content</span>: <span style="color: #7bc275;">''</span>;
+    <span style="color: #7bc275;">height</span>: 0.45em;
+    <span style="color: #7bc275;">width</span>: 0.225em;
+    <span style="color: #e69055;">-webkit-transform-origin</span>: left top;
+    <span style="color: #7bc275;">transform-origin</span>: left top;
+    <span style="color: #7bc275;">transform</span>: scaleX(-1) rotate(135deg);
+    <span style="color: #7bc275;">border-right</span>: 2.8px solid<span style="color: #000000; background-color: #fff;">#fff</span>;
+    <span style="color: #7bc275;">border-top</span>: 2.8px solid<span style="color: #000000; background-color: #fff;">#fff</span>;
+    <span style="color: #7bc275;">opacity</span>: <span style="color: #e69055; font-weight: bold;">0.9</span>;
+    <span style="color: #7bc275;">left</span>: 0.10em;
+    <span style="color: #7bc275;">top</span>: 0.45em;
+    <span style="color: #7bc275;">position</span>: absolute;
+}
+<span style="color: #51afef;">li.trans &gt; .checkbox::after </span>{
+    <span style="color: #7bc275;">content</span>: <span style="color: #7bc275;">''</span>;
+    <span style="color: #7bc275;">font-weight</span>: bold;
+    <span style="color: #7bc275;">font-size</span>: 1.6em;
+    <span style="color: #7bc275;">position</span>: absolute;
+    <span style="color: #7bc275;">top</span>: 0.23em;
+    <span style="color: #7bc275;">left</span>: 0.09em;
+    <span style="color: #7bc275;">width</span>: 0.35em;
+    <span style="color: #7bc275;">height</span>: 0.12em;
+    <span style="color: #7bc275;">background</span>:<span style="color: #000000; background-color: #fff;">#fff</span>;
+    <span style="color: #7bc275;">opacity</span>: <span style="color: #e69055; font-weight: bold;">0.9</span>;
+    <span style="color: #7bc275;">border-radius</span>: 0.1em;
+}
+<span style="color: #51afef;">li.off &gt; .checkbox::after </span>{
+    <span style="color: #7bc275;">content</span>: <span style="color: #7bc275;">'&#10006;'</span>;
+    <span style="color: #7bc275;">color</span>:<span style="color: #000000; background-color: #fff;">#fff</span>;
+    <span style="color: #7bc275;">opacity</span>: <span style="color: #e69055; font-weight: bold;">0.9</span>;
+    <span style="color: #7bc275;">position</span>: relative;
+    <span style="color: #7bc275;">top</span>: -0.40rem;
+    <span style="color: #7bc275;">left</span>: 0.17em;
+    <span style="color: #7bc275;">font-size</span>: 0.75em;
+}
+
+<span style="color: #51afef;">span.timestamp </span>{
+    <span style="color: #7bc275;">color</span>: <span style="color: #ffffff; background-color: #003280;">#003280</span>;
+    <span style="color: #7bc275;">background</span>: <span style="color: #ffffff; background-color: #647CFF;">#647CFF44</span>;
+    <span style="color: #7bc275;">border-radius</span>: 3px;
+    <span style="color: #7bc275;">line-height</span>: <span style="color: #e69055; font-weight: bold;">1.25</span>;
+}
+
+<span style="color: #51afef;">\#content img </span>{
+    <span style="color: #7bc275;">border-radius</span>: 3px;
+}
+
+<span style="color: #51afef;">\#table-of-contents </span>{ <span style="color: #7bc275;">overflow-y</span>: auto; }
+<span style="color: #51afef;">blockquote p </span>{ <span style="color: #7bc275;">margin</span>: 8px 0px 16px 0px; }
+<span style="color: #51afef;">\#postamble .date </span>{ <span style="color: #7bc275;">color</span>: var(<span style="color: #DFDFDF;">--theme-</span><span style="color: #ffffff; background-color: #008000;">green</span>); }
+
+::-webkit-scrollbar { <span style="color: #7bc275;">width</span>: 10px; <span style="color: #7bc275;">height</span>: 8px; }
+::-webkit-scrollbar-track { <span style="color: #7bc275;">background</span>:<span style="color: #ffffff; background-color: #999;">#9992</span>; }
+::-webkit-scrollbar-thumb { <span style="color: #7bc275;">background</span>:<span style="color: #000000; background-color: #ccc;">#ccc</span>; <span style="color: #7bc275;">border-radius</span>: 10px; }
+::-webkit-scrollbar-thumb:hover { <span style="color: #7bc275;">background</span>:<span style="color: #ffffff; background-color: #888;">#888</span>; }
+
+<span style="color: #62686E;">/* </span><span style="color: #62686E;">sometimes this all-important space seems to go missing</span>
+<span style="color: #62686E;">/so let's protect against that. If it's exteranious it's</span>
+<span style="color: #62686E;">/just gobbled anyway. </span><span style="color: #62686E;">*/</span>
+span.section-number-1:after,
+span.section-number-2:after,
+span.section-number-3:after,
+span.section-number-4:after,
+span.section-number-5:after,
+<span style="color: #51afef;">span.section-number-6:after </span>{
+    <span style="color: #7bc275;">content</span>: <span style="color: #7bc275;">' '</span>
+}
+
+<span style="color: #62686E;">/* </span><span style="color: #62686E;">so the bounding box coveres the &lt;a&gt; </span><span style="color: #62686E;">*/</span>
+<span style="color: #51afef;">h1,h2,h3,h4,h5,h6 </span>{
+    <span style="color: #7bc275;">padding-left</span>: 30px;
+    <span style="color: #7bc275;">margin-left</span>: -30px;
+}
+
+<span style="color: #51afef;">h1 &gt; a[aria-hidden=</span><span style="color: #7bc275;">'true'</span><span style="color: #51afef;">],</span>
+<span style="color: #51afef;">h2 &gt; a[aria-hidden=</span><span style="color: #7bc275;">'true'</span><span style="color: #51afef;">],</span>
+<span style="color: #51afef;">h3 &gt; a[aria-hidden=</span><span style="color: #7bc275;">'true'</span><span style="color: #51afef;">],</span>
+<span style="color: #51afef;">h4 &gt; a[aria-hidden=</span><span style="color: #7bc275;">'true'</span><span style="color: #51afef;">],</span>
+<span style="color: #51afef;">h5 &gt; a[aria-hidden=</span><span style="color: #7bc275;">'true'</span><span style="color: #51afef;">],</span>
+<span style="color: #51afef;">h6 &gt; a[aria-hidden=</span><span style="color: #7bc275;">'true'</span><span style="color: #51afef;">] </span>{
+    <span style="color: #7bc275;">color</span>: <span style="color: #ffffff; background-color: #6a737d;">#6a737d</span>;
+    <span style="color: #7bc275;">float</span>: left;
+    <span style="color: #7bc275;">padding-right</span>: 4px;
+    <span style="color: #7bc275;">margin-left</span>: -25px;
+    <span style="color: #7bc275;">position</span>: relative;
+    <span style="color: #7bc275;">top</span>: 7px;
+    <span style="color: #7bc275;">line-height</span>: <span style="color: #e69055; font-weight: bold;">1</span>;
+    <span style="color: #7bc275;">font-size</span>: <span style="color: #e69055; font-weight: bold;">70</span>%;
+    <span style="color: #7bc275;">visibility</span>: hidden;
+}
+
+<span style="color: #7bc275;">h1</span>:hover &gt; a[aria-hidden=<span style="color: #7bc275;">'true'</span>],
+<span style="color: #7bc275;">h2</span>:hover &gt; a[aria-hidden=<span style="color: #7bc275;">'true'</span>],
+<span style="color: #7bc275;">h3</span>:hover &gt; a[aria-hidden=<span style="color: #7bc275;">'true'</span>],
+<span style="color: #7bc275;">h4</span>:hover &gt; a[aria-hidden=<span style="color: #7bc275;">'true'</span>],
+<span style="color: #7bc275;">h5</span>:hover &gt; a[aria-hidden=<span style="color: #7bc275;">'true'</span>],
+<span style="color: #51afef;">h6:hover &gt; a[aria-hidden=</span><span style="color: #7bc275;">'true'</span><span style="color: #51afef;">] </span>{
+    <span style="color: #7bc275;">visibility</span>: visible;
+}
+
+<span style="color: #51afef;">.music-track </span>{
+    <span style="color: #7bc275;">display</span>: flex;
+    <span style="color: #7bc275;">justify-content</span>: center;
+    <span style="color: #7bc275;">align-items</span>: center;
+    <span style="color: #7bc275;">flex-wrap</span>: wrap;
+}
+
+<span style="color: #51afef;">.music-track &gt; img </span>{
+    <span style="color: #7bc275;">height</span>: 6rem;
+}
+
+<span style="color: #51afef;">.music-track &gt; span </span>{
+    <span style="color: #7bc275;">margin-left</span>: 2rem;
+    <span style="color: #7bc275;">min-width</span>: <span style="color: #e69055; font-weight: bold;">25</span>%;
+}
+</pre>
+</div>
+
 <p>
 We also want to make the background and foreground colours of the <code>&lt;pre&gt;</code> blocks
 match out theme (they don&rsquo;t by default), so I scraped some code from <code>emacs.stackexchange</code>.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
-<span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">my-org-inline-css-hook</span> <span style="color: #7bc275;">(</span>exporter<span style="color: #7bc275;">)</span>
-  <span style="color: #7e7e87;">"Insert custom inline css to automatically set the</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> org-custom-css <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">f-read-text</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">expand-file-name</span> <span style="color: #7bc275;">"misc/org-export-style.css"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> org-custom-html-header <span style="color: #7bc275;">(</span><span style="color: #5cEfFF;">f-read-text</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">expand-file-name</span> <span style="color: #7bc275;">"misc/org-export-header.html"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">my-org-inline-css-hook</span> <span style="color: #7bc275;">(</span>exporter<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Insert custom inline css to automatically set the</span>
 <span style="color: #7e7e87;">   background of code to whatever theme I'm using's background"</span>
-  <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">eq</span> exporter <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">html</span><span style="color: #51afef;">)</span>
-    <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span>
-     <span style="color: #DFDFDF;">org-html-head-extra</span>
-     <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span>
-      <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">s-contains-p</span> <span style="color: #7bc275;">"&lt;!&#8211;&#8211;tec/custom-head-start--&gt;"</span> <span style="color: #DFDFDF;">org-html-head-extra</span><span style="color: #51afef;">)</span>
-          <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">s-replace-regexp</span> <span style="color: #7bc275;">"&lt;!&#8211;&#8211;tec\\/custom-head-start--&gt;[</span><span style="color: #C57BDB; font-weight: bold;">^</span><span style="color: #7bc275;">&#128604;]*&lt;!&#8211;&#8211;tec\\/custom-head-end--&gt;"</span> <span style="color: #7bc275;">""</span> <span style="color: #DFDFDF;">org-html-head-extra</span><span style="color: #51afef;">)</span>
-        <span style="color: #DFDFDF;">org-html-head-extra</span><span style="color: #7bc275;">)</span>
-      <span style="color: #7bc275;">"&lt;!&#8211;&#8211;tec/custom-head-start--&gt;"</span>
-      <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"&lt;style type=\"text/css\"&gt;</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">eq</span> exporter <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">html</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">setq</span>
+       <span style="color: #DFDFDF;">org-html-head-extra</span>
+       <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span>
+        <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">s-contains-p</span> <span style="color: #7bc275;">"&lt;!&#8211;&#8211;tec/custom-head-start--&gt;"</span> <span style="color: #DFDFDF;">org-html-head-extra</span><span style="color: #51afef;">)</span>
+            <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">s-replace-regexp</span> <span style="color: #7bc275;">"&lt;!&#8211;&#8211;tec\\/custom-head-start--&gt;[</span><span style="color: #C57BDB; font-weight: bold;">^</span><span style="color: #7bc275;">&#128604;]*&lt;!&#8211;&#8211;tec\\/custom-head-end--&gt;"</span> <span style="color: #7bc275;">""</span> <span style="color: #DFDFDF;">org-html-head-extra</span><span style="color: #51afef;">)</span>
+          <span style="color: #DFDFDF;">org-html-head-extra</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">"&lt;!&#8211;&#8211;tec/custom-head-start--&gt;"</span>
+        <span style="color: #7bc275;">(</span><span style="color: #a991f1;">format</span> <span style="color: #7bc275;">"&lt;style type=\"text/css\"&gt;</span>
 <span style="color: #7bc275;">   :root {</span>
 <span style="color: #7bc275;">      --theme-bg: %s;</span>
 <span style="color: #7bc275;">      --theme-bg-alt: %s;</span>
@@ -6903,253 +7126,35 @@ match out theme (they don&rsquo;t by default), so I scraped some code from <code
 <span style="color: #7bc275;">      --theme-dark-cyan: %s;</span>
 <span style="color: #7bc275;">   }</span>
 <span style="color: #7bc275;">&lt;/style&gt;"</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">bg</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">bg-alt</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base0</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base1</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base2</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base3</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base4</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base5</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base6</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base7</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base8</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">fg</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">fg-alt</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">grey</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">red</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">orange</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">green</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">teal</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">yellow</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">blue</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">dark-blue</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">magenta</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">violet</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">cyan</span><span style="color: #51afef;">)</span>
-              <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">dark-cyan</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-      <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">bound-and-true-p</span> <span style="color: #DFDFDF;">org-msg-currently-exporting</span><span style="color: #51afef;">)</span> <span style="color: #7bc275;">""</span>
-      <span style="color: #7bc275;">"</span>
-<span style="color: #7bc275;">&lt;link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css'/&gt;</span>
-<span style="color: #7bc275;">&lt;link rel='stylesheet' type='text/css' href='https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css'/&gt;</span>
-
-<span style="color: #7bc275;">&lt;script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'&gt;&lt;/script&gt;</span>
-<span style="color: #7bc275;">&lt;script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'&gt;&lt;/script&gt;</span>
-<span style="color: #7bc275;">&lt;script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js'&gt;&lt;/script&gt;</span>
-<span style="color: #7bc275;">&lt;script type='text/javascript' src='https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js'&gt;&lt;/script&gt;</span>
-
-<span style="color: #7bc275;">&lt;style&gt;</span>
-<span style="color: #7bc275;"> pre.src {</span>
-<span style="color: #7bc275;">     background-color: var(--theme-bg);</span>
-<span style="color: #7bc275;">     color: var(--theme-fg);</span>
-<span style="color: #7bc275;">     scrollbar-color:#bbb6#9992;</span>
-<span style="color: #7bc275;">     scrollbar-width: thin;</span>
-<span style="color: #7bc275;">     margin: 0;</span>
-<span style="color: #7bc275;">     border: none;</span>
-<span style="color: #7bc275;"> }</span>
-<span style="color: #7bc275;"> div.org-src-container {</span>
-<span style="color: #7bc275;">     border-radius: 12px;</span>
-<span style="color: #7bc275;">     overflow: hidden;</span>
-<span style="color: #7bc275;">     margin-bottom: 24px;</span>
-<span style="color: #7bc275;">     margin-top: 1px;</span>
-<span style="color: #7bc275;">     border: 1px solid#e1e4e5;</span>
-<span style="color: #7bc275;"> }</span>
-<span style="color: #7bc275;"> pre.src::before {</span>
-<span style="color: #7bc275;">     background-color:#6666;</span>
-<span style="color: #7bc275;">     top: 8px;</span>
-<span style="color: #7bc275;">     border: none;</span>
-<span style="color: #7bc275;">     border-radius: 5px;</span>
-<span style="color: #7bc275;">     line-height: 1;</span>
-<span style="color: #7bc275;">     border: 2px solid var(--theme-bg);</span>
-<span style="color: #7bc275;">     opacity: 0;</span>
-<span style="color: #7bc275;">     transition: opacity 200ms;</span>
-<span style="color: #7bc275;"> }</span>
-<span style="color: #7bc275;"> pre.src:hover::before { opacity: 1; }</span>
-<span style="color: #7bc275;"> pre.src:active::before { opacity: 0; }</span>
-
-<span style="color: #7bc275;"> pre.example {</span>
-<span style="color: #7bc275;">     border-radius: 12px;</span>
-<span style="color: #7bc275;">     background: var(--theme-bg-alt);</span>
-<span style="color: #7bc275;">     color: var(--theme-fg);</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> code {</span>
-<span style="color: #7bc275;">     border-radius: 5px;</span>
-<span style="color: #7bc275;">     background:#e8e8e8;</span>
-<span style="color: #7bc275;">     font-size: 80%;</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> kbd {</span>
-<span style="color: #7bc275;">     display: inline-block;</span>
-<span style="color: #7bc275;">     padding: 3px 5px;</span>
-<span style="color: #7bc275;">     font: 80% SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;</span>
-<span style="color: #7bc275;">     line-height: normal;</span>
-<span style="color: #7bc275;">     line-height: 10px;</span>
-<span style="color: #7bc275;">     color:#444d56;</span>
-<span style="color: #7bc275;">     vertical-align: middle;</span>
-<span style="color: #7bc275;">     background-color:#fafbfc;</span>
-<span style="color: #7bc275;">     border: 1px solid#d1d5da;</span>
-<span style="color: #7bc275;">     border-radius: 3px;</span>
-<span style="color: #7bc275;">     box-shadow: inset 0 -1px 0#d1d5da;</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> table {</span>
-<span style="color: #7bc275;">     max-width: 100%;</span>
-<span style="color: #7bc275;">     overflow-x: auto;</span>
-<span style="color: #7bc275;">     display: block;</span>
-<span style="color: #7bc275;">     border-top: none;</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> a:not([aria-hidden='true']) {</span>
-<span style="color: #7bc275;">     text-decoration: none;</span>
-<span style="color: #7bc275;">     background-image: linear-gradient(#d8dce9, #d8dce9);</span>
-<span style="color: #7bc275;">     background-position: 0% 100%;</span>
-<span style="color: #7bc275;">     background-repeat: no-repeat;</span>
-<span style="color: #7bc275;">     background-size: 0% 2px;</span>
-<span style="color: #7bc275;">     transition: background-size .3s;</span>
-<span style="color: #7bc275;"> }</span>
-<span style="color: #7bc275;"> </span><span style="color: #FCCE7B;">\</span><span style="color: #7bc275;">#table-of-contents a {</span>
-<span style="color: #7bc275;">     background-image: none;</span>
-<span style="color: #7bc275;"> }</span>
-<span style="color: #7bc275;"> a:hover:not([aria-hidden='true']),</span>
-<span style="color: #7bc275;"> a:focus:not([aria-hidden='true']) {</span>
-<span style="color: #7bc275;">     background-size: 100% 2px;</span>
-<span style="color: #7bc275;"> }</span>
-<span style="color: #7bc275;"> a[href^='#'] { font-variant-numeric: oldstyle-nums; }</span>
-<span style="color: #7bc275;"> a[href^='#']:visited { color:#3091d1; }</span>
-
-<span style="color: #7bc275;"> li .checkbox {</span>
-<span style="color: #7bc275;">     display: inline-block;</span>
-<span style="color: #7bc275;">     width: 0.9em;</span>
-<span style="color: #7bc275;">     height: 0.9em;</span>
-<span style="color: #7bc275;">     border-radius: 3px;</span>
-<span style="color: #7bc275;">     margin: 3px;</span>
-<span style="color: #7bc275;">     top: 4px;</span>
-<span style="color: #7bc275;">     position: relative;</span>
-<span style="color: #7bc275;"> }</span>
-<span style="color: #7bc275;"> li.on &gt; .checkbox { background: var(--theme-green); box-shadow: 0 0 2px var(--theme-green); }</span>
-<span style="color: #7bc275;"> li.trans &gt; .checkbox { background: var(--theme-orange); box-shadow: 0 0 2px var(--theme-orange); }</span>
-<span style="color: #7bc275;"> li.off &gt; .checkbox { background: var(--theme-red); box-shadow: 0 0 2px var(--theme-red); }</span>
-<span style="color: #7bc275;"> li.on &gt; .checkbox::after {</span>
-<span style="color: #7bc275;">     content: '';</span>
-<span style="color: #7bc275;">     height: 0.45em;</span>
-<span style="color: #7bc275;">     width: 0.225em;</span>
-<span style="color: #7bc275;">     -webkit-transform-origin: left top;</span>
-<span style="color: #7bc275;">     transform-origin: left top;</span>
-<span style="color: #7bc275;">     transform: scaleX(-1) rotate(135deg);</span>
-<span style="color: #7bc275;">     border-right: 2.8px solid#fff;</span>
-<span style="color: #7bc275;">     border-top: 2.8px solid#fff;</span>
-<span style="color: #7bc275;">     opacity: 0.9;</span>
-<span style="color: #7bc275;">     left: 0.10em;</span>
-<span style="color: #7bc275;">     top: 0.45em;</span>
-<span style="color: #7bc275;">     position: absolute;</span>
-<span style="color: #7bc275;"> }</span>
-<span style="color: #7bc275;"> li.trans &gt; .checkbox::after {</span>
-<span style="color: #7bc275;">     content: '';</span>
-<span style="color: #7bc275;">     font-weight: bold;</span>
-<span style="color: #7bc275;">     font-size: 1.6em;</span>
-<span style="color: #7bc275;">     position: absolute;</span>
-<span style="color: #7bc275;">     top: 0.23em;</span>
-<span style="color: #7bc275;">     left: 0.09em;</span>
-<span style="color: #7bc275;">     width: 0.35em;</span>
-<span style="color: #7bc275;">     height: 0.12em;</span>
-<span style="color: #7bc275;">     background:#fff;</span>
-<span style="color: #7bc275;">     opacity: 0.9;</span>
-<span style="color: #7bc275;">     border-radius: 0.1em;</span>
-<span style="color: #7bc275;"> }</span>
-<span style="color: #7bc275;"> li.off &gt; .checkbox::after {</span>
-<span style="color: #7bc275;">     content: '&#10006;';</span>
-<span style="color: #7bc275;">     color:#fff;</span>
-<span style="color: #7bc275;">     opacity: 0.9;</span>
-<span style="color: #7bc275;">     position: relative;</span>
-<span style="color: #7bc275;">     top: -0.40rem;</span>
-<span style="color: #7bc275;">     left: 0.17em;</span>
-<span style="color: #7bc275;">     font-size: 0.75em;</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> span.timestamp {</span>
-<span style="color: #7bc275;">     color: #003280;</span>
-<span style="color: #7bc275;">     background: #647CFF44;</span>
-<span style="color: #7bc275;">     border-radius: 3px;</span>
-<span style="color: #7bc275;">     line-height: 1.25;</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> </span><span style="color: #FCCE7B;">\</span><span style="color: #7bc275;">#content img {</span>
-<span style="color: #7bc275;">     border-radius: 3px;</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> </span><span style="color: #FCCE7B;">\</span><span style="color: #7bc275;">#table-of-contents { overflow-y: auto; }</span>
-<span style="color: #7bc275;"> blockquote p { margin: 8px 0px 16px 0px; }</span>
-<span style="color: #7bc275;"> </span><span style="color: #FCCE7B;">\</span><span style="color: #7bc275;">#postamble .date { color: var(--theme-green); }</span>
-
-<span style="color: #7bc275;"> ::-webkit-scrollbar { width: 10px; height: 8px; }</span>
-<span style="color: #7bc275;"> ::-webkit-scrollbar-track { background:#9992; }</span>
-<span style="color: #7bc275;"> ::-webkit-scrollbar-thumb { background:#ccc; border-radius: 10px; }</span>
-<span style="color: #7bc275;"> ::-webkit-scrollbar-thumb:hover { background:#888; }</span>
-
-<span style="color: #7bc275;"> /* sometimes this all-important space seems to go missing</span>
-<span style="color: #7bc275;"> /so let's protect against that. If it's exteranious it's</span>
-<span style="color: #7bc275;"> /just gobbled anyway. */</span>
-<span style="color: #7bc275;"> span.section-number-1:after,</span>
-<span style="color: #7bc275;"> span.section-number-2:after,</span>
-<span style="color: #7bc275;"> span.section-number-3:after,</span>
-<span style="color: #7bc275;"> span.section-number-4:after,</span>
-<span style="color: #7bc275;"> span.section-number-5:after,</span>
-<span style="color: #7bc275;"> span.section-number-6:after {</span>
-<span style="color: #7bc275;">     content: ' '</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> /* so the bounding box coveres the &lt;a&gt; */</span>
-<span style="color: #7bc275;"> h1,h2,h3,h4,h5,h6 {</span>
-<span style="color: #7bc275;">     padding-left: 30px;</span>
-<span style="color: #7bc275;">     margin-left: -30px;</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> h1 &gt; a[aria-hidden='true'],</span>
-<span style="color: #7bc275;"> h2 &gt; a[aria-hidden='true'],</span>
-<span style="color: #7bc275;"> h3 &gt; a[aria-hidden='true'],</span>
-<span style="color: #7bc275;"> h4 &gt; a[aria-hidden='true'],</span>
-<span style="color: #7bc275;"> h5 &gt; a[aria-hidden='true'],</span>
-<span style="color: #7bc275;"> h6 &gt; a[aria-hidden='true'] {</span>
-<span style="color: #7bc275;">     color: #6a737d;</span>
-<span style="color: #7bc275;">     float: left;</span>
-<span style="color: #7bc275;">     padding-right: 4px;</span>
-<span style="color: #7bc275;">     margin-left: -25px;</span>
-<span style="color: #7bc275;">     position: relative;</span>
-<span style="color: #7bc275;">     top: 7px;</span>
-<span style="color: #7bc275;">     line-height: 1;</span>
-<span style="color: #7bc275;">     font-size: 70%;</span>
-<span style="color: #7bc275;">     visibility: hidden;</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> h1:hover &gt; a[aria-hidden='true'],</span>
-<span style="color: #7bc275;"> h2:hover &gt; a[aria-hidden='true'],</span>
-<span style="color: #7bc275;"> h3:hover &gt; a[aria-hidden='true'],</span>
-<span style="color: #7bc275;"> h4:hover &gt; a[aria-hidden='true'],</span>
-<span style="color: #7bc275;"> h5:hover &gt; a[aria-hidden='true'],</span>
-<span style="color: #7bc275;"> h6:hover &gt; a[aria-hidden='true'] {</span>
-<span style="color: #7bc275;">     visibility: visible;</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> .music-track {</span>
-<span style="color: #7bc275;">     display: flex;</span>
-<span style="color: #7bc275;">     justify-content: center;</span>
-<span style="color: #7bc275;">     align-items: center;</span>
-<span style="color: #7bc275;">     flex-wrap: wrap;</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> .music-track &gt; img {</span>
-<span style="color: #7bc275;">     height: 6rem;</span>
-<span style="color: #7bc275;"> }</span>
-
-<span style="color: #7bc275;"> .music-track &gt; span {</span>
-<span style="color: #7bc275;">     margin-left: 2rem;</span>
-<span style="color: #7bc275;">     min-width: 25%;</span>
-<span style="color: #7bc275;"> }</span>
-<span style="color: #7bc275;">&lt;/style&gt;</span>
-<span style="color: #7bc275;">"</span><span style="color: #7bc275;">)</span>
-      <span style="color: #7bc275;">"&lt;!&#8211;&#8211;tec/custom-head-end--&gt;"</span>
-      <span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">bg</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">bg-alt</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base0</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base1</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base2</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base3</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base4</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base5</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base6</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base7</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">base8</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">fg</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">fg-alt</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">grey</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">red</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">orange</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">green</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">teal</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">yellow</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">blue</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">dark-blue</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">magenta</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">violet</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">cyan</span><span style="color: #51afef;">)</span>
+                <span style="color: #51afef;">(</span><span style="color: #5cEfFF;">doom-color</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">dark-cyan</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">(</span><span style="color: #51afef;">if</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">bound-and-true-p</span> <span style="color: #DFDFDF;">org-msg-currently-exporting</span><span style="color: #51afef;">)</span> <span style="color: #7bc275;">""</span>
+          <span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span> org-custom-html-header <span style="color: #7bc275;">"&lt;style&gt;"</span> org-custom-css <span style="color: #7bc275;">"&lt;/style&gt;"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+        <span style="color: #7bc275;">"&lt;!&#8211;&#8211;tec/custom-head-end--&gt;"</span>
+        <span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
 <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #DFDFDF;">org-export-before-processing-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">my-org-inline-css-hook</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
@@ -7531,7 +7536,7 @@ Instead of just loading doing the &rsquo;minted stuff&rsquo; all the time, we ca
 a bit cleverer.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgb3a7240"><span style="color: #51afef;">(</span><span style="color: #51afef;">defadvice!</span> org-latex-header-smart-minted <span style="color: #C57BDB;">(</span>orig-fn tpl def-pkg pkg snippets-p <span style="color: #FCCE7B;">&amp;optional</span> extra<span style="color: #C57BDB;">)</span>
+<pre class="src src-emacs-lisp" id="orga4a4405"><span style="color: #51afef;">(</span><span style="color: #51afef;">defadvice!</span> org-latex-header-smart-minted <span style="color: #C57BDB;">(</span>orig-fn tpl def-pkg pkg snippets-p <span style="color: #FCCE7B;">&amp;optional</span> extra<span style="color: #C57BDB;">)</span>
   <span style="color: #7e7e87;">"Include minted config if src blocks are detected."</span>
   <span style="color: #C57BDB;">:around</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-splice-latex-header</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>header <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">funcall</span> orig-fn tpl def-pkg pkg snippets-p extra<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
@@ -7872,7 +7877,7 @@ Syntax highlighting is nice, so let&rsquo;s turn all of that on
 Use <code>xclip</code> to save file to graphics folder, or current directory (whichever applies)
 </p>
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #C57BDB;">command</span> -v xclip &gt;/dev/null <span style="color: #e69055; font-weight: bold;">2</span>&gt;&amp;<span style="color: #e69055; font-weight: bold;">1</span> || <span style="color: #51afef;">{</span> <span style="color: #FCCE7B;">echo</span> &gt;&amp;<span style="color: #e69055; font-weight: bold;">1</span> <span style="color: #7bc275;">"no xclip"</span>; <span style="color: #51afef;">exit</span> <span style="color: #e69055; font-weight: bold;">1</span>; <span style="color: #51afef;">}</span>
+<pre class="src src-shell">command -v xclip &gt;/dev/null <span style="color: #e69055; font-weight: bold;">2</span>&gt;&amp;<span style="color: #e69055; font-weight: bold;">1</span> || <span style="color: #51afef;">{</span> <span style="color: #FCCE7B;">echo</span> &gt;&amp;<span style="color: #e69055; font-weight: bold;">1</span> <span style="color: #7bc275;">"no xclip"</span>; <span style="color: #51afef;">exit</span> <span style="color: #e69055; font-weight: bold;">1</span>; <span style="color: #51afef;">}</span>
 
 <span style="color: #51afef;">if</span>
 xclip -selection clipboard -target image/png -o &gt;/dev/null <span style="color: #e69055; font-weight: bold;">2</span>&gt;&amp;<span style="color: #e69055; font-weight: bold;">1</span>
@@ -8448,7 +8453,7 @@ Now we just need to load it appropriately.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-06-30 Tue 03:57</p>
+<p class="date">Created: 2020-06-30 Tue 13:32</p>
 </div>
 </body>
 </html>
