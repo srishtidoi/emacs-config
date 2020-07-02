@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-30 Tue 13:32 -->
+<!-- 2020-07-03 Fri 00:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -7452,16 +7452,20 @@ Now for a few more adjustments.
                <span style="color: #51afef;">(</span><span style="color: #7bc275;">"\\subparagraph{%s}"</span> . <span style="color: #7bc275;">"\\subparagraph*{%s}"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-latex-default-class</span> <span style="color: #7bc275;">"fancy-article"</span><span style="color: #C57BDB;">)</span>
 
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> org-latex-header-smart-minted <span style="color: #7bc275;">(</span>orig-fn tpl def-pkg pkg snippets-p <span style="color: #FCCE7B;">&amp;optional</span> extra<span style="color: #7bc275;">)</span>
-    <span style="color: #7e7e87;">"Include minted config if src blocks are detected."</span>
-    <span style="color: #C57BDB;">:around</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-splice-latex-header</span>
-    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>header <span style="color: #7bc275;">(</span><span style="color: #a991f1;">funcall</span> orig-fn tpl def-pkg pkg snippets-p extra<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-          <span style="color: #C57BDB;">(</span>src-p <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">save-excursion</span>
-                         <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">goto-char</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">point-min</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
-                         <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">search-forward-regexp</span> <span style="color: #7bc275;">"#\\+BEGIN_SRC</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">|</span><span style="color: #7bc275;">#\\+begin_src"</span> nil t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-                   t<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-      <span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span> header
-              <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when</span> src-p <span style="color: #7bc275;">"</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">after!</span> org
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">defadvice!</span> org-latex-header-smart-minted <span style="color: #51afef;">(</span>orig-fn tpl def-pkg pkg snippets-p <span style="color: #FCCE7B;">&amp;optional</span> extra<span style="color: #51afef;">)</span>
+      <span style="color: #7e7e87;">"Include minted config if src blocks are detected."</span>
+      <span style="color: #C57BDB;">:around</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-splice-latex-header</span>
+      <span style="color: #51afef;">(</span><span style="color: #51afef;">let</span> <span style="color: #C57BDB;">(</span><span style="color: #7bc275;">(</span>header <span style="color: #51afef;">(</span><span style="color: #a991f1;">funcall</span> orig-fn tpl def-pkg pkg snippets-p extra<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+            <span style="color: #7bc275;">(</span>src-p <span style="color: #51afef;">(</span><span style="color: #51afef;">when</span> <span style="color: #C57BDB;">(</span><span style="color: #51afef;">save-excursion</span>
+                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">goto-char</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">point-min</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+                           <span style="color: #7bc275;">(</span><span style="color: #a991f1;">search-forward-regexp</span> <span style="color: #7bc275;">"#\\+BEGIN_SRC</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">|</span><span style="color: #7bc275;">#\\+begin_src"</span> nil t<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                     t<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+        <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">concat</span> header
+                <span style="color: #DFDFDF;">org-latex-universal-preamble</span>
+                <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> src-p <span style="color: #DFDFDF;">org-latex-minted-preamble</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
+  
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-latex-minted-preamble</span> <span style="color: #7bc275;">"</span>
 <span style="color: #7bc275;">  \\usepackage{minted}</span>
 <span style="color: #7bc275;">  \\usepackage[many]{tcolorbox}</span>
 <span style="color: #7bc275;">  \\setminted{</span>
@@ -7502,7 +7506,15 @@ Now for a few more adjustments.
 <span style="color: #7bc275;">    ]</span>
 <span style="color: #7bc275;">  }</span>
 <span style="color: #7bc275;">  \\AfterEndEnvironment{minted}{\\end{tcolorbox}}</span>
-<span style="color: #7bc275;">  \\renewcommand\\theFancyVerbLine{\\color{black!60!white}\\arabic{FancyVerbLine}} % minted line numbering"</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+<span style="color: #7bc275;">  \\renewcommand\\theFancyVerbLine{\\color{black!60!white}\\arabic{FancyVerbLine}} % minted line numbering</span>
+<span style="color: #7bc275;">  "</span>
+      <span style="color: #7e7e87;">"Preamble to be inserted when minted is used."</span><span style="color: #7bc275;">)</span>
+  
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-latex-universal-preamble</span> <span style="color: #7bc275;">"</span>
+<span style="color: #7bc275;">  \\usepackage[main,input,include]{embedall}</span>
+<span style="color: #7bc275;">  \\IfFileExists{./\\jobname.org}{\\embedfile{\\jobname.org}}{}</span>
+<span style="color: #7bc275;">  "</span>
+      <span style="color: #7e7e87;">"Preamble to be included in every export."</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
 
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">setq</span> <span style="color: #DFDFDF;">org-latex-listings</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">minted</span>
         <span style="color: #DFDFDF;">org-latex-minted-options</span>
@@ -7534,20 +7546,82 @@ Now for a few more adjustments.
 </div>
 
 <p>
-Instead of just loading doing the &rsquo;minted stuff&rsquo; all the time, we can try to be
-a bit cleverer.
+We also want a particular preamble when minted is used,
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orga4a4405"><span style="color: #51afef;">(</span><span style="color: #51afef;">defadvice!</span> org-latex-header-smart-minted <span style="color: #C57BDB;">(</span>orig-fn tpl def-pkg pkg snippets-p <span style="color: #FCCE7B;">&amp;optional</span> extra<span style="color: #C57BDB;">)</span>
-  <span style="color: #7e7e87;">"Include minted config if src blocks are detected."</span>
-  <span style="color: #C57BDB;">:around</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-splice-latex-header</span>
-  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">let</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">(</span>header <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">funcall</span> orig-fn tpl def-pkg pkg snippets-p extra<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-        <span style="color: #51afef;">(</span>src-p <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when</span> <span style="color: #7bc275;">(</span><span style="color: #51afef;">save-excursion</span>
-                       <span style="color: #51afef;">(</span><span style="color: #a991f1;">goto-char</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">point-min</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
-                       <span style="color: #51afef;">(</span><span style="color: #a991f1;">search-forward-regexp</span> <span style="color: #7bc275;">"#\\+BEGIN_SRC</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">|</span><span style="color: #7bc275;">#\\+begin_src"</span> nil t<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-                 t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span>
-    <span style="color: #7bc275;">(</span><span style="color: #a991f1;">concat</span> header
-            <span style="color: #51afef;">(</span><span style="color: #51afef;">when</span> src-p <span style="color: #7bc275;">"</span>
+<pre class="src src-LaTeX" id="org9754a70"><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>{<span style="color: #5cEfFF;">minted</span>}
+<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">many</span>]{<span style="color: #5cEfFF;">tcolorbox</span>}
+<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">setminted</span>{
+  frame=none,
+  <span style="color: #62686E;">% framesep=2mm,</span>
+  baselinestretch=1.2,
+  fontsize=<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">footnotesize</span>,
+  highlightcolor=white!95!black!80!blue,
+  linenos,
+  breakanywhere=true,
+  breakautoindent=true,
+  breaklines=true,
+  tabsize=4,
+  xleftmargin=3.5em,
+  autogobble=true,
+  obeytabs=true,
+  python3=true,
+  <span style="color: #62686E;">% texcomments=true,</span>
+  framesep=2mm,
+  breakbefore=<span style="color: #FCCE7B;">\\\\</span>\.+,
+  breakafter=<span style="color: #FCCE7B;">\\</span>,
+  style=autumn,
+  breaksymbol=<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">color</span>{page!60!text}<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">tiny</span><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">ensuremath</span>{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">hookrightarrow</span>},
+  breakanywheresymbolpre=<span style="color: #FCCE7B;">\\</span>,<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">footnotesize</span><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">ensuremath</span>{<span style="color: #1f5582;">_{\\color{page!60!text}\\rfloor}</span>},
+  breakbeforesymbolpre=<span style="color: #FCCE7B;">\\</span>,<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">footnotesize</span><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">ensuremath</span>{<span style="color: #1f5582;">_{\\color{page!60!text}\\rfloor}</span>},
+  breakaftersymbolpre=<span style="color: #FCCE7B;">\\</span>,<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">footnotesize</span><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">ensuremath</span>{<span style="color: #1f5582;">_{\\color{page!60!text}\\rfloor}</span>},
+}
+
+<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">BeforeBeginEnvironment</span>{minted}{
+  <span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">begin</span>{<span style="color: #5cEfFF;">tcolorbox</span>}[
+    enhanced,
+    overlay={<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">fill</span>[white!90!black] (frame.south west) rectangle ([xshift=2.8em]frame.north west);},
+    colback=white!95!black,
+    colframe=white!95!black, <span style="color: #62686E;">% make frame colour same as background</span>
+    breakable,<span style="color: #62686E;">% Allow white breaks</span>
+    arc=0pt,outer arc=0pt,sharp corners, <span style="color: #62686E;">% sharp corners</span>
+    boxsep=0pt,left=0pt,right=0pt,top=0pt,bottom=0pt <span style="color: #62686E;">% no margin/paddding</span>
+  ]
+}
+<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">AfterEndEnvironment</span>{minted}{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">end</span>{<span style="color: #5cEfFF;">tcolorbox</span>}}
+<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">renewcommand</span><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">theFancyVerbLine</span>{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">color</span>{black!60!white}<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">arabic</span>{<span style="color: #DFDFDF;">FancyVerbLine</span>}} <span style="color: #62686E;">% minted line numbering</span>
+</pre>
+</div>
+
+<p>
+We also always want some particular elements in the preamble, let&rsquo;s call this
+the &ldquo;universal preamble&rdquo;
+</p>
+<div class="org-src-container">
+<pre class="src src-LaTeX" id="orgb894869"><span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">usepackage</span>[<span style="color: #DFDFDF;">main,input,include</span>]{<span style="color: #5cEfFF;">embedall</span>}
+<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">IfFileExists</span>{./<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">jobname</span>.org}{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">embedfile</span>{<span style="color: #FCCE7B;">\</span><span style="color: #51afef;">\</span><span style="color: #51afef;">jobname</span>.org}}{}
+</pre>
+</div>
+
+<p>
+Instead of just loading doing the &rsquo;minted stuff&rsquo; all the time, we can try to be
+a bit cleverer, and handle the &ldquo;universal preamble&rdquo; while we&rsquo;re at it.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp" id="org89c0cbe"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> org
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defadvice!</span> org-latex-header-smart-minted <span style="color: #7bc275;">(</span>orig-fn tpl def-pkg pkg snippets-p <span style="color: #FCCE7B;">&amp;optional</span> extra<span style="color: #7bc275;">)</span>
+    <span style="color: #7e7e87;">"Include minted config if src blocks are detected."</span>
+    <span style="color: #C57BDB;">:around</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">org-splice-latex-header</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">let</span> <span style="color: #51afef;">(</span><span style="color: #C57BDB;">(</span>header <span style="color: #7bc275;">(</span><span style="color: #a991f1;">funcall</span> orig-fn tpl def-pkg pkg snippets-p extra<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+          <span style="color: #C57BDB;">(</span>src-p <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #51afef;">save-excursion</span>
+                         <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">goto-char</span> <span style="color: #7bc275;">(</span><span style="color: #a991f1;">point-min</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+                         <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">search-forward-regexp</span> <span style="color: #7bc275;">"#\\+BEGIN_SRC</span><span style="color: #C57BDB; font-weight: bold;">\\</span><span style="color: #C57BDB; font-weight: bold;">|</span><span style="color: #7bc275;">#\\+begin_src"</span> nil t<span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+                   t<span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">concat</span> header
+              <span style="color: #DFDFDF;">org-latex-universal-preamble</span>
+              <span style="color: #C57BDB;">(</span><span style="color: #51afef;">when</span> src-p <span style="color: #DFDFDF;">org-latex-minted-preamble</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-latex-minted-preamble</span> <span style="color: #7bc275;">"</span>
 <span style="color: #7bc275;">\\usepackage{minted}</span>
 <span style="color: #7bc275;">\\usepackage[many]{tcolorbox}</span>
 <span style="color: #7bc275;">\\setminted{</span>
@@ -7588,7 +7662,15 @@ a bit cleverer.
 <span style="color: #7bc275;">  ]</span>
 <span style="color: #7bc275;">}</span>
 <span style="color: #7bc275;">\\AfterEndEnvironment{minted}{\\end{tcolorbox}}</span>
-<span style="color: #7bc275;">\\renewcommand\\theFancyVerbLine{\\color{black!60!white}\\arabic{FancyVerbLine}} % minted line numbering"</span><span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+<span style="color: #7bc275;">\\renewcommand\\theFancyVerbLine{\\color{black!60!white}\\arabic{FancyVerbLine}} % minted line numbering</span>
+<span style="color: #7bc275;">"</span>
+    <span style="color: #7e7e87;">"Preamble to be inserted when minted is used."</span><span style="color: #C57BDB;">)</span>
+
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-latex-universal-preamble</span> <span style="color: #7bc275;">"</span>
+<span style="color: #7bc275;">\\usepackage[main,input,include]{embedall}</span>
+<span style="color: #7bc275;">\\IfFileExists{./\\jobname.org}{\\embedfile{\\jobname.org}}{}</span>
+<span style="color: #7bc275;">"</span>
+    <span style="color: #7e7e87;">"Preamble to be included in every export."</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>
 </div>
 </div>
@@ -8455,7 +8537,7 @@ Now we just need to load it appropriately.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-06-30 Tue 13:32</p>
+<p class="date">Created: 2020-07-03 Fri 00:46</p>
 </div>
 </body>
 </html>

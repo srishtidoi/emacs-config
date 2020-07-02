@@ -3212,16 +3212,20 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
   (setq org-latex-default-class "fancy-article")
 
-  (defadvice! org-latex-header-smart-minted (orig-fn tpl def-pkg pkg snippets-p &optional extra)
-    "Include minted config if src blocks are detected."
-    :around #'org-splice-latex-header
-    (let ((header (funcall orig-fn tpl def-pkg pkg snippets-p extra))
-          (src-p (when (save-excursion
-                         (goto-char (point-min))
-                         (search-forward-regexp "#\\+BEGIN_SRC\\|#\\+begin_src" nil t))
-                   t)))
-      (concat header
-              (when src-p "
+  (after! org
+    (defadvice! org-latex-header-smart-minted (orig-fn tpl def-pkg pkg snippets-p &optional extra)
+      "Include minted config if src blocks are detected."
+      :around #'org-splice-latex-header
+      (let ((header (funcall orig-fn tpl def-pkg pkg snippets-p extra))
+            (src-p (when (save-excursion
+                           (goto-char (point-min))
+                           (search-forward-regexp "#\\+BEGIN_SRC\\|#\\+begin_src" nil t))
+                     t)))
+        (concat header
+                org-latex-universal-preamble
+                (when src-p org-latex-minted-preamble))))
+  
+    (defvar org-latex-minted-preamble "
   \\usepackage{minted}
   \\usepackage[many]{tcolorbox}
   \\setminted{
@@ -3262,7 +3266,15 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
     ]
   }
   \\AfterEndEnvironment{minted}{\\end{tcolorbox}}
-  \\renewcommand\\theFancyVerbLine{\\color{black!60!white}\\arabic{FancyVerbLine}} % minted line numbering"))))
+  \\renewcommand\\theFancyVerbLine{\\color{black!60!white}\\arabic{FancyVerbLine}} % minted line numbering
+  "
+      "Preamble to be inserted when minted is used.")
+  
+    (defvar org-latex-universal-preamble "
+  \\usepackage[main,input,include]{embedall}
+  \\IfFileExists{./\\jobname.org}{\\embedfile{\\jobname.org}}{}
+  "
+      "Preamble to be included in every export."))
 
   (setq org-latex-listings 'minted
         org-latex-minted-options
@@ -3293,16 +3305,20 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
 ;; Exporting to LaTeX:3 ends here
 
 ;; [[file:config.org::org-latex-smart-minted][org-latex-smart-minted]]
-(defadvice! org-latex-header-smart-minted (orig-fn tpl def-pkg pkg snippets-p &optional extra)
-  "Include minted config if src blocks are detected."
-  :around #'org-splice-latex-header
-  (let ((header (funcall orig-fn tpl def-pkg pkg snippets-p extra))
-        (src-p (when (save-excursion
-                       (goto-char (point-min))
-                       (search-forward-regexp "#\\+BEGIN_SRC\\|#\\+begin_src" nil t))
-                 t)))
-    (concat header
-            (when src-p "
+(after! org
+  (defadvice! org-latex-header-smart-minted (orig-fn tpl def-pkg pkg snippets-p &optional extra)
+    "Include minted config if src blocks are detected."
+    :around #'org-splice-latex-header
+    (let ((header (funcall orig-fn tpl def-pkg pkg snippets-p extra))
+          (src-p (when (save-excursion
+                         (goto-char (point-min))
+                         (search-forward-regexp "#\\+BEGIN_SRC\\|#\\+begin_src" nil t))
+                   t)))
+      (concat header
+              org-latex-universal-preamble
+              (when src-p org-latex-minted-preamble))))
+
+  (defvar org-latex-minted-preamble "
 \\usepackage{minted}
 \\usepackage[many]{tcolorbox}
 \\setminted{
@@ -3343,7 +3359,15 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
   ]
 }
 \\AfterEndEnvironment{minted}{\\end{tcolorbox}}
-\\renewcommand\\theFancyVerbLine{\\color{black!60!white}\\arabic{FancyVerbLine}} % minted line numbering"))))
+\\renewcommand\\theFancyVerbLine{\\color{black!60!white}\\arabic{FancyVerbLine}} % minted line numbering
+"
+    "Preamble to be inserted when minted is used.")
+
+  (defvar org-latex-universal-preamble "
+\\usepackage[main,input,include]{embedall}
+\\IfFileExists{./\\jobname.org}{\\embedfile{\\jobname.org}}{}
+"
+    "Preamble to be included in every export."))
 ;; org-latex-smart-minted ends here
 
 ;; [[file:config.org::*Chameleon --- aka. match theme][Chameleon --- aka. match theme:1]]
