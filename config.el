@@ -2909,8 +2909,8 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
 
 ;; [[file:config.org::*Custom CSS/JS][Custom CSS/JS:3]]
 (after! org
-  (setq org-custom-css (f-read-text (expand-file-name "misc/org-export-style.css")))
-  (setq org-custom-html-header (f-read-text (expand-file-name "misc/org-export-header.html")))
+  (setq org-custom-css (f-read-text (expand-file-name "misc/org-export-style.css" doom-private-dir)))
+  (setq org-custom-html-header (f-read-text (expand-file-name "misc/org-export-header.html" doom-private-dir)))
 
   (defun my-org-inline-css-hook (exporter)
     "Insert custom inline css to automatically set the
