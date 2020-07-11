@@ -3124,8 +3124,10 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
 
   (add-to-list 'org-export-filter-plain-text-functions
                'tec/org-export-latex-filter-acronym)
-  (add-to-list 'org-export-filter-headline-functions
-               'tec/org-export-latex-filter-acronym))
+  ;; FIXME I want to process headings, but this causes issues ATM
+  ;; (add-to-list 'org-export-filter-headline-functions
+  ;;              'tec/org-export-latex-filter-acronym)
+  )
 ;; Exporting to LaTeX:1 ends here
 
 ;; [[file:config.org::*Exporting to LaTeX][Exporting to LaTeX:2]]
