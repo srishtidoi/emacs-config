@@ -3408,6 +3408,22 @@ few more visual tweaks, we&rsquo;ll tweak the headers a bit.
 </div>
 
 <p>
+While considering width and the mu4e header view &#x2014; it&rsquo;s hard to see enough with
+a with less than 120 charachters, so let&rsquo;s add a hook to mu4e&rsquo;s header mode.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #51afef;">(</span><span style="color: #51afef;">after!</span> mu4e
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">mu4e-min-header-frame-width</span> <span style="color: #e69055; font-weight: bold;">120</span>
+    <span style="color: #7e7e87;">"Minimum reasonable with for the header view."</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defun</span> <span style="color: #5cEfFF;">mu4e-widen-frame-maybe</span> <span style="color: #7bc275;">()</span>
+    <span style="color: #7e7e87;">"Expand the frame with if it's less than `</span><span style="color: #a991f1;">mu4e-min-header-frame-width</span><span style="color: #7e7e87;">'."</span>
+    <span style="color: #7bc275;">(</span><span style="color: #51afef;">when</span> <span style="color: #51afef;">(</span><span style="color: #a991f1;">&lt;</span> <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">frame-width</span><span style="color: #C57BDB;">)</span> mu4e-min-header-frame-width<span style="color: #51afef;">)</span>
+      <span style="color: #51afef;">(</span><span style="color: #a991f1;">set-frame-width</span> <span style="color: #C57BDB;">(</span><span style="color: #a991f1;">selected-frame</span><span style="color: #C57BDB;">)</span> mu4e-min-header-frame-width<span style="color: #51afef;">)</span><span style="color: #7bc275;">)</span><span style="color: #C57BDB;">)</span>
+  <span style="color: #C57BDB;">(</span><span style="color: #5cEfFF;">add-hook</span> <span style="color: #C57BDB;">'</span><span style="color: #FCCE7B;">mu4e-headers-mode-hook</span> <span style="color: #C57BDB;">#'</span><span style="color: #FCCE7B;">mu4e-widen-frame-maybe</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
+</pre>
+</div>
+
+<p>
 Due to evil, none of the marking commands work when making a visual selection in
 the headers view of mu4e. Without overriding any evil commands we may actually
 want to use in and evil selection, this can be easily fixed.

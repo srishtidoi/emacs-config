@@ -655,15 +655,26 @@ will also be the width of all other printable characters."
 ;; Viewing Mail:3 ends here
 
 ;; [[file:config.org::*Viewing Mail][Viewing Mail:4]]
+(after! mu4e
+  (defvar mu4e-min-header-frame-width 120
+    "Minimum reasonable with for the header view.")
+  (defun mu4e-widen-frame-maybe ()
+    "Expand the frame with if it's less than `mu4e-min-header-frame-width'."
+    (when (< (frame-width) mu4e-min-header-frame-width)
+      (set-frame-width (selected-frame) mu4e-min-header-frame-width)))
+  (add-hook 'mu4e-headers-mode-hook #'mu4e-widen-frame-maybe))
+;; Viewing Mail:4 ends here
+
+;; [[file:config.org::*Viewing Mail][Viewing Mail:5]]
 (map! :map mu4e-headers-mode-map
     :after mu4e
     :v "*" #'mu4e-headers-mark-for-something
     :v "!" #'mu4e-headers-mark-for-read
     :v "?" #'mu4e-headers-mark-for-unread
     :v "u" #'mu4e-headers-mark-for-unmark)
-;; Viewing Mail:4 ends here
+;; Viewing Mail:5 ends here
 
-;; [[file:config.org::*Viewing Mail][Viewing Mail:5]]
+;; [[file:config.org::*Viewing Mail][Viewing Mail:6]]
 (defadvice! mu4e~main-action-prettier-str (str &optional func-or-shortcut)
   "Highlight the first occurrence of [.] in STR.
 If FUNC-OR-SHORTCUT is non-nil and if it is a function, call it
@@ -692,21 +703,21 @@ clicked."
     newstr))
 
 (setq evil-collection-mu4e-end-region-misc "quit")
-;; Viewing Mail:5 ends here
-
-;; [[file:config.org::*Viewing Mail][Viewing Mail:6]]
-(map! :map mu4e-main-mode-map
-      :after mu4e
-      :nive "h" #'+workspace/other)
 ;; Viewing Mail:6 ends here
 
 ;; [[file:config.org::*Viewing Mail][Viewing Mail:7]]
+(map! :map mu4e-main-mode-map
+      :after mu4e
+      :nive "h" #'+workspace/other)
+;; Viewing Mail:7 ends here
+
+;; [[file:config.org::*Viewing Mail][Viewing Mail:8]]
 (defadvice! delete-current-worspace-if-empty ()
   "Close the current workspace if it is empty."
   :before #'=mu4e
   (unless (+workspace-buffer-list)
     (+workspace-delete (+workspace-current-name))))
-;; Viewing Mail:7 ends here
+;; Viewing Mail:8 ends here
 
 ;; [[file:config.org::*Sending Mail][Sending Mail:1]]
 (after! mu4e
