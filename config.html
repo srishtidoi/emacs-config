@@ -7697,8 +7697,8 @@ a bit cleverer, and handle the &ldquo;universal preamble&rdquo; while we&rsquo;r
     <span style="color: #7e7e87;">"Preamble to be inserted when minted is used."</span><span style="color: #C57BDB;">)</span>
 
   <span style="color: #C57BDB;">(</span><span style="color: #51afef;">defvar</span> <span style="color: #DFDFDF;">org-latex-universal-preamble</span> <span style="color: #7bc275;">"</span>
-<span style="color: #7bc275;">\\usepackage[main,input,include]{embedall}</span>
-<span style="color: #7bc275;">\\IfFileExists{./\\jobname.org}{\\embedfile{\\jobname.org}}{}</span>
+<span style="color: #7bc275;">\\usepackage[main,include]{embedall}</span>
+<span style="color: #7bc275;">\\IfFileExists{./\\jobname.org}{\\embedfile[desc=The original file]{\\jobname.org}}{}</span>
 <span style="color: #7bc275;">"</span>
     <span style="color: #7e7e87;">"Preamble to be included in every export."</span><span style="color: #C57BDB;">)</span><span style="color: #51afef;">)</span>
 </pre>

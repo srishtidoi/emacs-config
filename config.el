@@ -3284,8 +3284,8 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
       "Preamble to be inserted when minted is used.")
   
     (defvar org-latex-universal-preamble "
-  \\usepackage[main,input,include]{embedall}
-  \\IfFileExists{./\\jobname.org}{\\embedfile{\\jobname.org}}{}
+  \\usepackage[main,include]{embedall}
+  \\IfFileExists{./\\jobname.org}{\\embedfile[desc=The original file]{\\jobname.org}}{}
   "
       "Preamble to be included in every export."))
 
@@ -3377,8 +3377,8 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
     "Preamble to be inserted when minted is used.")
 
   (defvar org-latex-universal-preamble "
-\\usepackage[main,input,include]{embedall}
-\\IfFileExists{./\\jobname.org}{\\embedfile{\\jobname.org}}{}
+\\usepackage[main,include]{embedall}
+\\IfFileExists{./\\jobname.org}{\\embedfile[desc=The original file]{\\jobname.org}}{}
 "
     "Preamble to be included in every export."))
 ;; org-latex-smart-minted ends here
