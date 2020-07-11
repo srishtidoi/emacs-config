@@ -2781,7 +2781,7 @@ imapnotifyConfigFolder.mkdir(exist_ok=<span style="color: #a991f1;">True</span>)
     <span style="color: #51afef;">except</span> subprocess.TimeoutExpired <span style="color: #51afef;">as</span> e:
         <span style="color: #51afef;">print</span>(
             f<span style="color: #7bc275;">"\033[1;31mError:\033[0;31m failed to fetch mailboxes (skipping): "</span>
-            + f<span style="color: #7bc275;">"`{' '.join(e.cmd)}' timed out after {e.timeout.2f} seconds\033[0;37m"</span>
+            + f<span style="color: #7bc275;">"`{' '.join(e.cmd)}' timed out after {e.timeout:.2f} seconds\033[0;37m"</span>
         )
         <span style="color: #51afef;">return</span>
 
@@ -2933,7 +2933,7 @@ imapnotifyConfigFolder.mkdir(exist_ok=<span style="color: #a991f1;">True</span>)
             + f<span style="color: #7bc275;">"returned code {e.returncode}\033[0;37m"</span>
         )
     <span style="color: #51afef;">except</span> subprocess.TimeoutExpired <span style="color: #51afef;">as</span> e:
-        <span style="color: #51afef;">print</span>(f<span style="color: #7bc275;">" \033[1;31mtimed out after {e.timeout.2f} seconds\033[0;37m"</span>)
+        <span style="color: #51afef;">print</span>(f<span style="color: #7bc275;">" \033[1;31mtimed out after {e.timeout:.2f} seconds\033[0;37m"</span>)
         <span style="color: #51afef;">return</span> <span style="color: #a991f1;">False</span>
 
 
@@ -2979,6 +2979,18 @@ imapnotifyConfigFolder.mkdir(exist_ok=<span style="color: #a991f1;">True</span>)
         <span style="color: #a991f1;">exit</span>()
     <span style="color: #51afef;">elif</span> sys.argv[<span style="color: #e69055; font-weight: bold;">1</span>] == <span style="color: #7bc275;">"--status"</span>:
         getAccountServiceStates(oldAccounts)
+        <span style="color: #a991f1;">exit</span>()
+    <span style="color: #51afef;">elif</span> sys.argv[<span style="color: #e69055; font-weight: bold;">1</span>] == <span style="color: #7bc275;">"--help"</span>:
+        <span style="color: #51afef;">print</span>(<span style="color: #7bc275;">"""\033[1;37mMbsync to IMAP Notify config generator.\033[0;37m</span>
+
+<span style="color: #7bc275;">Usage: mbsync-imapnotify [options]</span>
+
+<span style="color: #7bc275;">Options:</span>
+<span style="color: #7bc275;">    --enable       enable all services</span>
+<span style="color: #7bc275;">    --disable      disable all services</span>
+<span style="color: #7bc275;">    --status       fetch the status for all services</span>
+<span style="color: #7bc275;">    --help         show this help</span>
+<span style="color: #7bc275;">"""</span>, end=<span style="color: #7bc275;">''</span>)
         <span style="color: #a991f1;">exit</span>()
     <span style="color: #51afef;">else</span>:
         <span style="color: #51afef;">print</span>(f<span style="color: #7bc275;">"\033[0;31mFlag {sys.argv[1]} not recognised\033[0;37m"</span>)
