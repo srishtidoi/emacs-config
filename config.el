@@ -3099,6 +3099,32 @@ INFO is a plist used as a communication channel."
   org-html-htmlize-output-type 'css)
 ;; Custom CSS/JS:2 ends here
 
+;; [[file:config.org::Src blocks][Src blocks]]
+(defadvice! org-html-src-block-collapsable (orig-fn src-block contents info)
+  "Wrap the usual <pre> block in a <details>"
+  :around #'org-html-src-block
+  (let* ((properties (cadr src-block))
+         (lang (plist-get properties :language))
+         (name (plist-get properties :name)))
+    (format "<details class='code' open><summary%s>%s</summary>%s</details>"
+            (if name " class='named'" "")
+            (if (not name) lang (format "<span class='name'>%s</span> %s" name lang))
+            (funcall orig-fn src-block contents info))))
+;; Src blocks ends here
+
+;; [[file:config.org::Exampl, fixed width, and property blocks][Exampl, fixed width, and property blocks]]
+(after! org
+  (defun org-html-block-collapsable (orig-fn block contents info)
+    "Wrap the usual block in a <details>"
+    (concat "<details class='code' open><summary></summary>"
+            (funcall orig-fn block contents info)
+            "</details>"))
+
+  (advice-add 'org-html-example-block   :around #'org-html-block-collapsable)
+  (advice-add 'org-html-fixed-width     :around #'org-html-block-collapsable)
+  (advice-add 'org-html-property-drawer :around #'org-html-block-collapsable))
+;; Exampl, fixed width, and property blocks ends here
+
 ;; [[file:config.org::*Make verbatim different to code][Make verbatim different to code:1]]
 (setq org-html-text-markup-alist
       '((bold . "<b>%s</b>")
