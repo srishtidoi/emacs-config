@@ -2307,7 +2307,7 @@ appropriate.  In tables, insert a new row or end the table."
            (title (plist-get xkcd-info :title))
            (file (xkcd-download img (string-to-number num))))
       (cond ((org-export-derived-backend-p backend 'html)
-             (format "<img src='%s' title=\"%s\" alt='%s'>" img (subst-char-in-string ?\" ?“ alt) title))
+             (format "<img class='invertable' src='%s' title=\"%s\" alt='%s'>" img (subst-char-in-string ?\" ?“ alt) title))
             ((org-export-derived-backend-p backend 'latex)
              (format "\\begin{figure}[!htb]
   \\centering
@@ -2920,83 +2920,184 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
   (ox-extras-activate '(ignore-headlines)))
 ;; Exporting (general):2 ends here
 
-;; [[file:config.org::*Custom CSS/JS][Custom CSS/JS:3]]
+;; [[file:config.org::*Extra header content][Extra header content:1]]
+(defadvice! org-html-template-fancier (contents info)
+  "Return complete document string after HTML conversion.
+CONTENTS is the transcoded contents string.  INFO is a plist
+holding export options. Adds a few extra things to the body
+compared to the default implementation."
+  :override #'org-html-template
+  (concat
+   (when (and (not (org-html-html5-p info)) (org-html-xhtml-p info))
+     (let* ((xml-declaration (plist-get info :html-xml-declaration))
+      (decl (or (and (stringp xml-declaration) xml-declaration)
+          (cdr (assoc (plist-get info :html-extension)
+          xml-declaration))
+          (cdr (assoc "html" xml-declaration))
+          "")))
+       (when (not (or (not decl) (string= "" decl)))
+   (format "%s\n"
+     (format decl
+       (or (and org-html-coding-system
+          (fboundp 'coding-system-get)
+          (coding-system-get org-html-coding-system 'mime-charset))
+           "iso-8859-1"))))))
+   (org-html-doctype info)
+   "\n"
+   (concat "<html"
+     (cond ((org-html-xhtml-p info)
+      (format
+       " xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"%s\" xml:lang=\"%s\""
+       (plist-get info :language) (plist-get info :language)))
+     ((org-html-html5-p info)
+      (format " lang=\"%s\"" (plist-get info :language))))
+     ">\n")
+   "<head>\n"
+   (org-html--build-meta-info info)
+   (org-html--build-head info)
+   (org-html--build-mathjax-config info)
+   "</head>\n"
+   "<body>\n<input type='checkbox' id='theme-switch'><div id='page'><label id='switch-label' for='theme-switch'></label>"
+   (let ((link-up (org-trim (plist-get info :html-link-up)))
+   (link-home (org-trim (plist-get info :html-link-home))))
+     (unless (and (string= link-up "") (string= link-home ""))
+       (format (plist-get info :html-home/up-format)
+         (or link-up link-home)
+         (or link-home link-up))))
+   ;; Preamble.
+   (org-html--build-pre/postamble 'preamble info)
+   ;; Document contents.
+   (let ((div (assq 'content (plist-get info :html-divs))))
+     (format "<%s id=\"%s\">\n" (nth 1 div) (nth 2 div)))
+   ;; Document title.
+   (when (plist-get info :with-title)
+     (let ((title (and (plist-get info :with-title)
+           (plist-get info :title)))
+     (subtitle (plist-get info :subtitle))
+     (html5-fancy (org-html--html5-fancy-p info)))
+       (when title
+   (format
+    "<div class='page-header'><div class='page-meta'>%s, %s</div><h1 class=\"title\">%s%s</h1></div>\n"
+    (format-time-string "%Y-%m-%d %A %-I:%M%p")
+    (org-export-data (plist-get info :author) info)
+    (org-export-data title info)
+    (if subtitle
+        (format
+         (if html5-fancy
+       "<p class=\"subtitle\">%s</p>\n"
+     (concat "\n" (org-html-close-tag "br" nil info) "\n"
+       "<span class=\"subtitle\">%s</span>\n"))
+         (org-export-data subtitle info))
+      "")))))
+   contents
+   (format "</%s>\n" (nth 1 (assq 'content (plist-get info :html-divs))))
+   ;; Postamble.
+   (org-html--build-pre/postamble 'postamble info)
+   ;; Possibly use the Klipse library live code blocks.
+   (when (plist-get info :html-klipsify-src)
+     (concat "<script>" (plist-get info :html-klipse-selection-script)
+       "</script><script src=\""
+       org-html-klipse-js
+       "\"></script><link rel=\"stylesheet\" type=\"text/css\" href=\""
+       org-html-klipse-css "\"/>"))
+   ;; Closing document.
+   "</div>\n</body>\n</html>"))
+;; Extra header content:1 ends here
+
+;; [[file:config.org::*Extra header content][Extra header content:2]]
+(defun org-html--build-meta-entry (label identity &optional content-format &rest content-formatters)
+  "Construct <meta> tag with LABEL=\"IDENTITY\" and content from CONTENT-FORMAT and CONTENT-FORMATTER."
+  (concat "<meta "
+          (format "%s=\"%s" label identity)
+          (when content-format
+            (concat "\" content=\""
+                    (replace-regexp-in-string
+                     "\"" "&quot;"
+                     (org-html-encode-plain-text
+                      (if content-formatters
+                          (apply #'format content-format content-formatters)
+                        content-format)))))
+          "\" />\n"))
+
+(defadvice! org-html--build-meta-info-extended (info)
+  "Return meta tags for exported document, with more meta than usual.
+INFO is a plist used as a communication channel."
+  :override #'org-html--build-meta-info
+  (let* ((protect-string
+          (lambda (str)
+            (replace-regexp-in-string
+             "\"" "&quot;" (org-html-encode-plain-text str))))
+         (title (org-export-data (plist-get info :title) info))
+         ;; Set title to an invisible character instead of leaving it
+         ;; empty, which is invalid.
+         (title (if (org-string-nw-p title) title "&lrm;"))
+         (subtitle (org-export-data (plist-get info :subtitle) info))
+         (author (and (plist-get info :with-author)
+                      (let ((auth (plist-get info :author)))
+         ;; Return raw Org syntax.
+                        (and auth (org-element-interpret-data auth)))))
+         (description (plist-get info :description))
+         (keywords (plist-get info :keywords))
+         (charset (or (and org-html-coding-system
+                           (fboundp 'coding-system-get)
+                           (coding-system-get org-html-coding-system
+                                              'mime-charset))
+                      "iso-8859-1")))
+    (concat
+     (when (plist-get info :time-stamp-file)
+       (format-time-string
+        (concat "<!-- "
+                (plist-get info :html-metadata-timestamp-format)
+                " -->\n")))
+
+     (org-html--build-meta-entry "charset" charset)
+
+     (let ((viewport-options
+            (cl-remove-if-not (lambda (cell) (org-string-nw-p (cadr cell)))
+                              (plist-get info :html-viewport))))
+       (if viewport-options
+           (org-html--build-meta-entry "name" "viewport"
+                                       (mapconcat
+                                        (lambda (elm) (format "%s=%s" (car elm) (cadr elm)))
+                                        viewport-options ", "))))
+
+     (format "<title>%s</title>\n" title)
+
+     (org-html--build-meta-entry "name" "generator" "Org Mode")
+
+     (when (org-string-nw-p author)
+       (org-html--build-meta-entry "name" "author" author))
+
+     (when (org-string-nw-p description)
+       (org-html--build-meta-entry "name" "description" description))
+
+     (when (org-string-nw-p keywords)
+       (org-html--build-meta-entry "name" "keywords" keywords))
+
+     (org-html--build-meta-entry "name" "theme-color" "#77aa99")
+
+     (org-html--build-meta-entry "property" "og:title" title)
+     (org-html--build-meta-entry "property" "og:type" "article")
+     (when (org-string-nw-p author)
+       (org-html--build-meta-entry "property" "og:article:author:first_name" (car (s-split " " author))))
+     (when (and (org-string-nw-p author) (s-contains-p " " author))
+       (org-html--build-meta-entry "property" "og:article:author:first_name" (cdr (s-split-up-to " " author 2))))
+     (org-html--build-meta-entry "property" "og:article:published_time" (format-time-string "%FT%T%z"))
+     (when (org-string-nw-p subtitle)
+       (org-html--build-meta-entry "property" "og:description" subtitle)))))
+;; Extra header content:2 ends here
+
+;; [[file:config.org::*Custom CSS/JS][Custom CSS/JS:2]]
 (after! org
-  (setq org-custom-css (f-read-text (expand-file-name "misc/org-export-style.css" doom-private-dir)))
-  (setq org-custom-html-header (f-read-text (expand-file-name "misc/org-export-header.html" doom-private-dir)))
-
-  (defun my-org-inline-css-hook (exporter)
-    "Insert custom inline css to automatically set the
-   background of code to whatever theme I'm using's background"
-    (when (eq exporter 'html)
-      (setq
-       org-html-head-extra
-       (concat
-        (if (s-contains-p "<!––tec/custom-head-start-->" org-html-head-extra)
-            (s-replace-regexp "<!––tec\\/custom-head-start-->[^🙜]*<!––tec\\/custom-head-end-->" "" org-html-head-extra)
-          org-html-head-extra)
-        "<!––tec/custom-head-start-->"
-        (format "<style type=\"text/css\">
-   :root {
-      --theme-bg: %s;
-      --theme-bg-alt: %s;
-      --theme-base0: %s;
-      --theme-base1: %s;
-      --theme-base2: %s;
-      --theme-base3: %s;
-      --theme-base4: %s;
-      --theme-base5: %s;
-      --theme-base6: %s;
-      --theme-base7: %s;
-      --theme-base8: %s;
-      --theme-fg: %s;
-      --theme-fg-alt: %s;
-      --theme-grey: %s;
-      --theme-red: %s;
-      --theme-orange: %s;
-      --theme-green: %s;
-      --theme-teal: %s;
-      --theme-yellow: %s;
-      --theme-blue: %s;
-      --theme-dark-blue: %s;
-      --theme-magenta: %s;
-      --theme-violet: %s;
-      --theme-cyan: %s;
-      --theme-dark-cyan: %s;
-   }
-</style>"
-                (doom-color 'bg)
-                (doom-color 'bg-alt)
-                (doom-color 'base0)
-                (doom-color 'base1)
-                (doom-color 'base2)
-                (doom-color 'base3)
-                (doom-color 'base4)
-                (doom-color 'base5)
-                (doom-color 'base6)
-                (doom-color 'base7)
-                (doom-color 'base8)
-                (doom-color 'fg)
-                (doom-color 'fg-alt)
-                (doom-color 'grey)
-                (doom-color 'red)
-                (doom-color 'orange)
-                (doom-color 'green)
-                (doom-color 'teal)
-                (doom-color 'yellow)
-                (doom-color 'blue)
-                (doom-color 'dark-blue)
-                (doom-color 'magenta)
-                (doom-color 'violet)
-                (doom-color 'cyan)
-                (doom-color 'dark-cyan))
-        (if (bound-and-true-p org-msg-currently-exporting) ""
-          (concat org-custom-html-header "<style>" org-custom-css "</style>"))
-        "<!––tec/custom-head-end-->"
-        ))))
-
-(add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook))
-;; Custom CSS/JS:3 ends here
+  (setq org-html-style-default
+        (concat (f-read-text (expand-file-name "misc/org-export-header.html" doom-private-dir))
+              "<script>\n"
+              (f-read-text (expand-file-name "misc/pile-css-theme/toc.js" doom-private-dir))
+              "</script>\n<style>\n"
+              (f-read-text (expand-file-name "misc/pile-css-theme/main.css" doom-private-dir))
+              "</style>"))
+  org-html-htmlize-output-type 'css)
+;; Custom CSS/JS:2 ends here
 
 ;; [[file:config.org::*Make verbatim different to code][Make verbatim different to code:1]]
 (setq org-html-text-markup-alist
@@ -3023,9 +3124,8 @@ JUSTIFICATION is a symbol for 'left, 'center or 'right."
     (when (org-export-derived-backend-p backend 'html)
       (unless org-msg-currently-exporting
         (replace-regexp-in-string
-         "<h\\([0-9]\\) id=\"\\([a-z0-9-]+\\)\">" ; this is quite restrictive, but due to `org-heading-contraction' I can do this
-         "<h\\1 id=\"\\2\">\
- <a class=\"anchor\" aria-hidden=\"true\" href=\"#\\2\">🔗</a>"
+         "<h\\([0-9]\\) id=\"\\([a-z0-9-]+\\)\">\\(.*[^ ]\\)<\\/h[0-9]>" ; this is quite restrictive, but due to `org-heading-contraction' I can do this
+         "<h\\1 id=\"\\2\">\\3<a aria-hidden=\"true\" href=\"#\\2\">#</a> </h\\1>"
          text))))
 
   (add-to-list 'org-export-filter-headline-functions
