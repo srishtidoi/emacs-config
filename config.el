@@ -3126,6 +3126,15 @@ INFO is a plist used as a communication channel."
   (advice-add 'org-html-property-drawer :around #'org-html-block-collapsable))
 ;; Exampl, fixed width, and property blocks ends here
 
+;; [[file:config.org::*Handle table overflow][Handle table overflow:1]]
+(defadvice! org-html-table-wrapped (orig-fn table contents info)
+  "Wrap the usual <table> in a <div>"
+  :around #'org-html-table
+  (concat "<div class='table'>"
+          (funcall orig-fn table contents info)
+          "</div>"))
+;; Handle table overflow:1 ends here
+
 ;; [[file:config.org::*Make verbatim different to code][Make verbatim different to code:1]]
 (setq org-html-text-markup-alist
       '((bold . "<b>%s</b>")

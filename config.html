@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-17 Fri 02:41 -->
+<!-- 2020-07-17 Fri 05:06 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -15,7 +15,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:image" content="https://tecosaur.com/resources/org/nib.png" />
 <meta property="og:article:author:first_name" content="tecosaur" />
-<meta property="og:article:published_time" content="2020-07-17T02:41:05+0800" />
+<meta property="og:article:published_time" content="2020-07-17T05:06:11+0800" />
 <meta property="og:description" content="The Methods, Management, and Menagerie of Madness" />
 <link rel="icon" href="https://tecosaur.com/resources/org/nib.ico" type="image/ico" />
 
@@ -2291,6 +2291,10 @@ li.off > .checkbox::after {
   color: var(--text-light);
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace; }
 
+div.table {
+  max-width: 100%;
+  overflow-x: auto; }
+
 table {
   border-color: var(--text-light);
   border-left: transparent;
@@ -2568,7 +2572,7 @@ nav#table-of-contents {
 </head>
 <body>
 <input type='checkbox' id='theme-switch'><div id='page'><label id='switch-label' for='theme-switch'></label><div id="content">
-<div class='page-header'><div class='page-meta'>2020-07-17 Friday 4:42AM, tecosaur</div><h1 class="title">Doom Emacs Configuration
+<div class='page-header'><div class='page-meta'>2020-07-17 Friday 5:06AM, tecosaur</div><h1 class="title">Doom Emacs Configuration
 <br />
 <span class="subtitle">The Methods, Management, and Menagerie of Madness</span>
 </h1></div>
@@ -2815,11 +2819,12 @@ nav#table-of-contents {
 <ul>
 <li><a href="#extra-header-content">5.2.3.3.1. Extra header content</a></li>
 <li><a href="#custom-css-js">5.2.3.3.2. Custom CSS/JS</a></li>
-<li><a href="#collapsable-src-blocks">5.2.3.3.3. Collapsable src blocks</a></li>
-<li><a href="#make-verbatim-different">5.2.3.3.4. Make verbatim different to code</a></li>
-<li><a href="#change-checkbox-type">5.2.3.3.5. Change checkbox type</a></li>
-<li><a href="#header-anchors">5.2.3.3.6. Header anchors</a></li>
-<li><a href="#latex-rendering">5.2.3.3.7. LaTeX Rendering</a></li>
+<li><a href="#collapsable-src-example">5.2.3.3.3. Collapsable src and example blocks</a></li>
+<li><a href="#handle-table-overflow">5.2.3.3.4. Handle table overflow</a></li>
+<li><a href="#make-verbatim-different">5.2.3.3.5. Make verbatim different to code</a></li>
+<li><a href="#change-checkbox-type">5.2.3.3.6. Change checkbox type</a></li>
+<li><a href="#header-anchors">5.2.3.3.7. Header anchors</a></li>
+<li><a href="#latex-rendering">5.2.3.3.8. LaTeX Rendering</a></li>
 </ul>
 </li>
 <li><a href="#exporting-latex">5.2.3.4. Exporting to LaTeX</a>
@@ -3068,7 +3073,7 @@ editor) the following applications
 I have attempted to quantify aspects of my impressions of them below.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<div class='table'><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -3148,7 +3153,7 @@ I have attempted to quantify aspects of my impressions of them below.
 <td class="org-right">2</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
 
 <div class="figure">
@@ -5222,7 +5227,7 @@ building it from source then. I needed to install these packages
 </ul>
 
 <details class='code' open><summary class='named'><span class='name'>install mu from source (solus)</span> shell</summary><div class="org-src-container">
-<pre class="src src-shell" id="org013ad8a"><span class="org-type">cd</span> ~/.local/lib/
+<pre class="src src-shell" id="org48828f4"><span class="org-type">cd</span> ~/.local/lib/
 <span class="org-type">git</span> clone https://github.com/djcb/mu.git
 <span class="org-type">cd</span> ./mu
 ./autogen.sh
@@ -6012,7 +6017,7 @@ in the file and check for existance too.
 To make this look a little nicer, we will overwrite the default style.
 </p>
 <details class='code' open><summary class='named'><span class='name'>org-msg-restyle</span> emacs-lisp</summary><div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org22b5ab1"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-msg-enforce-css
+<pre class="src src-emacs-lisp" id="orgd3d99fd"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-msg-enforce-css
       <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>font-family <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-2">(</span>font-family . <span class="org-string">"-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell,\</span>
 <span class="org-string">        \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
              <span class="org-rainbow-delimiters-depth-1">(</span>monospace-font <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-2">(</span>font-family . <span class="org-string">"SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
@@ -6688,7 +6693,7 @@ It&rsquo;s nice to see ansi colour codes displayed
 I really like org mode, I&rsquo;ve given some thought to why, and below is the result.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<div class='table'><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -6776,7 +6781,7 @@ I really like org mode, I&rsquo;ve given some thought to why, and below is the r
 <td class="org-right">2</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
 
 <div class="figure">
@@ -7440,7 +7445,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <details class='code' open><summary class='named'><span class='name'>prettify-capture</span> emacs-lisp</summary><div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org1812363"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">org-capture-select-template-prettier</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">&amp;optional</span> keys<span class="org-rainbow-delimiters-depth-2">)</span>
+<pre class="src src-emacs-lisp" id="orgf146369"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">org-capture-select-template-prettier</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">&amp;optional</span> keys<span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-doc">"Select a capture template, in a prettier way than default</span>
 <span class="org-doc">Lisp programs can force the template by setting KEYS to a string."</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-variable-name">org-capture-templates</span>
@@ -8057,7 +8062,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="org052fbbc"></a></li>
+This uses the radar template, the result of which can be seen in <a id="orgc3caa64"></a></li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -8673,7 +8678,7 @@ text &#x2014; like this \(\sqrt{\beta^2+3}-\sum_{\phi=1}^\infty \frac{x^\phi-1}{
 We can either render from a <code>dvi</code> or <code>pdf</code> file, so let&rsquo;s benchmark <code>latex</code> and
 <code>pdflatex</code>.
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<div class='table'><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -8693,7 +8698,7 @@ We can either render from a <code>dvi</code> or <code>pdf</code> file, so let&rs
 <td class="org-left">215±3 ms</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
 <p>
 On the rendering side, there are two <code>.dvi</code>-to-image converters which I am
@@ -8705,7 +8710,7 @@ size and prefer a vector graphic.
 <p>
 Using the above latex expression and benchmarking lead to the following results:
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<div class='table'><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -8729,12 +8734,12 @@ Using the above latex expression and benchmarking lead to the following results:
 <td class="org-left">12±2 ms</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
 <p>
 Now let&rsquo;s combine this to see what&rsquo;s best
 </p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<div class='table'><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -8770,7 +8775,7 @@ Now let&rsquo;s combine this to see what&rsquo;s best
 <td class="org-left">16 KiB</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
 <p>
 So, let&rsquo;s use <code>dvipng</code> for previewing LaTeX fragments in-Emacs, but <code>dvisvgm</code> for <a href="#exporting-html">LaTeX Rendering</a>.
@@ -9185,8 +9190,8 @@ Chrome seems to be treating this as <code>position: absolute</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-collapsable-src-blocks" class="outline-6">
-<h6 id="collapsable-src-blocks"><span class="section-number-6">5.2.3.3.3</span> Collapsable src blocks<a aria-hidden="true" href="#collapsable-src-blocks">#</a> </h6>
+<div id="outline-container-collapsable-src-example" class="outline-6">
+<h6 id="collapsable-src-example"><span class="section-number-6">5.2.3.3.3</span> Collapsable src and example blocks<a aria-hidden="true" href="#collapsable-src-example">#</a> </h6>
 <div class="outline-text-6" id="text-5-2-3-3-3">
 <p>
 By wrapping the <code>&lt;pre&gt;</code> element in a <code>&lt;details&gt;</code> block, we can obtain collapsable
@@ -9194,8 +9199,8 @@ blocks with no CSS, though we will toss a little in anyway to have this looking
 somewhat spiffy.
 </p>
 
-<details class='code' open><summary>emacs-lisp</summary><div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defadvice!</span> org-html-src-block-collapsable <span class="org-rainbow-delimiters-depth-2">(</span>orig-fn src-block contents info<span class="org-rainbow-delimiters-depth-2">)</span>
+<details class='code' open><summary class='named'><span class='name'>Src blocks</span> emacs-lisp</summary><div class="org-src-container">
+<pre class="src src-emacs-lisp" id="org196ef1d"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defadvice!</span> org-html-src-block-collapsable <span class="org-rainbow-delimiters-depth-2">(</span>orig-fn src-block contents info<span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-doc">"Wrap the usual &lt;pre&gt; block in a &lt;details&gt;"</span>
   <span class="org-builtin">:around</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">org-html-src-block</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>properties <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">cadr</span> src-block<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
@@ -9209,7 +9214,7 @@ somewhat spiffy.
 </div></details>
 
 <details class='code' open><summary class='named'><span class='name'>Exampl, fixed width, and property blocks</span> emacs-lisp</summary><div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgf152047"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">after!</span> org
+<pre class="src src-emacs-lisp" id="org0908c3f"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">after!</span> org
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">defun</span> <span class="org-function-name">org-html-block-collapsable</span> <span class="org-rainbow-delimiters-depth-3">(</span>orig-fn block contents info<span class="org-rainbow-delimiters-depth-3">)</span>
     <span class="org-doc">"Wrap the usual block in a &lt;details&gt;"</span>
     <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">concat</span> <span class="org-string">"&lt;details class='code' open&gt;&lt;summary&gt;&lt;/summary&gt;"</span>
@@ -9223,9 +9228,29 @@ somewhat spiffy.
 </div></details>
 </div>
 </div>
-<div id="outline-container-make-verbatim-different" class="outline-6">
-<h6 id="make-verbatim-different"><span class="section-number-6">5.2.3.3.4</span> Make verbatim different to code<a aria-hidden="true" href="#make-verbatim-different">#</a> </h6>
+<div id="outline-container-handle-table-overflow" class="outline-6">
+<h6 id="handle-table-overflow"><span class="section-number-6">5.2.3.3.4</span> Handle table overflow<a aria-hidden="true" href="#handle-table-overflow">#</a> </h6>
 <div class="outline-text-6" id="text-5-2-3-3-4">
+<p>
+In order to accommodate wide tables &#x2014;particularly on mobile devices&#x2014; we want
+to set a maximum width and scroll overflow. Unfortunately, this cannot be applied
+directly to the <code>table</code> element, so we have to wrap it in a <code>div</code>.
+</p>
+
+<details class='code' open><summary>emacs-lisp</summary><div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defadvice!</span> org-html-table-wrapped <span class="org-rainbow-delimiters-depth-2">(</span>orig-fn table contents info<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-doc">"Wrap the usual &lt;table&gt; in a &lt;div&gt;"</span>
+  <span class="org-builtin">:around</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">org-html-table</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">concat</span> <span class="org-string">"&lt;div class='table'&gt;"</span>
+          <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">funcall</span> orig-fn table contents info<span class="org-rainbow-delimiters-depth-3">)</span>
+          <span class="org-string">"&lt;/div&gt;"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</pre>
+</div></details>
+</div>
+</div>
+<div id="outline-container-make-verbatim-different" class="outline-6">
+<h6 id="make-verbatim-different"><span class="section-number-6">5.2.3.3.5</span> Make verbatim different to code<a aria-hidden="true" href="#make-verbatim-different">#</a> </h6>
+<div class="outline-text-6" id="text-5-2-3-3-5">
 <p>
 Since we have <kbd>verbatim</kbd> and <code>code</code>, let&rsquo;s use <kbd>verbatim</kbd> for key strokes.
 </p>
@@ -9242,8 +9267,8 @@ Since we have <kbd>verbatim</kbd> and <code>code</code>, let&rsquo;s use <kbd>ve
 </div>
 </div>
 <div id="outline-container-change-checkbox-type" class="outline-6">
-<h6 id="change-checkbox-type"><span class="section-number-6">5.2.3.3.5</span> Change checkbox type<a aria-hidden="true" href="#change-checkbox-type">#</a> </h6>
-<div class="outline-text-6" id="text-5-2-3-3-5">
+<h6 id="change-checkbox-type"><span class="section-number-6">5.2.3.3.6</span> Change checkbox type<a aria-hidden="true" href="#change-checkbox-type">#</a> </h6>
+<div class="outline-text-6" id="text-5-2-3-3-6">
 <p>
 We also want to use HTML checkboxes, however we want to get a bit fancier than default
 </p>
@@ -9264,8 +9289,8 @@ We also want to use HTML checkboxes, however we want to get a bit fancier than d
 </div>
 </div>
 <div id="outline-container-header-anchors" class="outline-6">
-<h6 id="header-anchors"><span class="section-number-6">5.2.3.3.6</span> Header anchors<a aria-hidden="true" href="#header-anchors">#</a> </h6>
-<div class="outline-text-6" id="text-5-2-3-3-6">
+<h6 id="header-anchors"><span class="section-number-6">5.2.3.3.7</span> Header anchors<a aria-hidden="true" href="#header-anchors">#</a> </h6>
+<div class="outline-text-6" id="text-5-2-3-3-7">
 <p>
 I want to add github-style links on hover for headings.
 </p>
@@ -9289,8 +9314,8 @@ It&rsquo;s worth noting that <code>org-msg-currently-exporting</code> is defined
 </div>
 </div>
 <div id="outline-container-latex-rendering" class="outline-6">
-<h6 id="latex-rendering"><span class="section-number-6">5.2.3.3.7</span> LaTeX Rendering<a aria-hidden="true" href="#latex-rendering">#</a> </h6>
-<div class="outline-text-6" id="text-5-2-3-3-7">
+<h6 id="latex-rendering"><span class="section-number-6">5.2.3.3.8</span> LaTeX Rendering<a aria-hidden="true" href="#latex-rendering">#</a> </h6>
+<div class="outline-text-6" id="text-5-2-3-3-8">
 <p>
 When displaying images, we want to resize by the reciprocal of <code>preview-scale</code>.
 Unfortunately that doesn&rsquo;t happen by default, but not to worry! Advice exists.
@@ -9610,7 +9635,7 @@ Now for a few more adjustments.
 We also want a particular preamble when minted is used,
 </p>
 <details class='code' open><summary class='named'><span class='name'>org-minted-preamble</span> LaTeX</summary><div class="org-src-container">
-<pre class="src src-LaTeX" id="org731a65b"><span class="org-font-latex-warning">\</span><span class="org-keyword"><span class="org-font-latex-warning"><span class="org-keyword">\</span></span></span><span class="org-keyword"><span class="org-keyword">usepackage</span></span>{<span class="org-function-name">minted</span>}
+<pre class="src src-LaTeX" id="orgc7165fb"><span class="org-font-latex-warning">\</span><span class="org-keyword"><span class="org-font-latex-warning"><span class="org-keyword">\</span></span></span><span class="org-keyword"><span class="org-keyword">usepackage</span></span>{<span class="org-function-name">minted</span>}
 <span class="org-font-latex-warning">\</span><span class="org-keyword"><span class="org-font-latex-warning"><span class="org-keyword">\</span></span></span><span class="org-keyword"><span class="org-keyword">usepackage</span></span>[<span class="org-variable-name">many</span>]{<span class="org-function-name">tcolorbox</span>}
 <span class="org-font-latex-warning">\</span><span class="org-font-latex-warning"><span class="org-keyword">\</span></span><span class="org-keyword">setminted</span>{
   frame=none,
@@ -9659,7 +9684,7 @@ We also always want some particular elements in the preamble, let&rsquo;s call t
 the &ldquo;universal preamble&rdquo;
 </p>
 <details class='code' open><summary class='named'><span class='name'>org-universal-preamble</span> LaTeX</summary><div class="org-src-container">
-<pre class="src src-LaTeX" id="org40160a0"><span class="org-font-latex-warning">\</span><span class="org-keyword"><span class="org-font-latex-warning"><span class="org-keyword">\</span></span></span><span class="org-keyword"><span class="org-keyword">usepackage</span></span>[<span class="org-variable-name">main,include</span>]{<span class="org-function-name">embedall</span>}
+<pre class="src src-LaTeX" id="org9316bf9"><span class="org-font-latex-warning">\</span><span class="org-keyword"><span class="org-font-latex-warning"><span class="org-keyword">\</span></span></span><span class="org-keyword"><span class="org-keyword">usepackage</span></span>[<span class="org-variable-name">main,include</span>]{<span class="org-function-name">embedall</span>}
 <span class="org-font-latex-warning">\</span><span class="org-font-latex-warning"><span class="org-keyword">\</span></span><span class="org-keyword">IfFileExists</span>{./<span class="org-font-latex-warning">\</span><span class="org-font-latex-warning"><span class="org-keyword">\</span></span><span class="org-keyword">jobname</span>.org}{<span class="org-font-latex-warning">\</span><span class="org-font-latex-warning"><span class="org-keyword">\</span></span><span class="org-keyword">embedfile</span>[desc=The original file]{<span class="org-font-latex-warning">\</span><span class="org-font-latex-warning"><span class="org-keyword">\</span></span><span class="org-keyword">jobname</span>.org}}{}
 </pre>
 </div></details>
@@ -9669,7 +9694,7 @@ Instead of just loading doing the &rsquo;minted stuff&rsquo; all the time, we ca
 a bit cleverer, and handle the &ldquo;universal preamble&rdquo; while we&rsquo;re at it.
 </p>
 <details class='code' open><summary class='named'><span class='name'>org-latex-smart-minted</span> emacs-lisp</summary><div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgf2b5abf"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">after!</span> org
+<pre class="src src-emacs-lisp" id="org8440c42"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">after!</span> org
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">defadvice!</span> org-latex-header-smart-minted <span class="org-rainbow-delimiters-depth-3">(</span>orig-fn tpl def-pkg pkg snippets-p <span class="org-type">&amp;optional</span> extra<span class="org-rainbow-delimiters-depth-3">)</span>
     <span class="org-doc">"Include minted config if src blocks are detected."</span>
     <span class="org-builtin">:around</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">org-splice-latex-header</span>
@@ -10598,7 +10623,7 @@ Now we just need to load it appropriately.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-07-17 Fri 04:39</p>
+<p class="date">Created: 2020-07-17 Fri 05:06</p>
 </div>
 </div>
 </body>
