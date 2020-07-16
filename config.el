@@ -3109,7 +3109,8 @@ INFO is a plist used as a communication channel."
          (name (plist-get properties :name)))
     (format "<details class='code' open><summary%s>%s</summary>%s</details>"
             (if name " class='named'" "")
-            (if (not name) lang (format "<span class='name'>%s</span> %s" name lang))
+            (if (not name) (concat "<span class='lang'>" lang "</span>")
+              (format "<span class='name'>%s</span><span class='lang'>%s</span>" name lang))
             (funcall orig-fn src-block contents info))))
 ;; Src blocks ends here
 
