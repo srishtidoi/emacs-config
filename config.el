@@ -624,7 +624,10 @@ will also be the width of all other printable characters."
           (:from . 25)
           (:folder . 10)
           (:recipnum . 2)
-          (:subject)))
+          (:subject))
+        mu4e-headers-date-format "%d/%m/%y"
+        mu4e-headers-time-format "%T")
+
   (plist-put (cdr (assoc :flags mu4e-header-info)) :shortname " Flags") ; default=Flgs
   (setq mu4e-header-info-custom
         '((:account .
