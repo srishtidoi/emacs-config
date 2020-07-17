@@ -77,6 +77,10 @@
            :no-byte-compile t))
 ;; LaTeX:2 ends here
 
+;; [[file:config.org::*Org Mode][Org Mode:1]]
+(unpin! org)
+;; Org Mode:1 ends here
+
 ;; [[file:config.org::*Improve agenda/capture][Improve agenda/capture:1]]
 (package! org-super-agenda :pin "dd0d104c269fab9ebe5af7009bc1dd2a3a8f3c12")
 ;; Improve agenda/capture:1 ends here
@@ -117,7 +121,7 @@
 ;; Extra functionality:4 ends here
 
 ;; [[file:config.org::*Extra functionality][Extra functionality:5]]
-(package! org-plot :recipe (:local-repo "lisp" :no-byte-compile t))
+;; (package! org-plot :recipe (:local-repo "lisp" :no-byte-compile t))
 ;; Extra functionality:5 ends here
 
 ;; [[file:config.org::*Extra functionality][Extra functionality:6]]
