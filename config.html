@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-17 Fri 13:10 -->
+<!-- 2020-07-17 Fri 14:12 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -15,7 +15,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:image" content="https://tecosaur.com/resources/org/nib.png" />
 <meta property="og:article:author:first_name" content="tecosaur" />
-<meta property="og:article:published_time" content="2020-07-17T13:10:27+0800" />
+<meta property="og:article:published_time" content="2020-07-17T14:12:08+0800" />
 <meta property="og:description" content="The Methods, Management, and Menagerie of Madness" />
 <link rel="icon" href="https://tecosaur.com/resources/org/nib.ico" type="image/ico" />
 
@@ -2613,7 +2613,7 @@ nav#table-of-contents {
 </head>
 <body>
 <input type='checkbox' id='theme-switch'><div id='page'><label id='switch-label' for='theme-switch'></label><div id="content">
-<div class='page-header'><div class='page-meta'>2020-07-17 Friday 1:10PM, tecosaur</div><h1 class="title">Doom Emacs Configuration
+<div class='page-header'><div class='page-meta'>2020-07-17 Friday 2:12PM, tecosaur</div><h1 class="title">Doom Emacs Configuration
 <br />
 <span class="subtitle">The Methods, Management, and Menagerie of Madness</span>
 </h1></div>
@@ -4160,8 +4160,8 @@ inserts an org-ified version at point. Isn&rsquo;t that just great.
 <p>
 I have my own <a href="lisp/org-plot.el">modified version</a> of <code>org-plot</code>, so let&rsquo;s use that
 </p>
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">package!</span> org-plot <span class="org-builtin">:recipe</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-builtin">:local-repo</span> <span class="org-string">"lisp"</span> <span class="org-builtin">:no-byte-compile</span> t<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 <details class='code' open><summary><span class='lang'>Emacs Lisp</span></summary><div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">package!</span> org-plot <span class="org-builtin">:recipe</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-builtin">:local-repo</span> <span class="org-string">"lisp"</span> <span class="org-builtin">:no-byte-compile</span> t<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div></details>
 
@@ -4505,9 +4505,9 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 <pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">use-package!</span> info-colors
   <span class="org-builtin">:commands</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">info-colors-fontify-node</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-function-name">add-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">Info-selection-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">info-colors-fontify-node</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-function-name">add-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-variable-name">Info-selection-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">info-colors-fontify-node</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-function-name">add-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">Info-mode-hook</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-variable-name">mixed-pitch-mode</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-function-name">add-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-variable-name">Info-mode-hook</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-variable-name">mixed-pitch-mode</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div></details>
 </div>
@@ -5268,7 +5268,7 @@ building it from source then. I needed to install these packages
 </ul>
 
 <details class='code' open><summary class='named'><span class='name'>install mu from source (solus)</span><span class='lang'>Shell Script</span></summary><div class="org-src-container">
-<pre class="src src-shell" id="org90bb74a"><span class="org-type">cd</span> ~/.local/lib/
+<pre class="src src-shell" id="install-mu-from"><span class="org-type">cd</span> ~/.local/lib/
 <span class="org-type">git</span> clone https://github.com/djcb/mu.git
 <span class="org-type">cd</span> ./mu
 ./autogen.sh
@@ -6061,7 +6061,7 @@ in the file and check for existance too.
 To make this look a little nicer, we will overwrite the default style.
 </p>
 <details class='code' open><summary class='named'><span class='name'>org-msg-restyle</span><span class='lang'>Emacs Lisp</span></summary><div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org722e325"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-msg-enforce-css
+<pre class="src src-emacs-lisp" id="org-msg-restyle"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-msg-enforce-css
       <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>font-family <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-2">(</span>font-family . <span class="org-string">"-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell,\</span>
 <span class="org-string">        \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
              <span class="org-rainbow-delimiters-depth-1">(</span>monospace-font <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-2">(</span>font-family . <span class="org-string">"SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
@@ -7489,7 +7489,7 @@ Let&rsquo;s setup some org-capture templates
 It would also be nice to improve how the capture dialogue looks
 </p>
 <details class='code' open><summary class='named'><span class='name'>prettify-capture</span><span class='lang'>Emacs Lisp</span></summary><div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org17e3771"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">org-capture-select-template-prettier</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">&amp;optional</span> keys<span class="org-rainbow-delimiters-depth-2">)</span>
+<pre class="src src-emacs-lisp" id="prettify-capture"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">org-capture-select-template-prettier</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">&amp;optional</span> keys<span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-doc">"Select a capture template, in a prettier way than default</span>
 <span class="org-doc">Lisp programs can force the template by setting KEYS to a string."</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-variable-name">org-capture-templates</span>
@@ -7898,7 +7898,10 @@ Now here&rsquo;s alphapapa&rsquo;s subtley tweaked mode.
                          cells<span class="org-rainbow-delimiters-depth-2">)</span>
                         <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-function-name">org-element-property</span> <span class="org-builtin">:raw-value</span> datum<span class="org-rainbow-delimiters-depth-3">)</span>
                           <span class="org-comment-delimiter">;; </span><span class="org-comment">Heading with a title</span>
-                          <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-function-name">unpackaged/org-export-new-title-reference</span> datum cache<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+                          <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-function-name">unpackaged/org-export-new-named-reference</span> datum cache<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+                        <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">memq</span> <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">car</span> datum<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-1">(</span>src-block table<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+                          <span class="org-comment-delimiter">;; </span><span class="org-comment">Nameable elements</span>
+                          <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-function-name">unpackaged/org-export-new-named-reference</span> datum cache<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
                         <span class="org-comment-delimiter">;; </span><span class="org-bold"><span class="org-success">NOTE:</span></span><span class="org-comment"> This probably breaks some Org Export</span>
                         <span class="org-comment-delimiter">;; </span><span class="org-comment">feature, but if it does what I need, fine.</span>
                         <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">org-export-format-reference</span>
@@ -7915,7 +7918,7 @@ Now here&rsquo;s alphapapa&rsquo;s subtley tweaked mode.
           <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">plist-put</span> info <span class="org-builtin">:internal-references</span> cache<span class="org-rainbow-delimiters-depth-2">)</span>
           reference-string<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">unpackaged/org-export-new-title-reference</span> <span class="org-rainbow-delimiters-depth-2">(</span>datum cache<span class="org-rainbow-delimiters-depth-2">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">unpackaged/org-export-new-named-reference</span> <span class="org-rainbow-delimiters-depth-2">(</span>datum cache<span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-doc">"Return new reference for DATUM that is unique in CACHE."</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">cl-macrolet</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>inc-suffixf <span class="org-rainbow-delimiters-depth-2">(</span>place<span class="org-rainbow-delimiters-depth-2">)</span>
                              <span class="org-highlight-quoted-quote">`</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">progn</span>
@@ -7931,7 +7934,9 @@ Now here&rsquo;s alphapapa&rsquo;s subtley tweaked mode.
                                                     <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">string-to-number</span> suffix<span class="org-rainbow-delimiters-depth-1">)</span>
                                                   <span class="org-highlight-numbers-number">0</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
                                   <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setf</span> ,place <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">format</span> <span class="org-string">"%s--%s"</span> s1 <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">cl-incf</span> suffix<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>title <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-function-name">org-element-property</span> <span class="org-builtin">:raw-value</span> datum<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>title <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">eq</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">car</span> datum<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">headline</span><span class="org-rainbow-delimiters-depth-1">)</span>
+                      <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-function-name">org-element-property</span> <span class="org-builtin">:raw-value</span> datum<span class="org-rainbow-delimiters-depth-1">)</span>
+                    <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">or</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">org-element-property</span> <span class="org-builtin">:name</span> datum<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">symbol-name</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">car</span> datum<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
            <span class="org-comment-delimiter">;; </span><span class="org-comment">get ascii-only form of title without needing percent-encoding</span>
            <span class="org-rainbow-delimiters-depth-2">(</span>ref <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-function-name">org-heading-contraction</span> <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">substring-no-properties</span> title<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
            <span class="org-rainbow-delimiters-depth-2">(</span>parent <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-function-name">org-element-property</span> <span class="org-builtin">:parent</span> datum<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
@@ -8106,7 +8111,7 @@ The radar chart is a lot more involved, and I&rsquo;ve added the following keys
 </p>
 <ul class="org-ul">
 <li><code>type:radar</code>
-This uses the radar template, the result of which can be seen in <a id="orgba4ff9a"></a></li>
+This uses the radar template, the result of which can be seen in <a href="#org">Org Mode</a>.</li>
 <li><code>[min|ymin]:0..n</code>
 This sets the start value of <i>every</i> axis.</li>
 <li><code>[max|ymax]:0..n</code>
@@ -9236,7 +9241,7 @@ somewhat spiffy.
 </p>
 
 <details class='code' open><summary class='named'><span class='name'>Src blocks</span><span class='lang'>Emacs Lisp</span></summary><div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgc1be719"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defadvice!</span> org-html-src-block-collapsable <span class="org-rainbow-delimiters-depth-2">(</span>orig-fn src-block contents info<span class="org-rainbow-delimiters-depth-2">)</span>
+<pre class="src src-emacs-lisp" id="src-blocks"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defadvice!</span> org-html-src-block-collapsable <span class="org-rainbow-delimiters-depth-2">(</span>orig-fn src-block contents info<span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-doc">"Wrap the usual &lt;pre&gt; block in a &lt;details&gt;"</span>
   <span class="org-builtin">:around</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">org-html-src-block</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>properties <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">cadr</span> src-block<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
@@ -9338,7 +9343,7 @@ somewhat spiffy.
 </div></details>
 
 <details class='code' open><summary class='named'><span class='name'>Exampl, fixed width, and property blocks</span><span class='lang'>Emacs Lisp</span></summary><div class="org-src-container">
-<pre class="src src-emacs-lisp" id="org2c556d9"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">after!</span> org
+<pre class="src src-emacs-lisp" id="exampl-fixed-width"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">after!</span> org
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">defun</span> <span class="org-function-name">org-html-block-collapsable</span> <span class="org-rainbow-delimiters-depth-3">(</span>orig-fn block contents info<span class="org-rainbow-delimiters-depth-3">)</span>
     <span class="org-doc">"Wrap the usual block in a &lt;details&gt;"</span>
     <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">concat</span> <span class="org-string">"&lt;details class='code' open&gt;&lt;summary&gt;&lt;/summary&gt;"</span>
@@ -9759,7 +9764,7 @@ Now for a few more adjustments.
 We also want a particular preamble when minted is used,
 </p>
 <details class='code' open><summary class='named'><span class='name'>org-minted-preamble</span><span class='lang'>LaTeX</span></summary><div class="org-src-container">
-<pre class="src src-LaTeX" id="org17f70e0"><span class="org-font-latex-warning">\</span><span class="org-keyword"><span class="org-font-latex-warning"><span class="org-keyword">\</span></span></span><span class="org-keyword"><span class="org-keyword">usepackage</span></span>{<span class="org-function-name">minted</span>}
+<pre class="src src-LaTeX" id="org-minted-preamble"><span class="org-font-latex-warning">\</span><span class="org-keyword"><span class="org-font-latex-warning"><span class="org-keyword">\</span></span></span><span class="org-keyword"><span class="org-keyword">usepackage</span></span>{<span class="org-function-name">minted</span>}
 <span class="org-font-latex-warning">\</span><span class="org-keyword"><span class="org-font-latex-warning"><span class="org-keyword">\</span></span></span><span class="org-keyword"><span class="org-keyword">usepackage</span></span>[<span class="org-variable-name">many</span>]{<span class="org-function-name">tcolorbox</span>}
 <span class="org-font-latex-warning">\</span><span class="org-font-latex-warning"><span class="org-keyword">\</span></span><span class="org-keyword">setminted</span>{
   frame=none,
@@ -9808,7 +9813,7 @@ We also always want some particular elements in the preamble, let&rsquo;s call t
 the &ldquo;universal preamble&rdquo;
 </p>
 <details class='code' open><summary class='named'><span class='name'>org-universal-preamble</span><span class='lang'>LaTeX</span></summary><div class="org-src-container">
-<pre class="src src-LaTeX" id="org8cba542"><span class="org-font-latex-warning">\</span><span class="org-keyword"><span class="org-font-latex-warning"><span class="org-keyword">\</span></span></span><span class="org-keyword"><span class="org-keyword">usepackage</span></span>[<span class="org-variable-name">main,include</span>]{<span class="org-function-name">embedall</span>}
+<pre class="src src-LaTeX" id="org-universal-preamble"><span class="org-font-latex-warning">\</span><span class="org-keyword"><span class="org-font-latex-warning"><span class="org-keyword">\</span></span></span><span class="org-keyword"><span class="org-keyword">usepackage</span></span>[<span class="org-variable-name">main,include</span>]{<span class="org-function-name">embedall</span>}
 <span class="org-font-latex-warning">\</span><span class="org-font-latex-warning"><span class="org-keyword">\</span></span><span class="org-keyword">IfFileExists</span>{./<span class="org-font-latex-warning">\</span><span class="org-font-latex-warning"><span class="org-keyword">\</span></span><span class="org-keyword">jobname</span>.org}{<span class="org-font-latex-warning">\</span><span class="org-font-latex-warning"><span class="org-keyword">\</span></span><span class="org-keyword">embedfile</span>[desc=The original file]{<span class="org-font-latex-warning">\</span><span class="org-font-latex-warning"><span class="org-keyword">\</span></span><span class="org-keyword">jobname</span>.org}}{}
 </pre>
 </div></details>
@@ -9818,7 +9823,7 @@ Instead of just loading doing the &rsquo;minted stuff&rsquo; all the time, we ca
 a bit cleverer, and handle the &ldquo;universal preamble&rdquo; while we&rsquo;re at it.
 </p>
 <details class='code' open><summary class='named'><span class='name'>org-latex-smart-minted</span><span class='lang'>Emacs Lisp</span></summary><div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgb37eecb"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">after!</span> org
+<pre class="src src-emacs-lisp" id="org-latex-smart"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">after!</span> org
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">defadvice!</span> org-latex-header-smart-minted <span class="org-rainbow-delimiters-depth-3">(</span>orig-fn tpl def-pkg pkg snippets-p <span class="org-type">&amp;optional</span> extra<span class="org-rainbow-delimiters-depth-3">)</span>
     <span class="org-doc">"Include minted config if src blocks are detected."</span>
     <span class="org-builtin">:around</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">org-splice-latex-header</span>
@@ -10747,7 +10752,7 @@ Now we just need to load it appropriately.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-07-17 Fri 11:53</p>
+<p class="date">Created: 2020-07-17 Fri 14:12</p>
 </div>
 </div>
 </body>
