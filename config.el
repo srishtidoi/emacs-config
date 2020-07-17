@@ -3236,6 +3236,25 @@ INFO is a plist used as a communication channel."
           "</div>"))
 ;; Handle table overflow:1 ends here
 
+;; [[file:config.org::*TOC as a collapsable tree][TOC as a collapsable tree:1]]
+(defadvice! org-html--format-toc-headline-colapseable (orig-fn headline info)
+  "Add a label and checkbox to `org-html--format-toc-headline's usual output,
+to allow the TOC to be a collapseable tree."
+  :around #'org-html--format-toc-headline
+  (let ((id (or (org-element-property :CUSTOM_ID headline)
+                (org-export-get-reference headline info))))
+    (format "<input type='checkbox' id='toc--%s'/><label for='toc--%s'>%s</label>"
+            id id (funcall orig-fn headline info))))
+;; TOC as a collapsable tree:1 ends here
+
+;; [[file:config.org::*TOC as a collapsable tree][TOC as a collapsable tree:2]]
+(defadvice! org-html--toc-text-stripped-leaves (orig-fn toc-entries)
+  "Remove label"
+  :around #'org-html--toc-text
+  (replace-regexp-in-string "<input [^>]+><label [^>]+>\\(.+?\\)</label></li>" "\\1</li>"
+                            (funcall orig-fn toc-entries)))
+;; TOC as a collapsable tree:2 ends here
+
 ;; [[file:config.org::*Make verbatim different to code][Make verbatim different to code:1]]
 (setq org-html-text-markup-alist
       '((bold . "<b>%s</b>")

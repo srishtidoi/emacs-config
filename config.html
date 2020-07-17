@@ -4,7 +4,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-17 Fri 14:12 -->
+<!-- 2020-07-17 Fri 23:11 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -15,7 +15,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:image" content="https://tecosaur.com/resources/org/nib.png" />
 <meta property="og:article:author:first_name" content="tecosaur" />
-<meta property="og:article:published_time" content="2020-07-17T14:12:08+0800" />
+<meta property="og:article:published_time" content="2020-07-17T23:11:20+0800" />
 <meta property="og:description" content="The Methods, Management, and Menagerie of Madness" />
 <link rel="icon" href="https://tecosaur.com/resources/org/nib.ico" type="image/ico" />
 
@@ -2430,10 +2430,6 @@ nav#table-of-contents {
       overflow: auto; }
       nav#table-of-contents #text-table-of-contents ul {
         margin: 0; }
-    nav#table-of-contents:hover #text-table-of-contents {
-      display: block; }
-    nav#table-of-contents:hover h2 {
-      display: none; }
     nav#table-of-contents h2 {
       transform: rotate(-90deg);
       position: relative;
@@ -2446,63 +2442,117 @@ nav#table-of-contents {
   height: 8px; }
 
 ::-webkit-scrollbar-track {
-  background: transparent; }
+  background: #9992; }
 
 ::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 10px; }
+  background: #ccc; }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: transparent; }
+  background: #888; }
 
 @media (min-width: 1280px) {
   #table-of-contents {
     position: fixed;
-    right: 4rem;
+    width: 18rem;
+    right: 1rem;
     top: 0;
     padding: 1em;
-    width: 15rem;
     line-height: 1.5;
     margin-top: 4rem; }
     #table-of-contents h2 {
       margin-top: 0; }
-    #table-of-contents > div > ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      max-height: calc(100vh - 5rem - 40px);
-      overflow-y: auto;
-      overflow-x: visible;
-      scrollbar-color: transparent transparent;
-      scrollbar-width: thin; }
-      #table-of-contents > div > ul ul {
-        padding-left: 2em; }
-      #table-of-contents > div > ul > li {
-        display: block; }
-    #table-of-contents ul.active > li {
-      display: block; }
-    #table-of-contents li {
-      display: none; }
-      #table-of-contents li a {
-        display: inline-block;
-        color: var(--text-light);
-        text-decoration: none;
-        -webkit-transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-        text-shadow: none;
-        background: none !important; }
-    #table-of-contents li:hover, #table-of-contents li:hover > ul > li {
-      display: block !important; }
-      #table-of-contents li:hover a, #table-of-contents li:hover > ul > li a {
-        color: var(--text-gray); }
-    #table-of-contents li.active > a {
-      color: var(--text-dark); }
-    #table-of-contents li::before {
-      content: ""; } }
+    #table-of-contents #text-table-of-contents {
+      position: relative; }
+      #table-of-contents #text-table-of-contents::before, #table-of-contents #text-table-of-contents::after {
+        position: absolute;
+        content: '';
+        width: calc(100% - 10px);
+        height: 0.7rem;
+        left: 0;
+        z-index: 1; }
+      #table-of-contents #text-table-of-contents::before {
+        top: 0;
+        background: linear-gradient(180deg, var(--back-light) 0%, var(--back-light) 35%, rgba(0, 0, 0, 0) 100%); }
+      #table-of-contents #text-table-of-contents::after {
+        bottom: 0;
+        background: linear-gradient(0deg, var(--back-light) 0%, var(--back-light) 35%, rgba(0, 0, 0, 0) 100%); }
+      #table-of-contents #text-table-of-contents > ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-height: calc(100vh - 5rem - 50px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: thin; }
+        #table-of-contents #text-table-of-contents > ul ul {
+          padding-left: 2em; }
+        #table-of-contents #text-table-of-contents > ul ul.active {
+          display: inline-block; }
+        #table-of-contents #text-table-of-contents > ul li.active > ul {
+          display: inline-block; }
+        #table-of-contents #text-table-of-contents > ul li.active > label a, #table-of-contents #text-table-of-contents > ul li.active > a {
+          color: var(--text-dark); }
+        #table-of-contents #text-table-of-contents > ul li.active > input:not(:checked) ~ label::after {
+          transform: rotate(90deg);
+          top: 5px;
+          opacity: 0.35; }
+        #table-of-contents #text-table-of-contents > ul > li:last-child {
+          margin-bottom: 2rem; } }
+
+@media (min-width: 1440px) {
+  #table-of-contents {
+    width: 20rem;
+    right: 2rem; } }
 
 @media (min-width: 1640px) {
   #table-of-contents {
-    right: 10rem; } }
+    right: 5rem; } }
+
+@media (min-width: 2000px) {
+  #table-of-contents {
+    width: 25rem; } }
+
+#table-of-contents #text-table-of-contents > ul ul {
+  display: none; }
+
+#table-of-contents #text-table-of-contents li input[type=checkbox] {
+  display: none; }
+
+#table-of-contents #text-table-of-contents li label {
+  display: inline-block;
+  width: 100%;
+  position: relative; }
+
+#table-of-contents #text-table-of-contents li a {
+  display: inline-block;
+  color: var(--text-light);
+  text-decoration: none !important;
+  text-shadow: none;
+  background: none !important; }
+
+#table-of-contents #text-table-of-contents li label::after {
+  content: "\25b6";
+  color: var(--text-light);
+  margin-left: 0.5em;
+  font-size: 10px;
+  display: inline-block;
+  position: absolute;
+  top: 3.4px;
+  left: -20px;
+  opacity: 0.8; }
+
+#table-of-contents #text-table-of-contents li input:checked ~ ul {
+  display: inline-block !important; }
+
+#table-of-contents #text-table-of-contents li input:checked ~ label a {
+  font-weight: bold; }
+
+#table-of-contents #text-table-of-contents li input:checked ~ label::after {
+  transform: rotate(90deg);
+  top: 5px; }
+
+#table-of-contents #text-table-of-contents li::before {
+  content: "" !important; }
 
 #breadcrumbs {
   font-family: "Open Sans";
@@ -2620,7 +2670,7 @@ nav#table-of-contents {
 </head>
 <body>
 <input type='checkbox' id='theme-switch'><div id='page'><label id='switch-label' for='theme-switch'></label><div id="content">
-<div class='page-header'><div class='page-meta'>2020-07-17 Friday 2:12PM, tecosaur</div><h1 class="title">Doom Emacs Configuration
+<div class='page-header'><div class='page-meta'>2020-07-17 Friday 11:11PM, tecosaur</div><h1 class="title">Doom Emacs Configuration
 <br />
 <span class="subtitle">The Methods, Management, and Menagerie of Madness</span>
 </h1></div>
@@ -2628,14 +2678,14 @@ nav#table-of-contents {
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#intro">1. Intro</a>
+<li><input type='checkbox' id='toc--intro'/><label for='toc--intro'><a href="#intro">1. Intro</a></label>
 <ul>
-<li><a href="#notes-unwary-adventurer">1.1. Notes for the unwary adventurer</a>
+<li><input type='checkbox' id='toc--notes-unwary-adventurer'/><label for='toc--notes-unwary-adventurer'><a href="#notes-unwary-adventurer">1.1. Notes for the unwary adventurer</a></label>
 <ul>
 <li><a href="#extra-requirements">1.1.1. Extra Requirements</a></li>
 </ul>
 </li>
-<li><a href="#current-issues">1.2. Current Issues</a>
+<li><input type='checkbox' id='toc--current-issues'/><label for='toc--current-issues'><a href="#current-issues">1.2. Current Issues</a></label>
 <ul>
 <li><a href="#magit-push-daemon">1.2.1. Magit push in daemon</a></li>
 <li><a href="#calctex-brings-up">1.2.2. CalcTeX brings up compilation buffer</a></li>
@@ -2645,10 +2695,10 @@ nav#table-of-contents {
 <li><a href="#editor-comparison">1.3. Editor comparison</a></li>
 </ul>
 </li>
-<li><a href="#rudimentary-configuration">2. Rudimentary configuration</a>
+<li><input type='checkbox' id='toc--rudimentary-configuration'/><label for='toc--rudimentary-configuration'><a href="#rudimentary-configuration">2. Rudimentary configuration</a></label>
 <ul>
 <li><a href="#personal-information">2.1. Personal Information</a></li>
-<li><a href="#better-defaults">2.2. Better defaults</a>
+<li><input type='checkbox' id='toc--better-defaults'/><label for='toc--better-defaults'><a href="#better-defaults">2.2. Better defaults</a></label>
 <ul>
 <li><a href="#simple-settings">2.2.1. Simple settings</a></li>
 <li><a href="#fullscreen">2.2.2. Fullscreen</a></li>
@@ -2657,9 +2707,9 @@ nav#table-of-contents {
 <li><a href="#buffer-defaults">2.2.5. Buffer defaults</a></li>
 </ul>
 </li>
-<li><a href="#doom-configuration">2.3. Doom configuration</a>
+<li><input type='checkbox' id='toc--doom-configuration'/><label for='toc--doom-configuration'><a href="#doom-configuration">2.3. Doom configuration</a></label>
 <ul>
-<li><a href="#visual-settings">2.3.1. Visual Settings</a>
+<li><input type='checkbox' id='toc--visual-settings'/><label for='toc--visual-settings'><a href="#visual-settings">2.3.1. Visual Settings</a></label>
 <ul>
 <li><a href="#font-face">2.3.1.1. Font Face</a></li>
 <li><a href="#theme-modeline">2.3.1.2. Theme and modeline</a></li>
@@ -2669,9 +2719,9 @@ nav#table-of-contents {
 <li><a href="#some-helper-macros">2.3.2. Some helper macros</a></li>
 </ul>
 </li>
-<li><a href="#other-things">2.4. Other things</a>
+<li><input type='checkbox' id='toc--other-things'/><label for='toc--other-things'><a href="#other-things">2.4. Other things</a></label>
 <ul>
-<li><a href="#editor-interaction">2.4.1. Editor interaction</a>
+<li><input type='checkbox' id='toc--editor-interaction'/><label for='toc--editor-interaction'><a href="#editor-interaction">2.4.1. Editor interaction</a></label>
 <ul>
 <li><a href="#mouse-buttons">2.4.1.1. Mouse buttons</a></li>
 </ul>
@@ -2683,21 +2733,21 @@ nav#table-of-contents {
 </li>
 </ul>
 </li>
-<li><a href="#package-loading">3. Package loading</a>
+<li><input type='checkbox' id='toc--package-loading'/><label for='toc--package-loading'><a href="#package-loading">3. Package loading</a></label>
 <ul>
-<li><a href="#loading-instructions">3.1. Loading instructions</a>
+<li><input type='checkbox' id='toc--loading-instructions'/><label for='toc--loading-instructions'><a href="#loading-instructions">3.1. Loading instructions</a></label>
 <ul>
 <li><a href="#packages-melpa-elpa">3.1.1. Packages in MELPA/ELPA/emacsmirror</a></li>
 <li><a href="#packages-from-git">3.1.2. Packages from git repositories</a></li>
 <li><a href="#disabling-built-packages">3.1.3. Disabling built-in packages</a></li>
 </ul>
 </li>
-<li><a href="#general-packages">3.2. General packages</a>
+<li><input type='checkbox' id='toc--general-packages'/><label for='toc--general-packages'><a href="#general-packages">3.2. General packages</a></label>
 <ul>
 <li><a href="#prettification">3.2.1. Prettification</a></li>
 <li><a href="#window-management">3.2.2. Window management</a></li>
 <li><a href="#fun">3.2.3. Fun</a></li>
-<li><a href="#improving-features">3.2.4. Improving features</a>
+<li><input type='checkbox' id='toc--improving-features'/><label for='toc--improving-features'><a href="#improving-features">3.2.4. Improving features</a></label>
 <ul>
 <li><a href="#flyspell-lazy">3.2.4.1. Flyspell-lazy</a></li>
 <li><a href="#calctex">3.2.4.2. CalcTeX</a></li>
@@ -2709,10 +2759,10 @@ nav#table-of-contents {
 <li><a href="#email">3.2.5. Email</a></li>
 </ul>
 </li>
-<li><a href="#language-packages">3.3. Language packages</a>
+<li><input type='checkbox' id='toc--language-packages'/><label for='toc--language-packages'><a href="#language-packages">3.3. Language packages</a></label>
 <ul>
 <li><a href="#latex">3.3.1. LaTeX</a></li>
-<li><a href="#org-mode">3.3.2. Org Mode</a>
+<li><input type='checkbox' id='toc--org-mode'/><label for='toc--org-mode'><a href="#org-mode">3.3.2. Org Mode</a></label>
 <ul>
 <li><a href="#improve-agenda-capture">3.3.2.1. Improve agenda/capture</a></li>
 <li><a href="#visuals">3.3.2.2. Visuals</a></li>
@@ -2724,12 +2774,12 @@ nav#table-of-contents {
 </li>
 </ul>
 </li>
-<li><a href="#package-configuration">4. Package configuration</a>
+<li><input type='checkbox' id='toc--package-configuration'/><label for='toc--package-configuration'><a href="#package-configuration">4. Package configuration</a></label>
 <ul>
 <li><a href="#abbrev-mode">4.1. Abbrev mode</a></li>
 <li><a href="#calc">4.2. Calc</a></li>
 <li><a href="#centaur-tabs">4.3. Centaur Tabs</a></li>
-<li><a href="#company">4.4. Company</a>
+<li><input type='checkbox' id='toc--company'/><label for='toc--company'><a href="#company">4.4. Company</a></label>
 <ul>
 <li><a href="#plain-text">4.4.1. Plain Text</a></li>
 <li><a href="#company-ess">4.4.2. ESS</a></li>
@@ -2741,9 +2791,9 @@ nav#table-of-contents {
 <li><a href="#evil">4.8. EVIL</a></li>
 <li><a href="#flyspell">4.9. Flyspell</a></li>
 <li><a href="#info-colors">4.10. Info colors</a></li>
-<li><a href="#ispell">4.11. Ispell</a>
+<li><input type='checkbox' id='toc--ispell'/><label for='toc--ispell'><a href="#ispell">4.11. Ispell</a></label>
 <ul>
-<li><a href="#downloading-dictionaries">4.11.1. Downloading dictionaries</a>
+<li><input type='checkbox' id='toc--downloading-dictionaries'/><label for='toc--downloading-dictionaries'><a href="#downloading-dictionaries">4.11.1. Downloading dictionaries</a></label>
 <ul>
 <li><a href="#hunspell">4.11.1.1. Hunspell</a></li>
 <li><a href="#aspell">4.11.1.2. Aspell</a></li>
@@ -2754,9 +2804,9 @@ nav#table-of-contents {
 </li>
 <li><a href="#ivy">4.12. Ivy</a></li>
 <li><a href="#magit">4.13. Magit</a></li>
-<li><a href="#mail">4.14. Mail</a>
+<li><input type='checkbox' id='toc--mail'/><label for='toc--mail'><a href="#mail">4.14. Mail</a></label>
 <ul>
-<li><a href="#fetching">4.14.1. Fetching</a>
+<li><input type='checkbox' id='toc--fetching'/><label for='toc--fetching'><a href="#fetching">4.14.1. Fetching</a></label>
 <ul>
 <li><a href="#rebuild-mail-index">4.14.1.1. Rebuild mail index while using mu4e</a></li>
 <li><a href="#config-transcoding-">4.14.1.2. Config transcoding &amp; service management</a></li>
@@ -2764,12 +2814,12 @@ nav#table-of-contents {
 </ul>
 </li>
 <li><a href="#indexing-searching">4.14.2. Indexing/Searching</a></li>
-<li><a href="#sending">4.14.3. Sending</a>
+<li><input type='checkbox' id='toc--sending'/><label for='toc--sending'><a href="#sending">4.14.3. Sending</a></label>
 <ul>
 <li><a href="#system-hackery">4.14.3.1. System hackery</a></li>
 </ul>
 </li>
-<li><a href="#mu4e">4.14.4. Mu4e</a>
+<li><input type='checkbox' id='toc--mu4e'/><label for='toc--mu4e'><a href="#mu4e">4.14.4. Mu4e</a></label>
 <ul>
 <li><a href="#viewing-mail">4.14.4.1. Viewing Mail</a></li>
 <li><a href="#sending-mail">4.14.4.2. Sending Mail</a></li>
@@ -2785,11 +2835,11 @@ nav#table-of-contents {
 <li><a href="#smart-parentheses">4.17. Smart Parentheses</a></li>
 <li><a href="#spray">4.18. Spray</a></li>
 <li><a href="#theme-magic">4.19. Theme magic</a></li>
-<li><a href="#tramp">4.20. Tramp</a>
+<li><input type='checkbox' id='toc--tramp'/><label for='toc--tramp'><a href="#tramp">4.20. Tramp</a></label>
 <ul>
 <li>
 <ul>
-<li><a href="#troubleshooting">4.20.0.1. Troubleshooting</a>
+<li><input type='checkbox' id='toc--troubleshooting'/><label for='toc--troubleshooting'><a href="#troubleshooting">4.20.0.1. Troubleshooting</a></label>
 <ul>
 <li><a href="#zsh">4.20.0.1.1. Zsh</a></li>
 </ul>
@@ -2805,7 +2855,7 @@ nav#table-of-contents {
 <li><a href="#yasnippet">4.25. YASnippet</a></li>
 </ul>
 </li>
-<li><a href="#language-configuration">5. Language configuration</a>
+<li><input type='checkbox' id='toc--language-configuration'/><label for='toc--language-configuration'><a href="#language-configuration">5. Language configuration</a></label>
 <ul>
 <li>
 <ul>
@@ -2813,13 +2863,13 @@ nav#table-of-contents {
 </ul>
 </li>
 <li><a href="#plaintext">5.1. Plaintext</a></li>
-<li><a href="#org">5.2. Org Mode</a>
+<li><input type='checkbox' id='toc--org'/><label for='toc--org'><a href="#org">5.2. Org Mode</a></label>
 <ul>
 <li><a href="#system-config">5.2.1. System config</a></li>
-<li><a href="#behaviour">5.2.2. Behaviour</a>
+<li><input type='checkbox' id='toc--behaviour'/><label for='toc--behaviour'><a href="#behaviour">5.2.2. Behaviour</a></label>
 <ul>
 <li><a href="#tweaking-defaults">5.2.2.1. Tweaking defaults</a></li>
-<li><a href="#behaviour-extra-functionality">5.2.2.2. Extra functionality</a>
+<li><input type='checkbox' id='toc--behaviour-extra-functionality'/><label for='toc--behaviour-extra-functionality'><a href="#behaviour-extra-functionality">5.2.2.2. Extra functionality</a></label>
 <ul>
 <li><a href="#org-buffer-creation">5.2.2.2.1. Org buffer creation</a></li>
 <li><a href="#list-bullet-sequence">5.2.2.2.2. List bullet sequence</a></li>
@@ -2832,7 +2882,7 @@ nav#table-of-contents {
 </li>
 <li><a href="#super-agenda">5.2.2.3. Super agenda</a></li>
 <li><a href="#capture">5.2.2.4. Capture</a></li>
-<li><a href="#roam">5.2.2.5. Roam</a>
+<li><input type='checkbox' id='toc--roam'/><label for='toc--roam'><a href="#roam">5.2.2.5. Roam</a></label>
 <ul>
 <li><a href="#basic-settings">5.2.2.5.1. Basic settings</a></li>
 <li><a href="#registering-roam-protocol">5.2.2.5.2. Registering roam protocol</a></li>
@@ -2843,7 +2893,7 @@ nav#table-of-contents {
 <li><a href="#nicer-generated-heading">5.2.2.6. Nicer generated heading IDs</a></li>
 <li><a href="#nicer-org-return">5.2.2.7. Nicer <code>org-return</code></a></li>
 <li><a href="#org-plot">5.2.2.8. Org Plot</a></li>
-<li><a href="#extra-links">5.2.2.9. Extra links</a>
+<li><input type='checkbox' id='toc--extra-links'/><label for='toc--extra-links'><a href="#extra-links">5.2.2.9. Extra links</a></label>
 <ul>
 <li><a href="#extra-links-xkcd">5.2.2.9.1. xkcd</a></li>
 <li><a href="#music">5.2.2.9.2. Music</a></li>
@@ -2852,9 +2902,9 @@ nav#table-of-contents {
 </li>
 </ul>
 </li>
-<li><a href="#org-mode-visuals">5.2.3. Visuals</a>
+<li><input type='checkbox' id='toc--org-mode-visuals'/><label for='toc--org-mode-visuals'><a href="#org-mode-visuals">5.2.3. Visuals</a></label>
 <ul>
-<li><a href="#editor">5.2.3.1. In editor</a>
+<li><input type='checkbox' id='toc--editor'/><label for='toc--editor'><a href="#editor">5.2.3.1. In editor</a></label>
 <ul>
 <li><a href="#font-display">5.2.3.1.1. Font Display</a></li>
 <li><a href="#symbols">5.2.3.1.2. Symbols</a></li>
@@ -2863,19 +2913,20 @@ nav#table-of-contents {
 </ul>
 </li>
 <li><a href="#exporting-general">5.2.3.2. Exporting (general)</a></li>
-<li><a href="#exporting-html">5.2.3.3. Exporting to HTML</a>
+<li><input type='checkbox' id='toc--exporting-html'/><label for='toc--exporting-html'><a href="#exporting-html">5.2.3.3. Exporting to HTML</a></label>
 <ul>
 <li><a href="#extra-header-content">5.2.3.3.1. Extra header content</a></li>
 <li><a href="#custom-css-js">5.2.3.3.2. Custom CSS/JS</a></li>
 <li><a href="#collapsable-src-example">5.2.3.3.3. Collapsable src and example blocks</a></li>
 <li><a href="#handle-table-overflow">5.2.3.3.4. Handle table overflow</a></li>
-<li><a href="#make-verbatim-different">5.2.3.3.5. Make verbatim different to code</a></li>
-<li><a href="#change-checkbox-type">5.2.3.3.6. Change checkbox type</a></li>
-<li><a href="#header-anchors">5.2.3.3.7. Header anchors</a></li>
-<li><a href="#latex-rendering">5.2.3.3.8. LaTeX Rendering</a></li>
+<li><a href="#toc-as-collapsable">5.2.3.3.5. TOC as a collapsable tree</a></li>
+<li><a href="#make-verbatim-different">5.2.3.3.6. Make verbatim different to code</a></li>
+<li><a href="#change-checkbox-type">5.2.3.3.7. Change checkbox type</a></li>
+<li><a href="#header-anchors">5.2.3.3.8. Header anchors</a></li>
+<li><a href="#latex-rendering">5.2.3.3.9. LaTeX Rendering</a></li>
 </ul>
 </li>
-<li><a href="#exporting-latex">5.2.3.4. Exporting to LaTeX</a>
+<li><input type='checkbox' id='toc--exporting-latex'/><label for='toc--exporting-latex'><a href="#exporting-latex">5.2.3.4. Exporting to LaTeX</a></label>
 <ul>
 <li><a href="#chameleon-aka-match">5.2.3.4.1. Chameleon &#x2014; aka. match theme</a></li>
 <li><a href="#exporting-latex-make">5.2.3.4.2. Make verbatim different to code</a></li>
@@ -2889,11 +2940,11 @@ nav#table-of-contents {
 <li><a href="#org-mode-ess">5.2.5. ESS</a></li>
 </ul>
 </li>
-<li><a href="#language-configuration-latex">5.3. LaTeX</a>
+<li><input type='checkbox' id='toc--language-configuration-latex'/><label for='toc--language-configuration-latex'><a href="#language-configuration-latex">5.3. LaTeX</a></label>
 <ul>
 <li><a href="#be-implemented-ideas">5.3.1. To-be-implemented ideas</a></li>
 <li><a href="#compilation">5.3.2. Compilation</a></li>
-<li><a href="#snippet-helpers">5.3.3. Snippet helpers</a>
+<li><input type='checkbox' id='toc--snippet-helpers'/><label for='toc--snippet-helpers'><a href="#snippet-helpers">5.3.3. Snippet helpers</a></label>
 <ul>
 <li><a href="#template">5.3.3.1. Template</a></li>
 <li><a href="#deliminators">5.3.3.2. Deliminators</a></li>
@@ -2907,7 +2958,7 @@ nav#table-of-contents {
 </ul>
 </li>
 <li><a href="#python">5.4. Python</a></li>
-<li><a href="#r">5.5. R</a>
+<li><input type='checkbox' id='toc--r'/><label for='toc--r'><a href="#r">5.5. R</a></label>
 <ul>
 <li><a href="#r-editor-visuals">5.5.1. Editor Visuals</a></li>
 </ul>
@@ -9389,9 +9440,57 @@ directly to the <code>table</code> element, so we have to wrap it in a <code>div
 </div></details>
 </div>
 </div>
-<div id="outline-container-make-verbatim-different" class="outline-6">
-<h6 id="make-verbatim-different"><span class="section-number-6">5.2.3.3.5</span> Make verbatim different to code<a aria-hidden="true" href="#make-verbatim-different">#</a> </h6>
+<div id="outline-container-toc-as-collapsable" class="outline-6">
+<h6 id="toc-as-collapsable"><span class="section-number-6">5.2.3.3.5</span> TOC as a collapsable tree<a aria-hidden="true" href="#toc-as-collapsable">#</a> </h6>
 <div class="outline-text-6" id="text-5-2-3-3-5">
+<p>
+The TOC is much nicer to navigate as a collapsable tree. Unfortunately we cannot
+achieve this with CSS alone. Thankfully we can avoid JS though, by adapting the
+TOC generation code to use a <code>label</code> for each item, and a hidden <code>checkbox</code> to keep
+track of state.
+</p>
+
+<p>
+To add this, we need to change one line in <a href="file:///home/tec/.emacs.d/.local/straight/repos/org-mode/lisp/ox-html.el#MissingReference">org-html&#x2013;format-toc-headline</a>.
+</p>
+
+<p>
+Since we can actually accomplish the desired effect by adding advice <i>around</i> the
+function, without overriding it &#x2014; let&rsquo;s do that to reduce the bug surface of
+this config a tad.
+</p>
+<details class='code' open><summary><span class='lang'>Emacs Lisp</span></summary><div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defadvice!</span> org-html--format-toc-headline-colapseable <span class="org-rainbow-delimiters-depth-2">(</span>orig-fn headline info<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-doc">"Add a label and checkbox to `</span><span class="org-doc"><span class="org-constant">org-html--format-toc-headline</span></span><span class="org-doc">'s usual output,</span>
+<span class="org-doc">to allow the TOC to be a collapseable tree."</span>
+  <span class="org-builtin">:around</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">org-html--format-toc-headline</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>id <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">or</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-function-name">org-element-property</span> <span class="org-builtin">:CUSTOM_ID</span> headline<span class="org-rainbow-delimiters-depth-3">)</span>
+                <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-function-name">org-export-get-reference</span> headline info<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">format</span> <span class="org-string">"&lt;input type='checkbox' id='toc--%s'/&gt;&lt;label for='toc--%s'&gt;%s&lt;/label&gt;"</span>
+            id id <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">funcall</span> orig-fn headline info<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</pre>
+</div></details>
+
+<p>
+Now, leaves (headings with no children) shouldn&rsquo;t have the <code>label</code> item. The
+obvious way to achieve this is by including some <i>if no children&#x2026;</i> logic in
+<code>org-html--format-toc-headline-colapseable</code>. Unfortunately, I can&rsquo;t my elisp isn&rsquo;t
+up to par to extract the number of child headings from the mountain of info that
+org provides.
+</p>
+<details class='code' open><summary><span class='lang'>Emacs Lisp</span></summary><div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defadvice!</span> org-html--toc-text-stripped-leaves <span class="org-rainbow-delimiters-depth-2">(</span>orig-fn toc-entries<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-doc">"Remove label"</span>
+  <span class="org-builtin">:around</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">org-html--toc-text</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">replace-regexp-in-string</span> <span class="org-string">"&lt;input [</span><span class="org-string"><span class="org-negation-char">^</span></span><span class="org-string">&gt;]+&gt;&lt;label [</span><span class="org-string"><span class="org-negation-char">^</span></span><span class="org-string">&gt;]+&gt;</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">.+?</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">&lt;/label&gt;&lt;/li&gt;"</span> <span class="org-string">"\\1&lt;/li&gt;"</span>
+                            <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">funcall</span> orig-fn toc-entries<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</pre>
+</div></details>
+</div>
+</div>
+<div id="outline-container-make-verbatim-different" class="outline-6">
+<h6 id="make-verbatim-different"><span class="section-number-6">5.2.3.3.6</span> Make verbatim different to code<a aria-hidden="true" href="#make-verbatim-different">#</a> </h6>
+<div class="outline-text-6" id="text-5-2-3-3-6">
 <p>
 Since we have <kbd>verbatim</kbd> and <code>code</code>, let&rsquo;s use <kbd>verbatim</kbd> for key strokes.
 </p>
@@ -9408,8 +9507,8 @@ Since we have <kbd>verbatim</kbd> and <code>code</code>, let&rsquo;s use <kbd>ve
 </div>
 </div>
 <div id="outline-container-change-checkbox-type" class="outline-6">
-<h6 id="change-checkbox-type"><span class="section-number-6">5.2.3.3.6</span> Change checkbox type<a aria-hidden="true" href="#change-checkbox-type">#</a> </h6>
-<div class="outline-text-6" id="text-5-2-3-3-6">
+<h6 id="change-checkbox-type"><span class="section-number-6">5.2.3.3.7</span> Change checkbox type<a aria-hidden="true" href="#change-checkbox-type">#</a> </h6>
+<div class="outline-text-6" id="text-5-2-3-3-7">
 <p>
 We also want to use HTML checkboxes, however we want to get a bit fancier than default
 </p>
@@ -9430,8 +9529,8 @@ We also want to use HTML checkboxes, however we want to get a bit fancier than d
 </div>
 </div>
 <div id="outline-container-header-anchors" class="outline-6">
-<h6 id="header-anchors"><span class="section-number-6">5.2.3.3.7</span> Header anchors<a aria-hidden="true" href="#header-anchors">#</a> </h6>
-<div class="outline-text-6" id="text-5-2-3-3-7">
+<h6 id="header-anchors"><span class="section-number-6">5.2.3.3.8</span> Header anchors<a aria-hidden="true" href="#header-anchors">#</a> </h6>
+<div class="outline-text-6" id="text-5-2-3-3-8">
 <p>
 I want to add github-style links on hover for headings.
 </p>
@@ -9455,8 +9554,8 @@ It&rsquo;s worth noting that <code>org-msg-currently-exporting</code> is defined
 </div>
 </div>
 <div id="outline-container-latex-rendering" class="outline-6">
-<h6 id="latex-rendering"><span class="section-number-6">5.2.3.3.8</span> LaTeX Rendering<a aria-hidden="true" href="#latex-rendering">#</a> </h6>
-<div class="outline-text-6" id="text-5-2-3-3-8">
+<h6 id="latex-rendering"><span class="section-number-6">5.2.3.3.9</span> LaTeX Rendering<a aria-hidden="true" href="#latex-rendering">#</a> </h6>
+<div class="outline-text-6" id="text-5-2-3-3-9">
 <p>
 When displaying images, we want to resize by the reciprocal of <code>preview-scale</code>.
 Unfortunately that doesn&rsquo;t happen by default, but not to worry! Advice exists.
@@ -10764,7 +10863,7 @@ Now we just need to load it appropriately.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-07-17 Fri 14:12</p>
+<p class="date">Created: 2020-07-17 Fri 23:11</p>
 </div>
 </div>
 </body>
