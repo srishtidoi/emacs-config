@@ -1571,8 +1571,8 @@ SQL can be either the emacsql vector representation, or a string."
         :desc "View exported file" "v" #'org-view-output-file)
 
   (defun org-view-output-file (&optional org-file-path)
-    (interactive)
     "Visit buffer open on the first output file (if any) found, using `org-view-output-file-extensions'"
+    (interactive)
     (let* ((org-file-path (or org-file-path (buffer-file-name) ""))
            (dir (file-name-directory org-file-path))
            (basename (file-name-base org-file-path))
@@ -1583,12 +1583,16 @@ SQL can be either the emacsql vector representation, or a string."
                  (concat dir basename "." ext))
                  (setq output-file (concat dir basename "." ext)))))
       (if output-file
-        (pop-to-buffer (or (find-buffer-visiting output-file)
-                           (find-file-noselect output-file)))
+          (if (member (file-name-extension output-file) org-view-external-file-extensions)
+              (browse-url-xdg-open output-file)
+            (pop-to-buffer (or (find-buffer-visiting output-file)
+                               (find-file-noselect output-file))))
         (message "No exported file found")))))
 
-(defvar org-view-output-file-extensions '("pdf" "md" "rst" "txt" "tex")
+(defvar org-view-output-file-extensions '("pdf" "md" "rst" "txt" "tex" "html")
   "Search for output files with these extensions, in order, viewing the first that matches")
+(defvar org-view-external-file-extensions '("html")
+  "File formats that should be opened externally.")
 ;; View exported file:1 ends here
 
 ;; [[file:config.org::*Super agenda][Super agenda:1]]
