@@ -3495,10 +3495,10 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
     breakbefore=\\\\\.+,
     breakafter=\\,
     style=autumn,
-    breaksymbol=\\color{page!60!text}\\tiny\\ensuremath{\\hookrightarrow},
-    breakanywheresymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{page!60!text}\\rfloor}},
-    breakbeforesymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{page!60!text}\\rfloor}},
-    breakaftersymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{page!60!text}\\rfloor}},
+    breaksymbol=\\color{white!60!black}\\tiny\\ensuremath{\\hookrightarrow},
+    breakanywheresymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{white!60!black}\\rfloor}},
+    breakbeforesymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{white!60!black}\\rfloor}},
+    breakaftersymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{white!60!black}\\rfloor}},
   }
   
   \\BeforeBeginEnvironment{minted}{
@@ -3550,72 +3550,6 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
   (setq org-latex-pdf-process
         '("latexmk -shell-escape -interaction=nonstopmode -f -pdf -output-directory=%o %f")))
 ;; Exporting to LaTeX:3 ends here
-
-;; [[file:config.org::org-latex-smart-minted][org-latex-smart-minted]]
-(after! org
-  (defadvice! org-latex-header-smart-minted (orig-fn tpl def-pkg pkg snippets-p &optional extra)
-    "Include minted config if src blocks are detected."
-    :around #'org-splice-latex-header
-    (let ((header (funcall orig-fn tpl def-pkg pkg snippets-p extra))
-          (src-p (when (save-excursion
-                         (goto-char (point-min))
-                         (search-forward-regexp "#\\+BEGIN_SRC\\|#\\+begin_src" nil t))
-                   t)))
-      (concat header
-              org-latex-universal-preamble
-              (when src-p org-latex-minted-preamble))))
-
-  (defvar org-latex-minted-preamble "
-\\usepackage{minted}
-\\usepackage[many]{tcolorbox}
-\\setminted{
-  frame=none,
-  % framesep=2mm,
-  baselinestretch=1.2,
-  fontsize=\\footnotesize,
-  highlightcolor=white!95!black!80!blue,
-  linenos,
-  breakanywhere=true,
-  breakautoindent=true,
-  breaklines=true,
-  tabsize=4,
-  xleftmargin=3.5em,
-  autogobble=true,
-  obeytabs=true,
-  python3=true,
-  % texcomments=true,
-  framesep=2mm,
-  breakbefore=\\\\\.+,
-  breakafter=\\,
-  style=autumn,
-  breaksymbol=\\color{page!60!text}\\tiny\\ensuremath{\\hookrightarrow},
-  breakanywheresymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{page!60!text}\\rfloor}},
-  breakbeforesymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{page!60!text}\\rfloor}},
-  breakaftersymbolpre=\\,\\footnotesize\\ensuremath{_{\\color{page!60!text}\\rfloor}},
-}
-
-\\BeforeBeginEnvironment{minted}{
-  \\begin{tcolorbox}[
-    enhanced,
-    overlay={\\fill[white!90!black] (frame.south west) rectangle ([xshift=2.8em]frame.north west);},
-    colback=white!95!black,
-    colframe=white!95!black, % make frame colour same as background
-    breakable,% Allow white breaks
-    arc=0pt,outer arc=0pt,sharp corners, % sharp corners
-    boxsep=0pt,left=0pt,right=0pt,top=0pt,bottom=0pt % no margin/paddding
-  ]
-}
-\\AfterEndEnvironment{minted}{\\end{tcolorbox}}
-\\renewcommand\\theFancyVerbLine{\\color{black!60!white}\\arabic{FancyVerbLine}} % minted line numbering
-"
-    "Preamble to be inserted when minted is used.")
-
-  (defvar org-latex-universal-preamble "
-\\usepackage[main,include]{embedall}
-\\IfFileExists{./\\jobname.org}{\\embedfile[desc=The original file]{\\jobname.org}}{}
-"
-    "Preamble to be included in every export."))
-;; org-latex-smart-minted ends here
 
 ;; [[file:config.org::*Chameleon --- aka. match theme][Chameleon --- aka. match theme:1]]
 (after! ox
