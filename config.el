@@ -3105,7 +3105,7 @@ INFO is a plist used as a communication channel."
   (setq org-html-style-default
         (concat (f-read-text (expand-file-name "misc/org-export-header.html" doom-private-dir))
               "<script>\n"
-              (f-read-text (expand-file-name "misc/pile-css-theme/toc.js" doom-private-dir))
+              (f-read-text (expand-file-name "misc/pile-css-theme/main.js" doom-private-dir))
               "</script>\n<style>\n"
               (f-read-text (expand-file-name "misc/pile-css-theme/main.css" doom-private-dir))
               "</style>")
@@ -3121,11 +3121,17 @@ INFO is a plist used as a communication channel."
          (lang (mode-name-to-lang-name
           (plist-get properties :language)))
          (name (plist-get properties :name)))
-    (format "<details class='code' open><summary%s>%s</summary>%s</details>"
-            (if name " class='named'" "")
-            (if (not name) (concat "<span class='lang'>" lang "</span>")
-              (format "<span class='name'>%s</span><span class='lang'>%s</span>" name lang))
-            (funcall orig-fn src-block contents info))))
+    (format
+     "<details class='code' open><summary%s>%s</summary>
+<div class='gutter'>
+<button title='Copy to clipboard' onclick='copyPreToClipdord(this)'>⎘</button>\
+</div>
+%s
+</details>"
+     (if name " class='named'" "")
+     (if (not name) (concat "<span class='lang'>" lang "</span>")
+       (format "<span class='name'>%s</span><span class='lang'>%s</span>" name lang))
+     (funcall orig-fn src-block contents info))))
 
 (defun mode-name-to-lang-name (mode)
   (or (cadr (assoc mode
@@ -3209,23 +3215,26 @@ INFO is a plist used as a communication channel."
                      ("vhdl" "VHDL")
                      ("xml" "XML")
                      ("nxml" "XML")
-                     ("conf" "Configuration File")
-                     )))
+                     ("conf" "Configuration File"))))
       mode))
 ;; Src blocks ends here
 
-;; [[file:config.org::Exampl, fixed width, and property blocks][Exampl, fixed width, and property blocks]]
+;; [[file:config.org::Example, fixed width, and property blocks][Example, fixed width, and property blocks]]
 (after! org
   (defun org-html-block-collapsable (orig-fn block contents info)
     "Wrap the usual block in a <details>"
-    (concat "<details class='code' open><summary></summary>"
-            (funcall orig-fn block contents info)
-            "</details>"))
+    (concat
+     "<details class='code' open><summary></summary>
+<div class='gutter'>\
+<button title='Copy to clipboard' onclick='copyPreToClipdord(this)'>⎘</button>\
+</div>\n"
+     (funcall orig-fn block contents info)
+     "</details>"))
 
   (advice-add 'org-html-example-block   :around #'org-html-block-collapsable)
   (advice-add 'org-html-fixed-width     :around #'org-html-block-collapsable)
   (advice-add 'org-html-property-drawer :around #'org-html-block-collapsable))
-;; Exampl, fixed width, and property blocks ends here
+;; Example, fixed width, and property blocks ends here
 
 ;; [[file:config.org::*Handle table overflow][Handle table overflow:1]]
 (defadvice! org-html-table-wrapped (orig-fn table contents info)
