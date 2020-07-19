@@ -3123,6 +3123,7 @@ INFO is a plist used as a communication channel."
               (f-read-text (expand-file-name "misc/pile-css-theme/main.css" doom-private-dir))
               "</style>")
         org-html-htmlize-output-type 'css
+        org-html-doctype "html5"
         org-html-html5-fancy t))
 ;; Custom CSS/JS:2 ends here
 
