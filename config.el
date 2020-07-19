@@ -724,7 +724,7 @@ clicked."
 
 ;; [[file:config.org::*Sending Mail][Sending Mail:1]]
 (after! mu4e
-  (setq sendmail-program "/usr/local/bin/msmtp"
+  (setq sendmail-program "/usr/bin/msmtp"
         send-mail-function 'smtpmail-send-it
         message-sendmail-f-is-evil t
         message-sendmail-extra-arguments '("--read-envelope-from"); , "--read-recipients")
