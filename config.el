@@ -3246,17 +3246,30 @@ INFO is a plist used as a communication channel."
 (after! org
   (defun org-html-block-collapsable (orig-fn block contents info)
     "Wrap the usual block in a <details>"
-    (format
-     "<details class='code'%s><summary></summary>
+    (let ((ref (org-export-get-reference block info))
+          (type (case (car block)
+                  ('property-drawer "Properties")))
+          (collapsed-default (case (car block)
+                  ('property-drawer t)
+                  (t nil)))
+          (collapsed-value (org-export-read-attribute :attr_html block :collapsed)))
+      (format
+       "<details id='%s' class='code'%s>
+<summary%s>%s</summary>
 <div class='gutter'>\
+<a href='#%s'>#</a>
 <button title='Copy to clipboard' onclick='copyPreToClipdord(this)'>⎘</button>\
 </div>
 %s\n
 </details>"
-     (if (member (org-export-read-attribute :attr_html block :collapsed)
-                 '("y" "yes" "t" "true"))
-         "" " open")
-     (funcall orig-fn block contents info)))
+       ref
+       (if (or (and collapsed-value (member collapsed-value '("y" "yes" "t" "true")))
+               collapsed-default)
+               "" " open")
+       (if type " class='named'" "")
+       (if type (format "<span class='type'>%s</span>" type) "")
+       ref
+       (funcall orig-fn block contents info))))
 
   (advice-add 'org-html-example-block   :around #'org-html-block-collapsable)
   (advice-add 'org-html-fixed-width     :around #'org-html-block-collapsable)
