@@ -3552,9 +3552,10 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
                            (goto-char (point-min))
                            (search-forward-regexp "#\\+BEGIN_SRC\\|#\\+begin_src" nil t))
                      t)))
-        (concat header
-                org-latex-universal-preamble
-                (when src-p org-latex-minted-preamble))))
+        (if snippets-p header
+          (concat header
+                  org-latex-universal-preamble
+                  (when src-p org-latex-minted-preamble)))))
   
     (defvar org-latex-minted-preamble "
   \\usepackage{minted}

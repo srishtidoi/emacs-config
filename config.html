@@ -10895,9 +10895,10 @@ Now for a few more adjustments.
                            <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">goto-char</span> <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">point-min</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
                            <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">search-forward-regexp</span> <span class="org-string">"#\\+BEGIN_SRC</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">#\\+begin_src"</span> nil t<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
                      t<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-        <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">concat</span> header
-                <span class="org-variable-name">org-latex-universal-preamble</span>
-                <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">when</span> src-p <span class="org-variable-name">org-latex-minted-preamble</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+        <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">if</span> snippets-p header
+          <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">concat</span> header
+                  <span class="org-variable-name">org-latex-universal-preamble</span>
+                  <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">when</span> src-p <span class="org-variable-name">org-latex-minted-preamble</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
   
     <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">defvar</span> <span class="org-variable-name">org-latex-minted-preamble</span> <span class="org-string">"</span>
 <span class="org-string">  \\usepackage{minted}</span>
@@ -11066,9 +11067,10 @@ a bit cleverer, and handle the &ldquo;universal preamble&rdquo; while we&rsquo;r
                          <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">goto-char</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">point-min</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
                          <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">search-forward-regexp</span> <span class="org-string">"#\\+BEGIN_SRC</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">#\\+begin_src"</span> nil t<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
                    t<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-      <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">concat</span> header
-              <span class="org-variable-name">org-latex-universal-preamble</span>
-              <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">when</span> src-p <span class="org-variable-name">org-latex-minted-preamble</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+      <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">if</span> snippets-p header
+        <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">concat</span> header
+                <span class="org-variable-name">org-latex-universal-preamble</span>
+                <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">when</span> src-p <span class="org-variable-name">org-latex-minted-preamble</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
 
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">defvar</span> <span class="org-variable-name">org-latex-minted-preamble</span> <span class="org-string">"</span>
 <span class="org-string">\\usepackage{minted}</span>
