@@ -3281,9 +3281,19 @@ INFO is a plist used as a communication channel."
 (defadvice! org-html-table-wrapped (orig-fn table contents info)
   "Wrap the usual <table> in a <div>"
   :around #'org-html-table
-  (concat "<div class='table'>"
-          (funcall orig-fn table contents info)
-          "</div>"))
+  (let* ((name (plist-get (cadr table) :name))
+         (ref (org-export-get-reference table info)))
+    (format "<div id='%s' class='table'>
+<div class='gutter'><a href='#%s'>#</a></div>
+<div class='tabular'>
+%s
+</div>\
+</div>"
+            ref ref
+            (if name
+                (replace-regexp-in-string (format "<table id=\"%s\"" ref) "<table"
+                                          (funcall orig-fn table contents info))
+              (funcall orig-fn table contents info)))))
 ;; Handle table overflow:1 ends here
 
 ;; [[file:config.org::*TOC as a collapsable tree][TOC as a collapsable tree:1]]

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-07-19 Sun 16:24 -->
+<!-- 2020-07-19 Sun 17:55 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -12,7 +12,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:image" content="https://tecosaur.com/resources/org/nib.png" />
 <meta property="og:article:author:first_name" content="tecosaur" />
-<meta property="og:article:published_time" content="2020-07-19T16:24:09+0800" />
+<meta property="og:article:published_time" content="2020-07-19T17:55:48+0800" />
 <meta property="og:description" content="The Methods, Management, and Menagerie of Madness" />
 <link rel="icon" href="https://tecosaur.com/resources/org/nib.ico" type="image/ico" />
 
@@ -2371,8 +2371,19 @@ td.org-center {
   text-align: center; }
 
 div.table {
-  max-width: 100%;
-  overflow-x: auto; }
+  position: relative; }
+  div.table .gutter {
+    left: calc(20px - 2.5rem);
+    padding-top: 18px; }
+  div.table .name {
+    position: absolute;
+    font-size: 14px;
+    font-family: "Open Sans";
+    left: 20px;
+    color: var(--text-medium); }
+  div.table .tabular {
+    max-width: 100%;
+    overflow-x: auto; }
 
 table {
   border-color: var(--text-light);
@@ -2656,7 +2667,7 @@ table {
 </head>
 <body>
 <input type='checkbox' id='theme-switch'><div id='page'><label id='switch-label' for='theme-switch'></label><div id="content">
-<div class='page-header'><div class='page-meta'>2020-07-19 Sunday 4:24PM, tecosaur</div><h1 class="title">Doom Emacs Configuration<p class="subtitle">The Methods, Management, and Menagerie of Madness</p>
+<div class='page-header'><div class='page-meta'>2020-07-19 Sunday 5:55PM, tecosaur</div><h1 class="title">Doom Emacs Configuration<p class="subtitle">The Methods, Management, and Menagerie of Madness</p>
 </h1></div>
 <nav id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -3167,7 +3178,10 @@ editor) the following applications
 I have attempted to quantify aspects of my impressions of them below.
 </p>
 
-<div class='table'><table>
+<div id='editor-comparison,table--1' class='table'>
+<div class='gutter'><a href='#editor-comparison,table--1'>#</a></div>
+<div class='tabular'>
+<table>
 
 
 <colgroup>
@@ -3247,7 +3261,8 @@ I have attempted to quantify aspects of my impressions of them below.
 <td class="org-right">2</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div></div>
 
 
 <figure>
@@ -7488,7 +7503,10 @@ It&rsquo;s nice to see ansi colour codes displayed
 I really like org mode, I&rsquo;ve given some thought to why, and below is the result.
 </p>
 
-<div class='table'><table>
+<div id='org-mode,table--1' class='table'>
+<div class='gutter'><a href='#org-mode,table--1'>#</a></div>
+<div class='tabular'>
+<table>
 
 
 <colgroup>
@@ -7576,7 +7594,8 @@ I really like org mode, I&rsquo;ve given some thought to why, and below is the r
 <td class="org-right">2</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div></div>
 
 
 <figure>
@@ -9700,7 +9719,10 @@ text &#x2014; like this \(\sqrt{\beta^2+3}-\sum_{\phi=1}^\infty \frac{x^\phi-1}{
 We can either render from a <code>dvi</code> or <code>pdf</code> file, so let&rsquo;s benchmark <code>latex</code> and
 <code>pdflatex</code>.
 </p>
-<div class='table'><table>
+<div id='latex-fragments,table--1' class='table'>
+<div class='gutter'><a href='#latex-fragments,table--1'>#</a></div>
+<div class='tabular'>
+<table>
 
 
 <colgroup>
@@ -9720,7 +9742,8 @@ We can either render from a <code>dvi</code> or <code>pdf</code> file, so let&rs
 <td class="org-left">215±3 ms</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div></div>
 
 <p>
 On the rendering side, there are two <code>.dvi</code>-to-image converters which I am
@@ -9732,7 +9755,10 @@ size and prefer a vector graphic.
 <p>
 Using the above latex expression and benchmarking lead to the following results:
 </p>
-<div class='table'><table>
+<div id='latex-fragments,table--2' class='table'>
+<div class='gutter'><a href='#latex-fragments,table--2'>#</a></div>
+<div class='tabular'>
+<table>
 
 
 <colgroup>
@@ -9756,12 +9782,16 @@ Using the above latex expression and benchmarking lead to the following results:
 <td class="org-left">12±2 ms</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div></div>
 
 <p>
 Now let&rsquo;s combine this to see what&rsquo;s best
 </p>
-<div class='table'><table>
+<div id='latex-fragments,table--3' class='table'>
+<div class='gutter'><a href='#latex-fragments,table--3'>#</a></div>
+<div class='tabular'>
+<table>
 
 
 <colgroup>
@@ -9797,7 +9827,8 @@ Now let&rsquo;s combine this to see what&rsquo;s best
 <td class="org-left">16 KiB</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div></div>
 
 <p>
 So, let&rsquo;s use <code>dvipng</code> for previewing LaTeX fragments in-Emacs, but <code>dvisvgm</code> for <a href="#exporting-html">LaTeX Rendering</a>.
@@ -10437,6 +10468,11 @@ to set a maximum width and scroll overflow. Unfortunately, this cannot be applie
 directly to the <code>table</code> element, so we have to wrap it in a <code>div</code>.
 </p>
 
+<p>
+While we&rsquo;re at it, we can a link gutter, as we did with src blocks, and show the
+<code>#+name</code>, if one is given.
+</p>
+
 <details id='handle-table-overflow,code--1' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
 <div class='gutter'>
 <a href='#handle-table-overflow,code--1'>#</a>
@@ -10445,9 +10481,19 @@ directly to the <code>table</code> element, so we have to wrap it in a <code>div
 <pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defadvice!</span> org-html-table-wrapped <span class="org-rainbow-delimiters-depth-2">(</span>orig-fn table contents info<span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-doc">"Wrap the usual &lt;table&gt; in a &lt;div&gt;"</span>
   <span class="org-builtin">:around</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">org-html-table</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">concat</span> <span class="org-string">"&lt;div class='table'&gt;"</span>
-          <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">funcall</span> orig-fn table contents info<span class="org-rainbow-delimiters-depth-3">)</span>
-          <span class="org-string">"&lt;/div&gt;"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-1">(</span>name <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">plist-get</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-function-name">cadr</span> table<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-builtin">:name</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+         <span class="org-rainbow-delimiters-depth-1">(</span>ref <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">org-export-get-reference</span> table info<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">format</span> <span class="org-string">"&lt;div id='%s' class='table'&gt;</span>
+<span class="org-string">&lt;div class='gutter'&gt;&lt;a href='#%s'&gt;#&lt;/a&gt;&lt;/div&gt;</span>
+<span class="org-string">&lt;div class='tabular'&gt;</span>
+<span class="org-string">%s</span>
+<span class="org-string">&lt;/div&gt;\</span>
+<span class="org-string">&lt;/div&gt;"</span>
+            ref ref
+            <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">if</span> name
+                <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">replace-regexp-in-string</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">format</span> <span class="org-string">"&lt;table id=\"%s\""</span> ref<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-string">"&lt;table"</span>
+                                          <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">funcall</span> orig-fn table contents info<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+              <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">funcall</span> orig-fn table contents info<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </details>
@@ -12106,7 +12152,7 @@ Now we just need to load it appropriately.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-07-19 Sun 16:24</p>
+<p class="date">Created: 2020-07-19 Sun 17:55</p>
 </div>
 </div>
 </body>
