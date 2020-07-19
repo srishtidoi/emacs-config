@@ -3306,7 +3306,7 @@ Apparently this is used by <code>GPG</code>, and all sorts of other things.
 <p>
 Speaking of <code>GPG</code>, I want to use <kbd>~/.authsource.gpg</kbd> instead of the default in
 <kbd>~/.emacs.d</kbd>. Why? Because my home directory is already cluttered, so this won&rsquo;t
-make a difference, and I don&rsquo;t want to accidently purge this file (I have done
+make a difference, and I don&rsquo;t want to accidentaly purge this file (I have done
 <code>rm -rf~/.emac.d</code> before). I also want to cache as much as possible, as my home
 machine is pretty safe, and my laptop is shutdown a lot.
 </p>
@@ -3366,7 +3366,7 @@ shown by <kbd>SPC h v</kbd> and selecting what I thought looks good, I&rsquo;ve 
 <h4 id="fullscreen"><span class="section-number-4">2.2.2</span> Fullscreen<a aria-hidden="true" href="#fullscreen">#</a> </h4>
 <div class="outline-text-4" id="text-2-2-2">
 <p>
-I also like the idea of fullscreen-ing when opened by <code>emacs</code> or the <code>.desktop</code> file.
+I also like the idea of fullscreen-ing when opened by <code>Emacs</code> or the <code>.desktop</code> file.
 </p>
 <details id='fullscreen,code--1' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
 <div class='gutter'>
@@ -3622,7 +3622,7 @@ There are a few handy macros added by doom, namely
 <ul class="org-ul">
 <li><code>load!</code> for loading external <code>.el</code> files relative to this one</li>
 <li><code>use-package!</code> for configuring packages</li>
-<li><code>add-load-path!</code> for adding directories to the <code>load-path</code> where <code>emacs</code> looks when
+<li><code>add-load-path!</code> for adding directories to the <code>load-path</code> where <code>Emacs</code> looks when
 you load packages with <code>require</code> or <code>use-package</code></li>
 <li><code>map!</code> for binding new keys</li>
 </ul>
@@ -3684,7 +3684,7 @@ I&rsquo;d like to have just the buffer name, then if applicable the project fold
 <div class="outline-text-4" id="text-2-4-3">
 <p>
 Emacs can render an image as the splash screen, and <a href="https://github.com/MarioRicalde">@MarioRicalde</a> came up with a
-cracker! He&rsquo;s also provided me with a nice emacs-style <i>E</i>, which is good for
+cracker! He&rsquo;s also provided me with a nice Emacs-style <i>E</i>, which is good for
 smaller windows. <b>@MarioRicalde</b> you have my sincere thanks, you&rsquo;re great!
 <object type="image/svg+xml" data="misc/splash-images/blackhole-lines.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
@@ -4721,7 +4721,7 @@ are just waiting to be saved!
 </div>
 </details>
 <p>
-Now, the improvements from <code>precident</code> are mostly from remembering history, so
+Now, the improvements from <code>precedent</code> are mostly from remembering history, so
 let&rsquo;s improve that memory.
 </p>
 <details id='company,code--2' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
@@ -4739,7 +4739,7 @@ let&rsquo;s improve that memory.
 <h4 id="plain-text"><span class="section-number-4">4.4.1</span> Plain Text<a aria-hidden="true" href="#plain-text">#</a> </h4>
 <div class="outline-text-4" id="text-4-4-1">
 <p>
-<code>ispell</code> is nice, let&rsquo;s have it in <code>text</code>, <code>markdown</code>, and <code>GFM</code>.
+<code>Ispell</code> is nice, let&rsquo;s have it in <code>text</code>, <code>markdown</code>, and <code>GFM</code>.
 </p>
 <details id='plain-text,code--1' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
 <div class='gutter'>
@@ -4756,7 +4756,7 @@ let&rsquo;s improve that memory.
 </div>
 </details>
 <p>
-We then configure the dictionary we&rsquo;re using in <a href="#ispell">ispell</a>.
+We then configure the dictionary we&rsquo;re using in <a href="#ispell">Ispell</a>.
 </p>
 </div>
 </div>
@@ -4974,9 +4974,9 @@ So I&rsquo;m going to make use of <code>flyspell-lazy</code>
 <pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">use-package!</span> info-colors
   <span class="org-builtin">:commands</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">info-colors-fontify-node</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-function-name">add-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-variable-name">Info-selection-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">info-colors-fontify-node</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-function-name">add-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">Info-selection-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">info-colors-fontify-node</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-function-name">add-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-variable-name">Info-mode-hook</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-variable-name">mixed-pitch-mode</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-function-name">add-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">Info-mode-hook</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-variable-name">mixed-pitch-mode</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </details>
@@ -6135,7 +6135,7 @@ few more visual tweaks, we&rsquo;ll tweak the headers a bit
 
 <p>
 While considering width and the mu4e header view &#x2014; it&rsquo;s hard to see enough with
-a with less than 120 charachters, so let&rsquo;s add a hook to mu4e&rsquo;s header mode.
+a with less than 120 characters, so let&rsquo;s add a hook to mu4e&rsquo;s header mode.
 </p>
 <details id='viewing-mail,code--4' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
 <div class='gutter'>
@@ -6175,7 +6175,7 @@ want to use in and evil selection, this can be easily fixed.
 </details>
 
 <p>
-The main mu4e window is &#x2026; alright. I&rsquo;m not afraid of unicode though, so I&rsquo;ll
+The main mu4e window is &#x2026; alright. I&rsquo;m not afraid of Unicode though, so I&rsquo;ll
 define a fancier version. Look, it&rsquo;s the asterisks. We can do better than
 asterisks. The keybindings can also be made nicer, why have <code>[x]</code> when we can just
 have a bold, coloured <code>x</code>. Does the same job, while looking much less garish.
@@ -6240,7 +6240,7 @@ unbound in the main mu4e view.
 <p>
 I often find myself viewing new mails using the Emacs client. When opening a new
 window and switching to view the mu4e workspace, and empty workspace is left. We
-can try to avoid this workspace polution by deleting the current workspace
+can try to avoid this workspace pollution by deleting the current workspace
 before switching if it is empty.
 </p>
 <details id='viewing-mail,code--8' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
@@ -6280,7 +6280,7 @@ Let&rsquo;s send emails too.
 </details>
 
 <p>
-It&rsquo;s also nice to avoid accidently sending emails with the wrong account.
+It&rsquo;s also nice to avoid accidentally sending emails with the wrong account.
 If we can send from the address in the <code>To</code> field, let&rsquo;s do that. Opening an <code>ivy</code>
 prompt otherwise also seems sensible.
 </p>
@@ -6476,7 +6476,7 @@ Here&rsquo;s what I want
 <p>
 I think a file watch etc. setup similar to that in <a href="#rebuild-mail-index">Rebuild mail index while
 using mu4e</a> is probably the cleanest way to operate. We can put the current PID
-in the file and check for existance too.
+in the file and check for exitance too.
 </p>
 <details id='process-control,code--1' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
 <div class='gutter'>
@@ -7130,7 +7130,7 @@ I also think that having <kbd>evil-</kbd> appear in so many popups is a bit too 
 <h3 id="xkcd"><span class="section-number-3">4.24</span> xkcd<a aria-hidden="true" href="#xkcd">#</a> </h3>
 <div class="outline-text-3" id="text-4-24">
 <p>
-We wan&rsquo;t to set this up so it loads nicely in <a href="#extra-links">Extra links</a>.
+We want to set this up so it loads nicely in <a href="#extra-links">Extra links</a>.
 </p>
 <details id='xkcd,code--1' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
 <div class='gutter'>
@@ -7473,7 +7473,7 @@ need to have a template assigned.
 <h3 id="plaintext"><span class="section-number-3">5.2</span> Plaintext<a aria-hidden="true" href="#plaintext">#</a> </h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
-It&rsquo;s nice to see ansi colour codes displayed
+It&rsquo;s nice to see ANSI colour codes displayed
 </p>
 <details id='plaintext,code--1' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
 <div class='gutter'>
@@ -10611,7 +10611,7 @@ We also want to use HTML checkboxes, however we want to get a bit fancier than d
 <h6 id="header-anchors"><span class="section-number-6">5.3.3.3.8</span> Header anchors<a aria-hidden="true" href="#header-anchors">#</a> </h6>
 <div class="outline-text-6" id="text-5-3-3-3-8">
 <p>
-I want to add github-style links on hover for headings.
+I want to add GitHub-style links on hover for headings.
 </p>
 <details id='header-anchors,code--1' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
 <div class='gutter'>
@@ -12043,7 +12043,7 @@ will do it&rsquo;s own line wrapping, hence we <i>only</i> want to use visual li
 
 <p>
 Since markdown is often seen as rendered HTML, let&rsquo;s try to somewhat mirror the
-style or markdown renderes.
+style or markdown renderers.
 </p>
 
 <p>
