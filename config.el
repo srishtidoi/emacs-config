@@ -2129,7 +2129,7 @@ made unique when necessary."
                         (when (org-element-property :raw-value datum)
                           ;; Heading with a title
                           (unpackaged/org-export-new-named-reference datum cache))
-                        (when (member (car datum) '(src-block table))
+                        (when (member (car datum) '(src-block table example fixed-width property-drawer))
                           ;; Nameable elements
                           (unpackaged/org-export-new-named-reference datum cache))
                         ;; NOTE: This probably breaks some Org Export
@@ -2174,7 +2174,14 @@ made unique when necessary."
            ;; get ascii-only form of title without needing percent-encoding
            (ref (concat (org-heading-contraction (substring-no-properties title))
                         (unless (or headline-p (org-element-property :name datum))
-                          (concat "," (symbol-name (car datum)) "--1"))))
+                          (concat ","
+                                  (case (car datum)
+                                    ('src-block "code")
+                                    ('example "example")
+                                    ('fixed-width "mono")
+                                    ('property-drawer "properties")
+                                    (t (symbol-name (car datum))))
+                                  "--1"))))
            (parent (when headline-p (org-element-property :parent datum))))
       (while (--any (equal ref (car it))
                     cache)
