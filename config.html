@@ -6071,7 +6071,7 @@ fancy chars, and make sure they get the correct width.
 </details>
 
 <p>
-To account for the increase width of each flag charachter, and make perform a
+To account for the increase width of each flag character, and make perform a
 few more visual tweaks, we&rsquo;ll tweak the headers a bit
 </p>
 <details id='viewing-mail,code--3' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
@@ -10294,6 +10294,12 @@ Suffice to say I&rsquo;ve snatched it, with a few of my own tweaks applied.
 By wrapping the <code>&lt;pre&gt;</code> element in a <code>&lt;details&gt;</code> block, we can obtain collapsable
 blocks with no CSS, though we will toss a little in anyway to have this looking
 somewhat spiffy.
+</p>
+
+<p>
+We can take our modification a step further, and add a gutter on the side of the
+Src block containing both an anchor referencing the current block, and a button
+to copy the content of the block.
 </p>
 
 <details id='src-blocks' class='code' open><summary class='named'><span class='name'>Src blocks</span><span class='lang'>Emacs Lisp</span></summary>
