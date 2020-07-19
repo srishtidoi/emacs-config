@@ -3129,7 +3129,7 @@ INFO is a plist used as a communication channel."
          (name (plist-get properties :name))
          (ref (org-export-get-reference src-block info)))
     (format
-     "<details id='%s' class='code' open><summary%s>%s</summary>
+     "<details id='%s' class='code'%s><summary%s>%s</summary>
 <div class='gutter'>
 <a href='#%s'>#</a>
 <button title='Copy to clipboard' onclick='copyPreToClipdord(this)'>⎘</button>\
@@ -3137,6 +3137,9 @@ INFO is a plist used as a communication channel."
 %s
 </details>"
      ref
+     (if (member (org-export-read-attribute :attr_html src-block :collapsed)
+                 '("y" "yes" "t" "true"))
+         "" " open")
      (if name " class='named'" "")
      (if (not name) (concat "<span class='lang'>" lang "</span>")
        (format "<span class='name'>%s</span><span class='lang'>%s</span>" name lang))
@@ -3236,13 +3239,17 @@ INFO is a plist used as a communication channel."
 (after! org
   (defun org-html-block-collapsable (orig-fn block contents info)
     "Wrap the usual block in a <details>"
-    (concat
-     "<details class='code' open><summary></summary>
+    (format
+     "<details class='code'%s><summary></summary>
 <div class='gutter'>\
 <button title='Copy to clipboard' onclick='copyPreToClipdord(this)'>⎘</button>\
-</div>\n"
-     (funcall orig-fn block contents info)
-     "</details>"))
+</div>
+%s\n
+</details>"
+     (if (member (org-export-read-attribute :attr_html block :collapsed)
+                 '("y" "yes" "t" "true"))
+         "" " open")
+     (funcall orig-fn block contents info)))
 
   (advice-add 'org-html-example-block   :around #'org-html-block-collapsable)
   (advice-add 'org-html-fixed-width     :around #'org-html-block-collapsable)

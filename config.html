@@ -4480,7 +4480,7 @@ Because of the <i><a href="https://github.com/commonmark/commonmark-spec/wiki/ma
 such a thing a standard table spec &#x2026; or standard anything really. Because
 <code>org-md</code> is a goody-two-shoes, it just uses HTML for all these non-standardised
 elements (a lot of them). So <code>ox-gfm</code> is handy for exporting markdown with all the
-features that GitHub has. Initialised in <a href="#exporting-gfm">5.2.3.6</a>.
+features that GitHub has. Initialised in <a href="#exporting-gfm">5.3.3.6</a>.
 </p>
 <details id='extra-functionality,src-block--1' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
 <div class='gutter'>
@@ -10275,7 +10275,7 @@ somewhat spiffy.
          <span class="org-rainbow-delimiters-depth-1">(</span>name <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">plist-get</span> properties <span class="org-builtin">:name</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
          <span class="org-rainbow-delimiters-depth-1">(</span>ref <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">org-export-get-reference</span> src-block info<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
     <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">format</span>
-     <span class="org-string">"&lt;details id='%s' class='code' open&gt;&lt;summary%s&gt;%s&lt;/summary&gt;</span>
+     <span class="org-string">"&lt;details id='%s' class='code'%s&gt;&lt;summary%s&gt;%s&lt;/summary&gt;</span>
 <span class="org-string">&lt;div class='gutter'&gt;</span>
 <span class="org-string">&lt;a href='#%s'&gt;#&lt;/a&gt;</span>
 <span class="org-string">&lt;button title='Copy to clipboard' onclick='copyPreToClipdord(this)'&gt;&#9112;&lt;/button&gt;\</span>
@@ -10283,6 +10283,9 @@ somewhat spiffy.
 <span class="org-string">%s</span>
 <span class="org-string">&lt;/details&gt;"</span>
      ref
+     <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">member</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-function-name">org-export-read-attribute</span> <span class="org-builtin">:attr_html</span> src-block <span class="org-builtin">:collapsed</span><span class="org-rainbow-delimiters-depth-3">)</span>
+                 <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"y"</span> <span class="org-string">"yes"</span> <span class="org-string">"t"</span> <span class="org-string">"true"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+         <span class="org-string">""</span> <span class="org-string">" open"</span><span class="org-rainbow-delimiters-depth-1">)</span>
      <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">if</span> name <span class="org-string">" class='named'"</span> <span class="org-string">""</span><span class="org-rainbow-delimiters-depth-1">)</span>
      <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">not</span> name<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">concat</span> <span class="org-string">"&lt;span class='lang'&gt;"</span> lang <span class="org-string">"&lt;/span&gt;"</span><span class="org-rainbow-delimiters-depth-2">)</span>
        <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">format</span> <span class="org-string">"&lt;span class='name'&gt;%s&lt;/span&gt;&lt;span class='lang'&gt;%s&lt;/span&gt;"</span> name lang<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
@@ -10388,13 +10391,17 @@ somewhat spiffy.
 <pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">after!</span> org
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">defun</span> <span class="org-function-name">org-html-block-collapsable</span> <span class="org-rainbow-delimiters-depth-3">(</span>orig-fn block contents info<span class="org-rainbow-delimiters-depth-3">)</span>
     <span class="org-doc">"Wrap the usual block in a &lt;details&gt;"</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">concat</span>
-     <span class="org-string">"&lt;details class='code' open&gt;&lt;summary&gt;&lt;/summary&gt;</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">format</span>
+     <span class="org-string">"&lt;details class='code'%s&gt;&lt;summary&gt;&lt;/summary&gt;</span>
 <span class="org-string">&lt;div class='gutter'&gt;\</span>
 <span class="org-string">&lt;button title='Copy to clipboard' onclick='copyPreToClipdord(this)'&gt;&#9112;&lt;/button&gt;\</span>
-<span class="org-string">&lt;/div&gt;\n"</span>
-     <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">funcall</span> orig-fn block contents info<span class="org-rainbow-delimiters-depth-1">)</span>
-     <span class="org-string">"&lt;/details&gt;"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+<span class="org-string">&lt;/div&gt;</span>
+<span class="org-string">%s\n</span>
+<span class="org-string">&lt;/details&gt;"</span>
+     <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-constant">member</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-function-name">org-export-read-attribute</span> <span class="org-builtin">:attr_html</span> block <span class="org-builtin">:collapsed</span><span class="org-rainbow-delimiters-depth-3">)</span>
+                 <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"y"</span> <span class="org-string">"yes"</span> <span class="org-string">"t"</span> <span class="org-string">"true"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+         <span class="org-string">""</span> <span class="org-string">" open"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+     <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">funcall</span> orig-fn block contents info<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
 
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">advice-add</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">org-html-example-block</span>   <span class="org-builtin">:around</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">org-html-block-collapsable</span><span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">advice-add</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">org-html-fixed-width</span>     <span class="org-builtin">:around</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">org-html-block-collapsable</span><span class="org-rainbow-delimiters-depth-2">)</span>
