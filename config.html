@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-07-19 Sun 17:55 -->
+<!-- 2020-07-24 Fri 14:40 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doom Emacs Configuration</title>
@@ -12,7 +12,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:image" content="https://tecosaur.com/resources/org/nib.png" />
 <meta property="og:article:author:first_name" content="tecosaur" />
-<meta property="og:article:published_time" content="2020-07-19T17:55:48+0800" />
+<meta property="og:article:published_time" content="2020-07-24T14:40:46+0800" />
 <meta property="og:description" content="The Methods, Management, and Menagerie of Madness" />
 <link rel="icon" href="https://tecosaur.com/resources/org/nib.ico" type="image/ico" />
 
@@ -2661,7 +2661,7 @@ table {
 </head>
 <body>
 <input type='checkbox' id='theme-switch'><div id='page'><label id='switch-label' for='theme-switch'></label><div id="content">
-<div class='page-header'><div class='page-meta'>2020-07-19 Sunday 5:55PM, tecosaur</div><h1 class="title">Doom Emacs Configuration<p class="subtitle">The Methods, Management, and Menagerie of Madness</p>
+<div class='page-header'><div class='page-meta'>2020-07-24 Friday 2:40PM, tecosaur</div><h1 class="title">Doom Emacs Configuration<p class="subtitle">The Methods, Management, and Menagerie of Madness</p>
 </h1></div>
 <nav id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -3460,13 +3460,28 @@ Window rotation is nice, and can be found under <kbd>SPC w r</kbd> and <kbd>SPC 
 <i>Layout</i> rotation is also nice though. Let&rsquo;s stash this under <kbd>SPC w SPC</kbd>, inspired
 by Tmux&rsquo;s use of <kbd>C-b SPC</kbd> to rotate windows.
 </p>
+
+<p>
+We could also do with adding the missing arrow-key variants of the window
+navigation/swapping commands.
+</p>
 <details id='windows,code--4' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
 <div class='gutter'>
 <a href='#windows,code--4'>#</a>
 <button title='Copy to clipboard' onclick='copyPreToClipdord(this)'>⎘</button></div>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">map!</span> <span class="org-builtin">:map</span> <span class="org-variable-name">evil-window-map</span>
-      <span class="org-string">"SPC"</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">rotate-layout</span><span class="org-rainbow-delimiters-depth-1">)</span>
+      <span class="org-string">"SPC"</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">rotate-layout</span>
+       <span class="org-comment-delimiter">;; </span><span class="org-comment">Navigation</span>
+       <span class="org-string">"C-&lt;left&gt;"</span>     <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">evil-window-left</span>
+       <span class="org-string">"C-&lt;down&gt;"</span>     <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">evil-window-down</span>
+       <span class="org-string">"C-&lt;up&gt;"</span>       <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">evil-window-up</span>
+       <span class="org-string">"C-&lt;right&gt;"</span>    <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">evil-window-right</span>
+       <span class="org-comment-delimiter">;; </span><span class="org-comment">Swapping windows</span>
+       <span class="org-string">"&lt;left&gt;"</span>       <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">+evil/window-move-left</span>
+       <span class="org-string">"&lt;down&gt;"</span>       <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">+evil/window-move-down</span>
+       <span class="org-string">"&lt;up&gt;"</span>         <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">+evil/window-move-up</span>
+       <span class="org-string">"&lt;right&gt;"</span>      <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">+evil/window-move-right</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </details>
@@ -8474,7 +8489,7 @@ no modeline.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setf</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-function-name">alist-get</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">height</span> <span class="org-variable-name">+org-capture-frame-parameters</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-highlight-numbers-number">15</span><span class="org-rainbow-delimiters-depth-1">)</span>
       <span class="org-comment-delimiter">;; </span><span class="org-comment">(alist-get 'name +org-capture-frame-parameters) "&#10070; Capture") ;; ATM hardcoded in other places, so changing breaks stuff</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> +org-capture-fn
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> <span class="org-variable-name">+org-capture-fn</span>
       <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">lambda</span> <span class="org-rainbow-delimiters-depth-3">()</span>
         <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-3">)</span>
         <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">set-window-parameter</span> nil <span class="org-highlight-quoted-quote">'</span><span class="org-variable-name">mode-line-format</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">none</span><span class="org-rainbow-delimiters-depth-3">)</span>
@@ -12164,7 +12179,7 @@ Now we just need to load it appropriately.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tecosaur</p>
-<p class="date">Created: 2020-07-19 Sun 17:55</p>
+<p class="date">Created: 2020-07-24 Fri 14:40</p>
 </div>
 </div>
 </body>
