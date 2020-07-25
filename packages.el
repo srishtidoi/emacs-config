@@ -58,6 +58,11 @@
 (package! info-colors :pin "47ee73cc19b1049eef32c9f3e264ea7ef2aaf8a5")
 ;; Info colours:1 ends here
 
+;; [[file:config.org::*Large files][Large files:1]]
+(package! vlf :recipe (:host github :repo "m00natic/vlfi" :files ("*.el"))
+  :pin "cc02f2533782d6b9b628cec7e2dcf25b2d05a27c")
+;; Large files:1 ends here
+
 ;; [[file:config.org::*Email][Email:1]]
 (package! org-msg)
 ;; Email:1 ends here

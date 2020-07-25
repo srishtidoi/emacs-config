@@ -277,6 +277,11 @@
                   :weight bold)))
 ;; Fun:8 ends here
 
+;; [[file:config.org::*Large files][Large files:2]]
+(use-package! vlf-setup
+  :defer-incrementally vlf-tune vlf-base vlf-write vlf-search vlf-occur vlf-follow vlf-ediff vlf)
+;; Large files:2 ends here
+
 ;; [[file:config.org::*LaTeX][LaTeX:3]]
 (use-package! auto-latex-snippets
   :hook (LaTeX-mode . auto-latex-snippets-mode)
