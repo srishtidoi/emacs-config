@@ -4852,12 +4852,34 @@ We then configure the dictionary we&rsquo;re using in <a href="#ispell">Ispell</
 <h3 id="emacs-anywhere-configuration"><span class="section-number-3">4.6</span> <a href="https://github.com/zachcurry/emacs-anywhere">Emacs Anywhere</a> configuration<a aria-hidden="true" href="#emacs-anywhere-configuration">#</a> </h3>
 <div class="outline-text-3" id="text-4-6">
 <p>
+To start with, let&rsquo;s install this.
+</p>
+<details id='emacs-anywhere-configuration,code--1' class='code' open><summary><span class='lang'>Shell Script</span></summary>
+<div class='gutter'>
+<a href='#emacs-anywhere-configuration,code--1'>#</a>
+<button title='Copy to clipboard' onclick='copyPreToClipdord(this)'>⎘</button></div>
+<div class="org-src-container">
+<pre class="src src-shell"><span class="org-type">cd</span> /tmp
+<span class="org-type">curl</span> -fsSL https://raw.github.com/zachcurry/emacs-anywhere/master/install -o ea-install.sh
+sed -i <span class="org-string">'s/EA_PATH=$HOME\/.emacs_anywhere/EA_PATH=$HOME\/.local\/share\/emacs_anywhere/'</span> ea-install.sh
+bash ea-install.sh || <span class="org-keyword">exit</span>
+<span class="org-type">cd</span> ~/.local/share/emacs_anywhere
+<span class="org-comment-delimiter"># </span><span class="org-comment">Install in ~/.local not ~/.emacs_anywhere</span>
+sed -i <span class="org-string">'s/$HOME\/.emacs_anywhere/$HOME\/.local\/share\/emacs_anywhere/'</span> ./bin/linux ./bin/emacstask
+<span class="org-type">ln</span> -s ~/.local/share/emacs_anywhere/bin/linux ~/.local/bin/emacs_anywhere
+<span class="org-comment-delimiter"># </span><span class="org-comment">Improve paste robustness --- https://github.com/zachcurry/emacs-anywhere/pull/66</span>
+sed -i <span class="org-string">'s/xdotool key --clearmodifiers ctrl+v/xdotool key --clearmodifiers Shift+Insert/'</span> ./bin/linux
+</pre>
+</div>
+</details>
+
+<p>
 It&rsquo;s nice to recognise GitHub (so we can use <code>GFM</code>), and other apps which we know
 take markdown
 </p>
-<details id='emacs-anywhere-configuration,code--1' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
+<details id='emacs-anywhere-configuration,code--2' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
 <div class='gutter'>
-<a href='#emacs-anywhere-configuration,code--1'>#</a>
+<a href='#emacs-anywhere-configuration,code--2'>#</a>
 <button title='Copy to clipboard' onclick='copyPreToClipdord(this)'>⎘</button></div>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">markdown-window-p</span> <span class="org-rainbow-delimiters-depth-2">(</span>window-title<span class="org-rainbow-delimiters-depth-2">)</span>
@@ -4873,9 +4895,9 @@ When the window opens, we generally want text so let&rsquo;s use a nice sans ser
 a position the window below and to the left. Oh, and don&rsquo;t forget about checking
 for <code>GFM</code>, otherwise let&rsquo;s just use <code>markdown</code>.
 </p>
-<details id='emacs-anywhere-configuration,code--2' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
+<details id='emacs-anywhere-configuration,code--3' class='code' open><summary><span class='lang'>Emacs Lisp</span></summary>
 <div class='gutter'>
-<a href='#emacs-anywhere-configuration,code--2'>#</a>
+<a href='#emacs-anywhere-configuration,code--3'>#</a>
 <button title='Copy to clipboard' onclick='copyPreToClipdord(this)'>⎘</button></div>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defvar</span> <span class="org-variable-name">emacs-anywhere--active-markdown</span> nil

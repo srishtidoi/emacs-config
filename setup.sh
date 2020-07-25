@@ -6,6 +6,19 @@ cargo install git-delta
 cargo install cargo-script
 # Extra Requirements:2 ends here
 
+# [[file:config.org::*\[\[https:/github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1]]
+cd /tmp
+curl -fsSL https://raw.github.com/zachcurry/emacs-anywhere/master/install -o ea-install.sh
+sed -i 's/EA_PATH=$HOME\/.emacs_anywhere/EA_PATH=$HOME\/.local\/share\/emacs_anywhere/' ea-install.sh
+bash ea-install.sh || exit
+cd ~/.local/share/emacs_anywhere
+# Install in ~/.local not ~/.emacs_anywhere
+sed -i 's/$HOME\/.emacs_anywhere/$HOME\/.local\/share\/emacs_anywhere/' ./bin/linux ./bin/emacstask
+ln -s ~/.local/share/emacs_anywhere/bin/linux ~/.local/bin/emacs_anywhere
+# Improve paste robustness --- https://github.com/zachcurry/emacs-anywhere/pull/66
+sed -i 's/xdotool key --clearmodifiers ctrl+v/xdotool key --clearmodifiers Shift+Insert/' ./bin/linux
+# [[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1 ends here
+
 # [[file:config.org::*Hunspell][Hunspell:1]]
 cd /tmp
 curl -o "hunspell-en-custom.zip" 'http://app.aspell.net/create?max_size=80&spelling=GBs&spelling=AU&max_variant=0&diacritic=keep&special=hacker&special=roman-numerals&encoding=utf-8&format=inline&download=hunspell'

@@ -380,15 +380,15 @@
 (setq elcord-use-major-mode-as-main-icon t)
 ;; Elcord:1 ends here
 
-;; [[file:config.org::*\[\[https:/github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1]]
+;; [[file:config.org::*\[\[https:/github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2]]
 (defun markdown-window-p (window-title)
   "Judges from WINDOW-TITLE whether the current window likes markdown"
   (if (string-match-p (rx (or "Stack Exchange" "Stack Overflow"
                           "Pull Request" "Issue" "Discord"))
                   window-title) t nil))
-;; [[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:1 ends here
+;; [[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2 ends here
 
-;; [[file:config.org::*\[\[https:/github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2]]
+;; [[file:config.org::*\[\[https:/github.com/zachcurry/emacs-anywhere\]\[Emacs Anywhere\]\] configuration][[[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:3]]
 (defvar emacs-anywhere--active-markdown nil
   "Whether the buffer started off as markdown.
 Affects behaviour of `emacs-anywhere--finalise-content'")
@@ -469,7 +469,7 @@ Affects behaviour of `emacs-anywhere--finalise-content'")
   (emacs-anywhere-mode 1))
 
 (add-hook 'ea-popup-hook 'ea-popup-handler)
-;; [[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:2 ends here
+;; [[https://github.com/zachcurry/emacs-anywhere][Emacs Anywhere]] configuration:3 ends here
 
 ;; [[file:config.org::*Eros-eval][Eros-eval:1]]
 (setq eros-eval-result-prefix "⟹ ")
