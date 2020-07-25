@@ -43,7 +43,7 @@
 
 ;; [[file:config.org::*CalcTeX][CalcTeX:1]]
 (package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
-                                 :files ("*.el")) :pin "1d2c3df2e9230ecbe370cb2da82482cfb83b7a34")
+                                 :files ("*.el")) :pin "7fa2673c64e259e04aef684ccf09ef85570c388b")
 ;; CalcTeX:1 ends here
 
 ;; [[file:config.org::*ESS][ESS:1]]
@@ -68,7 +68,7 @@
 
 ;; [[file:config.org::*LaTeX][LaTeX:1]]
 (package! evil-tex :recipe (:host github :repo "itai33/evil-tex")
-                            :pin "4826bffa28fde3ace3ec0bd66b2838d44539d016")
+                            :pin "925337a4d5799d48c03e0384757decb6363ab478")
 ;; LaTeX:1 ends here
 
 ;; [[file:config.org::*LaTeX][LaTeX:2]]
@@ -88,7 +88,7 @@
 ;; [[file:config.org::*Improve agenda/capture][Improve agenda/capture:2]]
 (package! doct
   :recipe (:host github :repo "progfolio/doct")
-  :pin "9be788f9e3db45610a9e3489d4bba70b3b5de1f0")
+  :pin "80d291e5f1cbdabd4eb7f88c917653c59d3f14be")
 ;; Improve agenda/capture:2 ends here
 
 ;; [[file:config.org::*Visuals][Visuals:1]]
@@ -97,7 +97,7 @@
 ;; Visuals:1 ends here
 
 ;; [[file:config.org::*Visuals][Visuals:2]]
-(package! org-fragtog :pin "3eea7f17087a0165280e9c7b7a39a4b8d91c684d")
+(package! org-fragtog :pin "92119e3ae7c9a0ae2b5c9d9e4801b5fdc4804ad7")
 ;; Visuals:2 ends here
 
 ;; [[file:config.org::*Visuals][Visuals:3]]
@@ -109,7 +109,7 @@
 ;; Extra functionality:1 ends here
 
 ;; [[file:config.org::*Extra functionality][Extra functionality:2]]
-(package! org-ref :pin "b05d6b443494cc251d2f11a882a8b27fb8f7baf6")
+(package! org-ref :pin "9a8053f0b0e799b8edbae2376dda44704054725a")
 ;; Extra functionality:2 ends here
 
 ;; [[file:config.org::*Extra functionality][Extra functionality:3]]
@@ -117,7 +117,7 @@
 ;; Extra functionality:3 ends here
 
 ;; [[file:config.org::*Extra functionality][Extra functionality:4]]
-(package! org-chef :pin "1dd73fd3db0e9382fa34d3b48c8ec608e65f3bdc")
+(package! org-chef :pin "77f97ad07b957d6b5ea6c2a57a9e623f2ab36d04")
 ;; Extra functionality:4 ends here
 
 ;; [[file:config.org::*Extra functionality][Extra functionality:5]]
@@ -125,7 +125,7 @@
 ;; Extra functionality:5 ends here
 
 ;; [[file:config.org::*Extra functionality][Extra functionality:6]]
-(package! org-roam-server :pin "7617ac01a1b7bad61407916ef03eda95c17da7c9")
+(package! org-roam-server :pin "bfc70327413948fb7e631f4424fb92c3dbdeafc0")
 ;; Extra functionality:6 ends here
 
 ;; [[file:config.org::*Systemd][Systemd:1]]
